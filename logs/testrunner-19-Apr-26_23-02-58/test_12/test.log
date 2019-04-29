@@ -1,0 +1,134 @@
+[2019-04-26 23:22:57,115] - [fts_base] [123145410170880] - INFO - ==== FTSbasetests setup is started for test #12 create_simple_default_index ====
+[2019-04-26 23:22:57,125] - [fts_base] [123145410170880] - INFO - removing nodes from cluster ...
+[2019-04-26 23:22:57,134] - [fts_base] [123145410170880] - INFO - cleanup [ip:192.168.10.12 port:8091 ssh_username:root]
+[2019-04-26 23:22:57,165] - [cluster_helper] [123145410170880] - INFO - waiting for ns_server @ 192.168.10.12:8091
+[2019-04-26 23:22:57,170] - [cluster_helper] [123145410170880] - INFO - ns_server @ 192.168.10.12:8091 is running
+[2019-04-26 23:22:57,171] - [fts_base] [123145410170880] - INFO - Removing user 'cbadminbucket'...
+[2019-04-26 23:22:57,182] - [rest_client] [123145410170880] - ERROR - DELETE http://192.168.10.12:8091/settings/rbac/users/local/cbadminbucket body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpQYXNzdzByZA==\n'} error: 404 reason: unknown "User was not found." auth: Administrator:Passw0rd
+[2019-04-26 23:22:57,182] - [fts_base] [123145410170880] - INFO - "User was not found."
+[2019-04-26 23:22:57,183] - [fts_base] [123145410170880] - INFO - Initializing Cluster ...
+[2019-04-26 23:22:58,138] - [task] [123145586847744] - INFO - server: ip:192.168.10.12 port:8091 ssh_username:root, nodes/self: {'ip': u'192.168.10.12', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@192.168.10.12', 'uptime': u'1246', 'mcdMemoryReserved': 3032, 'storageTotalRam': 3790, 'hostname': u'192.168.10.12:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x1068b8590>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-3068-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'index', u'kv', u'n1ql'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 3119636480, 'memoryTotal': 3974823936, 'memoryQuota': 2021, 'mcdMemoryAllocated': 3032, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-04-26 23:22:58,145] - [rest_client] [123145586847744] - INFO - pools/default params : memoryQuota=2021
+[2019-04-26 23:22:58,152] - [rest_client] [123145586847744] - INFO - settings/web params on 192.168.10.12:8091:username=Administrator&password=Passw0rd&port=8091
+[2019-04-26 23:22:58,208] - [remote_util] [123145586847744] - INFO - connecting to 192.168.10.12 with username:root 
+[2019-04-26 23:22:58,358] - [remote_util] [123145586847744] - INFO - Connected to 192.168.10.12
+[2019-04-26 23:22:58,557] - [remote_util] [123145586847744] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-26 23:22:58,961] - [remote_util] [123145586847744] - INFO - running command.raw on 192.168.10.12: curl http://Administrator:Passw0rd@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-04-26 23:22:59,038] - [remote_util] [123145586847744] - INFO - command executed successfully
+[2019-04-26 23:22:59,043] - [rest_client] [123145586847744] - INFO - /diag/eval status on 192.168.10.12:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-04-26 23:22:59,044] - [rest_client] [123145586847744] - INFO - settings/indexes params : storageMode=forestdb
+[2019-04-26 23:22:59,048] - [rest_client] [123145586847744] - ERROR - POST http://192.168.10.12:8091/settings/indexes body: storageMode=forestdb headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpQYXNzdzByZA==\n'} error: 400 reason: unknown {"errors":{"storageMode":"The value must be one of the following: [plasma,memory_optimized]"}} auth: Administrator:Passw0rd
+[2019-04-26 23:22:59,060] - [fts_base] [123145410170880] - INFO - 192.168.10.11 will be configured with services fts
+[2019-04-26 23:23:00,060] - [task] [123145586847744] - INFO - adding node 192.168.10.11:8091 to cluster
+[2019-04-26 23:23:00,061] - [rest_client] [123145586847744] - INFO - adding remote node @192.168.10.11:8091 to this cluster @192.168.10.12:8091
+[2019-04-26 23:23:01,570] - [rest_client] [123145586847744] - INFO - rebalance params : {'password': 'Passw0rd', 'ejectedNodes': '', 'user': 'Administrator', 'knownNodes': u'ns_1@192.168.10.11,ns_1@192.168.10.12'}
+[2019-04-26 23:23:01,576] - [rest_client] [123145586847744] - INFO - rebalance operation started
+[2019-04-26 23:23:01,582] - [rest_client] [123145586847744] - INFO - rebalance percentage : 0.00 %
+[2019-04-26 23:23:01,583] - [task] [123145586847744] - INFO - Rebalance - status: running, progress: 0.00%
+[2019-04-26 23:23:11,654] - [task] [123145586847744] - INFO - Rebalance - status: none, progress: 100.00%
+[2019-04-26 23:23:11,663] - [task] [123145586847744] - INFO - rebalancing was completed with progress: 100% in 10.0859179497 sec
+[2019-04-26 23:23:11,674] - [remote_util] [123145410170880] - INFO - connecting to 192.168.10.12 with username:root 
+[2019-04-26 23:23:11,833] - [remote_util] [123145410170880] - INFO - Connected to 192.168.10.12
+[2019-04-26 23:23:12,044] - [remote_util] [123145410170880] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-26 23:23:12,491] - [remote_util] [123145410170880] - INFO - running command.raw on 192.168.10.12: curl http://Administrator:Passw0rd@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-04-26 23:23:12,567] - [remote_util] [123145410170880] - INFO - command executed successfully
+[2019-04-26 23:23:12,568] - [fts_base] [123145410170880] - INFO - Enabled diag/eval for non-local hosts from 192.168.10.12
+[2019-04-26 23:23:12,593] - [rest_client] [123145410170880] - ERROR - DELETE http://192.168.10.12:8091/settings/rbac/users/local/cbadminbucket body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpQYXNzdzByZA==\n'} error: 404 reason: unknown "User was not found." auth: Administrator:Passw0rd
+[2019-04-26 23:23:12,594] - [internal_user] [123145410170880] - INFO - Exception while deleting user. Exception is -"User was not found."
+[2019-04-26 23:23:12,694] - [rest_client] [123145586847744] - INFO - http://192.168.10.12:8091/pools/default/buckets with param: bucketType=membase&evictionPolicy=valueOnly&threadsNumber=3&ramQuotaMB=217&authType=sasl&name=default&flushEnabled=1&replicaNumber=1&compressionMode=passive&saslPassword=None&replicaIndex=1
+[2019-04-26 23:23:12,702] - [rest_client] [123145586847744] - INFO - 0.01 seconds to create bucket default
+[2019-04-26 23:23:12,703] - [bucket_helper] [123145586847744] - INFO - waiting for memcached bucket : default in 192.168.10.12 to accept set ops
+[2019-04-26 23:23:13,973] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-26 23:23:14,121] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-26 23:23:14,657] - [task] [123145586847744] - INFO - bucket 'default' was created with per node RAM quota: 217
+[2019-04-26 23:23:15,699] - [rest_client] [123145586847744] - INFO - http://192.168.10.12:8091/pools/default/buckets with param: bucketType=membase&evictionPolicy=valueOnly&threadsNumber=3&ramQuotaMB=217&authType=sasl&name=sasl_bucket_1&flushEnabled=1&replicaNumber=1&compressionMode=passive&saslPassword=password&replicaIndex=1
+[2019-04-26 23:23:15,710] - [rest_client] [123145586847744] - INFO - 0.01 seconds to create bucket sasl_bucket_1
+[2019-04-26 23:23:15,780] - [rest_client] [123145586847744] - INFO - http://192.168.10.12:8091/pools/default/buckets with param: bucketType=membase&evictionPolicy=valueOnly&threadsNumber=3&ramQuotaMB=217&authType=sasl&name=sasl_bucket_2&flushEnabled=1&replicaNumber=1&compressionMode=passive&saslPassword=password&replicaIndex=1
+[2019-04-26 23:23:16,756] - [rest_client] [123145586847744] - INFO - 0.98 seconds to create bucket sasl_bucket_2
+[2019-04-26 23:23:16,884] - [rest_client] [123145586847744] - INFO - http://192.168.10.12:8091/pools/default/buckets with param: bucketType=membase&evictionPolicy=valueOnly&threadsNumber=3&ramQuotaMB=217&authType=sasl&name=sasl_bucket_3&flushEnabled=1&replicaNumber=1&compressionMode=passive&saslPassword=password&replicaIndex=1
+[2019-04-26 23:23:16,907] - [rest_client] [123145586847744] - INFO - 0.02 seconds to create bucket sasl_bucket_3
+[2019-04-26 23:23:16,907] - [bucket_helper] [123145586847744] - INFO - waiting for memcached bucket : sasl_bucket_1 in 192.168.10.12 to accept set ops
+[2019-04-26 23:23:17,140] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_1
+[2019-04-26 23:23:17,277] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_1
+[2019-04-26 23:23:18,227] - [task] [123145586847744] - INFO - bucket 'sasl_bucket_1' was created with per node RAM quota: 217
+[2019-04-26 23:23:18,229] - [bucket_helper] [123145586847744] - INFO - waiting for memcached bucket : sasl_bucket_2 in 192.168.10.12 to accept set ops
+[2019-04-26 23:23:19,407] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_2
+[2019-04-26 23:23:19,643] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_2
+[2019-04-26 23:23:19,888] - [task] [123145586847744] - INFO - bucket 'sasl_bucket_2' was created with per node RAM quota: 217
+[2019-04-26 23:23:19,889] - [bucket_helper] [123145586847744] - INFO - waiting for memcached bucket : sasl_bucket_3 in 192.168.10.12 to accept set ops
+[2019-04-26 23:23:21,034] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_3
+[2019-04-26 23:23:21,124] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_3
+[2019-04-26 23:23:21,391] - [task] [123145586847744] - INFO - bucket 'sasl_bucket_3' was created with per node RAM quota: 217
+[2019-04-26 23:23:22,437] - [rest_client] [123145586847744] - INFO - http://192.168.10.12:8091/pools/default/buckets with param: bucketType=membase&threadsNumber=3&authType=none&compressionMode=passive&replicaIndex=1&name=standard_bucket_1&evictionPolicy=valueOnly&flushEnabled=1&replicaNumber=1&ramQuotaMB=217
+[2019-04-26 23:23:22,451] - [rest_client] [123145586847744] - INFO - 0.01 seconds to create bucket standard_bucket_1
+[2019-04-26 23:23:22,598] - [rest_client] [123145586847744] - INFO - http://192.168.10.12:8091/pools/default/buckets with param: bucketType=membase&threadsNumber=3&authType=none&compressionMode=passive&replicaIndex=1&name=standard_bucket_2&evictionPolicy=valueOnly&flushEnabled=1&replicaNumber=1&ramQuotaMB=217
+[2019-04-26 23:23:22,702] - [rest_client] [123145586847744] - INFO - 0.10 seconds to create bucket standard_bucket_2
+[2019-04-26 23:23:22,803] - [rest_client] [123145586847744] - INFO - http://192.168.10.12:8091/pools/default/buckets with param: bucketType=membase&threadsNumber=3&authType=none&compressionMode=passive&replicaIndex=1&name=standard_bucket_3&evictionPolicy=valueOnly&flushEnabled=1&replicaNumber=1&ramQuotaMB=217
+[2019-04-26 23:23:22,935] - [rest_client] [123145586847744] - INFO - 0.13 seconds to create bucket standard_bucket_3
+[2019-04-26 23:23:22,936] - [bucket_helper] [123145586847744] - INFO - waiting for memcached bucket : standard_bucket_1 in 192.168.10.12 to accept set ops
+[2019-04-26 23:23:25,811] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_1
+[2019-04-26 23:23:26,056] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_1
+[2019-04-26 23:23:26,347] - [task] [123145586847744] - INFO - bucket 'standard_bucket_1' was created with per node RAM quota: 217
+[2019-04-26 23:23:26,347] - [bucket_helper] [123145586847744] - INFO - waiting for memcached bucket : standard_bucket_2 in 192.168.10.12 to accept set ops
+[2019-04-26 23:23:27,556] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_2
+[2019-04-26 23:23:27,875] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_2
+[2019-04-26 23:23:28,195] - [task] [123145586847744] - INFO - bucket 'standard_bucket_2' was created with per node RAM quota: 217
+[2019-04-26 23:23:28,196] - [bucket_helper] [123145586847744] - INFO - waiting for memcached bucket : standard_bucket_3 in 192.168.10.12 to accept set ops
+[2019-04-26 23:23:29,428] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_3
+[2019-04-26 23:23:29,588] - [data_helper] [123145586847744] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_3
+[2019-04-26 23:23:30,115] - [task] [123145586847744] - INFO - bucket 'standard_bucket_3' was created with per node RAM quota: 217
+[2019-04-26 23:23:30,124] - [rest_client] [123145410170880] - INFO - /diag/eval status on 192.168.10.12:8091: True content: "/opt/couchbase/var/lib/couchbase/logs" command: filename:absname(element(2, application:get_env(ns_server,error_logger_mf_dir))).
+[2019-04-26 23:23:30,126] - [remote_util] [123145410170880] - INFO - connecting to 192.168.10.12 with username:root 
+[2019-04-26 23:23:30,331] - [remote_util] [123145410170880] - INFO - Connected to 192.168.10.12
+[2019-04-26 23:23:30,527] - [remote_util] [123145410170880] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-26 23:23:30,931] - [remote_util] [123145410170880] - INFO - running command.raw on 192.168.10.12: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-04-26 23:23:30,989] - [remote_util] [123145410170880] - INFO - command executed successfully
+[2019-04-26 23:23:30,989] - [fts_base] [123145410170880] - INFO - 0
+[2019-04-26 23:23:31,126] - [remote_util] [123145410170880] - INFO - connecting to 192.168.10.11 with username:root 
+[2019-04-26 23:23:31,295] - [remote_util] [123145410170880] - INFO - Connected to 192.168.10.11
+[2019-04-26 23:23:31,557] - [remote_util] [123145410170880] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-26 23:23:31,959] - [remote_util] [123145410170880] - INFO - running command.raw on 192.168.10.11: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-04-26 23:23:32,078] - [remote_util] [123145410170880] - INFO - command executed successfully
+[2019-04-26 23:23:32,078] - [fts_base] [123145410170880] - INFO - 0
+[2019-04-26 23:23:32,219] - [remote_util] [123145410170880] - INFO - connecting to 192.168.10.13 with username:root 
+[2019-04-26 23:23:32,387] - [remote_util] [123145410170880] - INFO - Connected to 192.168.10.13
+[2019-04-26 23:23:32,621] - [remote_util] [123145410170880] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-26 23:23:33,098] - [remote_util] [123145410170880] - INFO - running command.raw on 192.168.10.13: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-04-26 23:23:33,177] - [remote_util] [123145410170880] - INFO - command executed successfully
+[2019-04-26 23:23:33,178] - [fts_base] [123145410170880] - INFO - 0
+[2019-04-26 23:23:33,308] - [fts_base] [123145410170880] - INFO - {'192.168.10.12': {'panic:': 0}, '192.168.10.13': {'panic:': 0}, '192.168.10.11': {'panic:': 0}}
+[2019-04-26 23:23:33,308] - [fts_base] [123145410170880] - INFO - ==== FTSbasetests setup is finished for test #12 create_simple_default_index ====
+[2019-04-26 23:23:33,599] - [data_helper] [123145410170880] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-26 23:23:33,849] - [data_helper] [123145410170880] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_1
+[2019-04-26 23:23:35,009] - [data_helper] [123145410170880] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_2
+[2019-04-26 23:23:35,319] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_1
+[2019-04-26 23:23:35,325] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_1
+[2019-04-26 23:23:35,331] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_1
+[2019-04-26 23:23:35,341] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_1
+[2019-04-26 23:23:35,632] - [data_helper] [123145410170880] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_3
+[2019-04-26 23:23:36,089] - [data_helper] [123145591054336] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-26 23:23:36,099] - [data_helper] [123145591054336] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-26 23:23:36,127] - [data_helper] [123145591054336] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-26 23:23:37,494] - [data_helper] [123145410170880] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_1
+[2019-04-26 23:23:37,904] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_2
+[2019-04-26 23:23:37,969] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_2
+[2019-04-26 23:23:37,970] - [data_helper] [123145599467520] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_3
+[2019-04-26 23:23:38,563] - [data_helper] [123145599467520] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_3
+[2019-04-26 23:23:38,566] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_2
+[2019-04-26 23:23:38,585] - [data_helper] [123145599467520] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_3
+[2019-04-26 23:23:38,848] - [data_helper] [123145410170880] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_2
+[2019-04-26 23:23:39,655] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_2
+[2019-04-26 23:23:39,656] - [data_helper] [123145603674112] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_1
+[2019-04-26 23:23:39,662] - [data_helper] [123145599467520] - INFO - creating direct client 192.168.10.12:11210 sasl_bucket_3
+[2019-04-26 23:23:39,819] - [data_helper] [123145410170880] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_3
+[2019-04-26 23:23:40,869] - [data_helper] [123145603674112] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_1
+[2019-04-26 23:23:40,870] - [data_helper] [123145603674112] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_1
+[2019-04-26 23:23:40,883] - [data_helper] [123145603674112] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_1
+[2019-04-26 23:23:41,577] - [data_helper] [123145607880704] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_2
+[2019-04-26 23:23:41,593] - [data_helper] [123145607880704] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_2
+[2019-04-26 23:23:41,621] - [data_helper] [123145607880704] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_2
+[2019-04-26 23:23:42,247] - [data_helper] [123145607880704] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_2
+[2019-04-26 23:23:42,357] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_3
+[2019-04-26 23:23:42,400] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_3
+[2019-04-26 23:23:42,924] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_3
+[2019-04-26 23:23:42,985] - [data_helper] [123145595260928] - INFO - creating direct client 192.168.10.12:11210 standard_bucket_3

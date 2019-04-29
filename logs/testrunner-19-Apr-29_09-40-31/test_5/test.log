@@ -1,0 +1,177 @@
+[2019-04-29 09:45:26,082] - [fts_base] [123145324642304] - INFO - ==== FTSbasetests setup is started for test #5 run_default_index_query ====
+[2019-04-29 09:45:26,092] - [fts_base] [123145324642304] - INFO - removing nodes from cluster ...
+[2019-04-29 09:45:26,100] - [fts_base] [123145324642304] - INFO - cleanup [ip:192.168.10.12 port:8091 ssh_username:root]
+[2019-04-29 09:45:26,129] - [cluster_helper] [123145324642304] - INFO - waiting for ns_server @ 192.168.10.12:8091
+[2019-04-29 09:45:26,134] - [cluster_helper] [123145324642304] - INFO - ns_server @ 192.168.10.12:8091 is running
+[2019-04-29 09:45:26,134] - [fts_base] [123145324642304] - INFO - Removing user 'cbadminbucket'...
+[2019-04-29 09:45:26,145] - [rest_client] [123145324642304] - ERROR - DELETE http://192.168.10.12:8091/settings/rbac/users/local/cbadminbucket body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpQYXNzdzByZA==\n'} error: 404 reason: unknown "User was not found." auth: Administrator:Passw0rd
+[2019-04-29 09:45:26,146] - [fts_base] [123145324642304] - INFO - "User was not found."
+[2019-04-29 09:45:26,147] - [fts_base] [123145324642304] - INFO - Initializing Cluster ...
+[2019-04-29 09:45:27,098] - [task] [123145408774144] - INFO - server: ip:192.168.10.12 port:8091 ssh_username:root, nodes/self: {'ip': u'192.168.10.12', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@192.168.10.12', 'uptime': u'40476', 'mcdMemoryReserved': 3032, 'storageTotalRam': 3790, 'hostname': u'192.168.10.12:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x102717490>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-3068-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'index', u'kv', u'n1ql'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 2790952960, 'memoryTotal': 3974823936, 'memoryQuota': 2021, 'mcdMemoryAllocated': 3032, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-04-29 09:45:27,105] - [rest_client] [123145408774144] - INFO - pools/default params : memoryQuota=2021
+[2019-04-29 09:45:27,112] - [rest_client] [123145408774144] - INFO - settings/web params on 192.168.10.12:8091:username=Administrator&password=Passw0rd&port=8091
+[2019-04-29 09:45:27,151] - [remote_util] [123145408774144] - INFO - connecting to 192.168.10.12 with username:root 
+[2019-04-29 09:45:27,317] - [remote_util] [123145408774144] - INFO - Connected to 192.168.10.12
+[2019-04-29 09:45:27,541] - [remote_util] [123145408774144] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-29 09:45:27,935] - [remote_util] [123145408774144] - INFO - running command.raw on 192.168.10.12: curl http://Administrator:Passw0rd@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-04-29 09:45:28,009] - [remote_util] [123145408774144] - INFO - command executed successfully
+[2019-04-29 09:45:28,014] - [rest_client] [123145408774144] - INFO - /diag/eval status on 192.168.10.12:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-04-29 09:45:28,015] - [rest_client] [123145408774144] - INFO - settings/indexes params : storageMode=forestdb
+[2019-04-29 09:45:28,020] - [rest_client] [123145408774144] - ERROR - POST http://192.168.10.12:8091/settings/indexes body: storageMode=forestdb headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpQYXNzdzByZA==\n'} error: 400 reason: unknown {"errors":{"storageMode":"The value must be one of the following: [plasma,memory_optimized]"}} auth: Administrator:Passw0rd
+[2019-04-29 09:45:28,033] - [fts_base] [123145324642304] - INFO - 192.168.10.11 will be configured with services kv,fts
+[2019-04-29 09:45:28,034] - [fts_base] [123145324642304] - INFO - 192.168.10.13 will be configured with services fts
+[2019-04-29 09:45:29,037] - [task] [123145408774144] - INFO - adding node 192.168.10.11:8091 to cluster
+[2019-04-29 09:45:29,037] - [rest_client] [123145408774144] - INFO - adding remote node @192.168.10.11:8091 to this cluster @192.168.10.12:8091
+[2019-04-29 09:45:30,544] - [task] [123145408774144] - INFO - adding node 192.168.10.13:8091 to cluster
+[2019-04-29 09:45:30,545] - [rest_client] [123145408774144] - INFO - adding remote node @192.168.10.13:8091 to this cluster @192.168.10.12:8091
+[2019-04-29 09:45:32,116] - [rest_client] [123145408774144] - INFO - rebalance params : {'password': 'Passw0rd', 'ejectedNodes': '', 'user': 'Administrator', 'knownNodes': u'ns_1@192.168.10.11,ns_1@192.168.10.12,ns_1@192.168.10.13'}
+[2019-04-29 09:45:32,123] - [rest_client] [123145408774144] - INFO - rebalance operation started
+[2019-04-29 09:45:32,138] - [rest_client] [123145408774144] - INFO - rebalance percentage : 0.00 %
+[2019-04-29 09:45:32,138] - [task] [123145408774144] - INFO - Rebalance - status: running, progress: 0.00%
+[2019-04-29 09:45:42,182] - [task] [123145408774144] - INFO - Rebalance - status: none, progress: 100.00%
+[2019-04-29 09:45:42,191] - [task] [123145408774144] - INFO - rebalancing was completed with progress: 100% in 10.0676679611 sec
+[2019-04-29 09:45:42,203] - [remote_util] [123145324642304] - INFO - connecting to 192.168.10.12 with username:root 
+[2019-04-29 09:45:42,358] - [remote_util] [123145324642304] - INFO - Connected to 192.168.10.12
+[2019-04-29 09:45:42,570] - [remote_util] [123145324642304] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-29 09:45:43,152] - [remote_util] [123145324642304] - INFO - running command.raw on 192.168.10.12: curl http://Administrator:Passw0rd@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-04-29 09:45:43,205] - [remote_util] [123145324642304] - INFO - command executed successfully
+[2019-04-29 09:45:43,205] - [fts_base] [123145324642304] - INFO - Enabled diag/eval for non-local hosts from 192.168.10.12
+[2019-04-29 09:45:43,235] - [rest_client] [123145324642304] - ERROR - DELETE http://192.168.10.12:8091/settings/rbac/users/local/cbadminbucket body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpQYXNzdzByZA==\n'} error: 404 reason: unknown "User was not found." auth: Administrator:Passw0rd
+[2019-04-29 09:45:43,236] - [internal_user] [123145324642304] - INFO - Exception while deleting user. Exception is -"User was not found."
+[2019-04-29 09:45:44,229] - [rest_client] [123145408774144] - INFO - http://192.168.10.12:8091/pools/default/buckets with param: bucketType=membase&evictionPolicy=valueOnly&threadsNumber=3&ramQuotaMB=1521&authType=sasl&name=default&flushEnabled=1&replicaNumber=1&compressionMode=passive&saslPassword=None&replicaIndex=1
+[2019-04-29 09:45:44,240] - [rest_client] [123145408774144] - INFO - 0.01 seconds to create bucket default
+[2019-04-29 09:45:44,241] - [bucket_helper] [123145408774144] - INFO - waiting for memcached bucket : default in 192.168.10.12 to accept set ops
+[2019-04-29 09:45:45,492] - [data_helper] [123145408774144] - INFO - creating direct client 192.168.10.11:11210 default
+[2019-04-29 09:45:45,602] - [data_helper] [123145408774144] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-29 09:45:45,773] - [data_helper] [123145408774144] - INFO - creating direct client 192.168.10.11:11210 default
+[2019-04-29 09:45:45,883] - [data_helper] [123145408774144] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-29 09:45:46,542] - [task] [123145408774144] - INFO - bucket 'default' was created with per node RAM quota: 1521
+[2019-04-29 09:45:46,560] - [rest_client] [123145324642304] - INFO - /diag/eval status on 192.168.10.12:8091: True content: "/opt/couchbase/var/lib/couchbase/logs" command: filename:absname(element(2, application:get_env(ns_server,error_logger_mf_dir))).
+[2019-04-29 09:45:46,561] - [remote_util] [123145324642304] - INFO - connecting to 192.168.10.12 with username:root 
+[2019-04-29 09:45:46,706] - [remote_util] [123145324642304] - INFO - Connected to 192.168.10.12
+[2019-04-29 09:45:46,899] - [remote_util] [123145324642304] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-29 09:45:47,279] - [remote_util] [123145324642304] - INFO - running command.raw on 192.168.10.12: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-04-29 09:45:47,335] - [remote_util] [123145324642304] - INFO - command executed successfully
+[2019-04-29 09:45:47,336] - [fts_base] [123145324642304] - INFO - 0
+[2019-04-29 09:45:47,457] - [remote_util] [123145324642304] - INFO - connecting to 192.168.10.11 with username:root 
+[2019-04-29 09:45:47,609] - [remote_util] [123145324642304] - INFO - Connected to 192.168.10.11
+[2019-04-29 09:45:47,831] - [remote_util] [123145324642304] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-29 09:45:48,181] - [remote_util] [123145324642304] - INFO - running command.raw on 192.168.10.11: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-04-29 09:45:48,255] - [remote_util] [123145324642304] - INFO - command executed successfully
+[2019-04-29 09:45:48,256] - [fts_base] [123145324642304] - INFO - 0
+[2019-04-29 09:45:48,385] - [remote_util] [123145324642304] - INFO - connecting to 192.168.10.13 with username:root 
+[2019-04-29 09:45:48,523] - [remote_util] [123145324642304] - INFO - Connected to 192.168.10.13
+[2019-04-29 09:45:48,760] - [remote_util] [123145324642304] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-29 09:45:49,113] - [remote_util] [123145324642304] - INFO - running command.raw on 192.168.10.13: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-04-29 09:45:49,289] - [remote_util] [123145324642304] - INFO - command executed successfully
+[2019-04-29 09:45:49,289] - [fts_base] [123145324642304] - INFO - 0
+[2019-04-29 09:45:49,412] - [fts_base] [123145324642304] - INFO - {'192.168.10.12': {'panic:': 0}, '192.168.10.13': {'panic:': 0}, '192.168.10.11': {'panic:': 0}}
+[2019-04-29 09:45:49,413] - [fts_base] [123145324642304] - INFO - ==== FTSbasetests setup is finished for test #5 run_default_index_query ====
+[2019-04-29 09:45:49,546] - [data_helper] [123145324642304] - INFO - creating direct client 192.168.10.11:11210 default
+[2019-04-29 09:45:49,616] - [data_helper] [123145324642304] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-29 09:45:50,861] - [data_helper] [123145412980736] - INFO - creating direct client 192.168.10.11:11210 default
+[2019-04-29 09:45:50,862] - [data_helper] [123145412980736] - INFO - creating direct client 192.168.10.11:11210 default
+[2019-04-29 09:45:50,863] - [data_helper] [123145412980736] - INFO - creating direct client 192.168.10.11:11210 default
+[2019-04-29 09:45:50,864] - [data_helper] [123145412980736] - INFO - creating direct client 192.168.10.11:11210 default
+[2019-04-29 09:45:50,971] - [data_helper] [123145412980736] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-29 09:45:50,973] - [data_helper] [123145412980736] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-29 09:45:50,973] - [data_helper] [123145412980736] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-29 09:45:50,974] - [data_helper] [123145412980736] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-29 09:45:51,335] - [fts_base] [123145324642304] - INFO - Loading phase complete!
+[2019-04-29 09:45:51,343] - [rest_client] [123145324642304] - INFO - http://192.168.10.12:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-04-29 09:45:51,362] - [rest_client] [123145324642304] - INFO - http://192.168.10.12:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-04-29 09:45:51,382] - [rest_client] [123145324642304] - INFO - http://192.168.10.12:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-04-29 09:45:51,393] - [fts_base] [123145324642304] - INFO - Docs in bucket default = 0
+[2019-04-29 09:45:51,394] - [fts_base] [123145324642304] - INFO - sleep for 1 secs. sleeping 1s to allow for item loading ...
+[2019-04-29 09:45:52,401] - [rest_client] [123145324642304] - INFO - http://192.168.10.12:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-04-29 09:45:52,427] - [fts_base] [123145324642304] - INFO - Checking if index already exists ...
+[2019-04-29 09:45:52,448] - [rest_client] [123145324642304] - ERROR - GET http://192.168.10.11:8094/api/index/default_index_1 body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpQYXNzdzByZA==\n'} error: 400 reason: rest_auth: preparePerms, err: index not found {"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"} auth: Administrator:Passw0rd
+[2019-04-29 09:45:52,453] - [rest_client] [123145324642304] - ERROR - DELETE http://192.168.10.11:8094/api/index/default_index_1 body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpQYXNzdzByZA==\n'} error: 400 reason: rest_auth: preparePerms, err: index not found {"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"} auth: Administrator:Passw0rd
+[2019-04-29 09:45:52,453] - [fts_base] [123145324642304] - INFO - Creating fulltext-index default_index_1 on 192.168.10.11
+[2019-04-29 09:45:52,454] - [rest_client] [123145324642304] - INFO - {"params": {"store": {"mossStoreOptions": {}, "kvStoreName": "mossStore"}}, "name": "default_index_1", "planParams": {"numReplicas": 0, "maxPartitionsPerPIndex": 171}, "sourceName": "default", "sourceUUID": "", "sourceType": "couchbase", "type": "fulltext-index", "uuid": ""}
+[2019-04-29 09:45:52,483] - [rest_client] [123145324642304] - INFO - Index default_index_1 created
+[2019-04-29 09:45:52,484] - [fts_base] [123145324642304] - INFO - Validating index distribution for default_index_1 ...
+[2019-04-29 09:45:52,521] - [fts_base] [123145324642304] - INFO - sleep for 5 secs. No pindexes found, waiting for index to get created ...
+[2019-04-29 09:45:57,575] - [fts_base] [123145324642304] - INFO - Validated: Number of PIndexes = 6
+[2019-04-29 09:45:57,589] - [fts_base] [123145324642304] - INFO - Validated: Every pIndex serves 171 partitions or lesser
+[2019-04-29 09:45:57,590] - [fts_base] [123145324642304] - INFO - Validated: pIndexes are distributed across [u'944032bd92a984a6d3bd00e8732778c9', u'109681af7a9b98ec58af26433f6f31f3'] 
+[2019-04-29 09:45:57,591] - [fts_base] [123145324642304] - INFO - Expecting num of partitions in each node in range 341-683
+[2019-04-29 09:45:57,591] - [fts_base] [123145324642304] - INFO - Validated: Node 944032bd92a984a6d3bd00e8732778c9 houses 3 pindexes which serve 513 partitions
+[2019-04-29 09:45:57,592] - [fts_base] [123145324642304] - INFO - Validated: Node 109681af7a9b98ec58af26433f6f31f3 houses 3 pindexes which serve 511 partitions
+[2019-04-29 09:45:57,623] - [rest_client] [123145324642304] - INFO - http://192.168.10.12:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-04-29 09:45:57,636] - [fts_base] [123145324642304] - INFO - Docs in bucket = 1000, docs in FTS index 'default_index_1': 1000
+[2019-04-29 09:45:57,686] - [rest_client] [123145324642304] - INFO - http://192.168.10.12:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-04-29 09:45:57,699] - [fts_base] [123145324642304] - INFO - Docs in index default_index_1=1000, bucket docs=1000
+[2019-04-29 09:45:57,699] - [fts_base] [123145324642304] - INFO - Updating keys @ C1 with expiry=0
+[2019-04-29 09:45:57,793] - [data_helper] [123145324642304] - INFO - creating direct client 192.168.10.11:11210 default
+[2019-04-29 09:45:57,896] - [data_helper] [123145324642304] - INFO - creating direct client 192.168.10.12:11210 default
+[2019-04-29 09:45:58,813] - [fts_base] [123145324642304] - INFO - Batched updates loaded to cluster(s)
+[2019-04-29 09:45:58,814] - [fts_base] [123145324642304] - INFO - sleep for 60 secs. Waiting for updates to get indexed... ...
+[2019-04-29 09:46:58,867] - [rest_client] [123145324642304] - INFO - http://192.168.10.12:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-04-29 09:46:58,908] - [fts_base] [123145324642304] - INFO - Docs in bucket = 1000, docs in FTS index 'default_index_1': 1000
+[2019-04-29 09:46:58,957] - [rest_client] [123145324642304] - INFO - http://192.168.10.12:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-04-29 09:46:58,989] - [fts_base] [123145324642304] - INFO - Docs in index default_index_1=1000, bucket docs=1000
+[2019-04-29 09:46:59,005] - [fts_base] [123145324642304] - INFO - Running query {"indexName": "default_index_1", "from": 0, "fields": [], "explain": false, "ctl": {"timeout": 60000, "consistency": {"vectors": {}, "level": ""}}, "query": {"inclusive_max": true, "max": 1, "field": "mutated", "inclusive_min": true, "min": 1}} on node: 192.168.10.13:
+[2019-04-29 09:46:59,063] - [fts_base] [123145324642304] - INFO - SUCCESS! Expected hits: 1000, fts returned: 1000
+[2019-04-29 09:46:59,065] - [stable_topology_fts] [123145324642304] - INFO - Hits: 1000
+[2019-04-29 09:46:59,066] - [stable_topology_fts] [123145324642304] - INFO - Matches: [u'emp10000864', u'emp10000824', u'emp10000810', u'emp10000222', u'emp10000980', u'emp10000338', u'emp10000832', u'emp10000872', u'emp10000550', u'emp10000928']
+[2019-04-29 09:46:59,079] - [rest_client] [123145324642304] - INFO - /diag/eval status on 192.168.10.12:8091: True content: "/opt/couchbase/var/lib/couchbase/logs" command: filename:absname(element(2, application:get_env(ns_server,error_logger_mf_dir))).
+[2019-04-29 09:46:59,083] - [remote_util] [123145324642304] - INFO - connecting to 192.168.10.12 with username:root 
+[2019-04-29 09:46:59,235] - [remote_util] [123145324642304] - INFO - Connected to 192.168.10.12
+[2019-04-29 09:46:59,470] - [remote_util] [123145324642304] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-29 09:46:59,875] - [remote_util] [123145324642304] - INFO - running command.raw on 192.168.10.12: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-04-29 09:46:59,932] - [remote_util] [123145324642304] - INFO - command executed successfully
+[2019-04-29 09:46:59,932] - [fts_base] [123145324642304] - INFO - 0
+[2019-04-29 09:46:59,933] - [fts_base] [123145324642304] - INFO - Initial 'panic:' count on 192.168.10.12 :0, now :0
+[2019-04-29 09:47:00,055] - [remote_util] [123145324642304] - INFO - connecting to 192.168.10.11 with username:root 
+[2019-04-29 09:47:00,208] - [remote_util] [123145324642304] - INFO - Connected to 192.168.10.11
+[2019-04-29 09:47:00,435] - [remote_util] [123145324642304] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-29 09:47:00,840] - [remote_util] [123145324642304] - INFO - running command.raw on 192.168.10.11: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-04-29 09:47:00,913] - [remote_util] [123145324642304] - INFO - command executed successfully
+[2019-04-29 09:47:00,914] - [fts_base] [123145324642304] - INFO - 0
+[2019-04-29 09:47:00,914] - [fts_base] [123145324642304] - INFO - Initial 'panic:' count on 192.168.10.11 :0, now :0
+[2019-04-29 09:47:01,038] - [remote_util] [123145324642304] - INFO - connecting to 192.168.10.13 with username:root 
+[2019-04-29 09:47:01,175] - [remote_util] [123145324642304] - INFO - Connected to 192.168.10.13
+[2019-04-29 09:47:01,399] - [remote_util] [123145324642304] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-29 09:47:01,793] - [remote_util] [123145324642304] - INFO - running command.raw on 192.168.10.13: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-04-29 09:47:01,867] - [remote_util] [123145324642304] - INFO - command executed successfully
+[2019-04-29 09:47:01,868] - [fts_base] [123145324642304] - INFO - 0
+[2019-04-29 09:47:01,869] - [fts_base] [123145324642304] - INFO - Initial 'panic:' count on 192.168.10.13 :0, now :0
+[2019-04-29 09:47:01,991] - [fts_base] [123145324642304] - INFO - ====  FTSbasetests cleanup is started for test #5 run_default_index_query ====
+[2019-04-29 09:47:02,016] - [fts_base] [123145324642304] - INFO - Deleting fulltext-index default_index_1 on 192.168.10.13
+[2019-04-29 09:47:02,086] - [remote_util] [123145324642304] - INFO - connecting to 192.168.10.11 with username:root 
+[2019-04-29 09:47:02,324] - [remote_util] [123145324642304] - INFO - Connected to 192.168.10.11
+[2019-04-29 09:47:02,529] - [remote_util] [123145324642304] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-29 09:47:02,939] - [remote_util] [123145324642304] - INFO - running command.raw on 192.168.10.11: ls /opt/couchbase/var/lib/couchbase/data/@fts |grep ^default_index_1 | wc -l
+[2019-04-29 09:47:02,991] - [remote_util] [123145324642304] - INFO - command executed successfully
+[2019-04-29 09:47:02,992] - [fts_base] [123145324642304] - INFO - 0
+[2019-04-29 09:47:05,009] - [remote_util] [123145324642304] - INFO - connecting to 192.168.10.13 with username:root 
+[2019-04-29 09:47:05,158] - [remote_util] [123145324642304] - INFO - Connected to 192.168.10.13
+[2019-04-29 09:47:05,375] - [remote_util] [123145324642304] - INFO - It could be other operating system.  Go to check at other location
+[2019-04-29 09:47:05,747] - [remote_util] [123145324642304] - INFO - running command.raw on 192.168.10.13: ls /opt/couchbase/var/lib/couchbase/data/@fts |grep ^default_index_1 | wc -l
+[2019-04-29 09:47:05,804] - [remote_util] [123145324642304] - INFO - command executed successfully
+[2019-04-29 09:47:05,805] - [fts_base] [123145324642304] - INFO - 0
+[2019-04-29 09:47:07,807] - [fts_base] [123145324642304] - INFO - Validated: all index files for default_index_1 deleted from disk
+[2019-04-29 09:47:07,814] - [fts_base] [123145324642304] - INFO - removing nodes from cluster ...
+[2019-04-29 09:47:07,826] - [fts_base] [123145324642304] - INFO - cleanup [ip:192.168.10.12 port:8091 ssh_username:root, ip:192.168.10.11 port:8091 ssh_username:root, ip:192.168.10.13 port:8091 ssh_username:root]
+[2019-04-29 09:47:07,847] - [bucket_helper] [123145324642304] - INFO - deleting existing buckets [u'default'] on 192.168.10.12
+[2019-04-29 09:47:07,847] - [bucket_helper] [123145324642304] - INFO - remove bucket default ...
+[2019-04-29 09:47:08,853] - [bucket_helper] [123145324642304] - INFO - deleted bucket : default from 192.168.10.12
+[2019-04-29 09:47:08,854] - [bucket_helper] [123145324642304] - INFO - waiting for bucket deletion to complete....
+[2019-04-29 09:47:08,858] - [rest_client] [123145324642304] - INFO - node 192.168.10.12 existing buckets : []
+[2019-04-29 09:47:08,859] - [bucket_helper] [123145324642304] - INFO - sleep 2 seconds to make sure all buckets ([u'default']) were deleted completely.
+[2019-04-29 09:47:10,888] - [cluster_helper] [123145324642304] - INFO - rebalancing all nodes in order to remove nodes
+[2019-04-29 09:47:10,892] - [rest_client] [123145324642304] - INFO - rebalance params : {'password': 'Passw0rd', 'ejectedNodes': u'ns_1@192.168.10.11,ns_1@192.168.10.13', 'user': 'Administrator', 'knownNodes': u'ns_1@192.168.10.11,ns_1@192.168.10.12,ns_1@192.168.10.13'}
+[2019-04-29 09:47:10,902] - [rest_client] [123145324642304] - INFO - rebalance operation started
+[2019-04-29 09:47:10,907] - [rest_client] [123145324642304] - INFO - rebalance percentage : 0.00 %
+[2019-04-29 09:47:30,922] - [rest_client] [123145324642304] - INFO - rebalance progress took 20.02 seconds 
+[2019-04-29 09:47:30,924] - [rest_client] [123145324642304] - INFO - sleep for 10 seconds after rebalance...
+[2019-04-29 09:47:40,946] - [cluster_helper] [123145324642304] - INFO - removed all the nodes from cluster associated with ip:192.168.10.12 port:8091 ssh_username:root ? [(u'ns_1@192.168.10.11', 8091), (u'ns_1@192.168.10.13', 8091)]
+[2019-04-29 09:47:40,953] - [cluster_helper] [123145324642304] - INFO - waiting for ns_server @ 192.168.10.12:8091
+[2019-04-29 09:47:40,959] - [cluster_helper] [123145324642304] - INFO - ns_server @ 192.168.10.12:8091 is running
+[2019-04-29 09:47:40,987] - [cluster_helper] [123145324642304] - INFO - waiting for ns_server @ 192.168.10.11:8091
+[2019-04-29 09:47:40,992] - [cluster_helper] [123145324642304] - INFO - ns_server @ 192.168.10.11:8091 is running
+[2019-04-29 09:47:41,103] - [cluster_helper] [123145324642304] - INFO - waiting for ns_server @ 192.168.10.13:8091
+[2019-04-29 09:47:41,109] - [cluster_helper] [123145324642304] - INFO - ns_server @ 192.168.10.13:8091 is running
+[2019-04-29 09:47:41,110] - [fts_base] [123145324642304] - INFO - Removing user 'cbadminbucket'...
+[2019-04-29 09:47:41,131] - [fts_base] [123145324642304] - INFO - ====  FTSbasetests cleanup is finished for test #5 run_default_index_query ===

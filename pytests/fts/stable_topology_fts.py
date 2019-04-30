@@ -78,7 +78,7 @@ class StableTopFTS(FTSBaseTest):
             if isinstance(query, str):
                 query = json.loads(query)
             zero_results_ok = True
-        if not expected_no_of_results:
+        if expected_no_of_results is None:
             expected_no_of_results = self._input.param("expected_no_of_results", None)
 
         for index in self._cb_cluster.get_indexes():

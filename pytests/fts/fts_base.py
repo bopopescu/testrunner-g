@@ -1023,11 +1023,11 @@ class FTSIndex:
         query_json['query'] = query
         query_json['indexName'] = self.name
         query_json['explain'] = explain
-        if max_matches:
+        if max_matches is not None:
             query_json['size'] = int(max_matches)
         else:
             del query_json['size']
-        if max_limit_matches:
+        if max_limit_matches is not None:
             query_json['limit'] = int(max_limit_matches)
         if show_results_from_item:
             query_json['from'] = int(show_results_from_item)
@@ -1164,7 +1164,7 @@ class FTSIndex:
         if expected_hits and expected_hits == hits:
             self.__log.info("SUCCESS! Expected hits: %s, fts returned: %s"
                             % (expected_hits, hits))
-        if expected_no_of_results:
+        if expected_no_of_results is not None:
             if expected_no_of_results == doc_ids.__len__():
                 self.__log.info("SUCCESS! Expected number of results: %s, fts returned: %s"
                             % (expected_no_of_results, doc_ids.__len__()))

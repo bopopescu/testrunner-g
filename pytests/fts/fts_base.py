@@ -3183,7 +3183,7 @@ class FTSBaseTest(unittest.TestCase):
         # Ensure to change other tests too.
 
         self._cluster_services = \
-            self.construct_serv_list(self._input.param("cluster", "D,D+F"))
+            self.construct_serv_list(self._input.param("cluster", "D,D+F,F"))
         self._num_replicas = self._input.param("replicas", 1)
         self._create_default_bucket = self._input.param("default_bucket", True)
         self._num_items = self._input.param("items", 1000)

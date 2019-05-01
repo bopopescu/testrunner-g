@@ -1386,6 +1386,7 @@ class ESRunQueryCompare(Task):
                         msg = "FAIL: FTS hits: %s, while ES hits: %s"\
                               % (fts_hits, es_hits)
                         self.log.error(msg)
+                        time.sleep(100)
                     es_but_not_fts = list(set(es_doc_ids) - set(fts_doc_ids))
                     fts_but_not_es = list(set(fts_doc_ids) - set(es_doc_ids))
                     if not (es_but_not_fts or fts_but_not_es):

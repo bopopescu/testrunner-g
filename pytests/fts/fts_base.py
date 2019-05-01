@@ -31,7 +31,6 @@ from es_base import ElasticSearchBase
 from security.rbac_base import RbacBase
 from lib.couchbase_helper.tuq_helper import N1QLHelper
 
-
 class RenameNodeException(FTSException):
     """Exception thrown when converting ip to hostname failed
     """
@@ -1016,7 +1015,7 @@ class FTSIndex:
                                                           consistency_level='',
                                                           consistency_vectors={},
                                                           score=''):
-        max_matches = TestInputSingleton.input.param("query_max_matches", None)
+        max_matches = TestInputSingleton.input.param("query_max_matches", 10000000)
         max_limit_matches = TestInputSingleton.input.param("query_limit_matches", None)
         query_json = copy.deepcopy(QUERY.JSON)
         # query is a unicode dict
@@ -1025,8 +1024,6 @@ class FTSIndex:
         query_json['explain'] = explain
         if max_matches is not None:
             query_json['size'] = int(max_matches)
-        else:
-            del query_json['size']
         if max_limit_matches is not None:
             query_json['limit'] = int(max_limit_matches)
         if show_results_from_item:

@@ -1686,6 +1686,7 @@ class StableTopFTS(FTSBaseTest):
                 msg = "FAIL: Sort order mismatch!"
                 self.log.error(msg)
                 self.fail(msg)
+		self.sleep(600)
             self.log.info("--------------------------------------------------"
                           "--------------------------------------------------")
 

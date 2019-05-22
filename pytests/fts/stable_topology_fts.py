@@ -115,7 +115,6 @@ class StableTopFTS(FTSBaseTest):
         uses RQG
         """
         self.load_data()
-        self._cb_cluster.run_n1ql_query(query="create primary index on default")
         index = self.create_index(
             self._cb_cluster.get_bucket_by_name('default'),
             "default_index")
@@ -883,6 +882,47 @@ class StableTopFTS(FTSBaseTest):
             self.log.error(err)
             self.fail("Testcase failed: "+ err.message)
 
+    def test_facets_during_index(self):
+        field_indexed = self._input.param("field_indexed",True)
+        self.load_data()
+        index = self.create_index(
+            self._cb_cluster.get_bucket_by_name('default'),
+            "default_index")
+        self.sleep(5)
+        index.add_child_field_to_default_mapping(field_name="type",
+                                                 field_type="text",
+                                                 field_alias="type",
+                                                 analyzer="keyword")
+        if field_indexed:
+            index.add_child_field_to_default_mapping(field_name="dept",
+                                                     field_type="text",
+                                                     field_alias="dept",
+                                                     analyzer="keyword")
+            index.add_child_field_to_default_mapping(field_name="salary",
+                                                     field_type="number",
+                                                     field_alias="salary")
+            index.add_child_field_to_default_mapping(field_name="join_date",
+                                                     field_type="datetime",
+                                                     field_alias="join_date")
+        index.index_definition['uuid'] = index.get_uuid()
+        index.update()
+
+        self.sleep(5)
+        query = eval(self._input.param("query", str(self.sample_query)))
+        if isinstance(query, str):
+            query = json.loads(query)
+
+        while not self.is_index_complete(index.name):
+            zero_results_ok = True
+            try:
+                hits, _, _, _, facets = index.execute_query_with_facets(query,
+                                                                            zero_results_ok=zero_results_ok)
+                self.log.info("Hits: %s" % hits)
+                self.log.info("Facets: %s" % facets)
+            except Exception as err:
+                self.log.error(err)
+                self.fail("Testcase failed: "+ err.message)
+
     def test_doc_config(self):
         # delete default bucket
         self._cb_cluster.delete_bucket("default")
@@ -1046,6 +1086,7 @@ class StableTopFTS(FTSBaseTest):
         zero_results_ok = False
         try:
             for index in self._cb_cluster.get_indexes():
+                n1ql_query = "select d, meta().id from default d where search(d, "+json.dumps(query)+") and type='emp'"
                 hits, contents, _, _ = index.execute_query(query,
                                             zero_results_ok=zero_results_ok,
                                             expected_hits=expected_hits,
@@ -1058,6 +1099,12 @@ class StableTopFTS(FTSBaseTest):
                     self.assertTrue(index.is_doc_present_in_query_result_content
                                     (contents=contents, doc_id=doc_id),"Doc ID "
                                     "%s is not present in Search results"
+                                    % doc_id)
+                    if self.run_via_n1ql:
+                        n1ql_results = self._cb_cluster.run_n1ql_query(query=n1ql_query)
+                        self.assertTrue(index.is_doc_present_in_query_result_content
+                                    (contents=n1ql_results['results'], doc_id=doc_id),"Doc ID "
+                                    "%s is not present in N1QL Search results"
                                     % doc_id)
                     score = index.get_score_from_query_result_content\
                         (contents=contents, doc_id=doc_id)
@@ -1110,6 +1157,40 @@ class StableTopFTS(FTSBaseTest):
                     if not result:
                         self.fail(
                             "Testcase failed. Actual results do not match expected.")
+        except Exception as err:
+            self.log.error(err)
+            self.fail("Testcase failed: " + err.message)
+
+    def test_sorting_of_results_during_indexing(self):
+        self.load_data()
+        self.wait_till_items_in_bucket_equal(self._num_items/2)
+        index = self.create_index(
+            self._cb_cluster.get_bucket_by_name('default'),
+            "default_index")
+        #self.wait_for_indexing_complete()
+
+        self.sleep(5)
+
+        zero_results_ok = True
+        #expected_hits = int(self._input.param("expected_hits", 0))
+        default_query = {"disjuncts": [{"match": "Safiya", "field": "name"},
+                                       {"match": "Palmer", "field": "name"}]}
+        query = eval(self._input.param("query", str(default_query)))
+        if isinstance(query, str):
+            query = json.loads(query)
+
+        try:
+            for index in self._cb_cluster.get_indexes():
+                while not self.is_index_complete(index.name):
+                    sort_params = self.build_sort_params()
+                    hits, raw_hits, _, _ = index.execute_query(query = query,
+                                                               zero_results_ok=zero_results_ok,
+                                                               sort_fields=sort_params,
+                                                               return_raw_hits=True)
+
+                    self.log.info("Hits: %s" % hits)
+                    self.log.info("Doc IDs: %s" % raw_hits)
+                    #self.sleep(5)
         except Exception as err:
             self.log.error(err)
             self.fail("Testcase failed: " + err.message)
@@ -1185,6 +1266,7 @@ class StableTopFTS(FTSBaseTest):
         if isinstance(query, str):
             query = json.loads(query)
         zero_results_ok = True
+        n1ql_query = "select search_score(d) as score, d.text, meta().id from default d where search(d," + json.dumps(query) + ")"
         for index in self._cb_cluster.get_indexes():
             hits, raw_hits, _, _ = index.execute_query(query=query,
                                                        zero_results_ok=zero_results_ok,
@@ -1212,6 +1294,20 @@ class StableTopFTS(FTSBaseTest):
 
             self.assertTrue(tf_score1 > tf_score2 > tf_score3,
                             "Testcase failed. TF score for Doc1 not > Doc2 not > Doc3")
+
+            if self.run_via_n1ql:
+                self.compare_n1ql_fts_scoring(n1ql_query=n1ql_query, raw_hits=raw_hits)
+
+    def compare_n1ql_fts_scoring(self, n1ql_query='', raw_hits=[]):
+        n1ql_results = self._cb_cluster.run_n1ql_query(query=n1ql_query)
+
+        self.assertEquals(len(n1ql_results['results']), len(raw_hits),
+                          "Return values are not the same for n1ql query and fts request.")
+        for res in n1ql_results['results']:
+            for hit in raw_hits:
+                if res['id'] == hit['id']:
+                    self.assertEqual(res['score'], hit['score'],
+                                     "Scoring is not the same for n1ql result and fts request hit")
 
     def test_scoring_idf_score(self):
         """
@@ -1242,6 +1338,7 @@ class StableTopFTS(FTSBaseTest):
         if isinstance(query, str):
             query = json.loads(query)
         zero_results_ok = True
+        n1ql_query = "select search_score(d) as score, d.text, meta().id from default d where search(d," + json.dumps(query) + ")"
         for index in self._cb_cluster.get_indexes():
             hits, raw_hits, _, _ = index.execute_query(query=query,
                                                        zero_results_ok=zero_results_ok,
@@ -1262,6 +1359,9 @@ class StableTopFTS(FTSBaseTest):
 
             self.assertTrue(idf1 > idf2, "Testcase failed. IDF score for Doc1 "
                     "for search term 'cat' not > that of search term 'lazy'")
+
+            if self.run_via_n1ql:
+                self.compare_n1ql_fts_scoring(n1ql_query=n1ql_query, raw_hits=raw_hits)
 
     def test_scoring_field_norm_score(self):
         """
@@ -1288,6 +1388,7 @@ class StableTopFTS(FTSBaseTest):
         if isinstance(query, str):
             query = json.loads(query)
         zero_results_ok = True
+        n1ql_query = "select search_score(d) as score, d.text, meta().id from default d where search(d," + json.dumps(query) + ")"
         for index in self._cb_cluster.get_indexes():
             hits, raw_hits, _, _ = index.execute_query(query=query,
                                                        zero_results_ok=zero_results_ok,
@@ -1320,6 +1421,9 @@ class StableTopFTS(FTSBaseTest):
                             "Testcase failed. Field Normalization score for "
                             "Doc1 not > Doc2 not > Doc3")
 
+            if self.run_via_n1ql:
+                self.compare_n1ql_fts_scoring(n1ql_query=n1ql_query, raw_hits=raw_hits)
+
     def test_scoring_query_norm_score(self):
         """
         Test if the Query Normalization score in the Scoring functionality works fine
@@ -1345,6 +1449,7 @@ class StableTopFTS(FTSBaseTest):
         if isinstance(query, str):
             query = json.loads(query)
         zero_results_ok = True
+        n1ql_query = "select search_score(d) as score, d.text, meta().id from default d where search(d," + json.dumps(query) + ")"
         for index in self._cb_cluster.get_indexes():
             hits, raw_hits, _, _ = index.execute_query(query=query,
                                                        zero_results_ok=zero_results_ok,
@@ -1377,6 +1482,9 @@ class StableTopFTS(FTSBaseTest):
                             "Testcase failed. Query Normalization score for "
                             "Doc1 != Doc2 != Doc3")
 
+            if self.run_via_n1ql:
+                self.compare_n1ql_fts_scoring(n1ql_query=n1ql_query, raw_hits=raw_hits)
+
     def test_scoring_coord_score(self):
         """
         Test if the Coord score in the Scoring functionality works fine
@@ -1401,6 +1509,7 @@ class StableTopFTS(FTSBaseTest):
         if isinstance(query, str):
             query = json.loads(query)
         zero_results_ok = True
+        n1ql_query = "select search_score(d) as score, d.text, meta().id from default d where search(d," + json.dumps(query) + ")"
         for index in self._cb_cluster.get_indexes():
             hits, raw_hits, _, _ = index.execute_query(query=query,
                                                        zero_results_ok=zero_results_ok,
@@ -1424,6 +1533,9 @@ class StableTopFTS(FTSBaseTest):
 
             self.assertTrue(coord1 < coord2,
                             "Testcase failed. Coord score for Doc1 not < Doc2")
+
+            if self.run_via_n1ql:
+                self.compare_n1ql_fts_scoring(n1ql_query=n1ql_query, raw_hits=raw_hits)
 
     def test_fuzzy_query(self):
         """
@@ -1556,6 +1668,13 @@ class StableTopFTS(FTSBaseTest):
 
         try:
             for index in self._cb_cluster.get_indexes():
+                n1ql_results = None
+                if self.run_via_n1ql:
+                    n1ql_query = "select b, search_meta(b.oouutt) as meta from default b where " \
+                                 "search(b, {\"query\": " + json.dumps(
+                        query) + ", \"explain\": true, \"highlight\": {}},{\"out\": \"oouutt\"})"
+                    n1ql_results = self._cb_cluster.run_n1ql_query(query=n1ql_query)
+
                 hits, contents, _, _ = index.execute_query(query=query,
                                                            zero_results_ok=zero_results_ok,
                                                            expected_hits=expected_hits,
@@ -1574,6 +1693,11 @@ class StableTopFTS(FTSBaseTest):
                             contents, expected_doc['doc_id'],
                             expected_doc['field_name'], expected_doc['term'],
                             highlight_style=self.highlight_style)
+                        if self.run_via_n1ql:
+                            result &= index.validate_snippet_highlighting_in_result_content_n1ql(
+                                n1ql_results['results'], expected_doc['doc_id'],
+                                expected_doc['field_name'], expected_doc['term'],
+                                highlight_style=self.highlight_style)
                     if not result:
                         self.fail(
                             "Testcase failed. Actual results do not match expected.")
@@ -1686,7 +1810,6 @@ class StableTopFTS(FTSBaseTest):
                 msg = "FAIL: Sort order mismatch!"
                 self.log.error(msg)
                 self.fail(msg)
-		self.sleep(600)
             self.log.info("--------------------------------------------------"
                           "--------------------------------------------------")
 

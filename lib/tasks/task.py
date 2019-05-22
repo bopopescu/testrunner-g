@@ -267,9 +267,9 @@ class BucketCreateTask(Task):
         try:
             rest = RestConnection(self.server)
         except ServerUnavailableException as error:
-                self.state = FINISHED
-                self.set_exception(error)
-                return
+            self.state = FINISHED
+            self.set_exception(error)
+            return
         info = rest.get_nodes_self()
 
         if self.size <= 0:
@@ -288,39 +288,37 @@ class BucketCreateTask(Task):
                 self.set_exception(e)
             return
 
-
         version = rest.get_nodes_self().version
         try:
             if float(version[:2]) >= 3.0 and self.bucket_priority is not None:
                 rest.create_bucket(bucket=self.bucket,
-                               ramQuotaMB=self.size,
-                               replicaNumber=self.replicas,
-                               proxyPort=self.port,
-                               authType=authType,
-                               saslPassword=self.password,
-                               bucketType=self.bucket_type,
-                               replica_index=self.enable_replica_index,
-                               flushEnabled=self.flush_enabled,
-                               evictionPolicy=self.eviction_policy,
-                               threadsNumber=self.bucket_priority,
-                               lww=self.lww,
-                               maxTTL=self.maxttl,
-                               compressionMode=self.compressionMode
-                               )
+                                   ramQuotaMB=self.size,
+                                   replicaNumber=self.replicas,
+                                   proxyPort=self.port,
+                                   authType=authType,
+                                   saslPassword=self.password,
+                                   bucketType=self.bucket_type,
+                                   replica_index=self.enable_replica_index,
+                                   flushEnabled=self.flush_enabled,
+                                   evictionPolicy=self.eviction_policy,
+                                   threadsNumber=self.bucket_priority,
+                                   lww=self.lww,
+                                   maxTTL=self.maxttl,
+                                   compressionMode=self.compressionMode)
             else:
                 rest.create_bucket(bucket=self.bucket,
-                               ramQuotaMB=self.size,
-                               replicaNumber=self.replicas,
-                               proxyPort=self.port,
-                               authType=authType,
-                               saslPassword=self.password,
-                               bucketType=self.bucket_type,
-                               replica_index=self.enable_replica_index,
-                               flushEnabled=self.flush_enabled,
-                               evictionPolicy=self.eviction_policy,
-                               lww=self.lww,
-                               maxTTL=self.maxttl,
-                               compressionMode=self.compressionMode)
+                                   ramQuotaMB=self.size,
+                                   replicaNumber=self.replicas,
+                                   proxyPort=self.port,
+                                   authType=authType,
+                                   saslPassword=self.password,
+                                   bucketType=self.bucket_type,
+                                   replica_index=self.enable_replica_index,
+                                   flushEnabled=self.flush_enabled,
+                                   evictionPolicy=self.eviction_policy,
+                                   lww=self.lww,
+                                   maxTTL=self.maxttl,
+                                   compressionMode=self.compressionMode)
             self.state = CHECKING
             task_manager.schedule(self)
 
@@ -397,8 +395,10 @@ class BucketDeleteTask(Task):
             self.set_unexpected_exception(e)
 
 class RebalanceTask(Task):
-    def __init__(self, servers, to_add=[], to_remove=[], do_stop=False, progress=30,
-                 use_hostnames=False, services=None):
+    def __init__(self, servers, to_add=[], to_remove=[],
+                 do_stop=False, progress=30,
+                 use_hostnames=False, services=None,
+                 sleep_before_rebalance=None):
         Task.__init__(self, "rebalance_task")
         self.servers = servers
         self.to_add = to_add
@@ -406,6 +406,7 @@ class RebalanceTask(Task):
         self.start_time = None
         self.services = services
         self.monitor_vbuckets_shuffling = False
+        self.sleep_before_rebalance = sleep_before_rebalance
 
         try:
             self.rest = RestConnection(self.servers[0])
@@ -440,6 +441,10 @@ class RebalanceTask(Task):
                 if self.monitor_vbuckets_shuffling:
                     self.log.info("This is swap rebalance and we will monitor vbuckets shuffling")
             self.add_nodes(task_manager)
+            if self.sleep_before_rebalance:
+                self.log.info("Sleep {0}secs before rebalance_start"
+                              .format(self.sleep_before_rebalance))
+                time.sleep(self.sleep_before_rebalance)
             self.start_rebalance(task_manager)
             self.state = CHECKING
             task_manager.schedule(self)
@@ -1386,7 +1391,6 @@ class ESRunQueryCompare(Task):
                         msg = "FAIL: FTS hits: %s, while ES hits: %s"\
                               % (fts_hits, es_hits)
                         self.log.error(msg)
-                        time.sleep(100)
                     es_but_not_fts = list(set(es_doc_ids) - set(fts_doc_ids))
                     fts_but_not_es = list(set(fts_doc_ids) - set(es_doc_ids))
                     if not (es_but_not_fts or fts_but_not_es):

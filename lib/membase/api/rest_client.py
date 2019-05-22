@@ -209,11 +209,12 @@ class RestHelper(object):
                 bucket_to_check = [bucket for bucket in buckets][0]
             vbuckets_servers[server] = {}
             vbs_active = [vb.id for vb in bucket_to_check.vbuckets
-                           if vb.master.startswith(str(server.ip))]
+                          if vb.master.startswith(str(server.ip))]
             vbs_replica = []
             for replica_num in xrange(0, bucket_to_check.numReplicas):
                 vbs_replica.extend([vb.id for vb in bucket_to_check.vbuckets
-                                    if vb.replica[replica_num].startswith(str(server.ip))])
+                                    if replica_num in vb.replica
+                                    and vb.replica[replica_num].startswith(str(server.ip))])
             vbuckets_servers[server]['active_vb'] = vbs_active
             vbuckets_servers[server]['replica_vb'] = vbs_replica
         return vbuckets_servers
@@ -1442,10 +1443,10 @@ class RestConnection(object):
 
     def set_recovery_type(self, otpNode=None, recoveryType=None):
         log.info("Going to set recoveryType={0} for node :: {1}".format(recoveryType, otpNode))
-        if otpNode == None:
+        if otpNode is None:
             log.error('otpNode parameter required')
             return False
-        if recoveryType == None:
+        if recoveryType is None:
             log.error('recoveryType is not set')
             return False
         api = self.baseUrl + 'controller/setRecoveryType'
@@ -1521,8 +1522,17 @@ class RestConnection(object):
     def set_enable_flow_control(self, flow=True, bucket='default'):
         flow_control = "false"
         if flow:
-           flow_control = "true"
+            flow_control = "true"
         code = "ns_bucket:update_bucket_props(\"" + bucket + "\", [{extra_config_string, \"upr_enable_flow_control=" + flow_control + "\"}])"
+        status, content = self.diag_eval(code)
+        return status, content
+
+    def change_flusher_batch_split_trigger(self, flusher_batch_split_trigger=3,
+                                           bucket='default'):
+        code = "ns_bucket:update_bucket_props(\"" + bucket \
+               + "\", [{extra_config_string, " \
+               + "\"flusher_batch_split_trigger=" \
+               + str(flusher_batch_split_trigger) + "\"}])."
         status, content = self.diag_eval(code)
         return status, content
 
@@ -1822,7 +1832,11 @@ class RestConnection(object):
                 # get otp,get status
                 node = OtpNode(id=value['otpNode'],
                                status=value['status'])
-                if node.ip == '127.0.0.1':
+                if node.ip == 'cb.local':
+                    node.ip = self.ip
+                    node.id = node.id.replace('cb.local',
+                                              self.ip.__str__())
+		if node.ip == '127.0.0.1':
                     node.ip = self.ip
                 node.port = int(key[key.rfind(":") + 1:])
                 node.replication = value['replication']
@@ -4894,14 +4908,11 @@ class RestParser(object):
 
         if "services" in parsed:
             node.services = parsed["services"]
+
         if "otpNode" in parsed:
             node.id = parsed["otpNode"]
-            if parsed["otpNode"].find('@') >= 0:
-                node.ip = node.id[node.id.index('@') + 1:]
-        elif "hostname" in parsed:
-            node.ip = parsed["hostname"].split(":")[0]
-        # if raw-ipv6, include enclosing square brackets
-        if parsed["hostname"].startswith('['):
+        if "hostname" in parsed:
+            # should work for both: ipv4 and ipv6
             node.ip = parsed["hostname"].rsplit(":", 1)[0]
 
         # memoryQuota

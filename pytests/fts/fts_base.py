@@ -31,6 +31,7 @@ from es_base import ElasticSearchBase
 from security.rbac_base import RbacBase
 from lib.couchbase_helper.tuq_helper import N1QLHelper
 
+
 class RenameNodeException(FTSException):
     """Exception thrown when converting ip to hostname failed
     """
@@ -1476,6 +1477,55 @@ class FTSIndex:
             validation = ~validation
         return validation
 
+    def validate_snippet_highlighting_in_result_content_n1ql(self, contents, doc_id,
+                                                        field_names, terms,
+                                                        highlight_style=None):
+        '''
+        Validate the snippets and highlighting in the result content for a given
+        doc id
+        :param contents: Result contents
+        :param doc_id: Doc ID to check highlighting/snippet for
+        :param field_names: Field name for which term is to be validated
+        :param terms: search term which should be highlighted
+        :param highlight_style: Expected highlight style - ansi/html
+        :return: True/False
+        '''
+        validation = True
+        for content in contents:
+            if content['meta']['id'] == doc_id:
+                # Check if Location section is present for the document in the search results
+                if 'locations' in content['meta']:
+                    validation &= True
+                else:
+                    self.__log.info(
+                        "Locations not present in the search result")
+                    validation &= False
+
+                # Check if Fragments section is present in the document in the search results
+                # If present, check if the search term is highlighted
+                if 'fragments' in content['meta']:
+                    snippet = content['meta']['fragments'][field_names][0]
+                    # Replace the Ansi highlight tags with <mark> since the
+                    # ansi ones render themselves hence cannot be compared.
+                    if highlight_style == 'ansi':
+                        snippet = snippet.replace('\x1b[43m', '<mark>').replace(
+                            '\x1b[0m', '</mark>')
+                    search_term = '<mark>' + terms + '</mark>'
+                    found = snippet.find(search_term)
+                    if found < 0:
+                        self.__log.info("Search term not highlighted")
+                    validation &= (found>=0)
+                else:
+                    self.__log.info(
+                        "Fragments not present in the search result")
+                    validation &= False
+
+        # If the test is a negative testcase to check if snippet, flip the result
+        if TestInputSingleton.input.param("negative_test", False):
+            validation = ~validation
+        return validation
+
+
     def get_score_from_query_result_content(self, contents, doc_id):
         for content in contents:
             if content['id'] == doc_id:
@@ -1792,15 +1842,16 @@ class CouchbaseCluster:
         if available_nodes:
             nodes_to_add = []
             node_services = []
+            node_num = 0
             for index, node_service in enumerate(cluster_services):
-                if index == 0:
-                    # first node is always a data/kv node
+                if index == 0 and node_service == "kv":
                     continue
                 self.__log.info("%s will be configured with services %s" % (
-                    available_nodes[index - 1].ip,
+                    available_nodes[node_num].ip,
                     node_service))
-                nodes_to_add.append(available_nodes[index - 1])
+                nodes_to_add.append(available_nodes[node_num])
                 node_services.append(node_service)
+                node_num = node_num + 1
             try:
                 self.__clusterop.async_rebalance(
                     self.__nodes,
@@ -3906,6 +3957,24 @@ class FTSBaseTest(unittest.TestCase):
                               (bucket_count, docs_indexed))
             index_name_count_map[index.name] = docs_indexed
         return index_name_count_map
+
+    def is_index_complete(self, name):
+        """
+         Handle validation and error logging for docs indexed
+         returns a map containing index_names and docs indexed
+        """
+        for index in self._cb_cluster.get_indexes():
+            if index.name == name:
+                docs_indexed = index.get_indexed_doc_count()
+                bucket_count = self._cb_cluster.get_doc_count_in_bucket(
+                    index.source_bucket)
+
+                self.log.info("Docs in index {0}={1}, bucket docs={2}".
+                          format(index.name, docs_indexed, bucket_count))
+                if docs_indexed != bucket_count:
+                    return False
+                else:
+                    return True
 
     def setup_es(self):
         """

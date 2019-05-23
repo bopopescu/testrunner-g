@@ -1730,6 +1730,7 @@ class StableTopFTS(FTSBaseTest):
         from random_query_generator.rand_query_gen import FTSESQueryGenerator
         testcase_failed = False
         for i in range(self.num_queries):
+	    self.log.info("Running Query no --> " + str(i))
             fts_query, es_query = FTSESQueryGenerator.construct_geo_location_query()
             print fts_query
             print "fts_query location ---> " + str(fts_query["location"])

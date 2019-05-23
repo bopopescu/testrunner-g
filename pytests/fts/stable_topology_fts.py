@@ -1732,6 +1732,7 @@ class StableTopFTS(FTSBaseTest):
         for i in range(self.num_queries):
             fts_query, es_query = FTSESQueryGenerator.construct_geo_location_query()
             print fts_query
+	    print "fts_query location ---> " + str(fts_query["location"])
             # If query has geo co-ordinates in form of an object
             if "lon" in fts_query["location"]:
                 lon = fts_query["location"]["lon"]
@@ -1770,7 +1771,7 @@ class StableTopFTS(FTSBaseTest):
             if case == 3:
                 geohash = Geohash.encode(lat, lon, precision=random.randint(3, 8))
                 location = geohash
-
+	    print "sort_fields_location ----> " + str(location)
             sort_fields = [
                 {
                     "by": "geo_distance",

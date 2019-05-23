@@ -2143,6 +2143,7 @@ class CouchbaseCluster:
         """
         if not node:
             node = self.get_random_fts_node()
+        print query_dict
         self.__log.info("Running query %s on node: %s:%s"
                         % (json.dumps(query_dict, ensure_ascii=False),
                            node.ip, node.fts_port))

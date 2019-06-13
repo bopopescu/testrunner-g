@@ -2145,7 +2145,6 @@ class CouchbaseCluster:
         """
         if not node:
             node = self.get_random_fts_node()
-        print query_dict
         self.__log.info("Running query %s on node: %s:%s"
                         % (json.dumps(query_dict, ensure_ascii=False),
                            node.ip, node.fts_port))
@@ -3282,9 +3281,7 @@ class FTSBaseTest(unittest.TestCase):
                           " [elastic] section in your ini file,"
                           " else set \"compare_es\" as False")
             self.es = ElasticSearchBase(self.elastic_node, self.log)
-            if not self.es.is_running():
-                self.fail("Could not reach Elastic Search server on %s"
-                          % self.elastic_node.ip)
+            self.es.restart_es()
         else:
             self.es = None
         self.run_via_n1ql = self._input.param("run_via_n1ql", False)
@@ -4049,7 +4046,7 @@ class FTSBaseTest(unittest.TestCase):
                                 "dynamic": False,
                                 "enabled": True,
                                 "fields": [{
-				    "docvalues": True,
+                                    "docvalues": True,
                                     "include_in_all": True,
                                     "name": "geo",
                                     "type": "geopoint",

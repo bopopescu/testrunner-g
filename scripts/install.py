@@ -30,9 +30,10 @@ from testconstants import COUCHBASE_VERSION_3, COUCHBASE_FROM_WATSON,\
                           COUCHBASE_FROM_SPOCK
 from testconstants import CB_VERSION_NAME, COUCHBASE_FROM_VERSION_4,\
                           CB_RELEASE_BUILDS, COUCHBASE_VERSIONS
-from testconstants import MIN_KV_QUOTA, INDEX_QUOTA, FTS_QUOTA, CBAS_QUOTA
+from testconstants import MIN_KV_QUOTA, INDEX_QUOTA, FTS_QUOTA, CBAS_QUOTA, CLUSTER_QUOTA_RATIO
 from testconstants import LINUX_COUCHBASE_PORT_CONFIG_PATH, LINUX_COUCHBASE_OLD_CONFIG_PATH
-from testconstants import WIN_COUCHBASE_PORT_CONFIG_PATH, WIN_COUCHBASE_OLD_CONFIG_PATH
+from testconstants import WIN_COUCHBASE_PORT_CONFIG_PATH, WIN_COUCHBASE_OLD_CONFIG_PATH,\
+                          MACOS_NAME
 import TestInput
 
 
@@ -251,8 +252,17 @@ class Installer(object):
 
         remote_client = RemoteMachineShellConnection(server)
         info = remote_client.extract_remote_info()
-        print "\n*** OS version of this server %s is %s ***" % (remote_client.ip,
-                                                       info.distribution_version)
+        server_os_type = info.distribution_version
+        if info.distribution_type.lower() == "mac":
+            macOS_name = info.distribution_version[:5]
+            if macOS_name >= "10.10":
+                server_os_type = "MacOS: {0} or ".format(MACOS_NAME[macOS_name])\
+                                                     + info.distribution_version
+            else:
+                server_os_type = "MacOS " + info.distribution_version
+
+        print "\n*** OS version of this server {0} is {1} ***"\
+                            .format(remote_client.ip, server_os_type)
         if info.distribution_version.lower() == "suse 12":
             if version[:5] not in COUCHBASE_FROM_SPOCK:
                 mesg = "%s does not support cb version %s \n" % \
@@ -552,7 +562,7 @@ class CouchbaseServerInstaller(Installer):
                         kv_quota = int(rest.get_nodes_self().mcdMemoryReserved)
                     info = rest.get_nodes_self()
                     cb_version = info.version[:5]
-                    kv_quota = int(info.mcdMemoryReserved * 2/3)
+                    kv_quota = int(info.mcdMemoryReserved * CLUSTER_QUOTA_RATIO)
                     """ for fts, we need to grep quota from ns_server
                                 but need to make it works even RAM of vm is
                                 smaller than 2 GB """

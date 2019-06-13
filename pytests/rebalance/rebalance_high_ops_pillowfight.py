@@ -1,22 +1,18 @@
-import time, os
-
+import random
+import subprocess
 from threading import Thread
-import threading
+
 from basetestcase import BaseTestCase
-from rebalance.rebalance_base import RebalanceBaseTest
-from membase.api.exception import RebalanceFailedException
 from membase.api.rest_client import RestConnection, RestHelper
-from couchbase_helper.documentgenerator import BlobGenerator
-from membase.helper.rebalance_helper import RebalanceHelper
-from remote.remote_util import RemoteMachineShellConnection
 from membase.helper.cluster_helper import ClusterOperationHelper
 from couchbase.bucket import Bucket
 from couchbase.cluster import Cluster, PasswordAuthenticator
-from couchbase.exceptions import NotFoundError, CouchbaseError
+from couchbase.exceptions import NotFoundError
 
 from lib.couchbase_helper.tuq_helper import N1QLHelper
 from lib.memcached.helper.data_helper import VBucketAwareMemcached
 from couchbase_helper.document import DesignDocument, View
+from remote.remote_util import RemoteMachineShellConnection
 
 
 class RebalanceHighOpsWithPillowFight(BaseTestCase):
@@ -58,7 +54,6 @@ class RebalanceHighOpsWithPillowFight(BaseTestCase):
 
     def load_buckets_with_high_ops(self, server, bucket, items, batch=20000,
                                    threads=5, start_document=0, instances=1, ttl=0):
-        import subprocess
         cmd_format = "python scripts/thanosied.py  --spec couchbase://{0} --bucket {1} --user {2} --password {3} " \
                      "--count {4} --batch_size {5} --threads {6} --start_document {7} --cb_version {8} --workers {9} --ttl {10} --rate_limit {11} " \
                      "--passes 1"
@@ -87,10 +82,41 @@ class RebalanceHighOpsWithPillowFight(BaseTestCase):
                                  items,
                                  total_loaded))
 
+    def test_kill_memcached_during_pillowfight(self):
+        """
+        To validate MB-34173
+        Reference: 'Tests Needed To Verify MB-34173' google doc
+        :return:
+        """
+
+        cmd_to_use = "cbc-pillowfight --json --num-items {0} -t 4 " \
+                     "--spec couchbase://{1}:11210/default --rate-limit {2}" \
+                     .format(self.num_items, self.master.ip, self.rate_limit)
+
+        # Select random node from the cluster to kill memcached
+        target_server = self.servers[random.randint(0, self.nodes_init-1)]
+        shell_conn = RemoteMachineShellConnection(target_server)
+
+        # Create PillowFight loader thread
+        self.loader = "pillowfight"
+        load_thread = self.load_docs(self.num_items, custom_cmd=cmd_to_use)
+        load_thread.start()
+        self.sleep(10, "Sleep before killing memcached process on {0}"
+                   .format(target_server))
+        # Kill memcached on the target_server
+        shell_conn.kill_memcached()
+        shell_conn.disconnect()
+
+        # Wait for loader thread to complete
+        load_thread.join()
+
+        # Verify last_persistence_snap start/stop values
+        self.sleep(5, "Sleep before last_persistence__snap verification")
+        self.check_snap_start_corruption()
+
     def update_buckets_with_high_ops(self, server, bucket, items, ops,
                                      batch=20000, threads=5, start_document=0,
                                      instances=1):
-        import subprocess
         cmd_format = "python scripts/thanosied.py  --spec couchbase://{0} --bucket {1} --user {2} --password {3} " \
                      "--count {4} --batch_size {5} --threads {6} --start_document {7} --cb_version {8} --workers {9} --rate_limit {10} " \
                      "--passes 1  --update_counter {7}"
@@ -123,7 +149,6 @@ class RebalanceHighOpsWithPillowFight(BaseTestCase):
                                      batch=20000, threads=5,
                                      start_document=0,
                                      instances=1):
-        import subprocess
         cmd_format = "python scripts/thanosied.py  --spec couchbase://{0} --bucket {1} --user {2} --password {3} " \
                      "--count {4} --batch_size {5} --threads {6} --start_document {7} --cb_version {8} --workers {9} --rate_limit {10} " \
                      "--passes 0  --delete --num_delete {4}"
@@ -153,8 +178,7 @@ class RebalanceHighOpsWithPillowFight(BaseTestCase):
             self.log.info("Total deleted from the datagen tool : {}".format(total_loaded))
 
     def load(self, server, items, batch=1000, docsize=100, rate_limit=100000,
-             start_at=0):
-        import subprocess
+             start_at=0, custom_cmd=None):
         from lib.testconstants import COUCHBASE_FROM_SPOCK
         rest = RestConnection(server)
         import multiprocessing
@@ -167,6 +191,8 @@ class RebalanceHighOpsWithPillowFight(BaseTestCase):
             .format(server.ip, items, batch, docsize, num_threads, num_cycles,
                     rate_limit, start_at)
 
+        cmd = custom_cmd or cmd
+
         if self.num_replicas > 0 and self.use_replica_to:
             cmd += " --replicate-to=1"
         if rest.get_nodes_version()[:5] in COUCHBASE_FROM_SPOCK:
@@ -177,7 +203,7 @@ class RebalanceHighOpsWithPillowFight(BaseTestCase):
             self.fail(
                 "Exception running cbc-pillowfight: subprocess module returned non-zero response!")
 
-    def load_docs(self, num_items=0, start_document=0, ttl=0):
+    def load_docs(self, num_items=0, start_document=0, ttl=0, custom_cmd=None):
         if num_items == 0:
             num_items = self.num_items
         if self.loader == "pillowfight":
@@ -186,7 +212,7 @@ class RebalanceHighOpsWithPillowFight(BaseTestCase):
                                  args=(
                                      self.master, num_items, self.batch_size,
                                      self.doc_size, self.rate_limit,
-                                     start_document))
+                                     start_document, custom_cmd))
             return load_thread
         elif self.loader == "high_ops":
             if num_items == 0:
@@ -204,7 +230,6 @@ class RebalanceHighOpsWithPillowFight(BaseTestCase):
                                            start_document=0,
                                            updated=False, ops=0, ttl=0, deleted=False, deleted_items=0,
                                            validate_expired=None, passes=0):
-        import subprocess
         from lib.memcached.helper.data_helper import VBucketAwareMemcached
 
         cmd_format = "python scripts/thanosied.py  --spec couchbase://{0} --bucket {1} --user {2} --password {3} " \
@@ -999,8 +1024,11 @@ class RebalanceHighOpsWithPillowFight(BaseTestCase):
         load_thread = self.load_docs()
         self.log.info('starting the load thread...')
         load_thread.start()
+        # This code was specifically added for CBSE-6791
+        if self.nodes_init == 1 and self.flusher_batch_split_trigger:
+            self.cluster.rebalance(self.servers[:self.nodes_init], [self.servers[self.nodes_init]], [])
         load_thread.join()
-        load_thread = self.load_docs(num_items=(self.num_items * 2),
+        load_thread = self.load_docs(num_items=(self.num_items),
                                      start_document=self.num_items)
         load_thread.start()
         nodes_all = rest.node_statuses()
@@ -1014,22 +1042,32 @@ class RebalanceHighOpsWithPillowFight(BaseTestCase):
             "graceful", wait_for_pending=360)
 
         failover_task.result()
+        load_thread.join()
 
+        load_thread = self.load_docs(num_items=self.num_items * 2,
+                                     start_document=(self.num_items * 2))
+        load_thread.start()
+        if self.flusher_batch_split_trigger:
+            for i in range(10):
+                # do delta recovery and cancel add back few times
+                # This was added to reproduce MB-34173
+                rest.set_recovery_type(node.id, self.recovery_type)
+                self.sleep(10)
+                rest.add_back_node(node.id)
         rest.set_recovery_type(node.id, self.recovery_type)
-        # Remove this. This cause even the delta recovery to become full recovery
-        # TODO: Do this to all the delta recovery testcases.
-        # rest.add_back_node(node.id)
-        
+        self.sleep(30)
         rebalance = self.cluster.async_rebalance(self.servers[:self.nodes_init],
                                                  [], [])
 
         reached = RestHelper(rest).rebalance_reached()
         self.assertTrue(reached, "rebalance failed, stuck or did not complete")
-        load_thread.join()
         rebalance.result()
-        if self.flusher_batch_split_trigger:
+        load_thread.join()
+        if self.nodes_init == 1 and self.flusher_batch_split_trigger:
+            self.check_snap_start_corruption(servers_to_check=self.servers[:self.nodes_init + 1])
+        elif self.flusher_batch_split_trigger:
             self.check_snap_start_corruption(servers_to_check=self.servers[:self.nodes_init])
-        num_items_to_validate = self.num_items * 3
+        num_items_to_validate = self.num_items * 4
         errors = self.check_data(self.master, bucket, num_items_to_validate)
         if errors:
             self.log.info("Missing keys count : {0}".format(len(errors)))

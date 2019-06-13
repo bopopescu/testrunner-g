@@ -55,7 +55,7 @@ class N1qlFTSIntegrationPhase2ClusteropsTest(QueryTests):
         if fts_node is None:
             self.log("Cannot find fts child node!")
 
-        n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, 'state:California')"
+        n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\":\"state\", \"match\":\"California\"}, \"size\":1000})"
         fts_request = {"query":{"field":"state", "match":"California"}, "size":1000}
         n1ql_results = self.run_cbq_query(n1ql_query, server=n1ql_node)['results']
         n1ql_doc_ids = []
@@ -84,7 +84,8 @@ class N1qlFTSIntegrationPhase2ClusteropsTest(QueryTests):
         fts_idx = self._create_fts_index(index_name="idx_beer_sample_fts", doc_count=7303, source_name='beer-sample')
         number_of_replicas = self.input.param("num_replicas", 0)
         self._update_replica_for_fts_index(fts_idx, number_of_replicas)
-        n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, \"state:California\")"
+        self.sleep(60)
+        n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\":\"state\", \"match\":\"California\"}, \"size\":10000})"
         n1ql_results = self.run_cbq_query(n1ql_query)['results']
         n1ql_doc_ids_before_failover = []
         for result in n1ql_results:
@@ -105,7 +106,7 @@ class N1qlFTSIntegrationPhase2ClusteropsTest(QueryTests):
         self.cbcluster = CouchbaseCluster(name='cluster', nodes=self.servers, log=self.log)
         fts_idx = self._create_fts_index(index_name="idx_beer_sample_fts", doc_count=7303, source_name='beer-sample')
 
-        n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, \"state:California\")"
+        n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\":\"state\", \"match\":\"California\"}, \"size\":10000})"
         n1ql_results_before_failover = self.run_cbq_query(n1ql_query)['results']
         n1ql_doc_ids_before_failover = []
         for result in n1ql_results_before_failover:
@@ -127,12 +128,12 @@ class N1qlFTSIntegrationPhase2ClusteropsTest(QueryTests):
         fts_idx = self._create_fts_index(index_name="idx_beer_sample_fts", doc_count=7303, source_name='beer-sample')
         number_of_replicas = self.input.param("num_replicas", 0)
         self._update_replica_for_fts_index(fts_idx, number_of_replicas)
-        n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, \"state:California\")"
+        self.sleep(60)
+        n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\":\"state\", \"match\":\"California\"}, \"size\":10000})"
         n1ql_results = self.run_cbq_query(n1ql_query)['results']
         n1ql_doc_ids_before_rebalance = []
         for result in n1ql_results:
             n1ql_doc_ids_before_rebalance.append(result['id'])
-
 
         self.cluster.rebalance(self.servers, [self.servers[4]], [], services=["fts"])
 
@@ -148,16 +149,18 @@ class N1qlFTSIntegrationPhase2ClusteropsTest(QueryTests):
         self.load_test_buckets()
         self.cbcluster = CouchbaseCluster(name='cluster', nodes=self.servers, log=self.log)
         fts_idx = self._create_fts_index(index_name="idx_beer_sample_fts", doc_count=7303, source_name='beer-sample')
-        default_results = self.run_cbq_query("select meta().id from `beer-sample` where search(`beer-sample`, \"state:California\")")
+        n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\":\"state\", \"match\":\"California\"}, \"size\":10000})"
+        default_results = self.run_cbq_query(n1ql_query)
         self._update_partiotions_for_fts_index(fts_idx, partitions_number)
-        new_partitioning_result = self.run_cbq_query("select meta().id from `beer-sample` where search(`beer-sample`, \"state:California\")")
+        self.sleep(60)
+        new_partitioning_result = self.run_cbq_query(n1ql_query)
 
         n1ql_doc_ids_before_partitioning = []
-        for result in default_results:
+        for result in default_results['results']:
             n1ql_doc_ids_before_partitioning.append(result['id'])
 
         n1ql_doc_ids_after_partitioning = []
-        for result in new_partitioning_result:
+        for result in new_partitioning_result['results']:
             n1ql_doc_ids_after_partitioning.append(result['id'])
 
         self.assertEquals(sorted(n1ql_doc_ids_before_partitioning), sorted(n1ql_doc_ids_after_partitioning), "Results after partitioning do not match.")
@@ -194,10 +197,12 @@ class N1qlFTSIntegrationPhase2ClusteropsTest(QueryTests):
     def _create_fts_index(self, index_name='', doc_count=0, source_name=''):
         fts_index = self.cbcluster.create_fts_index(name=index_name, source_name=source_name)
         rest = self.get_rest_client(self.servers[0].rest_username, self.servers[0].rest_password)
-        indexed_doc_count = rest.get_fts_stats(index_name, source_name, "doc_count")
+        indexed_doc_count = fts_index.get_indexed_doc_count(rest)
+        #indexed_doc_count = rest.get_fts_stats(index_name, source_name, "doc_count")
         while indexed_doc_count < doc_count:
             try:
-                indexed_doc_count = rest.get_fts_stats(index_name, source_name, "doc_count")
+                indexed_doc_count = fts_index.get_indexed_doc_count(rest)
+                #indexed_doc_count = rest.get_fts_stats(index_name, source_name, "doc_count")
             except KeyError, k:
                 continue
 

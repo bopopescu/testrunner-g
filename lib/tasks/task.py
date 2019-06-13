@@ -29,7 +29,9 @@ from membase.api.exception import N1QLQueryException, DropIndexException, Create
 from remote.remote_util import RemoteMachineShellConnection, RemoteUtilHelper
 from couchbase_helper.documentgenerator import BatchedDocumentGenerator
 from TestInput import TestInputServer, TestInputSingleton
-from testconstants import MIN_KV_QUOTA, INDEX_QUOTA, FTS_QUOTA, COUCHBASE_FROM_4DOT6, THROUGHPUT_CONCURRENCY, ALLOW_HTP, CBAS_QUOTA, COUCHBASE_FROM_VERSION_4
+from testconstants import MIN_KV_QUOTA, INDEX_QUOTA, FTS_QUOTA, COUCHBASE_FROM_4DOT6,\
+                          THROUGHPUT_CONCURRENCY, ALLOW_HTP, CBAS_QUOTA, COUCHBASE_FROM_VERSION_4,\
+                          CLUSTER_QUOTA_RATIO
 from multiprocessing import Process, Manager, Semaphore
 import memcacheConstants
 from membase.api.exception import CBQError
@@ -135,11 +137,12 @@ class NodeInitializeTask(Task):
             self.set_result(True)
             return
 
-        self.quota = int(info.mcdMemoryReserved * 2/3)
+        self.quota = int(info.mcdMemoryReserved * CLUSTER_QUOTA_RATIO)
         if self.index_quota_percent:
-            self.index_quota = int((info.mcdMemoryReserved * 2/3) * \
+            self.index_quota = int((info.mcdMemoryReserved * CLUSTER_QUOTA_RATIO) * \
                                       self.index_quota_percent / 100)
-            rest.set_service_memoryQuota(service='indexMemoryQuota', username=username, password=password, memoryQuota=self.index_quota)
+            rest.set_service_memoryQuota(service='indexMemoryQuota', username=username,\
+                                         password=password, memoryQuota=self.index_quota)
         if self.quota_percent:
            self.quota = int(info.mcdMemoryReserved * self.quota_percent / 100)
 
@@ -152,7 +155,7 @@ class NodeInitializeTask(Task):
             if cluster_setting["ftsMemoryQuota"] and \
                 int(cluster_setting["ftsMemoryQuota"]) >= 256:
                 fts_quota = int(cluster_setting["ftsMemoryQuota"])
-        kv_quota = int(info.mcdMemoryReserved * 2/3)
+        kv_quota = int(info.mcdMemoryReserved * CLUSTER_QUOTA_RATIO)
         if self.index_quota_percent:
                 index_quota = self.index_quota
         if not self.quota_percent:
@@ -459,7 +462,7 @@ class RebalanceTask(Task):
         node_index = 0
         for node in self.to_add:
             self.log.info("adding node {0}:{1} to cluster".format(node.ip, node.port))
-            if self.services != None:
+            if self.services is not None:
                 services_for_node = [self.services[node_index]]
                 node_index += 1
             if self.use_hostnames:
@@ -1918,12 +1921,14 @@ class BatchedValidateDataTask(GenericLoadingTask):
         try:
             key_vals = self.client.getMulti(keys, parallel=True, timeout_sec=self.timeout_sec, collection=collection)
         except ValueError, error:
+            self.log.error("Read failed via memcached client. Error: %s"%str(error))
             self.state = FINISHED
             self.kv_store.release_partitions(partition_keys_dic.keys())
             self.set_exception(error)
             return
         except BaseException, error:
         # handle all other exception, for instance concurrent.futures._base.TimeoutError
+            self.log.error("Read failed via memcached client. Error: %s"%str(error))
             self.state = FINISHED
             self.kv_store.release_partitions(partition_keys_dic.keys())
             self.set_exception(error)

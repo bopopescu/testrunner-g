@@ -12,7 +12,7 @@ from copy import deepcopy
 from threading import Thread
 from TestInput import TestInputSingleton
 from testconstants import MIN_KV_QUOTA, INDEX_QUOTA, FTS_QUOTA, CBAS_QUOTA
-from testconstants import COUCHBASE_FROM_VERSION_4, IS_CONTAINER
+from testconstants import COUCHBASE_FROM_VERSION_4, IS_CONTAINER, CLUSTER_QUOTA_RATIO
 
 
 try:
@@ -61,12 +61,12 @@ class RestHelper(object):
         nodes = self.rest.node_statuses(timeout)
         return all(node.status == 'healthy' for node in nodes)
 
-    def rebalance_reached(self, percentage=100):
+    def rebalance_reached(self, percentage=100,retry_count=40):
         start = time.time()
         progress = 0
         previous_progress = 0
         retry = 0
-        while progress is not -1 and progress < percentage and retry < 40:
+        while progress is not -1 and progress < percentage and retry < retry_count:
             # -1 is error , -100 means could not retrieve progress
             progress = self.rest._rebalance_progress()
             if progress == -100:
@@ -84,7 +84,7 @@ class RestHelper(object):
             log.error("rebalance progress code : {0}".format(progress))
 
             return False
-        elif retry >= 40:
+        elif retry >= retry_count:
             log.error("rebalance stuck on {0}%".format(progress))
             return False
         else:
@@ -880,7 +880,7 @@ class RestConnection(object):
             time.sleep(1)
             kv_quota = int(self.get_nodes_self().mcdMemoryReserved)
         info = self.get_nodes_self()
-        kv_quota = int(info.mcdMemoryReserved * 2 / 3)
+        kv_quota = int(info.mcdMemoryReserved * CLUSTER_QUOTA_RATIO)
 
         cb_version = info.version[:5]
         if cb_version in COUCHBASE_FROM_VERSION_4:
@@ -1717,6 +1717,13 @@ class RestConnection(object):
             json_parsed = json.loads(content)
             index_map = RestParser().parse_index_stats_response(json_parsed, index_map=index_map)
         return index_map
+
+    def get_index_official_stats(self, timeout=120, index_map=None):
+        api = self.index_baseUrl + 'api/v1/stats'
+        status, content, header = self._http_request(api, timeout=timeout)
+        if status:
+            json_parsed = json.loads(content)
+        return json_parsed
 
     def get_index_storage_stats(self, timeout=120, index_map=None):
         api = self.index_baseUrl + 'stats/storage'

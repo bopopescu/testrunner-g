@@ -280,6 +280,7 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
                 fts_request_str = "{\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"size\":10000, \""+test_name+"\":"+str(option_val)+"}"
             fts_request = json.loads(fts_request_str)
             n1ql_results = self.run_cbq_query(n1ql_query)['results']
+            print(str(n1ql_results))
             total_hits, hits, took, status = \
                 rest.run_fts_query(index_name="idx_beer_sample_fts",
                                    query_json=fts_request)

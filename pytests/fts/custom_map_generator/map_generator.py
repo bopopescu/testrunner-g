@@ -312,29 +312,6 @@ class CustomMapGenerator:
                 print "Unable to add a non-indexed field after %s retries" \
                       % self.max_fields
 
-"""
-    def get_child_map(self, field):
-        """
-        Child maps are for nested json structures i.e, any higher level field
-        having another nested structure as its value
-        """
-        fts_child_map = {}
-        fts_child_map['dynamic'] = False
-        fts_child_map['enabled'] = True
-        fts_child_map['fields'] = []
-        field, type = self.get_nested_child_field(field)
-        fts_child, es_child = self.get_child_field(field, type)
-        fts_child_map['properties'] = {field: fts_child}
-
-        es_child_map = {}
-        es_child_map['dynamic'] = False
-        es_child_map['enabled'] = True
-        es_child_map['type'] = "object"
-        es_child_map['properties'] = {field: es_child}
-
-        return fts_child_map, es_child_map
-"""
-
     def get_child_map(self, field, dataset):
         """
         Child maps are for nested json structures i.e, any higher level field

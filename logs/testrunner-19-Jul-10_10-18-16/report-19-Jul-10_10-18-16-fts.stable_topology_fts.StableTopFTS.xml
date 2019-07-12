@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<testsuite errors="2" failures="2" name="fts.stable_topology_fts.StableTopFTS" skip="0" tests="2" time="1251.14377284">
+	<testcase name="fts.stable_topology_fts.StableTopFTS.index_edit_and_query_custom_mapping,cluster_name:test,num_queries:100,logs_folder:/Users/girishbenakappa/IdeaProjects/testrunner/logs/testrunner-19-Jul-10_10-18-16/test_1,GROUP:P0,index_type:scorch,compare_es:True,run_via_n1ql:True,fts_quota:750,conf_file:test.conf,num_nodes:2,cluster:D:F,cm_id:2,ini:test.ini,case_number:1,custom_map:True,spec:test,disable_HTP:True" time="582.470566988">
+		<error type="membase.error">['Traceback (most recent call last):\n  File &quot;pytests/fts/stable_topology_fts.py&quot;, line 651, in index_edit_and_query_custom_mapping\n    self.run_query_and_compare(index, n1ql_executor=n1ql_executor)\n  File &quot;pytests/fts/fts_base.py&quot;, line 4222, in run_query_and_compare\n    task.result()\n  File &quot;lib/tasks/future.py&quot;, line 153, in result\n    return self.__get_result()\n  File &quot;lib/tasks/future.py&quot;, line 112, in __get_result\n    raise self._exception\nFTSException: No node in the cluster has \'n1ql\' service enabled\n']</error>
+	</testcase>
+	<testcase name="fts.stable_topology_fts.StableTopFTS.index_edit_and_query_custom_analyzer,cluster_name:test,num_custom_analyzers:1,GROUP:P0,index_type:scorch,compare_es:True,run_via_n1ql:True,items:100,num_queries:1,conf_file:test.conf,fts_quota:750,cluster:D:F,cm_id:2,logs_folder:/Users/girishbenakappa/IdeaProjects/testrunner/logs/testrunner-19-Jul-10_10-18-16/test_2,ini:test.ini,case_number:2,num_nodes:2,custom_map:True,spec:test,disable_HTP:True" time="668.673205853">
+		<error type="membase.error">['Traceback (most recent call last):\n  File &quot;pytests/fts/stable_topology_fts.py&quot;, line 728, in index_edit_and_query_custom_analyzer\n    raise err\nAssertionError: 1 out of 1 queries failed! - [1]\n']</error>
+	</testcase>
+</testsuite>

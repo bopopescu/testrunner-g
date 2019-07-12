@@ -1,0 +1,2009 @@
+[2019-07-09 16:59:48,547] - [remote_util] [123145401274368] - INFO - connecting to 172.23.107.207 with username:root 
+[2019-07-09 16:59:48,803] - [remote_util] [123145401274368] - INFO - Connected to 172.23.107.207
+[2019-07-09 16:59:49,915] - [remote_util] [123145401274368] - INFO - running command.raw on 172.23.107.207: /etc/init.d/elasticsearch restart
+[2019-07-09 16:59:50,654] - [remote_util] [123145401274368] - INFO - command executed successfully
+[2019-07-09 16:59:50,655] - [remote_util] [123145401274368] - INFO - Stopping elasticsearch: [  OK  ]
+[2019-07-09 16:59:50,655] - [remote_util] [123145401274368] - INFO - Starting elasticsearch: [  OK  ]
+[2019-07-09 16:59:50,656] - [es_base] [123145401274368] - INFO - sleep for 10 secs.  ...
+[2019-07-09 17:00:00,764] - [es_base] [123145401274368] - INFO - Restarted ES server 172.23.107.207 successfully
+[2019-07-09 17:00:00,767] - [fts_base] [123145401274368] - INFO - ==== FTSbasetests setup is started for test #2 index_edit_and_query_custom_analyzer ====
+[2019-07-09 17:00:00,866] - [rest_client] [123145401274368] - INFO - SUCCESS: FTS RAM quota set to 750mb
+[2019-07-09 17:00:00,866] - [fts_base] [123145401274368] - INFO - removing nodes from cluster ...
+[2019-07-09 17:00:00,908] - [fts_base] [123145401274368] - INFO - cleanup [ip:172.23.109.181 port:8091 ssh_username:root]
+[2019-07-09 17:00:01,065] - [cluster_helper] [123145401274368] - INFO - waiting for ns_server @ 172.23.109.181:8091
+[2019-07-09 17:00:01,086] - [cluster_helper] [123145401274368] - INFO - ns_server @ 172.23.109.181:8091 is running
+[2019-07-09 17:00:01,087] - [fts_base] [123145401274368] - INFO - Removing user 'cbadminbucket'...
+[2019-07-09 17:00:01,156] - [rest_client] [123145401274368] - ERROR - DELETE http://172.23.109.181:8091/settings/rbac/users/local/cbadminbucket body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "User was not found." auth: Administrator:password
+[2019-07-09 17:00:01,157] - [fts_base] [123145401274368] - INFO - "User was not found."
+[2019-07-09 17:00:01,187] - [es_base] [123145401274368] - ERROR - http://172.23.107.207:9200/es_index error 404 reason: IndexMissingException[[es_index] missing] {"error":"IndexMissingException[[es_index] missing]","status":404}
+[2019-07-09 17:00:01,654] - [fts_base] [123145401274368] - INFO - Created empty index es_index on Elastic Search node with custom standard analyzer(default)
+[2019-07-09 17:00:01,655] - [fts_base] [123145401274368] - INFO - Initializing Cluster ...
+[2019-07-09 17:00:01,815] - [task] [123145405480960] - INFO - server: ip:172.23.109.181 port:8091 ssh_username:root, nodes/self: {'ip': u'172.23.109.181', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@172.23.109.181', 'uptime': u'1384', 'mcdMemoryReserved': 2950, 'storageTotalRam': 3688, 'hostname': u'172.23.109.181:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x1033770d0>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-3626-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'kv'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 3379331072, 'memoryTotal': 3867238400, 'memoryQuota': 1976, 'mcdMemoryAllocated': 2950, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-07-09 17:00:01,835] - [rest_client] [123145405480960] - INFO - pools/default params : memoryQuota=1976
+[2019-07-09 17:00:01,861] - [rest_client] [123145405480960] - INFO - settings/web params on 172.23.109.181:8091:username=Administrator&password=password&port=8091
+[2019-07-09 17:00:01,942] - [remote_util] [123145405480960] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-07-09 17:00:02,159] - [remote_util] [123145405480960] - INFO - Connected to 172.23.109.181
+[2019-07-09 17:00:02,496] - [remote_util] [123145405480960] - INFO - It could be other operating system.  Go to check at other location
+[2019-07-09 17:00:03,306] - [remote_util] [123145405480960] - INFO - running command.raw on 172.23.109.181: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-07-09 17:00:03,413] - [remote_util] [123145405480960] - INFO - command executed successfully
+[2019-07-09 17:00:03,437] - [rest_client] [123145405480960] - INFO - /diag/eval status on 172.23.109.181:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-07-09 17:00:03,438] - [rest_client] [123145405480960] - INFO - settings/indexes params : storageMode=forestdb
+[2019-07-09 17:00:03,457] - [rest_client] [123145405480960] - ERROR - POST http://172.23.109.181:8091/settings/indexes body: storageMode=forestdb headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 400 reason: unknown {"errors":{"storageMode":"The value must be one of the following: [plasma,memory_optimized]"}} auth: Administrator:password
+[2019-07-09 17:00:03,501] - [fts_base] [123145401274368] - INFO - 172.23.109.180 will be configured with services fts
+[2019-07-09 17:00:04,504] - [task] [123145405480960] - INFO - adding node 172.23.109.180:8091 to cluster
+[2019-07-09 17:00:04,506] - [rest_client] [123145405480960] - INFO - adding remote node @172.23.109.180:8091 to this cluster @172.23.109.181:8091
+[2019-07-09 17:00:07,473] - [rest_client] [123145405480960] - INFO - rebalance params : {'password': 'password', 'ejectedNodes': '', 'user': 'Administrator', 'knownNodes': u'ns_1@172.23.109.181,ns_1@172.23.109.180'}
+[2019-07-09 17:00:07,515] - [rest_client] [123145405480960] - INFO - rebalance operation started
+[2019-07-09 17:00:07,547] - [rest_client] [123145405480960] - INFO - rebalance percentage : 0.00 %
+[2019-07-09 17:00:07,547] - [task] [123145405480960] - INFO - Rebalance - status: running, progress: 0.00%
+[2019-07-09 17:00:17,634] - [task] [123145405480960] - INFO - Rebalance - status: none, progress: 100.00%
+[2019-07-09 17:00:17,667] - [task] [123145405480960] - INFO - rebalancing was completed with progress: 100% in 10.1506550312 sec
+[2019-07-09 17:00:17,715] - [remote_util] [123145401274368] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-07-09 17:00:17,938] - [remote_util] [123145401274368] - INFO - Connected to 172.23.109.181
+[2019-07-09 17:00:18,300] - [remote_util] [123145401274368] - INFO - It could be other operating system.  Go to check at other location
+[2019-07-09 17:00:19,072] - [remote_util] [123145401274368] - INFO - running command.raw on 172.23.109.181: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-07-09 17:00:19,132] - [remote_util] [123145401274368] - INFO - command executed successfully
+[2019-07-09 17:00:19,133] - [fts_base] [123145401274368] - INFO - Enabled diag/eval for non-local hosts from 172.23.109.181
+[2019-07-09 17:00:19,238] - [rest_client] [123145401274368] - ERROR - DELETE http://172.23.109.181:8091/settings/rbac/users/local/cbadminbucket body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "User was not found." auth: Administrator:password
+[2019-07-09 17:00:19,239] - [internal_user] [123145401274368] - INFO - Exception while deleting user. Exception is -"User was not found."
+[2019-07-09 17:00:19,899] - [rest_client] [123145405480960] - INFO - http://172.23.109.181:8091/pools/default/buckets with param: bucketType=membase&evictionPolicy=valueOnly&threadsNumber=3&ramQuotaMB=1476&authType=sasl&name=default&flushEnabled=1&replicaNumber=1&compressionMode=passive&saslPassword=None&replicaIndex=1
+[2019-07-09 17:00:19,932] - [rest_client] [123145405480960] - INFO - 0.03 seconds to create bucket default
+[2019-07-09 17:00:19,932] - [bucket_helper] [123145405480960] - INFO - waiting for memcached bucket : default in 172.23.109.181 to accept set ops
+[2019-07-09 17:00:20,320] - [data_helper] [123145405480960] - INFO - creating direct client 172.23.109.181:11210 default
+[2019-07-09 17:00:20,703] - [data_helper] [123145405480960] - INFO - creating direct client 172.23.109.181:11210 default
+[2019-07-09 17:00:31,937] - [task] [123145405480960] - INFO - bucket 'default' was created with per node RAM quota: 1476
+[2019-07-09 17:00:32,033] - [rest_client] [123145401274368] - INFO - /diag/eval status on 172.23.109.181:8091: True content: "/opt/couchbase/var/lib/couchbase/logs" command: filename:absname(element(2, application:get_env(ns_server,error_logger_mf_dir))).
+[2019-07-09 17:00:32,035] - [remote_util] [123145401274368] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-07-09 17:00:32,249] - [remote_util] [123145401274368] - INFO - Connected to 172.23.109.181
+[2019-07-09 17:00:32,565] - [remote_util] [123145401274368] - INFO - It could be other operating system.  Go to check at other location
+[2019-07-09 17:00:33,300] - [remote_util] [123145401274368] - INFO - running command.raw on 172.23.109.181: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-07-09 17:00:33,417] - [remote_util] [123145401274368] - INFO - command executed successfully
+[2019-07-09 17:00:33,418] - [fts_base] [123145401274368] - INFO - 0
+[2019-07-09 17:00:33,540] - [remote_util] [123145401274368] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-07-09 17:00:33,757] - [remote_util] [123145401274368] - INFO - Connected to 172.23.109.180
+[2019-07-09 17:00:34,133] - [remote_util] [123145401274368] - INFO - It could be other operating system.  Go to check at other location
+[2019-07-09 17:00:34,919] - [remote_util] [123145401274368] - INFO - running command.raw on 172.23.109.180: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-07-09 17:00:35,075] - [remote_util] [123145401274368] - INFO - command executed successfully
+[2019-07-09 17:00:35,076] - [fts_base] [123145401274368] - INFO - 0
+[2019-07-09 17:00:35,194] - [fts_base] [123145401274368] - INFO - {'172.23.109.180': {'panic:': 0}, '172.23.109.181': {'panic:': 0}}
+[2019-07-09 17:00:35,195] - [fts_base] [123145401274368] - INFO - ==== FTSbasetests setup is finished for test #2 index_edit_and_query_custom_analyzer ====
+[2019-07-09 17:00:35,324] - [fts_base] [123145401274368] - INFO - {
+   "mapping": {
+      "default_analyzer": "standard", 
+      "default_datetime_parser": "dateTimeOptional", 
+      "type_field": "type", 
+      "default_mapping": {
+         "default_analyzer": "", 
+         "dynamic": true, 
+         "enabled": false
+      }, 
+      "default_type": "_default", 
+      "analysis": {
+         "analyzers": {
+            "customAnalyzer1": {
+               "type": "custom", 
+               "char_filters": [
+                  "mapping"
+               ], 
+               "tokenizer": "alphanumeric", 
+               "token_filters": [
+                  "cjk_bigram"
+               ]
+            }
+         }, 
+         "token_maps": {
+            "stopwords": {
+               "tokens": [
+                  "i", 
+                  "me", 
+                  "my", 
+                  "myself", 
+                  "we", 
+                  "our", 
+                  "ours", 
+                  "ourselves", 
+                  "you", 
+                  "your", 
+                  "yours", 
+                  "yourself", 
+                  "yourselves", 
+                  "he", 
+                  "him", 
+                  "his", 
+                  "himself", 
+                  "she", 
+                  "her", 
+                  "hers", 
+                  "herself", 
+                  "it", 
+                  "its", 
+                  "itself", 
+                  "they", 
+                  "them", 
+                  "their", 
+                  "theirs", 
+                  "themselves", 
+                  "what", 
+                  "which", 
+                  "who", 
+                  "whom", 
+                  "this", 
+                  "that", 
+                  "these", 
+                  "those", 
+                  "am", 
+                  "is", 
+                  "are", 
+                  "was", 
+                  "were", 
+                  "be", 
+                  "been", 
+                  "being", 
+                  "have", 
+                  "has", 
+                  "had", 
+                  "having", 
+                  "do", 
+                  "does", 
+                  "did", 
+                  "doing", 
+                  "would", 
+                  "should", 
+                  "could", 
+                  "ought", 
+                  "i'm", 
+                  "you're", 
+                  "he's", 
+                  "she's", 
+                  "it's", 
+                  "we're", 
+                  "they're", 
+                  "i've", 
+                  "you've", 
+                  "we've", 
+                  "they've", 
+                  "i'd", 
+                  "you'd", 
+                  "he'd", 
+                  "she'd", 
+                  "we'd", 
+                  "they'd", 
+                  "i'll", 
+                  "you'll", 
+                  "he'll", 
+                  "she'll", 
+                  "we'll", 
+                  "they'll", 
+                  "isn't", 
+                  "aren't", 
+                  "wasn't", 
+                  "weren't", 
+                  "hasn't", 
+                  "haven't", 
+                  "hadn't", 
+                  "doesn't", 
+                  "don't", 
+                  "didn't", 
+                  "won't", 
+                  "wouldn't", 
+                  "shan't", 
+                  "shouldn't", 
+                  "can't", 
+                  "cannot", 
+                  "couldn't", 
+                  "mustn't", 
+                  "let's", 
+                  "that's", 
+                  "who's", 
+                  "what's", 
+                  "here's", 
+                  "there's", 
+                  "when's", 
+                  "where's", 
+                  "why's", 
+                  "how's", 
+                  "a", 
+                  "an", 
+                  "the", 
+                  "and", 
+                  "but", 
+                  "if", 
+                  "or", 
+                  "because", 
+                  "as", 
+                  "until", 
+                  "while", 
+                  "of", 
+                  "at", 
+                  "by", 
+                  "for", 
+                  "with", 
+                  "about", 
+                  "against", 
+                  "between", 
+                  "into", 
+                  "through", 
+                  "during", 
+                  "before", 
+                  "after", 
+                  "above", 
+                  "below", 
+                  "to", 
+                  "from", 
+                  "up", 
+                  "down", 
+                  "in", 
+                  "out", 
+                  "on", 
+                  "off", 
+                  "over", 
+                  "under", 
+                  "again", 
+                  "further", 
+                  "then", 
+                  "once", 
+                  "here", 
+                  "there", 
+                  "when", 
+                  "where", 
+                  "why", 
+                  "how", 
+                  "all", 
+                  "any", 
+                  "both", 
+                  "each", 
+                  "few", 
+                  "more", 
+                  "most", 
+                  "other", 
+                  "some", 
+                  "such", 
+                  "no", 
+                  "nor", 
+                  "not", 
+                  "only", 
+                  "own", 
+                  "same", 
+                  "so", 
+                  "than", 
+                  "too", 
+                  "very"
+               ], 
+               "type": "custom"
+            }
+         }, 
+         "tokenizers": {
+            "alphanumeric": {
+               "regexp": "[0-9a-zA-Z_]*", 
+               "type": "regexp"
+            }
+         }, 
+         "char_filters": {
+            "mapping": {
+               "regexp": "[f]", 
+               "type": "regexp", 
+               "replace": "ph"
+            }
+         }, 
+         "token_filters": {
+            "dict_compound_en": {
+               "dict_token_map": "stop_en", 
+               "type": "dict_compound"
+            }, 
+            "keyword_marker": {
+               "type": "keyword_marker", 
+               "keywords_token_map": "stopwords"
+            }, 
+            "truncate": {
+               "length": 10, 
+               "type": "truncate_token"
+            }, 
+            "dict_compound_fr": {
+               "dict_token_map": "articles_fr", 
+               "type": "dict_compound"
+            }, 
+            "ngram": {
+               "max": 5, 
+               "type": "ngram", 
+               "min": 3
+            }, 
+            "front_edge_ngram": {
+               "max": 5, 
+               "type": "edge_ngram", 
+               "back": false, 
+               "min": 3
+            }, 
+            "back_edge_ngram": {
+               "max": 5, 
+               "type": "edge_ngram", 
+               "back": true, 
+               "min": 3
+            }, 
+            "shingle": {
+               "output_original": "false", 
+               "min": 2, 
+               "filler": "", 
+               "max": 5, 
+               "separator": "", 
+               "type": "shingle"
+            }, 
+            "length": {
+               "max": 5, 
+               "type": "length", 
+               "min": 3
+            }, 
+            "stopwords": {
+               "stop_token_map": "stopwords", 
+               "type": "stop_tokens"
+            }
+         }
+      }, 
+      "default_field": "_all", 
+      "types": {
+         "emp": {
+            "enabled": true, 
+            "dynamic": false, 
+            "properties": {
+               "salary": {
+                  "enabled": true, 
+                  "dynamic": false, 
+                  "properties": {}, 
+                  "fields": [
+                     {
+                        "index": true, 
+                        "name": "salary", 
+                        "include_in_all": true, 
+                        "type": "number", 
+                        "analyzer": "", 
+                        "include_term_vectors": true, 
+                        "store": false
+                     }
+                  ]
+               }, 
+               "name": {
+                  "enabled": true, 
+                  "dynamic": false, 
+                  "properties": {}, 
+                  "fields": [
+                     {
+                        "index": true, 
+                        "name": "name", 
+                        "include_in_all": true, 
+                        "type": "text", 
+                        "analyzer": "customAnalyzer1", 
+                        "include_term_vectors": true, 
+                        "store": false
+                     }
+                  ]
+               }, 
+               "join_date": {
+                  "enabled": true, 
+                  "dynamic": false, 
+                  "properties": {}, 
+                  "fields": [
+                     {
+                        "index": true, 
+                        "name": "join_date", 
+                        "include_in_all": true, 
+                        "type": "datetime", 
+                        "analyzer": "", 
+                        "include_term_vectors": true, 
+                        "store": false
+                     }
+                  ]
+               }, 
+               "manages": {
+                  "enabled": true, 
+                  "dynamic": false, 
+                  "properties": {
+                     "reports": {
+                        "enabled": true, 
+                        "dynamic": false, 
+                        "properties": {}, 
+                        "fields": [
+                           {
+                              "index": true, 
+                              "name": "reports", 
+                              "include_in_all": true, 
+                              "type": "text", 
+                              "analyzer": "customAnalyzer1", 
+                              "include_term_vectors": true, 
+                              "store": false
+                           }
+                        ]
+                     }
+                  }, 
+                  "fields": []
+               }, 
+               "languages_known": {
+                  "enabled": true, 
+                  "dynamic": false, 
+                  "properties": {}, 
+                  "fields": [
+                     {
+                        "index": true, 
+                        "name": "languages_known", 
+                        "include_in_all": true, 
+                        "type": "text", 
+                        "analyzer": "customAnalyzer1", 
+                        "include_term_vectors": true, 
+                        "store": false
+                     }
+                  ]
+               }, 
+               "email": {
+                  "enabled": true, 
+                  "dynamic": false, 
+                  "properties": {}, 
+                  "fields": [
+                     {
+                        "index": true, 
+                        "name": "email", 
+                        "include_in_all": true, 
+                        "type": "text", 
+                        "analyzer": "customAnalyzer1", 
+                        "include_term_vectors": true, 
+                        "store": false
+                     }
+                  ]
+               }
+            }, 
+            "fields": []
+         }
+      }
+   }, 
+   "store": {
+      "mossStoreOptions": {}, 
+      "kvStoreName": "mossStore", 
+      "indexType": "scorch"
+   }
+}
+[2019-07-09 17:00:35,324] - [fts_base] [123145401274368] - INFO - Checking if index already exists ...
+[2019-07-09 17:00:35,442] - [rest_client] [123145401274368] - ERROR - GET http://172.23.109.180:8094/api/index/custom_index body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 400 reason: rest_auth: preparePerms, err: index not found {"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"} auth: Administrator:password
+[2019-07-09 17:00:35,466] - [rest_client] [123145401274368] - ERROR - DELETE http://172.23.109.180:8094/api/index/custom_index body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 400 reason: rest_auth: preparePerms, err: index not found {"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"} auth: Administrator:password
+[2019-07-09 17:00:35,467] - [fts_base] [123145401274368] - INFO - Creating fulltext-index custom_index on 172.23.109.180
+[2019-07-09 17:00:35,467] - [rest_client] [123145401274368] - INFO - {"params": {"mapping": {"default_analyzer": "standard", "default_datetime_parser": "dateTimeOptional", "type_field": "type", "default_mapping": {"default_analyzer": "", "dynamic": true, "enabled": false}, "default_type": "_default", "analysis": {"analyzers": {"customAnalyzer1": {"type": "custom", "char_filters": ["mapping"], "tokenizer": "alphanumeric", "token_filters": ["cjk_bigram"]}}, "token_maps": {"stopwords": {"tokens": ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "would", "should", "could", "ought", "i'm", "you're", "he's", "she's", "it's", "we're", "they're", "i've", "you've", "we've", "they've", "i'd", "you'd", "he'd", "she'd", "we'd", "they'd", "i'll", "you'll", "he'll", "she'll", "we'll", "they'll", "isn't", "aren't", "wasn't", "weren't", "hasn't", "haven't", "hadn't", "doesn't", "don't", "didn't", "won't", "wouldn't", "shan't", "shouldn't", "can't", "cannot", "couldn't", "mustn't", "let's", "that's", "who's", "what's", "here's", "there's", "when's", "where's", "why's", "how's", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very"], "type": "custom"}}, "tokenizers": {"alphanumeric": {"regexp": "[0-9a-zA-Z_]*", "type": "regexp"}}, "char_filters": {"mapping": {"regexp": "[f]", "type": "regexp", "replace": "ph"}}, "token_filters": {"dict_compound_en": {"dict_token_map": "stop_en", "type": "dict_compound"}, "keyword_marker": {"type": "keyword_marker", "keywords_token_map": "stopwords"}, "truncate": {"length": 10, "type": "truncate_token"}, "dict_compound_fr": {"dict_token_map": "articles_fr", "type": "dict_compound"}, "ngram": {"max": 5, "type": "ngram", "min": 3}, "front_edge_ngram": {"max": 5, "type": "edge_ngram", "back": false, "min": 3}, "back_edge_ngram": {"max": 5, "type": "edge_ngram", "back": true, "min": 3}, "shingle": {"output_original": "false", "min": 2, "filler": "", "max": 5, "separator": "", "type": "shingle"}, "length": {"max": 5, "type": "length", "min": 3}, "stopwords": {"stop_token_map": "stopwords", "type": "stop_tokens"}}}, "default_field": "_all", "types": {"emp": {"enabled": true, "dynamic": false, "properties": {"salary": {"enabled": true, "dynamic": false, "properties": {}, "fields": [{"index": true, "name": "salary", "include_in_all": true, "type": "number", "analyzer": "", "include_term_vectors": true, "store": false}]}, "name": {"enabled": true, "dynamic": false, "properties": {}, "fields": [{"index": true, "name": "name", "include_in_all": true, "type": "text", "analyzer": "customAnalyzer1", "include_term_vectors": true, "store": false}]}, "join_date": {"enabled": true, "dynamic": false, "properties": {}, "fields": [{"index": true, "name": "join_date", "include_in_all": true, "type": "datetime", "analyzer": "", "include_term_vectors": true, "store": false}]}, "manages": {"enabled": true, "dynamic": false, "properties": {"reports": {"enabled": true, "dynamic": false, "properties": {}, "fields": [{"index": true, "name": "reports", "include_in_all": true, "type": "text", "analyzer": "customAnalyzer1", "include_term_vectors": true, "store": false}]}}, "fields": []}, "languages_known": {"enabled": true, "dynamic": false, "properties": {}, "fields": [{"index": true, "name": "languages_known", "include_in_all": true, "type": "text", "analyzer": "customAnalyzer1", "include_term_vectors": true, "store": false}]}, "email": {"enabled": true, "dynamic": false, "properties": {}, "fields": [{"index": true, "name": "email", "include_in_all": true, "type": "text", "analyzer": "customAnalyzer1", "include_term_vectors": true, "store": false}]}}, "fields": []}}}, "store": {"mossStoreOptions": {}, "kvStoreName": "mossStore", "indexType": "scorch"}}, "name": "custom_index", "planParams": {"numReplicas": 0, "maxPartitionsPerPIndex": 171}, "sourceName": "default", "sourceUUID": "", "sourceType": "couchbase", "type": "fulltext-index", "uuid": ""}
+[2019-07-09 17:00:35,557] - [rest_client] [123145401274368] - INFO - Index custom_index created
+[2019-07-09 17:00:35,558] - [fts_base] [123145401274368] - INFO - Validating index distribution for custom_index ...
+[2019-07-09 17:00:35,885] - [fts_base] [123145401274368] - INFO - Validated: Number of PIndexes = 6
+[2019-07-09 17:00:35,941] - [fts_base] [123145401274368] - INFO - Validated: Every pIndex serves 171 partitions or lesser
+[2019-07-09 17:00:35,942] - [fts_base] [123145401274368] - INFO - Expecting num of partitions in each node in range 853-1024
+[2019-07-09 17:00:35,942] - [fts_base] [123145401274368] - INFO - Validated: Node 8a4317355f5a5f15f7531804d9eade38 houses 6 pindexes which serve 1024 partitions
+[2019-07-09 17:00:35,998] - [es_base] [123145401274368] - INFO - Creating es_index with mapping {
+   "mappings": {
+      "emp": {
+         "dynamic": false, 
+         "properties": {
+            "salary": {
+               "index": "analyzed", 
+               "type": "float", 
+               "store": false
+            }, 
+            "name": {
+               "index": "analyzed", 
+               "type": "string", 
+               "analyzer": "customAnalyzer1", 
+               "store": false, 
+               "term_vector": "yes"
+            }, 
+            "join_date": {
+               "index": "analyzed", 
+               "type": "date", 
+               "store": false
+            }, 
+            "manages": {
+               "enabled": true, 
+               "dynamic": false, 
+               "properties": {
+                  "reports": {
+                     "index": "analyzed", 
+                     "type": "string", 
+                     "analyzer": "customAnalyzer1", 
+                     "store": false, 
+                     "term_vector": "yes"
+                  }
+               }, 
+               "type": "object"
+            }, 
+            "languages_known": {
+               "index": "analyzed", 
+               "type": "string", 
+               "analyzer": "customAnalyzer1", 
+               "store": false, 
+               "term_vector": "yes"
+            }, 
+            "email": {
+               "index": "analyzed", 
+               "type": "string", 
+               "analyzer": "customAnalyzer1", 
+               "store": false, 
+               "term_vector": "yes"
+            }
+         }
+      }
+   }, 
+   "settings": {
+      "analysis": {
+         "filter": {
+            "stemmer_fr_light": {
+               "type": "stemmer", 
+               "name": "light_french"
+            }, 
+            "stemmer_pt_light": {
+               "type": "stemmer", 
+               "name": "light_portuguese"
+            }, 
+            "truncate": {
+               "length": 10, 
+               "type": "truncate"
+            }, 
+            "ngram": {
+               "max_gram": 5, 
+               "type": "nGram", 
+               "side": "front", 
+               "min_gram": 3
+            }, 
+            "front_edge_ngram": {
+               "max_gram": 5, 
+               "type": "edgeNGram", 
+               "side": "front", 
+               "min_gram": 3
+            }, 
+            "cjk_bigram": {
+               "type": "cjk_bigram"
+            }, 
+            "keyword_marker": {
+               "keywords": [
+                  "i", 
+                  "me", 
+                  "my", 
+                  "myself", 
+                  "we", 
+                  "our", 
+                  "ours", 
+                  "ourselves", 
+                  "you", 
+                  "your", 
+                  "yours", 
+                  "yourself", 
+                  "yourselves", 
+                  "he", 
+                  "him", 
+                  "his", 
+                  "himself", 
+                  "she", 
+                  "her", 
+                  "hers", 
+                  "herself", 
+                  "it", 
+                  "its", 
+                  "itself", 
+                  "they", 
+                  "them", 
+                  "their", 
+                  "theirs", 
+                  "themselves", 
+                  "what", 
+                  "which", 
+                  "who", 
+                  "whom", 
+                  "this", 
+                  "that", 
+                  "these", 
+                  "those", 
+                  "am", 
+                  "is", 
+                  "are", 
+                  "was", 
+                  "were", 
+                  "be", 
+                  "been", 
+                  "being", 
+                  "have", 
+                  "has", 
+                  "had", 
+                  "having", 
+                  "do", 
+                  "does", 
+                  "did", 
+                  "doing", 
+                  "would", 
+                  "should", 
+                  "could", 
+                  "ought", 
+                  "i'm", 
+                  "you're", 
+                  "he's", 
+                  "she's", 
+                  "it's", 
+                  "we're", 
+                  "they're", 
+                  "i've", 
+                  "you've", 
+                  "we've", 
+                  "they've", 
+                  "i'd", 
+                  "you'd", 
+                  "he'd", 
+                  "she'd", 
+                  "we'd", 
+                  "they'd", 
+                  "i'll", 
+                  "you'll", 
+                  "he'll", 
+                  "she'll", 
+                  "we'll", 
+                  "they'll", 
+                  "isn't", 
+                  "aren't", 
+                  "wasn't", 
+                  "weren't", 
+                  "hasn't", 
+                  "haven't", 
+                  "hadn't", 
+                  "doesn't", 
+                  "don't", 
+                  "didn't", 
+                  "won't", 
+                  "wouldn't", 
+                  "shan't", 
+                  "shouldn't", 
+                  "can't", 
+                  "cannot", 
+                  "couldn't", 
+                  "mustn't", 
+                  "let's", 
+                  "that's", 
+                  "who's", 
+                  "what's", 
+                  "here's", 
+                  "there's", 
+                  "when's", 
+                  "where's", 
+                  "why's", 
+                  "how's", 
+                  "a", 
+                  "an", 
+                  "the", 
+                  "and", 
+                  "but", 
+                  "if", 
+                  "or", 
+                  "because", 
+                  "as", 
+                  "until", 
+                  "while", 
+                  "of", 
+                  "at", 
+                  "by", 
+                  "for", 
+                  "with", 
+                  "about", 
+                  "against", 
+                  "between", 
+                  "into", 
+                  "through", 
+                  "during", 
+                  "before", 
+                  "after", 
+                  "above", 
+                  "below", 
+                  "to", 
+                  "from", 
+                  "up", 
+                  "down", 
+                  "in", 
+                  "out", 
+                  "on", 
+                  "off", 
+                  "over", 
+                  "under", 
+                  "again", 
+                  "further", 
+                  "then", 
+                  "once", 
+                  "here", 
+                  "there", 
+                  "when", 
+                  "where", 
+                  "why", 
+                  "how", 
+                  "all", 
+                  "any", 
+                  "both", 
+                  "each", 
+                  "few", 
+                  "more", 
+                  "most", 
+                  "other", 
+                  "some", 
+                  "such", 
+                  "no", 
+                  "nor", 
+                  "not", 
+                  "only", 
+                  "own", 
+                  "same", 
+                  "so", 
+                  "than", 
+                  "too", 
+                  "very"
+               ], 
+               "type": "keyword_marker"
+            }, 
+            "shingle": {
+               "token_separator": "", 
+               "output_unigrams": "false", 
+               "filler_token": "", 
+               "output_unigrams_if_no_shingles": "false", 
+               "min_shingle_size": 2, 
+               "type": "shingle", 
+               "max_shingle_size": 5
+            }, 
+            "stemmer_it_light": {
+               "type": "stemmer", 
+               "name": "light_italian"
+            }, 
+            "stemmer_fr_min": {
+               "type": "stemmer", 
+               "name": "minimal_french"
+            }, 
+            "length": {
+               "max": 5, 
+               "type": "length", 
+               "min": 3
+            }, 
+            "back_edge_ngram": {
+               "max_gram": 5, 
+               "type": "edgeNGram", 
+               "side": "back", 
+               "min_gram": 3
+            }, 
+            "stopwords": {
+               "stopwords": [
+                  "i", 
+                  "me", 
+                  "my", 
+                  "myself", 
+                  "we", 
+                  "our", 
+                  "ours", 
+                  "ourselves", 
+                  "you", 
+                  "your", 
+                  "yours", 
+                  "yourself", 
+                  "yourselves", 
+                  "he", 
+                  "him", 
+                  "his", 
+                  "himself", 
+                  "she", 
+                  "her", 
+                  "hers", 
+                  "herself", 
+                  "it", 
+                  "its", 
+                  "itself", 
+                  "they", 
+                  "them", 
+                  "their", 
+                  "theirs", 
+                  "themselves", 
+                  "what", 
+                  "which", 
+                  "who", 
+                  "whom", 
+                  "this", 
+                  "that", 
+                  "these", 
+                  "those", 
+                  "am", 
+                  "is", 
+                  "are", 
+                  "was", 
+                  "were", 
+                  "be", 
+                  "been", 
+                  "being", 
+                  "have", 
+                  "has", 
+                  "had", 
+                  "having", 
+                  "do", 
+                  "does", 
+                  "did", 
+                  "doing", 
+                  "would", 
+                  "should", 
+                  "could", 
+                  "ought", 
+                  "i'm", 
+                  "you're", 
+                  "he's", 
+                  "she's", 
+                  "it's", 
+                  "we're", 
+                  "they're", 
+                  "i've", 
+                  "you've", 
+                  "we've", 
+                  "they've", 
+                  "i'd", 
+                  "you'd", 
+                  "he'd", 
+                  "she'd", 
+                  "we'd", 
+                  "they'd", 
+                  "i'll", 
+                  "you'll", 
+                  "he'll", 
+                  "she'll", 
+                  "we'll", 
+                  "they'll", 
+                  "isn't", 
+                  "aren't", 
+                  "wasn't", 
+                  "weren't", 
+                  "hasn't", 
+                  "haven't", 
+                  "hadn't", 
+                  "doesn't", 
+                  "don't", 
+                  "didn't", 
+                  "won't", 
+                  "wouldn't", 
+                  "shan't", 
+                  "shouldn't", 
+                  "can't", 
+                  "cannot", 
+                  "couldn't", 
+                  "mustn't", 
+                  "let's", 
+                  "that's", 
+                  "who's", 
+                  "what's", 
+                  "here's", 
+                  "there's", 
+                  "when's", 
+                  "where's", 
+                  "why's", 
+                  "how's", 
+                  "a", 
+                  "an", 
+                  "the", 
+                  "and", 
+                  "but", 
+                  "if", 
+                  "or", 
+                  "because", 
+                  "as", 
+                  "until", 
+                  "while", 
+                  "of", 
+                  "at", 
+                  "by", 
+                  "for", 
+                  "with", 
+                  "about", 
+                  "against", 
+                  "between", 
+                  "into", 
+                  "through", 
+                  "during", 
+                  "before", 
+                  "after", 
+                  "above", 
+                  "below", 
+                  "to", 
+                  "from", 
+                  "up", 
+                  "down", 
+                  "in", 
+                  "out", 
+                  "on", 
+                  "off", 
+                  "over", 
+                  "under", 
+                  "again", 
+                  "further", 
+                  "then", 
+                  "once", 
+                  "here", 
+                  "there", 
+                  "when", 
+                  "where", 
+                  "why", 
+                  "how", 
+                  "all", 
+                  "any", 
+                  "both", 
+                  "each", 
+                  "few", 
+                  "more", 
+                  "most", 
+                  "other", 
+                  "some", 
+                  "such", 
+                  "no", 
+                  "nor", 
+                  "not", 
+                  "only", 
+                  "own", 
+                  "same", 
+                  "so", 
+                  "than", 
+                  "too", 
+                  "very"
+               ], 
+               "type": "stop"
+            }
+         }, 
+         "char_filter": {
+            "mapping": {
+               "type": "mapping", 
+               "mappings": [
+                  "f => ph"
+               ]
+            }
+         }, 
+         "tokenizer": {
+            "alphanumeric": {
+               "pattern": "[^a-zA-Z0-9_]", 
+               "type": "pattern"
+            }
+         }, 
+         "analyzer": {
+            "customAnalyzer1": {
+               "filter": [
+                  "cjk_bigram"
+               ], 
+               "char_filter": [
+                  "mapping"
+               ], 
+               "tokenizer": "alphanumeric"
+            }
+         }
+      }
+   }
+}
+[2019-07-09 17:00:36,472] - [es_base] [123145401274368] - INFO - SUCCESS: ES index created with above mapping
+[2019-07-09 17:00:36,480] - [task] [123145401274368] - INFO - Starting operation 'create' on Elastic Search ...
+[2019-07-09 17:00:36,684] - [data_helper] [123145401274368] - INFO - creating direct client 172.23.109.181:11210 default
+[2019-07-09 17:00:36,945] - [task] [123145439133696] - INFO - 100 documents bulk loaded into ES
+[2019-07-09 17:00:37,169] - [task] [123145439133696] - INFO - ES index count for 'es_index': 100
+[2019-07-09 17:00:37,170] - [fts_base] [123145401274368] - INFO - Loading phase complete!
+[2019-07-09 17:00:37,309] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:00:37,404] - [fts_base] [123145401274368] - INFO - Docs in bucket = 0, docs in FTS index 'custom_index': 100, docs in ES index: 100 
+[2019-07-09 17:00:43,564] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:00:43,649] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 100 
+[2019-07-09 17:00:43,983] - [task] [123145405480960] - INFO - ----------------------------------------------------- Query # 1 ----------------------------------------------------
+[2019-07-09 17:00:44,034] - [fts_base] [123145405480960] - INFO - Running query {"indexName": "custom_index", "from": 0, "fields": [], "explain": false, "ctl": {"timeout": 60000, "consistency": {"vectors": {}, "level": ""}}, "query": {"conjuncts": [{"field": "manages.reports", "match": "Hanna Drucilla"}, {"field": "languages_known", "prefix": "Hind"}, {"inclusive_start": true, "field": "join_date", "inclusive_end": true, "end": "2019-07-09T17:00:43.752676", "start": "1959-02-23T23:31:00"}, {"inclusive_max": false, "field": "salary", "max": 65989.0, "inclusive_min": false, "min": 65000.0}]}, "size": 10000000} on node: 172.23.109.180:
+[2019-07-09 17:00:44,093] - [rest_client] [123145405480960] - ERROR - POST http://172.23.109.180:8094/api/index/custom_index/query body: {"indexName": "custom_index", "from": 0, "fields": [], "explain": false, "ctl": {"timeout": 60000, "consistency": {"vectors": {}, "level": ""}}, "query": {"conjuncts": [{"field": "manages.reports", "match": "Hanna Drucilla"}, {"field": "languages_known", "prefix": "Hind"}, {"inclusive_start": true, "field": "join_date", "inclusive_end": true, "end": "2019-07-09T17:00:43.752676", "start": "1959-02-23T23:31:00"}, {"inclusive_max": false, "field": "salary", "max": 65989.0, "inclusive_min": false, "min": 65000.0}]}, "size": 10000000} headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 400 reason: rest_index: Query, indexName: custom_index, err: bleve: bleveMaxResultWindow exceeded, from: 0, size: 10000000, bleveMaxResultWindow: 10000 {"error":"rest_index: Query, indexName: custom_index, err: bleve: bleveMaxResultWindow exceeded, from: 0, size: 10000000, bleveMaxResultWindow: 10000","request":{"ctl":{"consistency":{"level":"","vectors":{}},"timeout":60000},"explain":false,"fields":[],"from":0,"indexName":"custom_index","query":{"conjuncts":[{"field":"manages.reports","match":"Hanna Drucilla"},{"field":"languages_known","prefix":"Hind"},{"end":"2019-07-09T17:00:43.752676","field":"join_date","inclusive_end":true,"inclusive_start":true,"start":"1959-02-23T23:31:00"},{"field":"salary","inclusive_max":false,"inclusive_min":false,"max":65989,"min":65000}]},"size":10000000},"status":"fail"} auth: Administrator:password
+[2019-07-09 17:00:44,094] - [fts_base] [123145405480960] - ERROR - Error running query: 'NoneType' object is not iterable
+[2019-07-09 17:00:44,095] - [task] [123145405480960] - INFO - Status: {}
+[2019-07-09 17:00:44,095] - [task] [123145405480960] - INFO - FTS hits for query: {"conjuncts": [{"field": "manages.reports", "match": "Hanna Drucilla"}, {"field": "languages_known", "prefix": "Hind"}, {"inclusive_start": true, "field": "join_date", "inclusive_end": true, "end": "2019-07-09T17:00:43.752676", "start": "1959-02-23T23:31:00"}, {"inclusive_max": false, "field": "salary", "max": 65989.0, "inclusive_min": false, "min": 65000.0}]} is -1 (took 0.0ms)
+[2019-07-09 17:00:44,096] - [es_base] [123145405480960] - INFO - ES query '{u'query': {u'bool': {u'must': [{u'match': {u'manages.reports': u'Hanna Drucilla'}}, {u'prefix': {u'languages_known': u'Hind'}}, {u'filtered': {u'filter': {u'range': {u'join_date': {u'gte': u'1959-02-23T23:31:00', u'lte': u'2019-07-09T17:00:43.752676'}}}}}, {u'filtered': {u'filter': {u'range': {u'salary': {u'lt': 65989.0, u'gt': 65000.0}}}}}]}}}' 
+[2019-07-09 17:00:44,205] - [task] [123145405480960] - INFO - ES hits for query: {"query": {"bool": {"must": [{"match": {"manages.reports": "Hanna Drucilla"}}, {"prefix": {"languages_known": "Hind"}}, {"filtered": {"filter": {"range": {"join_date": {"gte": "1959-02-23T23:31:00", "lte": "2019-07-09T17:00:43.752676"}}}}}, {"filtered": {"filter": {"range": {"salary": {"lt": 65989.0, "gt": 65000.0}}}}}]}}} on es_index is 0 (took 80ms)
+[2019-07-09 17:00:44,207] - [stable_topology_fts] [123145401274368] - ERROR - 1 out of 1 queries failed! - [1]
+[2019-07-09 17:00:44,207] - [stable_topology_fts] [123145401274368] - INFO - Editing custom index with new custom analyzer...
+[2019-07-09 17:00:44,429] - [fts_base] [123145401274368] - INFO - Updating fulltext-index custom_index on 172.23.109.180
+[2019-07-09 17:00:44,431] - [rest_client] [123145401274368] - INFO - {
+   "params": {
+      "mapping": {
+         "default_analyzer": "standard", 
+         "default_datetime_parser": "dateTimeOptional", 
+         "type_field": "type", 
+         "default_mapping": {
+            "default_analyzer": "", 
+            "dynamic": true, 
+            "enabled": false
+         }, 
+         "default_type": "_default", 
+         "analysis": {
+            "analyzers": {
+               "customAnalyzer1": {
+                  "type": "custom", 
+                  "char_filters": [
+                     "mapping"
+                  ], 
+                  "tokenizer": "web", 
+                  "token_filters": [
+                     "ngram"
+                  ]
+               }
+            }, 
+            "token_maps": {
+               "stopwords": {
+                  "tokens": [
+                     "i", 
+                     "me", 
+                     "my", 
+                     "myself", 
+                     "we", 
+                     "our", 
+                     "ours", 
+                     "ourselves", 
+                     "you", 
+                     "your", 
+                     "yours", 
+                     "yourself", 
+                     "yourselves", 
+                     "he", 
+                     "him", 
+                     "his", 
+                     "himself", 
+                     "she", 
+                     "her", 
+                     "hers", 
+                     "herself", 
+                     "it", 
+                     "its", 
+                     "itself", 
+                     "they", 
+                     "them", 
+                     "their", 
+                     "theirs", 
+                     "themselves", 
+                     "what", 
+                     "which", 
+                     "who", 
+                     "whom", 
+                     "this", 
+                     "that", 
+                     "these", 
+                     "those", 
+                     "am", 
+                     "is", 
+                     "are", 
+                     "was", 
+                     "were", 
+                     "be", 
+                     "been", 
+                     "being", 
+                     "have", 
+                     "has", 
+                     "had", 
+                     "having", 
+                     "do", 
+                     "does", 
+                     "did", 
+                     "doing", 
+                     "would", 
+                     "should", 
+                     "could", 
+                     "ought", 
+                     "i'm", 
+                     "you're", 
+                     "he's", 
+                     "she's", 
+                     "it's", 
+                     "we're", 
+                     "they're", 
+                     "i've", 
+                     "you've", 
+                     "we've", 
+                     "they've", 
+                     "i'd", 
+                     "you'd", 
+                     "he'd", 
+                     "she'd", 
+                     "we'd", 
+                     "they'd", 
+                     "i'll", 
+                     "you'll", 
+                     "he'll", 
+                     "she'll", 
+                     "we'll", 
+                     "they'll", 
+                     "isn't", 
+                     "aren't", 
+                     "wasn't", 
+                     "weren't", 
+                     "hasn't", 
+                     "haven't", 
+                     "hadn't", 
+                     "doesn't", 
+                     "don't", 
+                     "didn't", 
+                     "won't", 
+                     "wouldn't", 
+                     "shan't", 
+                     "shouldn't", 
+                     "can't", 
+                     "cannot", 
+                     "couldn't", 
+                     "mustn't", 
+                     "let's", 
+                     "that's", 
+                     "who's", 
+                     "what's", 
+                     "here's", 
+                     "there's", 
+                     "when's", 
+                     "where's", 
+                     "why's", 
+                     "how's", 
+                     "a", 
+                     "an", 
+                     "the", 
+                     "and", 
+                     "but", 
+                     "if", 
+                     "or", 
+                     "because", 
+                     "as", 
+                     "until", 
+                     "while", 
+                     "of", 
+                     "at", 
+                     "by", 
+                     "for", 
+                     "with", 
+                     "about", 
+                     "against", 
+                     "between", 
+                     "into", 
+                     "through", 
+                     "during", 
+                     "before", 
+                     "after", 
+                     "above", 
+                     "below", 
+                     "to", 
+                     "from", 
+                     "up", 
+                     "down", 
+                     "in", 
+                     "out", 
+                     "on", 
+                     "off", 
+                     "over", 
+                     "under", 
+                     "again", 
+                     "further", 
+                     "then", 
+                     "once", 
+                     "here", 
+                     "there", 
+                     "when", 
+                     "where", 
+                     "why", 
+                     "how", 
+                     "all", 
+                     "any", 
+                     "both", 
+                     "each", 
+                     "few", 
+                     "more", 
+                     "most", 
+                     "other", 
+                     "some", 
+                     "such", 
+                     "no", 
+                     "nor", 
+                     "not", 
+                     "only", 
+                     "own", 
+                     "same", 
+                     "so", 
+                     "than", 
+                     "too", 
+                     "very"
+                  ], 
+                  "type": "custom"
+               }
+            }, 
+            "tokenizers": {
+               "alphanumeric": {
+                  "regexp": "[0-9a-zA-Z_]*", 
+                  "type": "regexp"
+               }
+            }, 
+            "char_filters": {
+               "mapping": {
+                  "regexp": "[f]", 
+                  "type": "regexp", 
+                  "replace": "ph"
+               }
+            }, 
+            "token_filters": {
+               "dict_compound_en": {
+                  "dict_token_map": "stop_en", 
+                  "type": "dict_compound"
+               }, 
+               "keyword_marker": {
+                  "type": "keyword_marker", 
+                  "keywords_token_map": "stopwords"
+               }, 
+               "truncate": {
+                  "length": 10, 
+                  "type": "truncate_token"
+               }, 
+               "dict_compound_fr": {
+                  "dict_token_map": "articles_fr", 
+                  "type": "dict_compound"
+               }, 
+               "ngram": {
+                  "max": 5, 
+                  "type": "ngram", 
+                  "min": 3
+               }, 
+               "front_edge_ngram": {
+                  "max": 5, 
+                  "type": "edge_ngram", 
+                  "back": false, 
+                  "min": 3
+               }, 
+               "back_edge_ngram": {
+                  "max": 5, 
+                  "type": "edge_ngram", 
+                  "back": true, 
+                  "min": 3
+               }, 
+               "shingle": {
+                  "output_original": "false", 
+                  "min": 2, 
+                  "filler": "", 
+                  "max": 5, 
+                  "separator": "", 
+                  "type": "shingle"
+               }, 
+               "length": {
+                  "max": 5, 
+                  "type": "length", 
+                  "min": 3
+               }, 
+               "stopwords": {
+                  "stop_token_map": "stopwords", 
+                  "type": "stop_tokens"
+               }
+            }
+         }, 
+         "default_field": "_all", 
+         "types": {
+            "emp": {
+               "enabled": true, 
+               "dynamic": false, 
+               "properties": {
+                  "salary": {
+                     "enabled": true, 
+                     "dynamic": false, 
+                     "properties": {}, 
+                     "fields": [
+                        {
+                           "index": true, 
+                           "name": "salary", 
+                           "include_in_all": true, 
+                           "type": "number", 
+                           "analyzer": "", 
+                           "include_term_vectors": true, 
+                           "store": false
+                        }
+                     ]
+                  }, 
+                  "name": {
+                     "enabled": true, 
+                     "dynamic": false, 
+                     "properties": {}, 
+                     "fields": [
+                        {
+                           "index": true, 
+                           "name": "name", 
+                           "include_in_all": true, 
+                           "type": "text", 
+                           "analyzer": "customAnalyzer1", 
+                           "include_term_vectors": true, 
+                           "store": false
+                        }
+                     ]
+                  }, 
+                  "join_date": {
+                     "enabled": true, 
+                     "dynamic": false, 
+                     "properties": {}, 
+                     "fields": [
+                        {
+                           "index": true, 
+                           "name": "join_date", 
+                           "include_in_all": true, 
+                           "type": "datetime", 
+                           "analyzer": "", 
+                           "include_term_vectors": true, 
+                           "store": false
+                        }
+                     ]
+                  }, 
+                  "manages": {
+                     "enabled": true, 
+                     "dynamic": false, 
+                     "properties": {
+                        "reports": {
+                           "enabled": true, 
+                           "dynamic": false, 
+                           "properties": {}, 
+                           "fields": [
+                              {
+                                 "index": true, 
+                                 "name": "reports", 
+                                 "include_in_all": true, 
+                                 "type": "text", 
+                                 "analyzer": "customAnalyzer1", 
+                                 "include_term_vectors": true, 
+                                 "store": false
+                              }
+                           ]
+                        }
+                     }, 
+                     "fields": []
+                  }, 
+                  "languages_known": {
+                     "enabled": true, 
+                     "dynamic": false, 
+                     "properties": {}, 
+                     "fields": [
+                        {
+                           "index": true, 
+                           "name": "languages_known", 
+                           "include_in_all": true, 
+                           "type": "text", 
+                           "analyzer": "customAnalyzer1", 
+                           "include_term_vectors": true, 
+                           "store": false
+                        }
+                     ]
+                  }, 
+                  "email": {
+                     "enabled": true, 
+                     "dynamic": false, 
+                     "properties": {}, 
+                     "fields": [
+                        {
+                           "index": true, 
+                           "name": "email", 
+                           "include_in_all": true, 
+                           "type": "text", 
+                           "analyzer": "customAnalyzer1", 
+                           "include_term_vectors": true, 
+                           "store": false
+                        }
+                     ]
+                  }
+               }, 
+               "fields": []
+            }
+         }
+      }, 
+      "store": {
+         "mossStoreOptions": {}, 
+         "kvStoreName": "mossStore", 
+         "indexType": "scorch"
+      }
+   }, 
+   "name": "custom_index", 
+   "planParams": {
+      "numReplicas": 0, 
+      "maxPartitionsPerPIndex": 171
+   }, 
+   "sourceName": "default", 
+   "sourceUUID": "", 
+   "sourceType": "couchbase", 
+   "type": "fulltext-index", 
+   "uuid": "307d544d5e124318"
+}
+[2019-07-09 17:00:44,497] - [rest_client] [123145401274368] - INFO - Index/alias custom_index updated
+[2019-07-09 17:00:44,497] - [fts_base] [123145401274368] - INFO - sleeping for 200
+[2019-07-09 17:04:04,558] - [es_base] [123145401274368] - INFO - Creating es_index with mapping {
+   "mappings": {
+      "emp": {
+         "dynamic": false, 
+         "properties": {
+            "salary": {
+               "index": "analyzed", 
+               "type": "float", 
+               "store": false
+            }, 
+            "name": {
+               "index": "analyzed", 
+               "type": "string", 
+               "analyzer": "customAnalyzer1", 
+               "store": false, 
+               "term_vector": "yes"
+            }, 
+            "join_date": {
+               "index": "analyzed", 
+               "type": "date", 
+               "store": false
+            }, 
+            "manages": {
+               "enabled": true, 
+               "dynamic": false, 
+               "properties": {
+                  "reports": {
+                     "index": "analyzed", 
+                     "type": "string", 
+                     "analyzer": "customAnalyzer1", 
+                     "store": false, 
+                     "term_vector": "yes"
+                  }
+               }, 
+               "type": "object"
+            }, 
+            "languages_known": {
+               "index": "analyzed", 
+               "type": "string", 
+               "analyzer": "customAnalyzer1", 
+               "store": false, 
+               "term_vector": "yes"
+            }, 
+            "email": {
+               "index": "analyzed", 
+               "type": "string", 
+               "analyzer": "customAnalyzer1", 
+               "store": false, 
+               "term_vector": "yes"
+            }
+         }
+      }
+   }, 
+   "settings": {
+      "analysis": {
+         "filter": {
+            "stemmer_fr_light": {
+               "type": "stemmer", 
+               "name": "light_french"
+            }, 
+            "stemmer_pt_light": {
+               "type": "stemmer", 
+               "name": "light_portuguese"
+            }, 
+            "truncate": {
+               "length": 10, 
+               "type": "truncate"
+            }, 
+            "ngram": {
+               "max_gram": 5, 
+               "type": "nGram", 
+               "side": "front", 
+               "min_gram": 3
+            }, 
+            "front_edge_ngram": {
+               "max_gram": 5, 
+               "type": "edgeNGram", 
+               "side": "front", 
+               "min_gram": 3
+            }, 
+            "cjk_bigram": {
+               "type": "cjk_bigram"
+            }, 
+            "keyword_marker": {
+               "keywords": [
+                  "i", 
+                  "me", 
+                  "my", 
+                  "myself", 
+                  "we", 
+                  "our", 
+                  "ours", 
+                  "ourselves", 
+                  "you", 
+                  "your", 
+                  "yours", 
+                  "yourself", 
+                  "yourselves", 
+                  "he", 
+                  "him", 
+                  "his", 
+                  "himself", 
+                  "she", 
+                  "her", 
+                  "hers", 
+                  "herself", 
+                  "it", 
+                  "its", 
+                  "itself", 
+                  "they", 
+                  "them", 
+                  "their", 
+                  "theirs", 
+                  "themselves", 
+                  "what", 
+                  "which", 
+                  "who", 
+                  "whom", 
+                  "this", 
+                  "that", 
+                  "these", 
+                  "those", 
+                  "am", 
+                  "is", 
+                  "are", 
+                  "was", 
+                  "were", 
+                  "be", 
+                  "been", 
+                  "being", 
+                  "have", 
+                  "has", 
+                  "had", 
+                  "having", 
+                  "do", 
+                  "does", 
+                  "did", 
+                  "doing", 
+                  "would", 
+                  "should", 
+                  "could", 
+                  "ought", 
+                  "i'm", 
+                  "you're", 
+                  "he's", 
+                  "she's", 
+                  "it's", 
+                  "we're", 
+                  "they're", 
+                  "i've", 
+                  "you've", 
+                  "we've", 
+                  "they've", 
+                  "i'd", 
+                  "you'd", 
+                  "he'd", 
+                  "she'd", 
+                  "we'd", 
+                  "they'd", 
+                  "i'll", 
+                  "you'll", 
+                  "he'll", 
+                  "she'll", 
+                  "we'll", 
+                  "they'll", 
+                  "isn't", 
+                  "aren't", 
+                  "wasn't", 
+                  "weren't", 
+                  "hasn't", 
+                  "haven't", 
+                  "hadn't", 
+                  "doesn't", 
+                  "don't", 
+                  "didn't", 
+                  "won't", 
+                  "wouldn't", 
+                  "shan't", 
+                  "shouldn't", 
+                  "can't", 
+                  "cannot", 
+                  "couldn't", 
+                  "mustn't", 
+                  "let's", 
+                  "that's", 
+                  "who's", 
+                  "what's", 
+                  "here's", 
+                  "there's", 
+                  "when's", 
+                  "where's", 
+                  "why's", 
+                  "how's", 
+                  "a", 
+                  "an", 
+                  "the", 
+                  "and", 
+                  "but", 
+                  "if", 
+                  "or", 
+                  "because", 
+                  "as", 
+                  "until", 
+                  "while", 
+                  "of", 
+                  "at", 
+                  "by", 
+                  "for", 
+                  "with", 
+                  "about", 
+                  "against", 
+                  "between", 
+                  "into", 
+                  "through", 
+                  "during", 
+                  "before", 
+                  "after", 
+                  "above", 
+                  "below", 
+                  "to", 
+                  "from", 
+                  "up", 
+                  "down", 
+                  "in", 
+                  "out", 
+                  "on", 
+                  "off", 
+                  "over", 
+                  "under", 
+                  "again", 
+                  "further", 
+                  "then", 
+                  "once", 
+                  "here", 
+                  "there", 
+                  "when", 
+                  "where", 
+                  "why", 
+                  "how", 
+                  "all", 
+                  "any", 
+                  "both", 
+                  "each", 
+                  "few", 
+                  "more", 
+                  "most", 
+                  "other", 
+                  "some", 
+                  "such", 
+                  "no", 
+                  "nor", 
+                  "not", 
+                  "only", 
+                  "own", 
+                  "same", 
+                  "so", 
+                  "than", 
+                  "too", 
+                  "very"
+               ], 
+               "type": "keyword_marker"
+            }, 
+            "shingle": {
+               "token_separator": "", 
+               "output_unigrams": "false", 
+               "filler_token": "", 
+               "output_unigrams_if_no_shingles": "false", 
+               "min_shingle_size": 2, 
+               "type": "shingle", 
+               "max_shingle_size": 5
+            }, 
+            "stemmer_it_light": {
+               "type": "stemmer", 
+               "name": "light_italian"
+            }, 
+            "stemmer_fr_min": {
+               "type": "stemmer", 
+               "name": "minimal_french"
+            }, 
+            "length": {
+               "max": 5, 
+               "type": "length", 
+               "min": 3
+            }, 
+            "back_edge_ngram": {
+               "max_gram": 5, 
+               "type": "edgeNGram", 
+               "side": "back", 
+               "min_gram": 3
+            }, 
+            "stopwords": {
+               "stopwords": [
+                  "i", 
+                  "me", 
+                  "my", 
+                  "myself", 
+                  "we", 
+                  "our", 
+                  "ours", 
+                  "ourselves", 
+                  "you", 
+                  "your", 
+                  "yours", 
+                  "yourself", 
+                  "yourselves", 
+                  "he", 
+                  "him", 
+                  "his", 
+                  "himself", 
+                  "she", 
+                  "her", 
+                  "hers", 
+                  "herself", 
+                  "it", 
+                  "its", 
+                  "itself", 
+                  "they", 
+                  "them", 
+                  "their", 
+                  "theirs", 
+                  "themselves", 
+                  "what", 
+                  "which", 
+                  "who", 
+                  "whom", 
+                  "this", 
+                  "that", 
+                  "these", 
+                  "those", 
+                  "am", 
+                  "is", 
+                  "are", 
+                  "was", 
+                  "were", 
+                  "be", 
+                  "been", 
+                  "being", 
+                  "have", 
+                  "has", 
+                  "had", 
+                  "having", 
+                  "do", 
+                  "does", 
+                  "did", 
+                  "doing", 
+                  "would", 
+                  "should", 
+                  "could", 
+                  "ought", 
+                  "i'm", 
+                  "you're", 
+                  "he's", 
+                  "she's", 
+                  "it's", 
+                  "we're", 
+                  "they're", 
+                  "i've", 
+                  "you've", 
+                  "we've", 
+                  "they've", 
+                  "i'd", 
+                  "you'd", 
+                  "he'd", 
+                  "she'd", 
+                  "we'd", 
+                  "they'd", 
+                  "i'll", 
+                  "you'll", 
+                  "he'll", 
+                  "she'll", 
+                  "we'll", 
+                  "they'll", 
+                  "isn't", 
+                  "aren't", 
+                  "wasn't", 
+                  "weren't", 
+                  "hasn't", 
+                  "haven't", 
+                  "hadn't", 
+                  "doesn't", 
+                  "don't", 
+                  "didn't", 
+                  "won't", 
+                  "wouldn't", 
+                  "shan't", 
+                  "shouldn't", 
+                  "can't", 
+                  "cannot", 
+                  "couldn't", 
+                  "mustn't", 
+                  "let's", 
+                  "that's", 
+                  "who's", 
+                  "what's", 
+                  "here's", 
+                  "there's", 
+                  "when's", 
+                  "where's", 
+                  "why's", 
+                  "how's", 
+                  "a", 
+                  "an", 
+                  "the", 
+                  "and", 
+                  "but", 
+                  "if", 
+                  "or", 
+                  "because", 
+                  "as", 
+                  "until", 
+                  "while", 
+                  "of", 
+                  "at", 
+                  "by", 
+                  "for", 
+                  "with", 
+                  "about", 
+                  "against", 
+                  "between", 
+                  "into", 
+                  "through", 
+                  "during", 
+                  "before", 
+                  "after", 
+                  "above", 
+                  "below", 
+                  "to", 
+                  "from", 
+                  "up", 
+                  "down", 
+                  "in", 
+                  "out", 
+                  "on", 
+                  "off", 
+                  "over", 
+                  "under", 
+                  "again", 
+                  "further", 
+                  "then", 
+                  "once", 
+                  "here", 
+                  "there", 
+                  "when", 
+                  "where", 
+                  "why", 
+                  "how", 
+                  "all", 
+                  "any", 
+                  "both", 
+                  "each", 
+                  "few", 
+                  "more", 
+                  "most", 
+                  "other", 
+                  "some", 
+                  "such", 
+                  "no", 
+                  "nor", 
+                  "not", 
+                  "only", 
+                  "own", 
+                  "same", 
+                  "so", 
+                  "than", 
+                  "too", 
+                  "very"
+               ], 
+               "type": "stop"
+            }
+         }, 
+         "char_filter": {
+            "mapping": {
+               "type": "mapping", 
+               "mappings": [
+                  "f => ph"
+               ]
+            }
+         }, 
+         "tokenizer": {
+            "alphanumeric": {
+               "pattern": "[^a-zA-Z0-9_]", 
+               "type": "pattern"
+            }
+         }, 
+         "analyzer": {
+            "customAnalyzer1": {
+               "filter": [
+                  "ngram"
+               ], 
+               "char_filter": [
+                  "mapping"
+               ], 
+               "tokenizer": "uax_url_email"
+            }
+         }
+      }
+   }
+}
+[2019-07-09 17:04:04,736] - [es_base] [123145401274368] - INFO - SUCCESS: ES index created with above mapping
+[2019-07-09 17:04:04,886] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:04:05,016] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:04:11,157] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:04:11,267] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:04:17,417] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:04:17,523] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:04:23,679] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:04:23,799] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:04:30,019] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:04:30,173] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:04:36,317] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:04:36,437] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:04:42,586] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:04:42,707] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:04:48,855] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:04:48,969] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:04:55,123] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:04:55,253] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:05:01,392] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:05:01,497] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:05:07,633] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:05:07,758] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:05:13,905] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:05:14,023] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:05:20,160] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:05:20,281] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:05:26,428] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:05:26,555] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:05:32,709] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:05:32,829] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:05:38,972] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:05:39,090] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:05:45,218] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:05:45,342] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:05:51,497] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:05:51,632] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:05:57,791] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:05:57,906] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:06:04,062] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:06:04,186] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:06:10,420] - [rest_client] [123145401274368] - INFO - http://172.23.109.181:8091/pools/default/buckets/default/stats?zoom=minute
+[2019-07-09 17:06:10,542] - [fts_base] [123145401274368] - INFO - Docs in bucket = 100, docs in FTS index 'custom_index': 100, docs in ES index: 0 
+[2019-07-09 17:06:16,662] - [task] [123145405480960] - INFO - ----------------------------------------------------- Query # 1 ----------------------------------------------------
+[2019-07-09 17:06:16,720] - [fts_base] [123145405480960] - INFO - Running query {"indexName": "custom_index", "from": 0, "fields": [], "explain": false, "ctl": {"timeout": 60000, "consistency": {"vectors": {}, "level": ""}}, "query": {"conjuncts": [{"field": "manages.reports", "match": "Hanna Drucilla"}, {"field": "languages_known", "prefix": "Hind"}, {"inclusive_start": true, "field": "join_date", "inclusive_end": true, "end": "2019-07-09T17:00:43.752676", "start": "1959-02-23T23:31:00"}, {"inclusive_max": false, "field": "salary", "max": 65989.0, "inclusive_min": false, "min": 65000.0}]}, "size": 10000000} on node: 172.23.109.180:
+[2019-07-09 17:06:16,777] - [rest_client] [123145405480960] - ERROR - POST http://172.23.109.180:8094/api/index/custom_index/query body: {"indexName": "custom_index", "from": 0, "fields": [], "explain": false, "ctl": {"timeout": 60000, "consistency": {"vectors": {}, "level": ""}}, "query": {"conjuncts": [{"field": "manages.reports", "match": "Hanna Drucilla"}, {"field": "languages_known", "prefix": "Hind"}, {"inclusive_start": true, "field": "join_date", "inclusive_end": true, "end": "2019-07-09T17:00:43.752676", "start": "1959-02-23T23:31:00"}, {"inclusive_max": false, "field": "salary", "max": 65989.0, "inclusive_min": false, "min": 65000.0}]}, "size": 10000000} headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 400 reason: rest_index: Query, indexName: custom_index, err: bleve: bleveMaxResultWindow exceeded, from: 0, size: 10000000, bleveMaxResultWindow: 10000 {"error":"rest_index: Query, indexName: custom_index, err: bleve: bleveMaxResultWindow exceeded, from: 0, size: 10000000, bleveMaxResultWindow: 10000","request":{"ctl":{"consistency":{"level":"","vectors":{}},"timeout":60000},"explain":false,"fields":[],"from":0,"indexName":"custom_index","query":{"conjuncts":[{"field":"manages.reports","match":"Hanna Drucilla"},{"field":"languages_known","prefix":"Hind"},{"end":"2019-07-09T17:00:43.752676","field":"join_date","inclusive_end":true,"inclusive_start":true,"start":"1959-02-23T23:31:00"},{"field":"salary","inclusive_max":false,"inclusive_min":false,"max":65989,"min":65000}]},"size":10000000},"status":"fail"} auth: Administrator:password
+[2019-07-09 17:06:16,778] - [fts_base] [123145405480960] - ERROR - Error running query: 'NoneType' object is not iterable
+[2019-07-09 17:06:16,778] - [task] [123145405480960] - INFO - Status: {}
+[2019-07-09 17:06:16,779] - [task] [123145405480960] - INFO - FTS hits for query: {"conjuncts": [{"field": "manages.reports", "match": "Hanna Drucilla"}, {"field": "languages_known", "prefix": "Hind"}, {"inclusive_start": true, "field": "join_date", "inclusive_end": true, "end": "2019-07-09T17:00:43.752676", "start": "1959-02-23T23:31:00"}, {"inclusive_max": false, "field": "salary", "max": 65989.0, "inclusive_min": false, "min": 65000.0}]} is -1 (took 0.0ms)
+[2019-07-09 17:06:16,779] - [es_base] [123145405480960] - INFO - ES query '{u'query': {u'bool': {u'must': [{u'match': {u'manages.reports': u'Hanna Drucilla'}}, {u'prefix': {u'languages_known': u'Hind'}}, {u'filtered': {u'filter': {u'range': {u'join_date': {u'gte': u'1959-02-23T23:31:00', u'lte': u'2019-07-09T17:00:43.752676'}}}}}, {u'filtered': {u'filter': {u'range': {u'salary': {u'lt': 65989.0, u'gt': 65000.0}}}}}]}}}' 
+[2019-07-09 17:06:16,829] - [task] [123145405480960] - INFO - ES hits for query: {"query": {"bool": {"must": [{"match": {"manages.reports": "Hanna Drucilla"}}, {"prefix": {"languages_known": "Hind"}}, {"filtered": {"filter": {"range": {"join_date": {"gte": "1959-02-23T23:31:00", "lte": "2019-07-09T17:00:43.752676"}}}}}, {"filtered": {"filter": {"range": {"salary": {"lt": 65989.0, "gt": 65000.0}}}}}]}}} on es_index is 0 (took 28ms)
+[2019-07-09 17:06:16,829] - [task] [123145405480960] - INFO - Skipping N1QL result validation since FTS results are - -1 and es results are - 0.
+[2019-07-09 17:06:16,830] - [stable_topology_fts] [123145401274368] - ERROR - 1 out of 1 queries failed! - [1]
+[2019-07-09 17:06:16,884] - [rest_client] [123145401274368] - INFO - /diag/eval status on 172.23.109.181:8091: True content: "/opt/couchbase/var/lib/couchbase/logs" command: filename:absname(element(2, application:get_env(ns_server,error_logger_mf_dir))).
+[2019-07-09 17:06:16,887] - [remote_util] [123145401274368] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-07-09 17:06:17,107] - [remote_util] [123145401274368] - INFO - Connected to 172.23.109.181
+[2019-07-09 17:06:17,461] - [remote_util] [123145401274368] - INFO - It could be other operating system.  Go to check at other location
+[2019-07-09 17:06:18,285] - [remote_util] [123145401274368] - INFO - running command.raw on 172.23.109.181: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-07-09 17:06:18,402] - [remote_util] [123145401274368] - INFO - command executed successfully
+[2019-07-09 17:06:18,403] - [fts_base] [123145401274368] - INFO - 0
+[2019-07-09 17:06:18,404] - [fts_base] [123145401274368] - INFO - Initial 'panic:' count on 172.23.109.181 :0, now :0
+[2019-07-09 17:06:18,533] - [remote_util] [123145401274368] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-07-09 17:06:18,751] - [remote_util] [123145401274368] - INFO - Connected to 172.23.109.180
+[2019-07-09 17:06:19,111] - [remote_util] [123145401274368] - INFO - It could be other operating system.  Go to check at other location
+[2019-07-09 17:06:19,872] - [remote_util] [123145401274368] - INFO - running command.raw on 172.23.109.180: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-07-09 17:06:19,997] - [remote_util] [123145401274368] - INFO - command executed successfully
+[2019-07-09 17:06:19,997] - [fts_base] [123145401274368] - INFO - 0
+[2019-07-09 17:06:19,998] - [fts_base] [123145401274368] - INFO - Initial 'panic:' count on 172.23.109.180 :0, now :0
+[2019-07-09 17:06:20,127] - [fts_base] [123145401274368] - INFO - Collecting logs @ 172.23.109.181
+[2019-07-09 17:06:20,128] - [remote_util] [123145401274368] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-07-09 17:06:20,352] - [remote_util] [123145401274368] - INFO - Connected to 172.23.109.181
+[2019-07-09 17:06:20,699] - [remote_util] [123145401274368] - INFO - It could be other operating system.  Go to check at other location
+[2019-07-09 17:06:21,525] - [remote_util] [123145401274368] - INFO - running command.raw on 172.23.109.181: /opt/couchbase/bin/cbcollect_info 172.23.109.181-20190709-1706-diag.zip 
+[2019-07-09 17:08:38,185] - [remote_util] [123145401274368] - INFO - command executed successfully
+[2019-07-09 17:08:39,298] - [remote_util] [123145401274368] - INFO - running command.raw on 172.23.109.181: rm -f /root/172.23.109.181-20190709-1706-diag.zip
+[2019-07-09 17:08:39,370] - [remote_util] [123145401274368] - INFO - command executed successfully
+[2019-07-09 17:08:39,497] - [fts_base] [123145401274368] - INFO - Collecting logs @ 172.23.109.180
+[2019-07-09 17:08:39,499] - [remote_util] [123145401274368] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-07-09 17:08:39,723] - [remote_util] [123145401274368] - INFO - Connected to 172.23.109.180
+[2019-07-09 17:08:40,050] - [remote_util] [123145401274368] - INFO - It could be other operating system.  Go to check at other location
+[2019-07-09 17:08:40,828] - [remote_util] [123145401274368] - INFO - running command.raw on 172.23.109.180: /opt/couchbase/bin/cbcollect_info 172.23.109.180-20190709-1708-diag.zip 
+[2019-07-09 17:10:06,087] - [remote_util] [123145401274368] - INFO - command executed successfully
+[2019-07-09 17:10:06,946] - [remote_util] [123145401274368] - INFO - running command.raw on 172.23.109.180: rm -f /root/172.23.109.180-20190709-1708-diag.zip
+[2019-07-09 17:10:06,992] - [remote_util] [123145401274368] - INFO - command executed successfully
+[2019-07-09 17:10:07,119] - [fts_base] [123145401274368] - INFO - ====  FTSbasetests cleanup is started for test #2 index_edit_and_query_custom_analyzer ====
+[2019-07-09 17:10:07,207] - [fts_base] [123145401274368] - INFO - Deleting fulltext-index custom_index on 172.23.109.180
+[2019-07-09 17:10:07,362] - [remote_util] [123145401274368] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-07-09 17:10:07,586] - [remote_util] [123145401274368] - INFO - Connected to 172.23.109.180
+[2019-07-09 17:10:07,923] - [remote_util] [123145401274368] - INFO - It could be other operating system.  Go to check at other location
+[2019-07-09 17:10:08,789] - [remote_util] [123145401274368] - INFO - running command.raw on 172.23.109.180: ls /opt/couchbase/var/lib/couchbase/data/@fts |grep ^custom_index | wc -l
+[2019-07-09 17:10:08,907] - [remote_util] [123145401274368] - INFO - command executed successfully
+[2019-07-09 17:10:08,908] - [fts_base] [123145401274368] - INFO - 0
+[2019-07-09 17:10:10,909] - [fts_base] [123145401274368] - INFO - Validated: all index files for custom_index deleted from disk
+[2019-07-09 17:10:10,910] - [fts_base] [123145401274368] - INFO - removing nodes from cluster ...
+[2019-07-09 17:10:10,982] - [fts_base] [123145401274368] - INFO - cleanup [ip:172.23.109.181 port:8091 ssh_username:root, ip:172.23.109.180 port:8091 ssh_username:root]
+[2019-07-09 17:10:11,036] - [bucket_helper] [123145401274368] - INFO - deleting existing buckets [u'default'] on 172.23.109.181
+[2019-07-09 17:10:11,037] - [bucket_helper] [123145401274368] - INFO - remove bucket default ...
+[2019-07-09 17:10:11,762] - [bucket_helper] [123145401274368] - INFO - deleted bucket : default from 172.23.109.181
+[2019-07-09 17:10:11,763] - [bucket_helper] [123145401274368] - INFO - waiting for bucket deletion to complete....
+[2019-07-09 17:10:11,784] - [rest_client] [123145401274368] - INFO - node 172.23.109.181 existing buckets : []
+[2019-07-09 17:10:11,785] - [bucket_helper] [123145401274368] - INFO - sleep 2 seconds to make sure all buckets ([u'default']) were deleted completely.
+[2019-07-09 17:10:13,912] - [cluster_helper] [123145401274368] - INFO - rebalancing all nodes in order to remove nodes
+[2019-07-09 17:10:13,939] - [rest_client] [123145401274368] - INFO - rebalance params : {'password': 'password', 'ejectedNodes': u'ns_1@172.23.109.180', 'user': 'Administrator', 'knownNodes': u'ns_1@172.23.109.181,ns_1@172.23.109.180'}
+[2019-07-09 17:10:13,967] - [rest_client] [123145401274368] - INFO - rebalance operation started
+[2019-07-09 17:10:13,996] - [rest_client] [123145401274368] - INFO - rebalance percentage : 0.00 %
+[2019-07-09 17:10:24,242] - [rest_client] [123145401274368] - INFO - rebalance percentage : 50.00 %
+[2019-07-09 17:10:44,312] - [rest_client] [123145401274368] - INFO - rebalance progress took 30.34 seconds 
+[2019-07-09 17:10:44,313] - [rest_client] [123145401274368] - INFO - sleep for 10 seconds after rebalance...
+[2019-07-09 17:10:54,377] - [cluster_helper] [123145401274368] - INFO - removed all the nodes from cluster associated with ip:172.23.109.181 port:8091 ssh_username:root ? [(u'ns_1@172.23.109.180', 8091)]
+[2019-07-09 17:10:54,402] - [cluster_helper] [123145401274368] - INFO - waiting for ns_server @ 172.23.109.181:8091
+[2019-07-09 17:10:54,531] - [cluster_helper] [123145401274368] - INFO - ns_server @ 172.23.109.181:8091 is running
+[2019-07-09 17:10:54,722] - [cluster_helper] [123145401274368] - INFO - waiting for ns_server @ 172.23.109.180:8091
+[2019-07-09 17:10:54,746] - [cluster_helper] [123145401274368] - INFO - ns_server @ 172.23.109.180:8091 is running
+[2019-07-09 17:10:54,746] - [fts_base] [123145401274368] - INFO - Removing user 'cbadminbucket'...
+[2019-07-09 17:10:54,873] - [es_base] [123145401274368] - INFO - ES index es_index deleted
+[2019-07-09 17:10:54,874] - [fts_base] [123145401274368] - INFO - ====  FTSbasetests cleanup is finished for test #2 index_edit_and_query_custom_analyzer ===

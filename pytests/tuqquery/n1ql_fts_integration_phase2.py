@@ -280,12 +280,9 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
                 fts_request_str = "{\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"size\":10000, \""+test_name+"\":"+str(option_val)+"}"
             fts_request = json.loads(fts_request_str)
             n1ql_results = self.run_cbq_query(n1ql_query)['results']
-            print(str(n1ql_results))
             total_hits, hits, took, status = \
                 rest.run_fts_query(index_name="idx_beer_sample_fts",
                                    query_json=fts_request)
-            print(str(fts_request))
-            print(str(hits))
             self._remove_all_fts_indexes()
             comparison_result = self._compare_n1ql_results_against_fts(n1ql_results, hits)
             self.assertEquals(comparison_result, "OK", comparison_result)
@@ -1237,10 +1234,6 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
             self.wait_for_buckets_status({"beer-sample": "healthy"}, 5, 120)
             self.wait_for_bucket_docs({"beer-sample": 7303}, 5, 120)
 
-        from n1ql_callable import N1QLCallable
-
-        callable = N1QLCallable(self.servers)
-        callable.create_gsi_index()
         if not self.is_index_present("beer-sample", "beer_sample_code_idx"):
             self.run_cbq_query("create index beer_sample_code_idx on `beer-sample` (`beer-sample`.code)")
         if not self.is_index_present("beer-sample", "beer_sample_brewery_id_idx"):

@@ -1868,6 +1868,8 @@ class CouchbaseCluster:
 
             self.__nodes += nodes_to_add
         self.__separate_nodes_on_services()
+        for node in self.__fts_nodes:
+            NodeHelper.set_cbft_env_fdb_options(node)
         if not self.is_cluster_run() and \
                 (TestInputSingleton.input.param("fdb_compact_interval", None) or \
                          TestInputSingleton.input.param("fdb_compact_threshold", None)):

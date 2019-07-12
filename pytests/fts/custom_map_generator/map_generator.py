@@ -279,7 +279,7 @@ class CustomMapGenerator:
             if field not in self.nested_fields.iterkeys():
                 fts_child, es_child = self.get_child_field(field, type)
             else:
-                fts_child, es_child = self.get_child_map(field)
+                fts_child, es_child = self.get_child_map(field, dataset)
             self.fts_map['types'][dataset]['properties'][field] = fts_child
             self.es_map[dataset]['properties'][field] = es_child
         if self.custom_map_add_non_indexed_fields:
@@ -312,6 +312,7 @@ class CustomMapGenerator:
                 print "Unable to add a non-indexed field after %s retries" \
                       % self.max_fields
 
+"""
     def get_child_map(self, field):
         """
         Child maps are for nested json structures i.e, any higher level field
@@ -330,6 +331,40 @@ class CustomMapGenerator:
         es_child_map['enabled'] = True
         es_child_map['type'] = "object"
         es_child_map['properties'] = {field: es_child}
+
+        return fts_child_map, es_child_map
+"""
+
+    def get_child_map(self, field, dataset):
+        """
+        Child maps are for nested json structures i.e, any higher level field
+        having another nested structure as its value
+        """
+        current_prop = self.fts_map['types'][dataset]['properties']
+        if field not in current_prop.iterkeys():
+            fts_child_map = {}
+            fts_child_map['dynamic'] = False
+            fts_child_map['enabled'] = True
+            fts_child_map['fields'] = []
+            fts_child_map['properties'] = {}
+
+            es_child_map = {}
+            es_child_map['dynamic'] = False
+            es_child_map['enabled'] = True
+            es_child_map['type'] = "object"
+            es_child_map['properties'] = {}
+        else:
+            fts_child_map = self.fts_map['types'][dataset]['properties'][field]
+            es_child_map = self.es_map[dataset]['properties'][field]
+
+        field, type = self.get_nested_child_field(field)
+        fts_child, es_child = self.get_child_field(field, type)
+        fts_child_map['properties'][field] = fts_child
+        es_child_map['properties'][field] = es_child
+
+        print "^^^^^^^^^^"
+        print fts_child_map
+        print "^^^^^^^^^^^"
 
         return fts_child_map, es_child_map
 

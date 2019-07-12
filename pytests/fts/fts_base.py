@@ -287,12 +287,7 @@ class NodeHelper:
     def set_cbft_env_fdb_options(server):
         shell = RemoteMachineShellConnection(server)
         shell.stop_couchbase()
-        cmd = "sed -i 's/^export CBFT_ENV_OPTIONS.*$/" \
-              "export CBFT_ENV_OPTIONS=bleveMaxResultWindow=10000000," \
-              "forestdbCompactorSleepDuration={0},forestdbCompactionThreshold={1}/g'\
-              /opt/couchbase/bin/couchbase-server".format(
-            int(TestInputSingleton.input.param("fdb_compact_interval", None)),
-            int(TestInputSingleton.input.param("fdb_compact_threshold", None)))
+        cmd = "sed -i 's/^export CBFT_ENV_OPTIONS.*$/export CBFT_ENV_OPTIONS=bleveMaxResultWindow=10000000/g' /opt/couchbase/bin/couchbase-server"
         shell.execute_command(cmd)
         shell.start_couchbase()
         shell.disconnect()

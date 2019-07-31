@@ -782,7 +782,7 @@ class MovingTopFTS(FTSBaseTest):
             services.append("fts")
         tasks = []
         retry_reb_thread = Thread(
-            target=self.induce_error_and_retry_rebalance,
+            target=self.retry_rebalance,
             args=[services])
         retry_reb_thread.start()
         reb_thread = Thread(

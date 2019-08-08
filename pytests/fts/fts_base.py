@@ -953,6 +953,7 @@ class FTSIndex:
         self.update()
 
     def update_index_partitions(self, new):
+        status, self.index_definition = self.get_index_defn()
         self.index_definition['planParams']['indexPartitions'] = new
         self.index_definition['uuid'] = self.get_uuid()
         self.update()

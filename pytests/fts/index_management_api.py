@@ -1,18 +1,7 @@
 # coding=utf-8
 
-import copy
 import json
-import random
-from threading import Thread
-
-import Geohash
-from membase.helper.cluster_helper import ClusterOperationHelper
-from remote.remote_util import RemoteMachineShellConnection
-
-from TestInput import TestInputSingleton
 from fts_base import FTSBaseTest
-from pytests.tuqquery.tuq import QueryTests
-from lib.membase.api.exception import FTSException, ServerUnavailableException
 from lib.membase.api.rest_client import RestConnection
 
 
@@ -34,7 +23,6 @@ class IndexManagementAPI(FTSBaseTest):
         self.planfreeze_control_unfreeze_op = "unfreeze"
         self.query_control_allow_op = "allow"
         self.query_control_disallow_op = "disallow"
-        self.edit_index = self._input.param("edit_index", None)
         self.second_index = self._input.param("second_index", None)
         self.run_in_parallel = self._input.param("run_in_parallel", None)
         self.freeze_parallel = self._input.param("freeze_parallel", None)
@@ -48,6 +36,7 @@ class IndexManagementAPI(FTSBaseTest):
     def test_ingest_control(self):
         self.load_sample_buckets(self._cb_cluster.get_master_node(), self.sample_bucket_name)
         fts_index = self._cb_cluster.create_fts_index(name=self.sample_index_name, source_name=self.sample_bucket_name)
+        self.sleep(5)
         self.fts_rest.call_index_management_api(fts_index.name,
                                                 self.ingest_control_api_name, self.ingest_control_pause_op)
 
@@ -55,9 +44,6 @@ class IndexManagementAPI(FTSBaseTest):
         index_count_after_pause = fts_index.get_indexed_doc_count()
         self.log.info("index paused and number of docs at present : {0}".format(index_count_after_pause))
         self.sleep(30)
-
-        if self.edit_index:
-            fts_index.update_index_partitions(1)
 
         if self.second_index:
             if self.run_in_parallel:
@@ -168,8 +154,4 @@ class IndexManagementAPI(FTSBaseTest):
                                                 self.query_control_api_name, self.query_control_disallow_op)
         self.sleep(5)
         self.generate_random_queries(fts_index_2, self.num_queries, self.query_types)
-        if self.run_via_n1ql:
-            n1ql_executor = self._cb_cluster
-        else:
-            n1ql_executor = None
-        self.run_query_and_compare(fts_index_2, n1ql_executor=n1ql_executor)
+        self.run_query_and_compare(fts_index_2, n1ql_executor=self._cb_cluster)

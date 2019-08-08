@@ -1827,6 +1827,10 @@ class RestConnection(object):
             node = RestParser().parse_get_nodes_response(json_parsed)
         return node
 
+    def get_ip_from_ini_file(self):
+        """ in alternate address, we need to get hostname from ini file """
+        return self.ip
+
     def node_statuses(self, timeout=120):
         nodes = []
         api = self.baseUrl + 'nodeStatuses'
@@ -1958,7 +1962,7 @@ class RestConnection(object):
             for item in json_parsed:
                 bucketInfo = RestParser().parse_get_bucket_json(item)
                 bucket_map[bucketInfo.name] = bucketInfo.stats.itemCount
-        log.info(bucket_map)
+        #log.info(bucket_map)
         return bucket_map
 
     def get_bucket_stats_for_node(self, bucket='default', node=None):
@@ -2860,6 +2864,23 @@ class RestConnection(object):
         if status:
             json_parsed = json.loads(content)
         return json_parsed['count']
+
+    def call_index_management_api(self, index_name, api_name, op, timeout=30):
+        """ call index management api with required op"""
+        json_parsed = {}
+        api = self.fts_baseUrl + "api/index/{0}/{1}/{2}".format(index_name, api_name, op)
+        log.info(api)
+        status, content, header = self._http_request(
+            api, 'POST',
+            headers=self._create_capi_headers(),
+            timeout=timeout)
+        if status:
+            json_parsed = json.loads(content)
+
+        if "ok" not in json_parsed['status']:
+            raise Exception("API call : {0}, failed with {1}".format(api, json_parsed))
+
+        return json_parsed['status']
 
     def get_fts_index_uuid(self, name, timeout=30):
         """ Returns uuid of index/alias """

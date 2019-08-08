@@ -952,6 +952,11 @@ class FTSIndex:
         self.index_definition['uuid'] = self.get_uuid()
         self.update()
 
+    def update_index_partitions(self, new):
+        self.index_definition['planParams']['indexPartitions'] = new
+        self.index_definition['uuid'] = self.get_uuid()
+        self.update()
+
     def update_num_replicas(self, new):
         self.index_definition['planParams']['numReplicas'] = new
         self.index_definition['uuid'] = self.get_uuid()
@@ -2118,6 +2123,21 @@ class CouchbaseCluster:
         )
         index.create()
         return index
+
+    def create_fts_index_wait_for_completion(self, sample_index_name_1, sample_bucket_name):
+        fts_idx = self.create_fts_index(name=sample_index_name_1, source_name=sample_bucket_name)
+
+        indexed_doc_count = 0
+        self.__log.info(RestConnection(self.get_master_node()).get_buckets_itemCount()[sample_bucket_name])
+        while indexed_doc_count < RestConnection(self.get_master_node()).get_buckets_itemCount()[sample_bucket_name]:
+            try:
+                time.sleep(10)
+                indexed_doc_count = fts_idx.get_indexed_doc_count()
+            except KeyError, k:
+                continue
+
+        return fts_idx
+
 
     def get_fts_index_by_name(self, name):
         """ Returns an FTSIndex object with the given name """

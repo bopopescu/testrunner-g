@@ -37,8 +37,7 @@ class IndexManagementAPI(FTSBaseTest):
         self.load_sample_buckets(self._cb_cluster.get_master_node(), self.sample_bucket_name)
         fts_index = self._cb_cluster.create_fts_index(name=self.sample_index_name, source_name=self.sample_bucket_name)
         self.sleep(5)
-        self.fts_rest.call_index_management_api(fts_index.name,
-                                                self.ingest_control_api_name, self.ingest_control_pause_op)
+        self.fts_rest.stop_fts_index_update(fts_index.name)
 
         self.sleep(10)
         index_count_after_pause = fts_index.get_indexed_doc_count()
@@ -58,8 +57,7 @@ class IndexManagementAPI(FTSBaseTest):
         else:
             self.log.info("index still paused and number of docs at present : {0}. Now resuming".format(index_count_after_pause))
 
-        self.fts_rest.call_index_management_api(fts_index.name,
-                                                self.ingest_control_api_name, self.ingest_control_resume_op)
+        self.fts_rest.resume_fts_index_update(fts_index.name)
         self.wait_for_indexing_complete()
         self.validate_index_count(equal_bucket_doc_count=True)
 
@@ -67,8 +65,7 @@ class IndexManagementAPI(FTSBaseTest):
         self.load_sample_buckets(self._cb_cluster.get_master_node(), self.sample_bucket_name)
         fts_index = self._cb_cluster.create_fts_index(name=self.sample_index_name, source_name=self.sample_bucket_name)
         self.sleep(5)
-        self.fts_rest.call_index_management_api(fts_index.name,
-                                                self.planfreeze_control_api_name, self.planfreeze_control_freeze_op)
+        self.fts_rest.freeze_fts_index_partitions(fts_index.name)
         self.wait_for_indexing_complete()
         index_count_after_freeze = fts_index.get_indexed_doc_count()
 
@@ -88,8 +85,7 @@ class IndexManagementAPI(FTSBaseTest):
         else:
             self.log.info("index still not changed  number of docs at present : {0}. Now unfreezing".format(current_index_count))
 
-        self.fts_rest.call_index_management_api(fts_index.name,
-                                                self.planfreeze_control_api_name, self.planfreeze_control_unfreeze_op)
+        self.fts_rest.unfreeze_fts_index_partitions(fts_index.name)
         fts_index.update_index_partitions(1)
         self.wait_for_indexing_complete()
         self.validate_index_count(equal_bucket_doc_count=True)
@@ -99,8 +95,7 @@ class IndexManagementAPI(FTSBaseTest):
         fts_index = self._cb_cluster.create_fts_index(name=self.sample_index_name, source_name=self.sample_bucket_name)
         fts_index2 = self._cb_cluster.create_fts_index(name=self.sample_index_name_1, source_name=self.sample_bucket_name)
         self.wait_for_indexing_complete()
-        self.fts_rest.call_index_management_api(fts_index.name,
-                                                self.planfreeze_control_api_name, self.planfreeze_control_freeze_op)
+        self.fts_rest.freeze_fts_index_partitions(fts_index.name)
         self.sleep(5)
         fts_index2.update_index_partitions(1)
         self.wait_for_indexing_complete()
@@ -110,8 +105,7 @@ class IndexManagementAPI(FTSBaseTest):
         self.load_sample_buckets(self._cb_cluster.get_master_node(), self.sample_bucket_name)
         fts_index = self._cb_cluster.create_fts_index(name=self.sample_index_name, source_name=self.sample_bucket_name)
         self.wait_for_indexing_complete()
-        self.fts_rest.call_index_management_api(fts_index.name,
-                                                self.query_control_api_name, self.query_control_disallow_op)
+        self.fts_rest.disable_querying_on_fts_index(fts_index.name)
         self.sleep(5)
         query = eval(self._input.param("query", str(self.sample_query)))
         if isinstance(query, str):
@@ -130,8 +124,7 @@ class IndexManagementAPI(FTSBaseTest):
 
         self.log.info("now allowing to run query on this index")
 
-        self.fts_rest.call_index_management_api(fts_index.name,
-                                                self.query_control_api_name, self.query_control_allow_op)
+        self.fts_rest.enable_querying_on_fts_index(fts_index.name)
         self.sleep(5)
         hits, matches, _, status= fts_index.execute_query(query,
                                                           zero_results_ok=False,
@@ -150,8 +143,7 @@ class IndexManagementAPI(FTSBaseTest):
             bucket=self._cb_cluster.get_bucket_by_name('default'),
             index_name="default_index_2")
         self.wait_for_indexing_complete()
-        self.fts_rest.call_index_management_api(fts_index_1.name,
-                                                self.query_control_api_name, self.query_control_disallow_op)
+        self.fts_rest.disable_querying_on_fts_index(fts_index_1.name)
         self.sleep(5)
         self.generate_random_queries(fts_index_2, self.num_queries, self.query_types)
         self.run_query_and_compare(fts_index_2, n1ql_executor=self._cb_cluster)

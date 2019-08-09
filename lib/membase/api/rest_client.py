@@ -2865,23 +2865,6 @@ class RestConnection(object):
             json_parsed = json.loads(content)
         return json_parsed['count']
 
-    def call_index_management_api(self, index_name, api_name, op, timeout=30):
-        """ call index management api with required op"""
-        json_parsed = {}
-        api = self.fts_baseUrl + "api/index/{0}/{1}/{2}".format(index_name, api_name, op)
-        log.info(api)
-        status, content, header = self._http_request(
-            api, 'POST',
-            headers=self._create_capi_headers(),
-            timeout=timeout)
-        if status:
-            json_parsed = json.loads(content)
-
-        if "ok" not in json_parsed['status']:
-            raise Exception("API call : {0}, failed with {1}".format(api, json_parsed))
-
-        return json_parsed['status']
-
     def get_fts_index_uuid(self, name, timeout=30):
         """ Returns uuid of index/alias """
         json_parsed = {}
@@ -2913,9 +2896,29 @@ class RestConnection(object):
             headers=self._create_capi_headers())
         return status
 
+    def resume_fts_index_update(self, name):
+        """ method to stop fts index from updating"""
+        api = self.fts_baseUrl + "api/index/{0}/ingestControl/resume".format(name)
+        status, content, header = self._http_request(
+            api,
+            'POST',
+            '',
+            headers=self._create_capi_headers())
+        return status
+
     def freeze_fts_index_partitions(self, name):
         """ method to freeze index partitions asignment"""
-        api = self.fts_baseUrl+ "api/index/{0}/planFreezeControl".format(name)
+        api = self.fts_baseUrl+ "api/index/{0}/planFreezeControl/freeze".format(name)
+        status, content, header = self._http_request(
+            api,
+            'POST',
+            '',
+            headers=self._create_capi_headers())
+        return status
+
+    def unfreeze_fts_index_partitions(self, name):
+        """ method to freeze index partitions asignment"""
+        api = self.fts_baseUrl+ "api/index/{0}/planFreezeControl/unfreeze".format(name)
         status, content, header = self._http_request(
             api,
             'POST',

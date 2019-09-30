@@ -21,10 +21,13 @@ EMP_NESTED_FIELDS = {
     }
 }
 
+# Need to work on double nested field "revision_text_text"
+
 WIKI_FIELDS = {
     'text': ["title", "type"],
     'number': ["mutated"],
-    'object': ["revision", "text", "contributor"]
+    #'object': ["revision", "text", "contributor"]
+    'object': ["revision"]
 }
 
 TOTAL_WIKI_FIELDS = 6
@@ -33,20 +36,20 @@ WIKI_NESTED_FIELDS = {
     'revision': {
         'datetime': ["timestamp"]
     },
-    'text': {
-        'text': ["#text"]
-    },
-    'contributor': {
-        'text': ["username"]
-    }
+    #'text': {
+    #    'text': ["#text"]
+    #},
+    #'contributor': {
+    #    'text': ["username"]
+    #}
 }
 
 FULL_FIELD_NAMES = {
     'reports': 'manages_reports',
     'team_size': 'manages_team_size',
     'timestamp': 'revision_timestamp',
-    '#text': 'revision_text_text',
-    'username': 'revision_contributor_username'
+    #'#text': 'revision_text_text',
+    #'username': 'revision_contributor_username'
 }
 
 CUSTOM_ANALYZER_TEMPLATE = {
@@ -282,6 +285,7 @@ class CustomMapGenerator:
                 fts_child, es_child = self.get_child_map(field, dataset)
             self.fts_map['types'][dataset]['properties'][field] = fts_child
             self.es_map[dataset]['properties'][field] = es_child
+
         if self.custom_map_add_non_indexed_fields:
             self.add_non_indexed_field_to_query()
 
@@ -338,10 +342,6 @@ class CustomMapGenerator:
         fts_child, es_child = self.get_child_field(field, type)
         fts_child_map['properties'][field] = fts_child
         es_child_map['properties'][field] = es_child
-
-        print "^^^^^^^^^^"
-        print fts_child_map
-        print "^^^^^^^^^^^"
 
         return fts_child_map, es_child_map
 

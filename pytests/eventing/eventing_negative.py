@@ -1,5 +1,6 @@
 import json
 
+from couchbase_helper.tuq_helper import N1QLHelper
 from lib.couchbase_helper.documentgenerator import BlobGenerator, JsonDocGenerator, JSONNonDocGenerator
 from lib.membase.api.rest_client import RestConnection
 from lib.testconstants import STANDARD_BUCKET_PORT
@@ -14,6 +15,7 @@ log = logging.getLogger()
 class EventingNegative(EventingBaseTest):
     def setUp(self):
         super(EventingNegative, self).setUp()
+        self.rest.set_service_memoryQuota(service='memoryQuota', memoryQuota=1200)
         if self.create_functions_buckets:
             self.bucket_size = 100
             log.info(self.bucket_size)
@@ -316,11 +318,12 @@ class EventingNegative(EventingBaseTest):
         # create a string with space and other special chars
         body = self.create_save_function_body(self.function_name, HANDLER_CODE.BUCKET_OPS_WITH_DOC_TIMER)
         body['appname'] = "a b c @ # $ % ^ & * ( ) + ="
+        err_msg='Function name can only start with characters in range A-Z, a-z, 0-9 and can only contain characters in range A-Z, a-z, 0-9, underscore and hyphen'
         try:
             content = self.rest.create_function("abc", body)
         except Exception as e:
-            if "Function name can only contain characters in range A-Z, a-z, 0-9 and underscore, hyphen" not in str(e):
-                self.fail("Deployment is expected to be failed when space is present in function name")
+            if err_msg not in str(e):
+                self.fail("Deployment is expected to be failed when space is present in function name expected err message {}".format(err_msg))
 
     def test_deploy_function_invalid_alias_name(self):
         body = self.create_save_function_body(self.function_name, HANDLER_CODE.BUCKET_OPS_WITH_DOC_TIMER)
@@ -398,3 +401,64 @@ class EventingNegative(EventingBaseTest):
             if "Can not execute DML query on bucket" not in str(e):
                 log.info(str(e))
                 self.fail("Not correct exception thrown")
+
+    def test_n1ql_with_wrong_query(self):
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                 batch_size=self.batch_size)
+        body = self.create_save_function_body(self.function_name, 'handler_code/n1ql_op_negative.js', worker_count=3)
+        self.deploy_function(body)
+        self.verify_eventing_results(self.function_name, self.docs_per_day * 2016,skip_stats_validation=True)
+        # delete all documents
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                  batch_size=self.batch_size, op_type='delete')
+        # Wait for eventing to catch up with all the delete mutations and verify results
+        self.verify_eventing_results(self.function_name, 0, on_delete=True,skip_stats_validation=True)
+        self.undeploy_and_delete_function(body)
+
+
+    def test_n1ql_without_n1ql_node(self):
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                 batch_size=self.batch_size)
+        body = self.create_save_function_body(self.function_name, 'handler_code/n1ql_op_no_n1ql.js', worker_count=3)
+        self.deploy_function(body)
+        self.verify_eventing_results(self.function_name, self.docs_per_day * 2016,skip_stats_validation=True)
+        # delete all documents
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                  batch_size=self.batch_size, op_type='delete')
+        # Wait for eventing to catch up with all the delete mutations and verify results
+        self.verify_eventing_results(self.function_name, 0, on_delete=True,skip_stats_validation=True)
+        self.undeploy_and_delete_function(body)
+
+    def test_n1ql_without_index_node(self):
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                 batch_size=self.batch_size)
+        body = self.create_save_function_body(self.function_name, 'handler_code/n1ql_op_without_index.js', worker_count=3)
+        self.deploy_function(body)
+        self.verify_eventing_results(self.function_name, self.docs_per_day * 2016,skip_stats_validation=True)
+        # delete all documents
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                  batch_size=self.batch_size, op_type='delete')
+        # Wait for eventing to catch up with all the delete mutations and verify results
+        self.verify_eventing_results(self.function_name, 0, on_delete=True,skip_stats_validation=True)
+        self.undeploy_and_delete_function(body)
+
+    def test_n1ql_max_connection(self):
+        self.n1ql_node = self.get_nodes_from_services_map(service_type="n1ql")
+        self.n1ql_helper = N1QLHelper(shell=self.shell, max_verify=self.max_verify, buckets=self.buckets,
+                                      item_flag=self.item_flag, n1ql_port=self.n1ql_port,
+                                      full_docs_list=self.full_docs_list, log=self.log, input=self.input,
+                                      master=self.master, use_rest=True)
+        # primary index is required as we run some queries from handler code
+        self.n1ql_helper.create_primary_index(using_gsi=True, server=self.n1ql_node)
+        self.load_sample_buckets(self.server, "travel-sample")
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                 batch_size=self.batch_size)
+        body = self.create_save_function_body(self.function_name, 'handler_code/n1ql_op_connection.js', worker_count=1)
+        self.deploy_function(body)
+        self.verify_eventing_results(self.function_name, self.docs_per_day * 2016,skip_stats_validation=True)
+        # delete all documents
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                  batch_size=self.batch_size, op_type='delete')
+        # Wait for eventing to catch up with all the delete mutations and verify results
+        self.verify_eventing_results(self.function_name, 0, on_delete=True,skip_stats_validation=True)
+        self.undeploy_and_delete_function(body)

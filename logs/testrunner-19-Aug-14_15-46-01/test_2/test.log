@@ -1,0 +1,223 @@
+[2019-08-14 15:53:33,773] - [fts_base] [123145466572800] - INFO - ==== FTSbasetests setup is started for test #2 test_query_index_freeze_plan ====
+[2019-08-14 15:53:33,887] - [rest_client] [123145466572800] - INFO - SUCCESS: FTS RAM quota set to 750mb
+[2019-08-14 15:53:33,888] - [fts_base] [123145466572800] - INFO - removing nodes from cluster ...
+[2019-08-14 15:53:33,934] - [fts_base] [123145466572800] - INFO - cleanup [ip:172.23.109.172 port:8091 ssh_username:root]
+[2019-08-14 15:53:34,108] - [cluster_helper] [123145466572800] - INFO - waiting for ns_server @ 172.23.109.172:8091
+[2019-08-14 15:53:34,148] - [cluster_helper] [123145466572800] - INFO - ns_server @ 172.23.109.172:8091 is running
+[2019-08-14 15:53:34,148] - [fts_base] [123145466572800] - INFO - Removing user 'cbadminbucket'...
+[2019-08-14 15:53:34,226] - [rest_client] [123145466572800] - ERROR - DELETE http://172.23.109.172:8091/settings/rbac/users/local/cbadminbucket body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "User was not found." auth: Administrator:password
+[2019-08-14 15:53:34,227] - [fts_base] [123145466572800] - INFO - "User was not found."
+[2019-08-14 15:53:34,228] - [fts_base] [123145466572800] - INFO - Initializing Cluster ...
+[2019-08-14 15:53:34,827] - [task] [123145496018944] - INFO - server: ip:172.23.109.172 port:8091 ssh_username:root, nodes/self: {'ip': u'172.23.109.172', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@172.23.109.172', 'uptime': u'726', 'mcdMemoryReserved': 2950, 'storageTotalRam': 3688, 'hostname': u'172.23.109.172:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x10dcd1e50>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-4007-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'kv'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 3382517760, 'memoryTotal': 3867238400, 'memoryQuota': 1976, 'mcdMemoryAllocated': 2950, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-08-14 15:53:34,853] - [rest_client] [123145496018944] - INFO - pools/default params : memoryQuota=1976
+[2019-08-14 15:53:34,883] - [rest_client] [123145496018944] - INFO - settings/web params on 172.23.109.172:8091:username=Administrator&password=password&port=8091
+[2019-08-14 15:53:34,990] - [remote_util] [123145496018944] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-08-14 15:53:35,343] - [remote_util] [123145496018944] - INFO - Connected to 172.23.109.172
+[2019-08-14 15:53:35,952] - [remote_util] [123145496018944] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:53:36,794] - [remote_util] [123145496018944] - INFO - running command.raw on 172.23.109.172: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-08-14 15:53:36,849] - [remote_util] [123145496018944] - INFO - command executed successfully
+[2019-08-14 15:53:36,872] - [rest_client] [123145496018944] - INFO - /diag/eval status on 172.23.109.172:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-08-14 15:53:36,873] - [rest_client] [123145496018944] - INFO - settings/indexes params : storageMode=forestdb
+[2019-08-14 15:53:36,894] - [rest_client] [123145496018944] - ERROR - POST http://172.23.109.172:8091/settings/indexes body: storageMode=forestdb headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 400 reason: unknown {"errors":{"storageMode":"The value must be one of the following: [plasma,memory_optimized]"}} auth: Administrator:password
+[2019-08-14 15:53:36,954] - [fts_base] [123145466572800] - INFO - 172.23.109.179 will be configured with services kv,fts
+[2019-08-14 15:53:37,957] - [task] [123145496018944] - INFO - adding node 172.23.109.179:8091 to cluster
+[2019-08-14 15:53:37,959] - [rest_client] [123145496018944] - INFO - adding remote node @172.23.109.179:8091 to this cluster @172.23.109.172:8091
+[2019-08-14 15:53:41,013] - [rest_client] [123145496018944] - INFO - rebalance params : {'password': 'password', 'ejectedNodes': '', 'user': 'Administrator', 'knownNodes': u'ns_1@172.23.109.179,ns_1@172.23.109.172'}
+[2019-08-14 15:53:41,055] - [rest_client] [123145496018944] - INFO - rebalance operation started
+[2019-08-14 15:53:41,078] - [rest_client] [123145496018944] - INFO - rebalance percentage : 0.00 %
+[2019-08-14 15:53:41,079] - [task] [123145496018944] - INFO - Rebalance - status: running, progress: 0.00%
+[2019-08-14 15:53:51,174] - [task] [123145496018944] - INFO - Rebalance - status: none, progress: 100.00%
+[2019-08-14 15:53:51,218] - [task] [123145496018944] - INFO - rebalancing was completed with progress: 100% in 10.1621038914 sec
+[2019-08-14 15:53:51,280] - [remote_util] [123145466572800] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-08-14 15:53:51,679] - [remote_util] [123145466572800] - INFO - Connected to 172.23.109.172
+[2019-08-14 15:53:52,056] - [remote_util] [123145466572800] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:53:52,965] - [remote_util] [123145466572800] - INFO - running command.raw on 172.23.109.172: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-08-14 15:53:53,059] - [remote_util] [123145466572800] - INFO - command executed successfully
+[2019-08-14 15:53:53,060] - [fts_base] [123145466572800] - INFO - Enabled diag/eval for non-local hosts from 172.23.109.172
+[2019-08-14 15:53:53,170] - [rest_client] [123145466572800] - ERROR - DELETE http://172.23.109.172:8091/settings/rbac/users/local/cbadminbucket body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "User was not found." auth: Administrator:password
+[2019-08-14 15:53:53,171] - [internal_user] [123145466572800] - INFO - Exception while deleting user. Exception is -"User was not found."
+[2019-08-14 15:53:54,373] - [rest_client] [123145496018944] - INFO - http://172.23.109.172:8091/pools/default/buckets with param: bucketType=membase&evictionPolicy=valueOnly&threadsNumber=3&ramQuotaMB=1476&authType=sasl&name=default&flushEnabled=1&replicaNumber=1&compressionMode=passive&saslPassword=None&replicaIndex=1
+[2019-08-14 15:53:54,405] - [rest_client] [123145496018944] - INFO - 0.03 seconds to create bucket default
+[2019-08-14 15:53:54,405] - [bucket_helper] [123145496018944] - INFO - waiting for memcached bucket : default in 172.23.109.172 to accept set ops
+[2019-08-14 15:53:54,752] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:53:55,065] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:53:55,472] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:53:55,824] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:53:56,244] - [task] [123145496018944] - WARNING - vbucket map not ready after try 0
+[2019-08-14 15:53:56,245] - [bucket_helper] [123145496018944] - INFO - waiting for memcached bucket : default in 172.23.109.172 to accept set ops
+[2019-08-14 15:53:58,082] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:53:59,216] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:54:00,172] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:54:00,480] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:54:00,712] - [task] [123145496018944] - WARNING - vbucket map not ready after try 1
+[2019-08-14 15:54:00,713] - [bucket_helper] [123145496018944] - INFO - waiting for memcached bucket : default in 172.23.109.172 to accept set ops
+[2019-08-14 15:54:01,099] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:54:01,634] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:54:02,116] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:54:02,484] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:54:02,720] - [task] [123145496018944] - WARNING - vbucket map not ready after try 2
+[2019-08-14 15:54:02,721] - [bucket_helper] [123145496018944] - INFO - waiting for memcached bucket : default in 172.23.109.172 to accept set ops
+[2019-08-14 15:54:03,089] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:54:03,402] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:54:03,816] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:54:04,102] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:54:04,353] - [task] [123145496018944] - WARNING - vbucket map not ready after try 3
+[2019-08-14 15:54:04,354] - [bucket_helper] [123145496018944] - INFO - waiting for memcached bucket : default in 172.23.109.172 to accept set ops
+[2019-08-14 15:54:04,965] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:54:05,289] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:54:05,679] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:54:06,004] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:54:06,249] - [task] [123145496018944] - WARNING - vbucket map not ready after try 4
+[2019-08-14 15:54:06,250] - [bucket_helper] [123145496018944] - INFO - waiting for memcached bucket : default in 172.23.109.172 to accept set ops
+[2019-08-14 15:54:06,642] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:54:06,995] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:54:07,379] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.172:11210 default
+[2019-08-14 15:54:08,095] - [data_helper] [123145496018944] - INFO - creating direct client 172.23.109.179:11210 default
+[2019-08-14 15:54:08,332] - [task] [123145496018944] - WARNING - vbucket map not ready after try 5
+[2019-08-14 15:54:08,422] - [rest_client] [123145466572800] - INFO - /diag/eval status on 172.23.109.172:8091: True content: "/opt/couchbase/var/lib/couchbase/logs" command: filename:absname(element(2, application:get_env(ns_server,error_logger_mf_dir))).
+[2019-08-14 15:54:08,424] - [remote_util] [123145466572800] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-08-14 15:54:08,784] - [remote_util] [123145466572800] - INFO - Connected to 172.23.109.172
+[2019-08-14 15:54:09,156] - [remote_util] [123145466572800] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:54:09,978] - [remote_util] [123145466572800] - INFO - running command.raw on 172.23.109.172: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-08-14 15:54:10,100] - [remote_util] [123145466572800] - INFO - command executed successfully
+[2019-08-14 15:54:10,101] - [fts_base] [123145466572800] - INFO - 0
+[2019-08-14 15:54:10,226] - [remote_util] [123145466572800] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-14 15:54:10,581] - [remote_util] [123145466572800] - INFO - Connected to 172.23.109.179
+[2019-08-14 15:54:10,964] - [remote_util] [123145466572800] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:54:11,788] - [remote_util] [123145466572800] - INFO - running command.raw on 172.23.109.179: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-08-14 15:54:11,937] - [remote_util] [123145466572800] - INFO - command executed successfully
+[2019-08-14 15:54:11,937] - [fts_base] [123145466572800] - INFO - 0
+[2019-08-14 15:54:12,060] - [remote_util] [123145466572800] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-14 15:54:12,412] - [remote_util] [123145466572800] - INFO - Connected to 172.23.109.180
+[2019-08-14 15:54:12,803] - [remote_util] [123145466572800] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:54:13,639] - [remote_util] [123145466572800] - INFO - running command.raw on 172.23.109.180: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-08-14 15:54:13,751] - [remote_util] [123145466572800] - INFO - command executed successfully
+[2019-08-14 15:54:13,752] - [fts_base] [123145466572800] - INFO - 0
+[2019-08-14 15:54:13,878] - [remote_util] [123145466572800] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-08-14 15:54:14,235] - [remote_util] [123145466572800] - INFO - Connected to 172.23.109.181
+[2019-08-14 15:54:14,564] - [remote_util] [123145466572800] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:54:15,308] - [remote_util] [123145466572800] - INFO - running command.raw on 172.23.109.181: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-08-14 15:54:15,423] - [remote_util] [123145466572800] - INFO - command executed successfully
+[2019-08-14 15:54:15,424] - [fts_base] [123145466572800] - INFO - 0
+[2019-08-14 15:54:15,551] - [fts_base] [123145466572800] - INFO - {'172.23.109.172': {'panic:': 0}, '172.23.109.179': {'panic:': 0}, '172.23.109.180': {'panic:': 0}, '172.23.109.181': {'panic:': 0}}
+[2019-08-14 15:54:15,552] - [fts_base] [123145466572800] - INFO - ==== FTSbasetests setup is finished for test #2 test_query_index_freeze_plan ====
+[2019-08-14 15:54:15,689] - [remote_util] [123145466572800] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-08-14 15:54:16,040] - [remote_util] [123145466572800] - INFO - Connected to 172.23.109.172
+[2019-08-14 15:54:16,432] - [remote_util] [123145466572800] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:54:17,240] - [remote_util] [123145466572800] - INFO - running command.raw on 172.23.109.172: curl -v -u Administrator:password                              -X POST http://172.23.109.172:8091/sampleBuckets/install                           -d '["travel-sample"]'
+[2019-08-14 15:54:17,396] - [remote_util] [123145466572800] - INFO - command executed successfully
+[2019-08-14 15:54:17,519] - [fts_base] [123145466572800] - INFO - sleep for 20 secs.  ...
+[2019-08-14 15:54:37,640] - [fts_base] [123145466572800] - INFO - Checking if index already exists ...
+[2019-08-14 15:54:37,755] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 400 reason: rest_auth: preparePerms, err: index not found {"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:54:37,790] - [rest_client] [123145466572800] - ERROR - DELETE http://172.23.109.179:8094/api/index/idx_travel_sample_fts body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 400 reason: rest_auth: preparePerms, err: index not found {"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:54:37,791] - [fts_base] [123145466572800] - INFO - Creating fulltext-index idx_travel_sample_fts on 172.23.109.179
+[2019-08-14 15:54:37,792] - [rest_client] [123145466572800] - INFO - {"params": {"store": {"mossStoreOptions": {}, "kvStoreName": "mossStore", "indexType": "scorch"}}, "name": "idx_travel_sample_fts", "planParams": {}, "sourceName": "travel-sample", "sourceUUID": "", "sourceType": "couchbase", "type": "fulltext-index", "uuid": ""}
+[2019-08-14 15:54:37,896] - [rest_client] [123145466572800] - INFO - Index idx_travel_sample_fts created
+[2019-08-14 15:54:37,897] - [fts_base] [123145466572800] - INFO - sleep for 3 secs.  ...
+[2019-08-14 15:54:41,848] - [rest_client] [123145466572800] - INFO - http://172.23.109.172:8091/pools/default/buckets/travel-sample/stats?zoom=minute
+[2019-08-14 15:54:41,956] - [fts_base] [123145466572800] - INFO - Docs in bucket = 29257, docs in FTS index 'idx_travel_sample_fts': 1287
+[2019-08-14 15:54:48,077] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:54:48,078] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:54:54,207] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:54:54,208] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:55:00,518] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:55:00,519] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:55:06,637] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:55:06,638] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:55:12,765] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:55:12,766] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:55:18,881] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:55:18,882] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:55:25,013] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:55:25,014] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:55:31,141] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:55:31,142] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:55:37,270] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:55:37,271] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:55:43,401] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:55:43,402] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:55:49,530] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:55:49,531] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:55:55,656] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:55:55,657] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:56:02,218] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:56:02,219] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:56:08,362] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:56:08,364] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:56:14,495] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:56:14,496] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:56:20,648] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:56:20,649] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:56:26,780] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:56:26,781] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:56:32,925] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:56:32,927] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:56:39,075] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:56:39,078] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:56:45,203] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:56:45,204] - [fts_base] [123145466572800] - INFO - 'count'
+[2019-08-14 15:56:51,344] - [rest_client] [123145466572800] - ERROR - GET http://172.23.109.179:8094/api/index/idx_travel_sample_fts/count body:  headers: {'Content-Type': 'application/json', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 500 reason: rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts {"error":"rest_index: Count, indexName: idx_travel_sample_fts, err: bleve: CountBleve indexAlias error, indexName: idx_travel_sample_fts, indexUUID: , err: bleve: bleveIndexTargets, err: pindex: no planPIndexes for indexName: idx_travel_sample_fts","request":"","status":"fail"} auth: Administrator:password
+[2019-08-14 15:56:51,400] - [rest_client] [123145466572800] - INFO - /diag/eval status on 172.23.109.172:8091: True content: "/opt/couchbase/var/lib/couchbase/logs" command: filename:absname(element(2, application:get_env(ns_server,error_logger_mf_dir))).
+[2019-08-14 15:56:51,401] - [remote_util] [123145466572800] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-08-14 15:56:51,789] - [remote_util] [123145466572800] - INFO - Connected to 172.23.109.172
+[2019-08-14 15:56:52,121] - [remote_util] [123145466572800] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:56:52,894] - [remote_util] [123145466572800] - INFO - running command.raw on 172.23.109.172: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-08-14 15:56:53,008] - [remote_util] [123145466572800] - INFO - command executed successfully
+[2019-08-14 15:56:53,009] - [fts_base] [123145466572800] - INFO - 0
+[2019-08-14 15:56:53,010] - [fts_base] [123145466572800] - INFO - Initial 'panic:' count on 172.23.109.172 :0, now :0
+[2019-08-14 15:56:53,135] - [remote_util] [123145466572800] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-14 15:56:53,488] - [remote_util] [123145466572800] - INFO - Connected to 172.23.109.179
+[2019-08-14 15:56:53,801] - [remote_util] [123145466572800] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:56:54,826] - [remote_util] [123145466572800] - INFO - running command.raw on 172.23.109.179: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-08-14 15:56:54,977] - [remote_util] [123145466572800] - INFO - command executed successfully
+[2019-08-14 15:56:54,978] - [fts_base] [123145466572800] - INFO - 0
+[2019-08-14 15:56:54,978] - [fts_base] [123145466572800] - INFO - Initial 'panic:' count on 172.23.109.179 :0, now :0
+[2019-08-14 15:56:55,100] - [remote_util] [123145466572800] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-14 15:56:55,457] - [remote_util] [123145466572800] - INFO - Connected to 172.23.109.180
+[2019-08-14 15:56:55,829] - [remote_util] [123145466572800] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:56:56,635] - [remote_util] [123145466572800] - INFO - running command.raw on 172.23.109.180: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-08-14 15:56:56,751] - [remote_util] [123145466572800] - INFO - command executed successfully
+[2019-08-14 15:56:56,752] - [fts_base] [123145466572800] - INFO - 0
+[2019-08-14 15:56:56,752] - [fts_base] [123145466572800] - INFO - Initial 'panic:' count on 172.23.109.180 :0, now :0
+[2019-08-14 15:56:56,877] - [remote_util] [123145466572800] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-08-14 15:56:57,232] - [remote_util] [123145466572800] - INFO - Connected to 172.23.109.181
+[2019-08-14 15:56:57,550] - [remote_util] [123145466572800] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:56:58,299] - [remote_util] [123145466572800] - INFO - running command.raw on 172.23.109.181: zgrep "panic:" "/opt/couchbase/var/lib/couchbase/logs"/fts.log* | wc -l
+[2019-08-14 15:56:58,414] - [remote_util] [123145466572800] - INFO - command executed successfully
+[2019-08-14 15:56:58,415] - [fts_base] [123145466572800] - INFO - 0
+[2019-08-14 15:56:58,415] - [fts_base] [123145466572800] - INFO - Initial 'panic:' count on 172.23.109.181 :0, now :0
+[2019-08-14 15:56:58,541] - [fts_base] [123145466572800] - INFO - ====  FTSbasetests cleanup is started for test #2 test_query_index_freeze_plan ====
+[2019-08-14 15:56:58,668] - [fts_base] [123145466572800] - INFO - Deleting fulltext-index idx_travel_sample_fts on 172.23.109.179
+[2019-08-14 15:56:58,872] - [remote_util] [123145466572800] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-14 15:56:59,231] - [remote_util] [123145466572800] - INFO - Connected to 172.23.109.179
+[2019-08-14 15:56:59,658] - [remote_util] [123145466572800] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 15:57:00,564] - [remote_util] [123145466572800] - INFO - running command.raw on 172.23.109.179: ls /opt/couchbase/var/lib/couchbase/data/@fts |grep ^idx_travel_sample_fts | wc -l
+[2019-08-14 15:57:00,676] - [remote_util] [123145466572800] - INFO - command executed successfully
+[2019-08-14 15:57:00,677] - [fts_base] [123145466572800] - INFO - 0
+[2019-08-14 15:57:02,681] - [fts_base] [123145466572800] - INFO - Validated: all index files for idx_travel_sample_fts deleted from disk
+[2019-08-14 15:57:02,681] - [fts_base] [123145466572800] - INFO - removing nodes from cluster ...
+[2019-08-14 15:57:02,738] - [fts_base] [123145466572800] - INFO - cleanup [ip:172.23.109.172 port:8091 ssh_username:root, ip:172.23.109.179 port:8091 ssh_username:root]
+[2019-08-14 15:57:02,839] - [bucket_helper] [123145466572800] - INFO - deleting existing buckets [u'default', u'travel-sample'] on 172.23.109.172
+[2019-08-14 15:57:02,839] - [bucket_helper] [123145466572800] - INFO - remove bucket default ...
+[2019-08-14 15:57:04,147] - [bucket_helper] [123145466572800] - INFO - deleted bucket : default from 172.23.109.172
+[2019-08-14 15:57:04,148] - [bucket_helper] [123145466572800] - INFO - waiting for bucket deletion to complete....
+[2019-08-14 15:57:04,356] - [rest_client] [123145466572800] - INFO - node 172.23.109.172 existing buckets : [u'travel-sample']
+[2019-08-14 15:57:04,357] - [bucket_helper] [123145466572800] - INFO - remove bucket travel-sample ...
+[2019-08-14 15:57:06,679] - [bucket_helper] [123145466572800] - INFO - deleted bucket : travel-sample from 172.23.109.172
+[2019-08-14 15:57:06,680] - [bucket_helper] [123145466572800] - INFO - waiting for bucket deletion to complete....
+[2019-08-14 15:57:06,708] - [rest_client] [123145466572800] - INFO - node 172.23.109.172 existing buckets : []
+[2019-08-14 15:57:06,708] - [bucket_helper] [123145466572800] - INFO - sleep 2 seconds to make sure all buckets ([u'default', u'travel-sample']) were deleted completely.
+[2019-08-14 15:57:08,834] - [cluster_helper] [123145466572800] - INFO - rebalancing all nodes in order to remove nodes
+[2019-08-14 15:57:08,858] - [rest_client] [123145466572800] - INFO - rebalance params : {'password': 'password', 'ejectedNodes': u'ns_1@172.23.109.179', 'user': 'Administrator', 'knownNodes': u'ns_1@172.23.109.179,ns_1@172.23.109.172'}
+[2019-08-14 15:57:08,891] - [rest_client] [123145466572800] - INFO - rebalance operation started
+[2019-08-14 15:57:08,919] - [rest_client] [123145466572800] - INFO - rebalance percentage : 0.00 %
+[2019-08-14 15:57:18,962] - [rest_client] [123145466572800] - INFO - rebalance percentage : 75.00 %
+[2019-08-14 15:57:39,024] - [rest_client] [123145466572800] - INFO - rebalance progress took 30.13 seconds 
+[2019-08-14 15:57:39,024] - [rest_client] [123145466572800] - INFO - sleep for 10 seconds after rebalance...
+[2019-08-14 15:57:49,106] - [cluster_helper] [123145466572800] - INFO - removed all the nodes from cluster associated with ip:172.23.109.172 port:8091 ssh_username:root ? [(u'ns_1@172.23.109.179', 8091)]
+[2019-08-14 15:57:49,143] - [cluster_helper] [123145466572800] - INFO - waiting for ns_server @ 172.23.109.172:8091
+[2019-08-14 15:57:49,187] - [cluster_helper] [123145466572800] - INFO - ns_server @ 172.23.109.172:8091 is running
+[2019-08-14 15:57:49,371] - [cluster_helper] [123145466572800] - INFO - waiting for ns_server @ 172.23.109.179:8091
+[2019-08-14 15:57:49,398] - [cluster_helper] [123145466572800] - INFO - ns_server @ 172.23.109.179:8091 is running
+[2019-08-14 15:57:49,399] - [fts_base] [123145466572800] - INFO - Removing user 'cbadminbucket'...
+[2019-08-14 15:57:49,486] - [fts_base] [123145466572800] - INFO - ====  FTSbasetests cleanup is finished for test #2 test_query_index_freeze_plan ===

@@ -335,7 +335,7 @@ class BuildQuery(object):
                     build.url = "{5}{0}/{1}_{4}-windows_{2}.{3}"\
                         .format(build_version, product, arch_type,
                          deliverable_type, build_details[:5], CB_RELEASE_REPO)
-        elif deliverable_type == "zip":
+        elif deliverable_type == "dmg":
             if not re.match(r'[1-9].[0-9].[0-9]$', build_version):
                 if build_version[:5] in COUCHBASE_RELEASE_FROM_VERSION_3:
                     os_name = "macos"
@@ -368,6 +368,8 @@ class BuildQuery(object):
                                 os_name = "suse11"
                             elif "12" in os_version.lower():
                                 os_name = "suse12"
+                            elif "15" in os_version.lower():
+                                os_name = "suse15"
                         elif "oracle linux" in os_version.lower():
                             os_name = "oel6"
                         elif "amazon linux 2" in os_version.lower():
@@ -440,6 +442,8 @@ class BuildQuery(object):
                                 os_name = "suse11"
                             elif "12" in os_version.lower():
                                 os_name = "suse12"
+                            elif "15" in os_version.lower():
+                                os_name = "suse15"
                         elif "oracle linux" in os_version.lower():
                             os_name = "oel6"
                         elif "amazon linux 2" in os_version.lower():
@@ -622,7 +626,7 @@ class BuildQuery(object):
             """ windows build name: couchbase_server-enterprise-windows-amd64-3.0.0-892.exe
                                     couchbase-server-enterprise_3.5.0-952-windows_amd64.exe """
             build.name = build_info
-            deliverable_type = ["exe", "msi", "rpm", "deb", "zip"]
+            deliverable_type = ["exe", "msi", "rpm", "deb", "dmg"]
             if build_info[-3:] in deliverable_type:
                 build.deliverable_type = build_info[-3:]
                 build_info = build_info[:-4]
@@ -685,7 +689,7 @@ class BuildQuery(object):
                     build_info = build_info.replace("-amd64", "")
                 del_words = ["centos6", "debian7", "debian8", "debian9",
                              "ubuntu12.04", "ubuntu14.04", "ubuntu16.04", "ubuntu18.04",
-                             "windows", "macos", "centos7", "suse11", "suse12", "amzn2"]
+                             "windows", "macos", "centos7", "suse11", "suse12", "suse15", "amzn2"]
                 if build_info.startswith("couchbase-server"):
                     build.product = build_info.split("-")
                     build.product = "-".join([i for i in build.product \
@@ -761,7 +765,7 @@ class BuildQuery(object):
         setup = ""
         build_number = ""
 
-        unix_deliverable_type = ["deb", "rpm", "zip"]
+        unix_deliverable_type = ["deb", "rpm", "dmg"]
         if deliverable_type in unix_deliverable_type:
             if toy == "" and version[:5] not in COUCHBASE_VERSION_2 and \
                                    version[:5] not in COUCHBASE_VERSION_3:
@@ -850,6 +854,13 @@ class BuildQuery(object):
                         build.distribution_version = "suse12"
                     else:
                         self.fail("suse 12 does not support on this version %s "
+                                                                  % version[:5])
+                elif "suse 15" in distribution_version:
+                    if version[:5] in COUCHBASE_FROM_MAD_HATTER:
+                        suse_version="suse15"
+                        build.distribution_version = "suse15"
+                    else:
+                        self.fail("suse 15 does not support on this version %s "
                                                                   % version[:5])
                 else:
                     suse_version="suse11"
@@ -1062,8 +1073,8 @@ class BuildQuery(object):
                 return version_item[:version_item.index('.deb')]
             elif version_item.endswith('.rpm'):
                 return version_item[:version_item.index('.rpm')]
-            elif version_item.endswith('.zip'):
-                return version_item[:version_item.index('.zip')]
+            elif version_item.endswith('.dmg'):
+                return version_item[:version_item.index('.dmg')]
         return ''
 
     def _product_deliverable_type(self, build_id=''):
@@ -1083,8 +1094,8 @@ class BuildQuery(object):
                 return 'deb'
             elif version_item.endswith('.rpm'):
                 return 'rpm'
-            elif version_item.endswith('.zip'):
-                return 'zip'
+            elif version_item.endswith('.dmg'):
+                return 'dmg'
         return ''
 
     def _product_time(self, build_description):

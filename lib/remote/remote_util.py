@@ -1014,8 +1014,8 @@ class RemoteMachineShellConnection:
         # fix this :
             command1 = "cd /tmp ; D=$(mktemp -d cb_XXXX) ; mv {0} $D ; mv core.* $D ;"\
                                      " rm -f * ; mv $D/* . ; rmdir $D".format(filename)
-            if self.info.distribution_type.lower() == 'suse':
-                command1 = "cd /var/cache/zypper/RPMS/; rm -rf couchbase-server*"
+            if "suse" in self.info.distribution_type.lower():
+                command1 += "; cd /var/cache/zypper/RPMS/; rm -rf couchbase-server*"
             command_root = "cd /tmp;wget -q -O {0} {1};cd /tmp;ls -lh".format(filename, url)
             file_location = "/tmp"
             output, error = self.execute_command_raw(command1, debug=False)
@@ -1974,13 +1974,22 @@ class RemoteMachineShellConnection:
                 else:
                     self.check_pkgconfig(self.info.deliverable_type, openssl)
                     if "SUSE" in self.info.distribution_type:
-			if environment:
-			    output, error = self.execute_command("export {0};zypper -n install /tmp/{1}"
+                        if environment:
+                            if "suse 12" in self.info.distribution_version.lower():
+                                output, error = self.execute_command("export {0};zypper -n install /tmp/{1}"
+                                                         .format(environment.strip(), build.name))
+                                self.log_command_output(output, error)
+                            elif "suse 15" in self.info.distribution_version.lower():
+                                output, error = self.execute_command("export {0};zypper -n install --allow-unsigned-rpm /tmp/{1}"
                                                      .format(environment.strip(), build.name))
-			    self.log_command_output(output, error)
-			else:
-                            output, error = self.execute_command("zypper -n install /tmp/{0}".format(build.name))
-                            self.log_command_output(output, error)
+                                self.log_command_output(output, error)
+                        else:
+                            if "suse 12" in self.info.distribution_version.lower():
+                                output, error = self.execute_command("zypper -n install /tmp/{0}".format(build.name))
+                                self.log_command_output(output, error)
+                            elif "suse 15" in self.info.distribution_version.lower():
+                                output, error = self.execute_command("zypper -n install --allow-unsigned-rpm /tmp/{0}".format(build.name))
+                                self.log_command_output(output, error)
                     else:
                         rpm_cmd = "yes | {0}yum localinstall -y /tmp/{1}"
                         if force:
@@ -2126,32 +2135,27 @@ class RemoteMachineShellConnection:
                     self.log_command_output(output, error, track_words)
                 else:
                     success &= self.log_command_output(output, error, track_words, debug=False)
-        elif self.info.deliverable_type in ["zip"]:
+        elif self.info.deliverable_type in ["dmg"]:
             """ close Safari browser before install """
             self.terminate_process(self.info, "/Applications/Safari.app/Contents/MacOS/Safari")
-            o, r = self.execute_command("ps aux | grep Archive | awk '{print $2}' | xargs kill -9")
-            output, error = self.execute_command("cd ~/Downloads ; open couchbase-server*.zip")
+            self.execute_command("ps aux | grep Archive | awk '{print $2}' | xargs kill -9")
+            output, error = self.execute_command("cd ~/Downloads ; hdiutil attach couchbase-server*.dmg")
             extracted = False
             count = 1
             if not output:
-                log.info("\n****** waiting to unzip file in server: {0}".format(self.ip))
+                log.info("\n****** waiting to mount dmg file on server: {0}".format(self.ip))
                 while not extracted:
-                    found, error = self.execute_command("ls ~/Downloads/couchbase-server*/",
-                                                         debug=False)
-                    if "Couchbase Server.app" not in found:
+                    found, error = self.execute_command("ls /Volumes/Couchbase\ Installer*/",
+                                                        debug=False)
+                    if "Couchbase\ Server.app" not in found:
                         time.sleep(10)
                         count += 1
                     else:
                         extracted = True
-            else:
-                found, error = self.execute_command("ls ~/Downloads/couchbase-server*/",
-                                                     debug=False)
-                if "Couchbase Server.app" not in found:
-                    raise Exception("Faile to open zip file")
 
-            cmd1 = "mv ~/Downloads/couchbase-server*/Couchbase\ Server.app /Applications/"
+            cmd1 = "cp -R /Volumes/Couchbase*/Couchbase\ Server.app /Applications"
             cmd2 = "sudo xattr -d -r com.apple.quarantine /Applications/Couchbase\ Server.app"
-            cmd3 = "open /Applications/Couchbase\ Server.app"
+            cmd3 = "sudo open -a /Applications/Couchbase\ Server.app"
             output, error = self.execute_command(cmd1)
             self.log_command_output(output, error)
             output, error = self.execute_command(cmd2)
@@ -2816,6 +2820,11 @@ class RemoteMachineShellConnection:
             self.log_command_output(output, error)
             output, error = self.execute_command("rm -rf ~/Library/Application\ Support/Couchbase")
             self.log_command_output(output, error)
+            """ Unmount existing app """
+            volumes, _ = self.execute_command("ls /Volumes | grep Couchbase\ Installer")
+            for volume in volumes:
+                output, error = self.execute_command("hdiutil unmount " + '"' + "/Volumes/" + volume + '"')
+                self.log_command_output(output, error)
         if self.nonroot:
             if self.nr_home_path != "/home/%s/" % self.username:
                 log.info("remove all non default install dir")
@@ -3505,7 +3514,7 @@ class RemoteMachineShellConnection:
             ext = { 'Ubuntu' : "deb",
                    'CentOS'  : "rpm",
                    'Red Hat' : "rpm",
-                   "Mac"     : "zip",
+                   "Mac"     : "dmg",
                    "Debian"  : "deb",
                    "openSUSE": "rpm",
                    "SUSE"    : "rpm",
@@ -4921,11 +4930,33 @@ class RemoteMachineShellConnection:
         command = "dd if=/dev/zero of={0}/disk-quota.ext3 count={1}; df -Th".format(location, count)
         output, error = self.execute_command(command)
         return output, error
-    
+
     def update_dist_type(self):
         output, error = self.execute_command("echo '{{dist_type,inet6_tcp}}.' > {0}".format(LINUX_DIST_CONFIG))
         self.log_command_output(output, error)
-        
+
+    def alt_addr_add_node(self, main_server=None, internal_IP=None,
+                                server_add=None,
+                                user="Administrator",
+                                passwd="password",
+                                services="kv", cmd_ext=""):
+        """ in alternate address, we need to use curl to add node """
+
+        if internal_IP is None:
+            raise Exception("Need internal IP to add node.")
+        if main_server is None:
+            raise Exception("Need master IP to run")
+        cmd = 'curl{0} -X POST -d  "hostname={1}&user={2}&password={3}&services={4}" '\
+                             .format(cmd_ext, internal_IP, server_add.rest_username,
+                                     server_add.rest_password, services)
+        cmd += '-u {0}:{1} http://{2}:8091/controller/addNode'\
+                             .format(main_server.rest_username,
+                                     main_server.rest_password,
+                                     main_server.ip)
+        output, error = self.execute_command(cmd)
+        return output, error
+
+
 class RemoteUtilHelper(object):
 
     @staticmethod

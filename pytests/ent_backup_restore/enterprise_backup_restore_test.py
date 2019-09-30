@@ -116,6 +116,9 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
                 if self.same_cluster:
                     self._initialize_nodes(Cluster(), self.servers[:self.nodes_init])
                 else:
+                    shell = RemoteMachineShellConnection(self.backupset.restore_cluster_host)
+                    shell.enable_diag_eval_on_non_local_hosts()
+                    shell.disconnect()
                     rest = RestConnection(self.backupset.restore_cluster_host)
                     rest.force_eject_node()
                     rest.init_node()
@@ -1385,8 +1388,12 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
         rest_conn.add_zone(target_zone)
         self.log.info("Moving {0} to new zone {1}".format(self.backupset.cluster_host.ip, target_zone))
         rest_conn.shuffle_nodes_in_zones(["{0}".format(self.backupset.cluster_host.ip)], source_zone, target_zone)
+        rebalance = self.cluster.async_rebalance(self.servers[:self.nodes_init], [], [])
+        rebalance.result()
         self.log.info("Restoring to {0} after group change".format(self.backupset.cluster_host.ip))
         try:
+            self.log.info("Flush bucket")
+            rest_conn.flush_bucket()
             self.backup_restore_validate()
         except Exception as ex:
             self.fail(str(ex))
@@ -1395,6 +1402,8 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
             rest_conn.shuffle_nodes_in_zones(["{0}".format(self.backupset.cluster_host.ip)], target_zone, source_zone)
             self.log.info("Deleting new zone " + target_zone)
             rest_conn.delete_zone(target_zone)
+            rebalance = self.cluster.async_rebalance(self.servers[:self.nodes_init], [], [])
+            rebalance.result()
 
     def test_backup_restore_with_firewall(self):
         """
@@ -1416,7 +1425,7 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
         self.enable_firewall = True
         try:
             output, error = self.backup_cluster()
-            self.assertTrue(self._check_output("getsockopt: connection refused", output),
+            self.assertTrue(self._check_output("connect: connection refused", output),
                             "Expected error not thrown by backup cluster when firewall enabled")
         finally:
             self.log.info("Disabling firewall on cluster host to take backup")
@@ -1432,7 +1441,7 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
         """ reset restore cluster to same services as backup cluster """
         try:
             output, error = self.backup_restore()
-            mesg = "getsockopt: connection refused"
+            mesg = "connect: connection refused"
             if self.skip_buckets:
                 mesg = "Error restoring cluster:"
             self.assertTrue(self._check_output(mesg, output),
@@ -1784,7 +1793,7 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
 
             self.sleep(10)
             output = backup_result.result(timeout=200)
-            mesg = "Error backing up cluster: Unable to find the latest vbucket sequence numbers."
+            mesg = "Error backing up cluster: Unable to find the latest vbucket sequence numbers"
             self.assertTrue(self._check_output(mesg, output),
                 "Expected error message not thrown by Backup 180 seconds after memcached crash")
             self.log.info("Expected error thrown by Backup 180 seconds after memcached crash")
@@ -2025,6 +2034,8 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
             strip_backupset = [s[:-6] for s in self.backups]
 
         for line in output:
+            if "entbackup" in line:
+                continue
             if re.search("\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}.\d+", line):
                 backup_name = re.search("\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}.\d+", line).group()
                 if self.debug_logs:
@@ -2049,6 +2060,8 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
             strip_backupset = [s[:-6] for s in self.backups]
 
         for line in output:
+            if "entbackup" in line:
+                continue
             if re.search("\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}.\d+", line):
                 backup_name = re.search("\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}.\d+", line).group()
                 if self.debug_logs:
@@ -2081,6 +2094,8 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
             self.fail(message)
         self.backupset.start = 1
         self.backupset.end = 1
+        rest = RestConnection(self.backupset.restore_cluster_host)
+        rest.flush_bucket()
         output, error = self.backup_restore()
         if error:
             self.fail("Restoring backup failed")
@@ -2868,7 +2883,7 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
         command = "{0}/cbbackupmgr {1}".format(self.cli_command_location, cmd)
         output, error = remote_client.execute_command(command)
         remote_client.log_command_output(output, error)
-        self.assertEqual(output[0], "Flag required, but not specified: -/--backup",
+        self.assertEqual(output[0], "Flag required, but not specified: --backup",
                          "Expected error message not thrown")
         cmd = "compact --archive {0} --repo {1} --backup" \
             .format(self.backupset.directory, self.backupset.name)
@@ -3253,6 +3268,7 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
         5. Restores data ans validates
         6. Ensures that same FTS index is created in restore cluster
         """
+        self.test_fts = True
         rest_src = RestConnection(self.backupset.cluster_host)
         rest_src.add_node(self.servers[1].rest_username, self.servers[1].rest_password,
                           self.servers[1].ip, services=['kv', 'fts'])
@@ -3275,12 +3291,8 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
         except Exception, ex:
             self.fail(ex)
         self.backup_cluster_validate()
-        rest_target = RestConnection(self.backupset.restore_cluster_host)
-        rest_target.add_node(self.input.clusters[0][1].rest_username,
-                             self.input.clusters[0][1].rest_password,
-                             self.input.clusters[0][1].ip, services=['kv', 'fts'])
-        rebalance = self.cluster.async_rebalance(self.cluster_to_restore, [], [])
-        rebalance.result()
+        if self.bucket_type != "ephemeral":
+            self._create_restore_cluster()
         self.backup_restore_validate(compare_uuid=False, seqno_compare_function=">=")
         rest_target_fts = RestConnection(self.input.clusters[0][1])
         status = False
@@ -3536,6 +3548,7 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
         gen = BlobGenerator("ent-backup", "ent-backup-", self.value_size, end=self.num_items)
         self._load_all_buckets(self.master, gen, "create", 0)
         self.backup_create()
+        self.backup_cluster()
         self._collect_logs()
 
     def test_cbbackupmgr_restore_with_ttl(self):
@@ -3578,11 +3591,14 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
         gen = BlobGenerator("ent-backup", "ent-backup-", self.value_size, end=self.num_items)
         self._load_all_buckets(self.master, gen, "create", 0)
         self.backup_create()
-        self.backup_cluster_validate()
         if self.should_fail:
-            self.backup_restore()
+            self.backup_cluster()
         else:
-            self.backup_restore_validate()
+            self.backup_cluster_validate()
+            if self.restore_should_fail:
+                self.backup_restore()
+            else:
+                self.backup_restore_validate()
 
     def test_cbbackupmgr_with_eventing(self):
         """
@@ -3834,27 +3850,32 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
             cb_version=self.cb_version)
 
         # We need to wait until the data transfer starts before we pause memcached.
-        # Read the backup file output until we find evidence of a DCP connection, or the backup finishes.
+        # Read the backup file output until we find evidence of a DCP connection,
+        # or the backup finishes.
         backup_client = RemoteMachineShellConnection(self.backupset.backup_host)
-        command = "tail -n 1 {}/logs/backup-*.log | grep ' (DCP) '".format(self.backupset.directory)
+        command = "tail -n 1 {}/logs/backup-*.log | grep ' (DCP) '"\
+                                               .format(self.backupset.directory)
         Future.wait_until(
             lambda: (bool(backup_client.execute_command(command)[0]) or backup_result.done()),
             lambda x: x is True,
-            200)
+            200,
+            interval_time=0.1,
+            exponential_backoff=False)
 
         # If the backup finished and we never saw a DCP connection something's not right.
         if backup_result.done():
             self.fail("Never found evidence of open DCP stream in backup logs.")
 
         # Pause memcached to trigger the log message.
-        cluster_client = RemoteMachineShellConnection(self.backupset.restore_cluster_host)
+        cluster_client = RemoteMachineShellConnection(self.backupset.cluster_host)
         cluster_client.pause_memcached(self.os_name, timesleep=65)
         cluster_client.unpause_memcached(self.os_name)
         cluster_client.disconnect()
         backup_result.result(timeout=200)
 
         expected_message = "Stream has been inactive for 60s"
-        command = "cat {}/logs/backup-*.log | grep '{}' ".format(self.backupset.directory, expected_message)
+        command = "cat {}/logs/backup-*.log | grep '{}' "\
+                         .format(self.backupset.directory, expected_message)
         output, _ = backup_client.execute_command(command)
         if not output:
             self.fail("Mutations were blocked for over 60 seconds, "

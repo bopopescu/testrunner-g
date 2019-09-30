@@ -1,0 +1,649 @@
+[2019-08-23 14:45:15,653] - [install] [4755604928] - INFO - *****Starting the complete install process ****
+[2019-08-23 14:45:15,658] - [install] [4755604928] - INFO - Doing  parallel install****
+[2019-08-23 14:45:15,660] - [remote_util] [123145561481216] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 14:45:15,660] - [remote_util] [123145565687808] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 14:45:16,024] - [remote_util] [123145561481216] - INFO - Connected to 172.23.109.180
+[2019-08-23 14:45:16,024] - [remote_util] [123145565687808] - INFO - Connected to 172.23.109.179
+[2019-08-23 14:45:16,392] - [remote_util] [123145561481216] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:45:16,402] - [remote_util] [123145565687808] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:45:17,169] - [remote_util] [123145561481216] - INFO - 172.23.109.180 *****In couchbase uninstall****
+[2019-08-23 14:45:17,169] - [remote_util] [123145561481216] - INFO - CentOS
+[2019-08-23 14:45:17,236] - [remote_util] [123145565687808] - INFO - 172.23.109.179 *****In couchbase uninstall****
+[2019-08-23 14:45:17,236] - [remote_util] [123145565687808] - INFO - CentOS
+[2019-08-23 14:45:17,520] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: killall -9 rpm
+[2019-08-23 14:45:17,568] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: killall -9 rpm
+[2019-08-23 14:45:17,585] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:45:17,585] - [remote_util] [123145561481216] - ERROR - rpm: no process found
+[2019-08-23 14:45:17,585] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: rm -f /var/lib/rpm/.rpm.lock
+[2019-08-23 14:45:17,632] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:45:17,632] - [remote_util] [123145565687808] - ERROR - rpm: no process found
+[2019-08-23 14:45:17,632] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: rm -f /var/lib/rpm/.rpm.lock
+[2019-08-23 14:45:17,688] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:45:17,748] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:45:18,034] - [remote_util] [123145561481216] - INFO - running rpm -e to remove couchbase-server
+[2019-08-23 14:45:18,034] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: rpm -e couchbase-server
+[2019-08-23 14:45:18,111] - [remote_util] [123145565687808] - INFO - running rpm -e to remove couchbase-server
+[2019-08-23 14:45:18,112] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: rpm -e couchbase-server
+[2019-08-23 14:45:22,276] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:45:22,276] - [remote_util] [123145561481216] - ERROR - 
+
+**** Uninstalling on server: 172.23.109.180 ****
+[2019-08-23 14:45:22,276] - [remote_util] [123145561481216] - ERROR - warning: file /opt/couchbase/var/lib/couchbase/ip_start: remove failed: No such file or directory
+[2019-08-23 14:45:22,276] - [remote_util] [123145561481216] - ERROR - warning: /opt/couchbase/var/lib/couchbase/ip saved as /opt/couchbase/var/lib/couchbase/ip.rpmsave
+[2019-08-23 14:45:22,276] - [remote_util] [123145561481216] - ERROR - warning: /opt/couchbase/var/lib/couchbase/config/dist_cfg saved as /opt/couchbase/var/lib/couchbase/config/dist_cfg.rpmsave
+[2019-08-23 14:45:22,276] - [remote_util] [123145561481216] - ERROR - warning: /opt/couchbase/var/lib/couchbase/config/config.dat saved as /opt/couchbase/var/lib/couchbase/config/config.dat.rpmsave
+[2019-08-23 14:45:22,276] - [remote_util] [123145561481216] - ERROR - warning: /opt/couchbase/etc/couchdb/local.ini saved as /opt/couchbase/etc/couchdb/local.ini.rpmsave
+[2019-08-23 14:45:22,276] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: pkill -u couchbase
+[2019-08-23 14:45:22,278] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:45:22,278] - [remote_util] [123145565687808] - ERROR - 
+
+**** Uninstalling on server: 172.23.109.179 ****
+[2019-08-23 14:45:22,278] - [remote_util] [123145565687808] - ERROR - warning: file /opt/couchbase/var/lib/couchbase/ip_start: remove failed: No such file or directory
+[2019-08-23 14:45:22,278] - [remote_util] [123145565687808] - ERROR - warning: /opt/couchbase/var/lib/couchbase/ip saved as /opt/couchbase/var/lib/couchbase/ip.rpmsave
+[2019-08-23 14:45:22,279] - [remote_util] [123145565687808] - ERROR - warning: /opt/couchbase/var/lib/couchbase/config/dist_cfg saved as /opt/couchbase/var/lib/couchbase/config/dist_cfg.rpmsave
+[2019-08-23 14:45:22,279] - [remote_util] [123145565687808] - ERROR - warning: /opt/couchbase/var/lib/couchbase/config/config.dat saved as /opt/couchbase/var/lib/couchbase/config/config.dat.rpmsave
+[2019-08-23 14:45:22,279] - [remote_util] [123145565687808] - ERROR - warning: /opt/couchbase/etc/couchdb/local.ini saved as /opt/couchbase/etc/couchdb/local.ini.rpmsave
+[2019-08-23 14:45:22,279] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: pkill -u couchbase
+[2019-08-23 14:45:22,350] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:45:22,350] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: ps -ef | grep couchbase
+[2019-08-23 14:45:22,364] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:45:22,364] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: ps -ef | grep couchbase
+[2019-08-23 14:45:22,481] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:45:22,481] - [remote_util] [123145561481216] - INFO - root     27292 27096  0 14:45 ?        00:00:00 bash -c ps -ef | grep couchbase
+[2019-08-23 14:45:22,481] - [remote_util] [123145561481216] - INFO - root     27298 27292  0 14:45 ?        00:00:00 grep couchbase
+[2019-08-23 14:45:22,504] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:45:22,504] - [remote_util] [123145565687808] - INFO - root      5527  5329  0 14:45 ?        00:00:00 bash -c ps -ef | grep couchbase
+[2019-08-23 14:45:22,504] - [remote_util] [123145565687808] - INFO - root      5533  5527  0 14:45 ?        00:00:00 grep couchbase
+[2019-08-23 14:45:25,609] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: ipcrm
+[2019-08-23 14:45:25,631] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: ipcrm
+[2019-08-23 14:45:25,697] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:45:25,726] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:45:25,853] - [remote_util] [4755604928] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 14:45:26,222] - [remote_util] [4755604928] - INFO - Connected to 172.23.109.180
+[2019-08-23 14:45:26,601] - [remote_util] [4755604928] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:45:27,649] - [remote_util] [4755604928] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 14:45:28,008] - [remote_util] [4755604928] - INFO - Connected to 172.23.109.179
+[2019-08-23 14:45:28,378] - [remote_util] [4755604928] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:45:29,467] - [install] [123145561481216] - INFO - ********CouchbaseServerInstaller:install
+[2019-08-23 14:45:29,468] - [remote_util] [123145561481216] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 14:45:29,469] - [install] [123145565687808] - INFO - ********CouchbaseServerInstaller:install
+[2019-08-23 14:45:29,470] - [remote_util] [123145565687808] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 14:45:29,830] - [remote_util] [123145561481216] - INFO - Connected to 172.23.109.180
+[2019-08-23 14:45:29,835] - [remote_util] [123145565687808] - INFO - Connected to 172.23.109.179
+[2019-08-23 14:45:30,164] - [remote_util] [123145565687808] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:45:30,184] - [remote_util] [123145561481216] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:45:31,111] - [remote_util] [123145565687808] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 14:45:31,136] - [remote_util] [123145561481216] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 14:45:31,473] - [remote_util] [123145565687808] - INFO - Connected to 172.23.109.179
+[2019-08-23 14:45:31,498] - [remote_util] [123145561481216] - INFO - Connected to 172.23.109.180
+[2019-08-23 14:45:31,869] - [remote_util] [123145561481216] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:45:31,879] - [remote_util] [123145565687808] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:45:32,888] - [remote_util] [123145561481216] - INFO - This url http://172.23.120.24/builds/latestbuilds/couchbase-server/alice/2409/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm is live
+[2019-08-23 14:45:32,889] - [remote_util] [123145565687808] - INFO - This url http://172.23.120.24/builds/latestbuilds/couchbase-server/alice/2409/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm is live
+[2019-08-23 14:45:33,009] - [remote_util] [123145565687808] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 14:45:33,010] - [remote_util] [123145561481216] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 14:45:33,367] - [remote_util] [123145565687808] - INFO - Connected to 172.23.109.179
+[2019-08-23 14:45:33,376] - [remote_util] [123145561481216] - INFO - Connected to 172.23.109.180
+[2019-08-23 14:45:33,736] - [remote_util] [123145565687808] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:45:33,758] - [remote_util] [123145561481216] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:45:34,736] - [remote_util] [123145561481216] - INFO - Connect to node: 172.23.109.180 as user: root
+[2019-08-23 14:45:34,818] - [remote_util] [123145565687808] - INFO - Connect to node: 172.23.109.179 as user: root
+[2019-08-23 14:45:35,125] - [remote_util] [123145561481216] - INFO - Connected to 172.23.109.180 as root
+[2019-08-23 14:45:35,230] - [remote_util] [123145565687808] - INFO - Connected to 172.23.109.179 as root
+[2019-08-23 14:45:35,420] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: cd /tmp;wget -q -O couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm http://172.23.120.24/builds/latestbuilds/couchbase-server/alice/2409/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm;cd /tmp;ls -lh
+[2019-08-23 14:45:35,474] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: cd /tmp;wget -q -O couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm http://172.23.120.24/builds/latestbuilds/couchbase-server/alice/2409/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm;cd /tmp;ls -lh
+[2019-08-23 14:46:04,997] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:46:04,997] - [remote_util] [123145565687808] - INFO - total 352M
+[2019-08-23 14:46:04,997] - [remote_util] [123145565687808] - INFO - -rw-r--r--. 1 root root 352M Jun  5 01:06 couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm
+[2019-08-23 14:46:05,141] - [remote_util] [123145565687808] - INFO - *****install server ***
+[2019-08-23 14:46:05,141] - [remote_util] [123145565687808] - INFO - deliverable_type : rpm
+[2019-08-23 14:46:05,141] - [remote_util] [123145565687808] - INFO - /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm or /tmp/
+[2019-08-23 14:46:05,141] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: /sbin/sysctl vm.swappiness=0
+[2019-08-23 14:46:05,223] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:46:05,223] - [remote_util] [123145565687808] - INFO - vm.swappiness = 0
+[2019-08-23 14:46:05,223] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: cat /etc/redhat-release
+[2019-08-23 14:46:05,338] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:46:05,338] - [remote_util] [123145565687808] - INFO - Red Hat Enterprise Linux Server release 7.3 (Maipo)
+[2019-08-23 14:46:05,338] - [remote_util] [123145565687808] - INFO - no need to install pkgconfig
+[2019-08-23 14:46:05,339] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: yes | INSTALL_DONT_START_SERVER=1 yum localinstall -y /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm
+[2019-08-23 14:46:08,111] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:46:08,111] - [remote_util] [123145561481216] - INFO - total 352M
+[2019-08-23 14:46:08,111] - [remote_util] [123145561481216] - INFO - -rw-r--r--. 1 root root 352M Jun  5 01:06 couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm
+[2019-08-23 14:46:08,275] - [remote_util] [123145561481216] - INFO - *****install server ***
+[2019-08-23 14:46:08,275] - [remote_util] [123145561481216] - INFO - deliverable_type : rpm
+[2019-08-23 14:46:08,275] - [remote_util] [123145561481216] - INFO - /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm or /tmp/
+[2019-08-23 14:46:08,275] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: /sbin/sysctl vm.swappiness=0
+[2019-08-23 14:46:08,361] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:46:08,361] - [remote_util] [123145561481216] - INFO - vm.swappiness = 0
+[2019-08-23 14:46:08,362] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: cat /etc/redhat-release
+[2019-08-23 14:46:08,459] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:46:08,460] - [remote_util] [123145561481216] - INFO - Red Hat Enterprise Linux Server release 7.3 (Maipo)
+[2019-08-23 14:46:08,460] - [remote_util] [123145561481216] - INFO - no need to install pkgconfig
+[2019-08-23 14:46:08,460] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: yes | INSTALL_DONT_START_SERVER=1 yum localinstall -y /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm
+[2019-08-23 14:47:17,313] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:47:17,314] - [remote_util] [123145565687808] - ERROR - Repodata is over 2 weeks old. Install yum-cron? Or run: yum makecache fast
+[2019-08-23 14:47:17,314] - [remote_util] [123145565687808] - ERROR - Warning: RPMDB altered outside of yum.
+[2019-08-23 14:47:17,314] - [remote_util] [123145565687808] - INFO - Loaded plugins: ulninfo
+[2019-08-23 14:47:17,314] - [remote_util] [123145565687808] - INFO - Examining /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm: couchbase-server-6.0.2-2409.x86_64
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO - Marking /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm to be installed
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO - Resolving Dependencies
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO - --> Running transaction check
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO - ---> Package couchbase-server.x86_64 0:6.0.2-2409 will be installed
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO - --> Finished Dependency Resolution
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO - Dependencies Resolved
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO - ================================================================================
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO -  Package
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO -       Arch   Version
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO -                    Repository                                              Size
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO - ================================================================================
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO - Installing:
+[2019-08-23 14:47:17,315] - [remote_util] [123145565687808] - INFO -  couchbase-server
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO -       x86_64 6.0.2-2409
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO -                    /couchbase-server-enterprise-6.0.2-2409-centos7.x86_64 760 M
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - Transaction Summary
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - ================================================================================
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - Install  1 Package
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - Total size: 760 M
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - Installed size: 760 M
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - Downloading packages:
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - Running transaction check
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - Running transaction test
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - Transaction test succeeded
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - Running transaction
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - Minimum RAM required  : 4 GB
+[2019-08-23 14:47:17,316] - [remote_util] [123145565687808] - INFO - System RAM configured : 3.60 GB
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - Minimum number of processors required : 4 cores
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - Number of processors on the system    : 4 cores
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO -   Installing : couchbase-server-6.0.2-2409.x86_64                           1/1 
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - Skipping server start due to INSTALL_DONT_START_SERVER ...
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - You have successfully installed Couchbase Server.
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - Please browse to http://localhost.localdomain:8091/ to configure your server.
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - Please refer to http://couchbase.com for additional resources.
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - Please note that you have to update your firewall configuration to
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - allow connections to the following ports:
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - 4369, 8091 to 8094, 9100 to 9105, 9998, 9999, 11207, 11209 to 11211,
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - 11214, 11215, 18091 to 18093, and from 21100 to 21299.
+[2019-08-23 14:47:17,317] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO - By using this software you agree to the End User License Agreement.
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO - See /opt/couchbase/LICENSE.txt.
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO -   Verifying  : couchbase-server-6.0.2-2409.x86_64                           1/1 
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO - Installed:
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO -   couchbase-server.x86_64 0:6.0.2-2409                                          
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO - 
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO - Complete!
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO - 
+If couchbase server is running with this error.
+Go to log_command_output to add error mesg to bypass it.
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO - 
+If couchbase server is running with this error.
+Go to log_command_output to add error mesg to bypass it.
+[2019-08-23 14:47:17,318] - [remote_util] [123145565687808] - INFO - Warming: RPMDB altered outside of yum
+[2019-08-23 14:47:17,397] - [remote_util] [123145565687808] - ERROR - Directory at /tmp DOES exist. Fx returns True
+[2019-08-23 14:47:17,908] - [remote_util] [123145565687808] - INFO - Running systemd command on this server
+[2019-08-23 14:47:17,908] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: systemctl start couchbase-server.service
+[2019-08-23 14:47:18,057] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:47:18,115] - [install] [123145565687808] - INFO - wait 5 seconds for Couchbase server to start
+[2019-08-23 14:47:22,039] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:47:22,040] - [remote_util] [123145561481216] - ERROR - Warning: RPMDB altered outside of yum.
+[2019-08-23 14:47:22,040] - [remote_util] [123145561481216] - INFO - Loaded plugins: ulninfo
+[2019-08-23 14:47:22,040] - [remote_util] [123145561481216] - INFO - Examining /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm: couchbase-server-6.0.2-2409.x86_64
+[2019-08-23 14:47:22,040] - [remote_util] [123145561481216] - INFO - Marking /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm to be installed
+[2019-08-23 14:47:22,040] - [remote_util] [123145561481216] - INFO - Resolving Dependencies
+[2019-08-23 14:47:22,040] - [remote_util] [123145561481216] - INFO - --> Running transaction check
+[2019-08-23 14:47:22,040] - [remote_util] [123145561481216] - INFO - ---> Package couchbase-server.x86_64 0:6.0.2-2409 will be installed
+[2019-08-23 14:47:22,040] - [remote_util] [123145561481216] - INFO - --> Finished Dependency Resolution
+[2019-08-23 14:47:22,040] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,041] - [remote_util] [123145561481216] - INFO - Dependencies Resolved
+[2019-08-23 14:47:22,041] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,041] - [remote_util] [123145561481216] - INFO - ================================================================================
+[2019-08-23 14:47:22,041] - [remote_util] [123145561481216] - INFO -  Package
+[2019-08-23 14:47:22,041] - [remote_util] [123145561481216] - INFO -       Arch   Version
+[2019-08-23 14:47:22,041] - [remote_util] [123145561481216] - INFO -                    Repository                                              Size
+[2019-08-23 14:47:22,041] - [remote_util] [123145561481216] - INFO - ================================================================================
+[2019-08-23 14:47:22,041] - [remote_util] [123145561481216] - INFO - Installing:
+[2019-08-23 14:47:22,041] - [remote_util] [123145561481216] - INFO -  couchbase-server
+[2019-08-23 14:47:22,041] - [remote_util] [123145561481216] - INFO -       x86_64 6.0.2-2409
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO -                    /couchbase-server-enterprise-6.0.2-2409-centos7.x86_64 760 M
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - Transaction Summary
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - ================================================================================
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - Install  1 Package
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - Total size: 760 M
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - Installed size: 760 M
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - Downloading packages:
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - Running transaction check
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - Running transaction test
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - Transaction test succeeded
+[2019-08-23 14:47:22,042] - [remote_util] [123145561481216] - INFO - Running transaction
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - Minimum RAM required  : 4 GB
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - System RAM configured : 3.60 GB
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - Minimum number of processors required : 4 cores
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - Number of processors on the system    : 4 cores
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO -   Installing : couchbase-server-6.0.2-2409.x86_64                           1/1 
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - Skipping server start due to INSTALL_DONT_START_SERVER ...
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - You have successfully installed Couchbase Server.
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - Please browse to http://localhost.localdomain:8091/ to configure your server.
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - Please refer to http://couchbase.com for additional resources.
+[2019-08-23 14:47:22,043] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO - Please note that you have to update your firewall configuration to
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO - allow connections to the following ports:
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO - 4369, 8091 to 8094, 9100 to 9105, 9998, 9999, 11207, 11209 to 11211,
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO - 11214, 11215, 18091 to 18093, and from 21100 to 21299.
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO - By using this software you agree to the End User License Agreement.
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO - See /opt/couchbase/LICENSE.txt.
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO -   Verifying  : couchbase-server-6.0.2-2409.x86_64                           1/1 
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO - Installed:
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO -   couchbase-server.x86_64 0:6.0.2-2409                                          
+[2019-08-23 14:47:22,044] - [remote_util] [123145561481216] - INFO - 
+[2019-08-23 14:47:22,045] - [remote_util] [123145561481216] - INFO - Complete!
+[2019-08-23 14:47:22,045] - [remote_util] [123145561481216] - INFO - 
+If couchbase server is running with this error.
+Go to log_command_output to add error mesg to bypass it.
+[2019-08-23 14:47:22,045] - [remote_util] [123145561481216] - INFO - Warming: RPMDB altered outside of yum
+[2019-08-23 14:47:22,163] - [remote_util] [123145561481216] - ERROR - Directory at /tmp DOES exist. Fx returns True
+[2019-08-23 14:47:22,704] - [remote_util] [123145561481216] - INFO - Running systemd command on this server
+[2019-08-23 14:47:22,704] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: systemctl start couchbase-server.service
+[2019-08-23 14:47:22,855] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:47:22,902] - [install] [123145561481216] - INFO - wait 5 seconds for Couchbase server to start
+[2019-08-23 14:47:27,924] - [remote_util] [123145565687808] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 14:47:27,925] - [remote_util] [123145561481216] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 14:47:28,287] - [remote_util] [123145561481216] - INFO - Connected to 172.23.109.180
+[2019-08-23 14:47:28,287] - [remote_util] [123145565687808] - INFO - Connected to 172.23.109.179
+[2019-08-23 14:47:28,644] - [remote_util] [123145565687808] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:47:28,651] - [remote_util] [123145561481216] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:47:29,617] - [remote_util] [123145561481216] - INFO - 172.23.109.180 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-08-23 14:47:29,635] - [rest_client] [123145561481216] - ERROR - socket error while connecting to http://172.23.109.180:8091/nodes/self error [Errno 61] Connection refused 
+[2019-08-23 14:47:29,638] - [remote_util] [123145565687808] - INFO - 172.23.109.179 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-08-23 14:47:29,647] - [rest_client] [123145565687808] - ERROR - socket error while connecting to http://172.23.109.179:8091/nodes/self error [Errno 61] Connection refused 
+[2019-08-23 14:47:32,653] - [rest_client] [123145561481216] - ERROR - socket error while connecting to http://172.23.109.180:8091/nodes/self error [Errno 61] Connection refused 
+[2019-08-23 14:47:35,792] - [rest_client] [123145565687808] - INFO - Node version in cluster 6.0.2-2409-enterprise
+[2019-08-23 14:47:35,792] - [remote_util] [123145565687808] - INFO - ***** set NS_SERVER_CBAUTH env in linux *****
+[2019-08-23 14:47:36,320] - [remote_util] [123145565687808] - INFO - check if man installed on vm?
+[2019-08-23 14:47:36,320] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: rpm -qa | grep 'man-db'
+[2019-08-23 14:47:37,114] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:47:37,114] - [remote_util] [123145565687808] - INFO - 
+---> Run command unzip to check if it is ready on server 172.23.109.179
+[2019-08-23 14:47:37,115] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: unzip
+[2019-08-23 14:47:37,192] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:47:37,192] - [remote_util] [123145565687808] - INFO - unzip command is ready
+[2019-08-23 14:47:37,192] - [remote_util] [123145565687808] - INFO - Check if ntp is installed
+[2019-08-23 14:47:37,192] - [remote_util] [123145565687808] - INFO - 
+This OS version centos 7
+[2019-08-23 14:47:37,192] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: systemctl status ntpd
+[2019-08-23 14:47:37,301] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:47:37,301] - [remote_util] [123145565687808] - INFO - running command.raw on 172.23.109.179: date
+[2019-08-23 14:47:37,414] - [remote_util] [123145565687808] - INFO - command executed successfully
+[2019-08-23 14:47:37,682] - [remote_util] [123145565687808] - INFO - 
+['Fri Aug 23 14:47:37 PDT 2019'] IP: 172.23.109.179
+[2019-08-23 14:47:38,815] - [rest_client] [123145561481216] - INFO - Node version in cluster 6.0.2-2409-enterprise
+[2019-08-23 14:47:38,816] - [remote_util] [123145561481216] - INFO - ***** set NS_SERVER_CBAUTH env in linux *****
+[2019-08-23 14:47:39,347] - [remote_util] [123145561481216] - INFO - check if man installed on vm?
+[2019-08-23 14:47:39,347] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: rpm -qa | grep 'man-db'
+[2019-08-23 14:47:40,504] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:47:40,504] - [remote_util] [123145561481216] - INFO - 
+---> Run command unzip to check if it is ready on server 172.23.109.180
+[2019-08-23 14:47:40,504] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: unzip
+[2019-08-23 14:47:40,569] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:47:40,569] - [remote_util] [123145561481216] - INFO - unzip command is ready
+[2019-08-23 14:47:40,569] - [remote_util] [123145561481216] - INFO - Check if ntp is installed
+[2019-08-23 14:47:40,569] - [remote_util] [123145561481216] - INFO - 
+This OS version centos 7
+[2019-08-23 14:47:40,569] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: systemctl status ntpd
+[2019-08-23 14:47:40,718] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:47:40,719] - [remote_util] [123145561481216] - INFO - running command.raw on 172.23.109.180: date
+[2019-08-23 14:47:40,803] - [remote_util] [123145561481216] - INFO - command executed successfully
+[2019-08-23 14:47:41,069] - [remote_util] [123145561481216] - INFO - 
+['Fri Aug 23 14:47:41 PDT 2019'] IP: 172.23.109.180
+[2019-08-23 14:47:41,189] - [remote_util] [4755604928] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 14:47:41,549] - [remote_util] [4755604928] - INFO - Connected to 172.23.109.180
+[2019-08-23 14:47:41,917] - [remote_util] [4755604928] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:47:42,782] - [remote_util] [4755604928] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 14:47:43,167] - [remote_util] [4755604928] - INFO - Connected to 172.23.109.180
+[2019-08-23 14:47:43,490] - [remote_util] [4755604928] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:47:44,442] - [remote_util] [4755604928] - INFO - 172.23.109.180 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-08-23 14:47:44,443] - [remote_util] [4755604928] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 14:47:44,795] - [remote_util] [4755604928] - INFO - Connected to 172.23.109.179
+[2019-08-23 14:47:45,114] - [remote_util] [4755604928] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 14:47:46,062] - [remote_util] [4755604928] - INFO - 172.23.109.179 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-08-23 15:06:45,701] - [install] [4433679808] - INFO - *****Starting the complete install process ****
+[2019-08-23 15:06:45,705] - [install] [4433679808] - INFO - Doing  parallel install****
+[2019-08-23 15:06:45,707] - [remote_util] [123145325752320] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 15:06:45,707] - [remote_util] [123145329958912] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 15:06:46,487] - [remote_util] [123145329958912] - INFO - Connected to 172.23.109.179
+[2019-08-23 15:06:46,762] - [remote_util] [123145325752320] - INFO - Connected to 172.23.109.180
+[2019-08-23 15:06:46,863] - [remote_util] [123145329958912] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:06:47,241] - [remote_util] [123145325752320] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:06:47,725] - [remote_util] [123145329958912] - INFO - 172.23.109.179 *****In couchbase uninstall****
+[2019-08-23 15:06:47,725] - [remote_util] [123145329958912] - INFO - CentOS
+[2019-08-23 15:06:48,014] - [remote_util] [123145325752320] - INFO - 172.23.109.180 *****In couchbase uninstall****
+[2019-08-23 15:06:48,014] - [remote_util] [123145325752320] - INFO - CentOS
+[2019-08-23 15:06:48,107] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: killall -9 rpm
+[2019-08-23 15:06:48,204] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:06:48,204] - [remote_util] [123145329958912] - ERROR - rpm: no process found
+[2019-08-23 15:06:48,204] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: rm -f /var/lib/rpm/.rpm.lock
+[2019-08-23 15:06:48,318] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:06:48,400] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: killall -9 rpm
+[2019-08-23 15:06:48,504] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:06:48,504] - [remote_util] [123145325752320] - ERROR - rpm: no process found
+[2019-08-23 15:06:48,505] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: rm -f /var/lib/rpm/.rpm.lock
+[2019-08-23 15:06:48,589] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:06:48,700] - [remote_util] [123145329958912] - INFO - running rpm -e to remove couchbase-server
+[2019-08-23 15:06:48,701] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: rpm -e couchbase-server
+[2019-08-23 15:06:48,946] - [remote_util] [123145325752320] - INFO - running rpm -e to remove couchbase-server
+[2019-08-23 15:06:48,946] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: rpm -e couchbase-server
+[2019-08-23 15:06:54,117] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:06:54,117] - [remote_util] [123145329958912] - ERROR - 
+
+**** Uninstalling on server: 172.23.109.179 ****
+[2019-08-23 15:06:54,117] - [remote_util] [123145329958912] - ERROR - warning: /opt/couchbase/var/lib/couchbase/ip_start saved as /opt/couchbase/var/lib/couchbase/ip_start.rpmsave
+[2019-08-23 15:06:54,117] - [remote_util] [123145329958912] - ERROR - warning: file /opt/couchbase/var/lib/couchbase/ip: remove failed: No such file or directory
+[2019-08-23 15:06:54,118] - [remote_util] [123145329958912] - ERROR - warning: /opt/couchbase/var/lib/couchbase/config/dist_cfg saved as /opt/couchbase/var/lib/couchbase/config/dist_cfg.rpmsave
+[2019-08-23 15:06:54,118] - [remote_util] [123145329958912] - ERROR - warning: /opt/couchbase/var/lib/couchbase/config/config.dat saved as /opt/couchbase/var/lib/couchbase/config/config.dat.rpmsave
+[2019-08-23 15:06:54,118] - [remote_util] [123145329958912] - ERROR - warning: /opt/couchbase/etc/couchdb/local.ini saved as /opt/couchbase/etc/couchdb/local.ini.rpmsave
+[2019-08-23 15:06:54,118] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: pkill -u couchbase
+[2019-08-23 15:06:54,201] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:06:54,201] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: ps -ef | grep couchbase
+[2019-08-23 15:06:54,350] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:06:54,351] - [remote_util] [123145329958912] - INFO - root      7639  7466  0 15:06 ?        00:00:00 bash -c ps -ef | grep couchbase
+[2019-08-23 15:06:54,351] - [remote_util] [123145329958912] - INFO - root      7645  7639  0 15:06 ?        00:00:00 grep couchbase
+[2019-08-23 15:06:54,862] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:06:54,862] - [remote_util] [123145325752320] - ERROR - 
+
+**** Uninstalling on server: 172.23.109.180 ****
+[2019-08-23 15:06:54,862] - [remote_util] [123145325752320] - ERROR - warning: file /opt/couchbase/var/lib/couchbase/ip_start: remove failed: No such file or directory
+[2019-08-23 15:06:54,863] - [remote_util] [123145325752320] - ERROR - warning: /opt/couchbase/var/lib/couchbase/ip saved as /opt/couchbase/var/lib/couchbase/ip.rpmsave
+[2019-08-23 15:06:54,863] - [remote_util] [123145325752320] - ERROR - warning: /opt/couchbase/var/lib/couchbase/config/dist_cfg saved as /opt/couchbase/var/lib/couchbase/config/dist_cfg.rpmsave
+[2019-08-23 15:06:54,863] - [remote_util] [123145325752320] - ERROR - warning: /opt/couchbase/var/lib/couchbase/config/config.dat saved as /opt/couchbase/var/lib/couchbase/config/config.dat.rpmsave
+[2019-08-23 15:06:54,863] - [remote_util] [123145325752320] - ERROR - warning: /opt/couchbase/etc/couchdb/local.ini saved as /opt/couchbase/etc/couchdb/local.ini.rpmsave
+[2019-08-23 15:06:54,863] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: pkill -u couchbase
+[2019-08-23 15:06:54,961] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:06:54,961] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: ps -ef | grep couchbase
+[2019-08-23 15:06:55,078] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:06:55,079] - [remote_util] [123145325752320] - INFO - root      4246  3982  0 15:06 ?        00:00:00 bash -c ps -ef | grep couchbase
+[2019-08-23 15:06:55,079] - [remote_util] [123145325752320] - INFO - root      4252  4246  0 15:06 ?        00:00:00 grep couchbase
+[2019-08-23 15:06:58,027] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: ipcrm
+[2019-08-23 15:06:58,143] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:06:58,442] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: ipcrm
+[2019-08-23 15:06:58,523] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:06:58,648] - [remote_util] [4433679808] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 15:06:59,009] - [remote_util] [4433679808] - INFO - Connected to 172.23.109.180
+[2019-08-23 15:06:59,399] - [remote_util] [4433679808] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:07:00,475] - [remote_util] [4433679808] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 15:07:00,831] - [remote_util] [4433679808] - INFO - Connected to 172.23.109.179
+[2019-08-23 15:07:01,205] - [remote_util] [4433679808] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:07:02,263] - [install] [123145325752320] - INFO - ********CouchbaseServerInstaller:install
+[2019-08-23 15:07:02,264] - [install] [123145329958912] - INFO - ********CouchbaseServerInstaller:install
+[2019-08-23 15:07:02,266] - [remote_util] [123145325752320] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 15:07:02,267] - [remote_util] [123145329958912] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 15:07:02,658] - [remote_util] [123145325752320] - INFO - Connected to 172.23.109.180
+[2019-08-23 15:07:02,661] - [remote_util] [123145329958912] - INFO - Connected to 172.23.109.179
+[2019-08-23 15:07:03,012] - [remote_util] [123145329958912] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:07:03,045] - [remote_util] [123145325752320] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:07:03,868] - [remote_util] [123145329958912] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 15:07:03,938] - [remote_util] [123145325752320] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 15:07:04,227] - [remote_util] [123145329958912] - INFO - Connected to 172.23.109.179
+[2019-08-23 15:07:04,302] - [remote_util] [123145325752320] - INFO - Connected to 172.23.109.180
+[2019-08-23 15:07:04,605] - [remote_util] [123145329958912] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:07:04,697] - [remote_util] [123145325752320] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:07:05,637] - [remote_util] [123145325752320] - INFO - This url http://172.23.120.24/builds/latestbuilds/couchbase-server/alice/2409/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm is live
+[2019-08-23 15:07:05,638] - [remote_util] [123145329958912] - INFO - This url http://172.23.120.24/builds/latestbuilds/couchbase-server/alice/2409/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm is live
+[2019-08-23 15:07:05,707] - [remote_util] [123145325752320] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 15:07:05,761] - [remote_util] [123145329958912] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 15:07:06,064] - [remote_util] [123145325752320] - INFO - Connected to 172.23.109.180
+[2019-08-23 15:07:06,115] - [remote_util] [123145329958912] - INFO - Connected to 172.23.109.179
+[2019-08-23 15:07:06,428] - [remote_util] [123145325752320] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:07:06,484] - [remote_util] [123145329958912] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:07:07,532] - [remote_util] [123145329958912] - INFO - Connect to node: 172.23.109.179 as user: root
+[2019-08-23 15:07:07,539] - [remote_util] [123145325752320] - INFO - Connect to node: 172.23.109.180 as user: root
+[2019-08-23 15:07:07,894] - [remote_util] [123145329958912] - INFO - Connected to 172.23.109.179 as root
+[2019-08-23 15:07:07,898] - [remote_util] [123145325752320] - INFO - Connected to 172.23.109.180 as root
+[2019-08-23 15:07:08,085] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: cd /tmp;wget -q -O couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm http://172.23.120.24/builds/latestbuilds/couchbase-server/alice/2409/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm;cd /tmp;ls -lh
+[2019-08-23 15:07:08,249] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: cd /tmp;wget -q -O couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm http://172.23.120.24/builds/latestbuilds/couchbase-server/alice/2409/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm;cd /tmp;ls -lh
+[2019-08-23 15:07:29,236] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:07:29,236] - [remote_util] [123145325752320] - INFO - total 352M
+[2019-08-23 15:07:29,236] - [remote_util] [123145325752320] - INFO - -rw-r--r--. 1 root root 352M Jun  5 01:06 couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm
+[2019-08-23 15:07:29,387] - [remote_util] [123145325752320] - INFO - *****install server ***
+[2019-08-23 15:07:29,387] - [remote_util] [123145325752320] - INFO - deliverable_type : rpm
+[2019-08-23 15:07:29,387] - [remote_util] [123145325752320] - INFO - /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm or /tmp/
+[2019-08-23 15:07:29,388] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: /sbin/sysctl vm.swappiness=0
+[2019-08-23 15:07:29,505] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:07:29,505] - [remote_util] [123145325752320] - INFO - vm.swappiness = 0
+[2019-08-23 15:07:29,505] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: cat /etc/redhat-release
+[2019-08-23 15:07:29,624] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:07:29,624] - [remote_util] [123145325752320] - INFO - Red Hat Enterprise Linux Server release 7.3 (Maipo)
+[2019-08-23 15:07:29,624] - [remote_util] [123145325752320] - INFO - no need to install pkgconfig
+[2019-08-23 15:07:29,625] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: yes | INSTALL_DONT_START_SERVER=1 yum localinstall -y /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm
+[2019-08-23 15:07:30,287] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:07:30,287] - [remote_util] [123145329958912] - INFO - total 352M
+[2019-08-23 15:07:30,287] - [remote_util] [123145329958912] - INFO - -rw-r--r--. 1 root root 352M Jun  5 01:06 couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm
+[2019-08-23 15:07:30,399] - [remote_util] [123145329958912] - INFO - *****install server ***
+[2019-08-23 15:07:30,400] - [remote_util] [123145329958912] - INFO - deliverable_type : rpm
+[2019-08-23 15:07:30,400] - [remote_util] [123145329958912] - INFO - /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm or /tmp/
+[2019-08-23 15:07:30,400] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: /sbin/sysctl vm.swappiness=0
+[2019-08-23 15:07:30,489] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:07:30,489] - [remote_util] [123145329958912] - INFO - vm.swappiness = 0
+[2019-08-23 15:07:30,489] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: cat /etc/redhat-release
+[2019-08-23 15:07:30,608] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:07:30,608] - [remote_util] [123145329958912] - INFO - Red Hat Enterprise Linux Server release 7.3 (Maipo)
+[2019-08-23 15:07:30,608] - [remote_util] [123145329958912] - INFO - no need to install pkgconfig
+[2019-08-23 15:07:30,608] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: yes | INSTALL_DONT_START_SERVER=1 yum localinstall -y /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm
+[2019-08-23 15:08:42,748] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:08:42,748] - [remote_util] [123145325752320] - ERROR - Warning: RPMDB altered outside of yum.
+[2019-08-23 15:08:42,748] - [remote_util] [123145325752320] - INFO - Loaded plugins: ulninfo
+[2019-08-23 15:08:42,749] - [remote_util] [123145325752320] - INFO - Examining /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm: couchbase-server-6.0.2-2409.x86_64
+[2019-08-23 15:08:42,749] - [remote_util] [123145325752320] - INFO - Marking /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm to be installed
+[2019-08-23 15:08:42,749] - [remote_util] [123145325752320] - INFO - Resolving Dependencies
+[2019-08-23 15:08:42,749] - [remote_util] [123145325752320] - INFO - --> Running transaction check
+[2019-08-23 15:08:42,749] - [remote_util] [123145325752320] - INFO - ---> Package couchbase-server.x86_64 0:6.0.2-2409 will be installed
+[2019-08-23 15:08:42,749] - [remote_util] [123145325752320] - INFO - --> Finished Dependency Resolution
+[2019-08-23 15:08:42,749] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,749] - [remote_util] [123145325752320] - INFO - Dependencies Resolved
+[2019-08-23 15:08:42,749] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,749] - [remote_util] [123145325752320] - INFO - ================================================================================
+[2019-08-23 15:08:42,750] - [remote_util] [123145325752320] - INFO -  Package
+[2019-08-23 15:08:42,750] - [remote_util] [123145325752320] - INFO -       Arch   Version
+[2019-08-23 15:08:42,750] - [remote_util] [123145325752320] - INFO -                    Repository                                              Size
+[2019-08-23 15:08:42,750] - [remote_util] [123145325752320] - INFO - ================================================================================
+[2019-08-23 15:08:42,750] - [remote_util] [123145325752320] - INFO - Installing:
+[2019-08-23 15:08:42,750] - [remote_util] [123145325752320] - INFO -  couchbase-server
+[2019-08-23 15:08:42,750] - [remote_util] [123145325752320] - INFO -       x86_64 6.0.2-2409
+[2019-08-23 15:08:42,750] - [remote_util] [123145325752320] - INFO -                    /couchbase-server-enterprise-6.0.2-2409-centos7.x86_64 760 M
+[2019-08-23 15:08:42,750] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,750] - [remote_util] [123145325752320] - INFO - Transaction Summary
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - ================================================================================
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - Install  1 Package
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - Total size: 760 M
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - Installed size: 760 M
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - Downloading packages:
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - Running transaction check
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - Running transaction test
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - Transaction test succeeded
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - Running transaction
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - Minimum RAM required  : 4 GB
+[2019-08-23 15:08:42,751] - [remote_util] [123145325752320] - INFO - System RAM configured : 3.60 GB
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - Minimum number of processors required : 4 cores
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - Number of processors on the system    : 4 cores
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO -   Installing : couchbase-server-6.0.2-2409.x86_64                           1/1 
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - Skipping server start due to INSTALL_DONT_START_SERVER ...
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - You have successfully installed Couchbase Server.
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - Please browse to http://localhost.localdomain:8091/ to configure your server.
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - Please refer to http://couchbase.com for additional resources.
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - Please note that you have to update your firewall configuration to
+[2019-08-23 15:08:42,752] - [remote_util] [123145325752320] - INFO - allow connections to the following ports:
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO - 4369, 8091 to 8094, 9100 to 9105, 9998, 9999, 11207, 11209 to 11211,
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO - 11214, 11215, 18091 to 18093, and from 21100 to 21299.
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO - By using this software you agree to the End User License Agreement.
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO - See /opt/couchbase/LICENSE.txt.
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO -   Verifying  : couchbase-server-6.0.2-2409.x86_64                           1/1 
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO - Installed:
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO -   couchbase-server.x86_64 0:6.0.2-2409                                          
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO - 
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO - Complete!
+[2019-08-23 15:08:42,753] - [remote_util] [123145325752320] - INFO - 
+If couchbase server is running with this error.
+Go to log_command_output to add error mesg to bypass it.
+[2019-08-23 15:08:42,754] - [remote_util] [123145325752320] - INFO - Warming: RPMDB altered outside of yum
+[2019-08-23 15:08:42,865] - [remote_util] [123145325752320] - ERROR - Directory at /tmp DOES exist. Fx returns True
+[2019-08-23 15:08:43,381] - [remote_util] [123145325752320] - INFO - Running systemd command on this server
+[2019-08-23 15:08:43,381] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: systemctl start couchbase-server.service
+[2019-08-23 15:08:43,479] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:08:43,572] - [install] [123145325752320] - INFO - wait 5 seconds for Couchbase server to start
+[2019-08-23 15:08:44,711] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:08:44,712] - [remote_util] [123145329958912] - ERROR - Repodata is over 2 weeks old. Install yum-cron? Or run: yum makecache fast
+[2019-08-23 15:08:44,712] - [remote_util] [123145329958912] - ERROR - Warning: RPMDB altered outside of yum.
+[2019-08-23 15:08:44,712] - [remote_util] [123145329958912] - INFO - Loaded plugins: ulninfo
+[2019-08-23 15:08:44,712] - [remote_util] [123145329958912] - INFO - Examining /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm: couchbase-server-6.0.2-2409.x86_64
+[2019-08-23 15:08:44,712] - [remote_util] [123145329958912] - INFO - Marking /tmp/couchbase-server-enterprise-6.0.2-2409-centos7.x86_64.rpm to be installed
+[2019-08-23 15:08:44,712] - [remote_util] [123145329958912] - INFO - Resolving Dependencies
+[2019-08-23 15:08:44,712] - [remote_util] [123145329958912] - INFO - --> Running transaction check
+[2019-08-23 15:08:44,712] - [remote_util] [123145329958912] - INFO - ---> Package couchbase-server.x86_64 0:6.0.2-2409 will be installed
+[2019-08-23 15:08:44,713] - [remote_util] [123145329958912] - INFO - --> Finished Dependency Resolution
+[2019-08-23 15:08:44,713] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,713] - [remote_util] [123145329958912] - INFO - Dependencies Resolved
+[2019-08-23 15:08:44,713] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,713] - [remote_util] [123145329958912] - INFO - ================================================================================
+[2019-08-23 15:08:44,713] - [remote_util] [123145329958912] - INFO -  Package
+[2019-08-23 15:08:44,713] - [remote_util] [123145329958912] - INFO -       Arch   Version
+[2019-08-23 15:08:44,713] - [remote_util] [123145329958912] - INFO -                    Repository                                              Size
+[2019-08-23 15:08:44,713] - [remote_util] [123145329958912] - INFO - ================================================================================
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO - Installing:
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO -  couchbase-server
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO -       x86_64 6.0.2-2409
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO -                    /couchbase-server-enterprise-6.0.2-2409-centos7.x86_64 760 M
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO - Transaction Summary
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO - ================================================================================
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO - Install  1 Package
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO - Total size: 760 M
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO - Installed size: 760 M
+[2019-08-23 15:08:44,714] - [remote_util] [123145329958912] - INFO - Downloading packages:
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - Running transaction check
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - Running transaction test
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - Transaction test succeeded
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - Running transaction
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - Minimum RAM required  : 4 GB
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - System RAM configured : 3.60 GB
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - Minimum number of processors required : 4 cores
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - Number of processors on the system    : 4 cores
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO -   Installing : couchbase-server-6.0.2-2409.x86_64                           1/1 
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - Skipping server start due to INSTALL_DONT_START_SERVER ...
+[2019-08-23 15:08:44,715] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - You have successfully installed Couchbase Server.
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - Please browse to http://localhost.localdomain:8091/ to configure your server.
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - Please refer to http://couchbase.com for additional resources.
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - Please note that you have to update your firewall configuration to
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - allow connections to the following ports:
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - 4369, 8091 to 8094, 9100 to 9105, 9998, 9999, 11207, 11209 to 11211,
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - 11214, 11215, 18091 to 18093, and from 21100 to 21299.
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - By using this software you agree to the End User License Agreement.
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - See /opt/couchbase/LICENSE.txt.
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,716] - [remote_util] [123145329958912] - INFO -   Verifying  : couchbase-server-6.0.2-2409.x86_64                           1/1 
+[2019-08-23 15:08:44,717] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,717] - [remote_util] [123145329958912] - INFO - Installed:
+[2019-08-23 15:08:44,717] - [remote_util] [123145329958912] - INFO -   couchbase-server.x86_64 0:6.0.2-2409                                          
+[2019-08-23 15:08:44,717] - [remote_util] [123145329958912] - INFO - 
+[2019-08-23 15:08:44,717] - [remote_util] [123145329958912] - INFO - Complete!
+[2019-08-23 15:08:44,717] - [remote_util] [123145329958912] - INFO - 
+If couchbase server is running with this error.
+Go to log_command_output to add error mesg to bypass it.
+[2019-08-23 15:08:44,717] - [remote_util] [123145329958912] - INFO - 
+If couchbase server is running with this error.
+Go to log_command_output to add error mesg to bypass it.
+[2019-08-23 15:08:44,717] - [remote_util] [123145329958912] - INFO - Warming: RPMDB altered outside of yum
+[2019-08-23 15:08:44,796] - [remote_util] [123145329958912] - ERROR - Directory at /tmp DOES exist. Fx returns True
+[2019-08-23 15:08:45,316] - [remote_util] [123145329958912] - INFO - Running systemd command on this server
+[2019-08-23 15:08:45,316] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: systemctl start couchbase-server.service
+[2019-08-23 15:08:45,471] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:08:45,538] - [install] [123145329958912] - INFO - wait 5 seconds for Couchbase server to start
+[2019-08-23 15:08:50,664] - [remote_util] [123145329958912] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 15:08:50,664] - [remote_util] [123145325752320] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 15:08:51,025] - [remote_util] [123145325752320] - INFO - Connected to 172.23.109.180
+[2019-08-23 15:08:51,026] - [remote_util] [123145329958912] - INFO - Connected to 172.23.109.179
+[2019-08-23 15:08:51,407] - [remote_util] [123145325752320] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:08:51,439] - [remote_util] [123145329958912] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:08:52,396] - [remote_util] [123145325752320] - INFO - 172.23.109.180 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-08-23 15:08:52,415] - [rest_client] [123145325752320] - ERROR - socket error while connecting to http://172.23.109.180:8091/nodes/self error [Errno 61] Connection refused 
+[2019-08-23 15:08:52,883] - [remote_util] [123145329958912] - INFO - 172.23.109.179 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-08-23 15:08:52,902] - [rest_client] [123145329958912] - ERROR - socket error while connecting to http://172.23.109.179:8091/nodes/self error [Errno 61] Connection refused 
+[2019-08-23 15:08:55,425] - [rest_client] [123145325752320] - ERROR - socket error while connecting to http://172.23.109.180:8091/nodes/self error [Errno 61] Connection refused 
+[2019-08-23 15:08:55,913] - [rest_client] [123145329958912] - ERROR - socket error while connecting to http://172.23.109.179:8091/nodes/self error [Errno 61] Connection refused 
+[2019-08-23 15:09:01,593] - [rest_client] [123145325752320] - INFO - Node version in cluster 6.0.2-2409-enterprise
+[2019-08-23 15:09:01,593] - [remote_util] [123145325752320] - INFO - ***** set NS_SERVER_CBAUTH env in linux *****
+[2019-08-23 15:09:02,071] - [remote_util] [123145325752320] - INFO - check if man installed on vm?
+[2019-08-23 15:09:02,072] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: rpm -qa | grep 'man-db'
+[2019-08-23 15:09:02,088] - [rest_client] [123145329958912] - INFO - Node version in cluster 6.0.2-2409-enterprise
+[2019-08-23 15:09:02,088] - [remote_util] [123145329958912] - INFO - ***** set NS_SERVER_CBAUTH env in linux *****
+[2019-08-23 15:09:02,583] - [remote_util] [123145329958912] - INFO - check if man installed on vm?
+[2019-08-23 15:09:02,583] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: rpm -qa | grep 'man-db'
+[2019-08-23 15:09:02,902] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:09:02,902] - [remote_util] [123145325752320] - INFO - 
+---> Run command unzip to check if it is ready on server 172.23.109.180
+[2019-08-23 15:09:02,902] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: unzip
+[2019-08-23 15:09:02,983] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:09:02,983] - [remote_util] [123145325752320] - INFO - unzip command is ready
+[2019-08-23 15:09:02,984] - [remote_util] [123145325752320] - INFO - Check if ntp is installed
+[2019-08-23 15:09:02,984] - [remote_util] [123145325752320] - INFO - 
+This OS version centos 7
+[2019-08-23 15:09:02,984] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: systemctl status ntpd
+[2019-08-23 15:09:03,100] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:09:03,100] - [remote_util] [123145325752320] - INFO - running command.raw on 172.23.109.180: date
+[2019-08-23 15:09:03,201] - [remote_util] [123145325752320] - INFO - command executed successfully
+[2019-08-23 15:09:03,263] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:09:03,263] - [remote_util] [123145329958912] - INFO - 
+---> Run command unzip to check if it is ready on server 172.23.109.179
+[2019-08-23 15:09:03,263] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: unzip
+[2019-08-23 15:09:03,384] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:09:03,384] - [remote_util] [123145329958912] - INFO - unzip command is ready
+[2019-08-23 15:09:03,384] - [remote_util] [123145329958912] - INFO - Check if ntp is installed
+[2019-08-23 15:09:03,385] - [remote_util] [123145329958912] - INFO - 
+This OS version centos 7
+[2019-08-23 15:09:03,385] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: systemctl status ntpd
+[2019-08-23 15:09:03,458] - [remote_util] [123145325752320] - INFO - 
+['Fri Aug 23 15:09:03 PDT 2019'] IP: 172.23.109.180
+[2019-08-23 15:09:03,498] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:09:03,499] - [remote_util] [123145329958912] - INFO - running command.raw on 172.23.109.179: date
+[2019-08-23 15:09:03,598] - [remote_util] [123145329958912] - INFO - command executed successfully
+[2019-08-23 15:09:03,859] - [remote_util] [123145329958912] - INFO - 
+['Fri Aug 23 15:09:03 PDT 2019'] IP: 172.23.109.179
+[2019-08-23 15:09:03,982] - [remote_util] [4433679808] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 15:09:04,332] - [remote_util] [4433679808] - INFO - Connected to 172.23.109.180
+[2019-08-23 15:09:04,703] - [remote_util] [4433679808] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:09:05,587] - [remote_util] [4433679808] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-08-23 15:09:05,950] - [remote_util] [4433679808] - INFO - Connected to 172.23.109.180
+[2019-08-23 15:09:06,323] - [remote_util] [4433679808] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:09:07,323] - [remote_util] [4433679808] - INFO - 172.23.109.180 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-08-23 15:09:07,325] - [remote_util] [4433679808] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-08-23 15:09:07,685] - [remote_util] [4433679808] - INFO - Connected to 172.23.109.179
+[2019-08-23 15:09:08,085] - [remote_util] [4433679808] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-23 15:09:09,052] - [remote_util] [4433679808] - INFO - 172.23.109.179 **** The version file /opt/couchbase/ VERSION.txt  exists

@@ -1,0 +1,47 @@
+[2019-08-14 13:28:53,335] - [fts_base] [123145499443200] - INFO - ==== FTSbasetests setup is started for test #2 test_query_index_freeze_plan ====
+[2019-08-14 13:28:53,451] - [rest_client] [123145499443200] - INFO - SUCCESS: FTS RAM quota set to 750mb
+[2019-08-14 13:28:53,452] - [fts_base] [123145499443200] - INFO - removing nodes from cluster ...
+[2019-08-14 13:28:53,502] - [fts_base] [123145499443200] - INFO - cleanup [ip:172.23.109.172 port:8091 ssh_username:root]
+[2019-08-14 13:28:53,728] - [cluster_helper] [123145499443200] - INFO - rebalancing all nodes in order to remove nodes
+[2019-08-14 13:28:53,755] - [rest_client] [123145499443200] - INFO - rebalance params : {'password': 'password', 'ejectedNodes': u'ns_1@172.23.109.179', 'user': 'Administrator', 'knownNodes': u'ns_1@172.23.109.179,ns_1@172.23.109.172'}
+[2019-08-14 13:28:53,788] - [rest_client] [123145499443200] - INFO - rebalance operation started
+[2019-08-14 13:28:53,826] - [rest_client] [123145499443200] - INFO - rebalance percentage : 37.50 %
+[2019-08-14 13:29:03,856] - [rest_client] [123145499443200] - INFO - rebalance percentage : 50.00 %
+[2019-08-14 13:29:23,940] - [rest_client] [123145499443200] - INFO - rebalance progress took 30.15 seconds 
+[2019-08-14 13:29:23,941] - [rest_client] [123145499443200] - INFO - sleep for 10 seconds after rebalance...
+[2019-08-14 13:29:33,996] - [cluster_helper] [123145499443200] - INFO - removed all the nodes from cluster associated with ip:172.23.109.172 port:8091 ssh_username:root ? [(u'ns_1@172.23.109.179', 8091)]
+[2019-08-14 13:29:34,023] - [cluster_helper] [123145499443200] - INFO - waiting for ns_server @ 172.23.109.172:8091
+[2019-08-14 13:29:34,051] - [cluster_helper] [123145499443200] - INFO - ns_server @ 172.23.109.172:8091 is running
+[2019-08-14 13:29:34,052] - [fts_base] [123145499443200] - INFO - Removing user 'cbadminbucket'...
+[2019-08-14 13:29:34,137] - [fts_base] [123145499443200] - INFO - Initializing Cluster ...
+[2019-08-14 13:29:34,496] - [task] [123145524682752] - INFO - server: ip:172.23.109.172 port:8091 ssh_username:root, nodes/self: {'ip': u'172.23.109.172', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@172.23.109.172', 'uptime': u'6561', 'mcdMemoryReserved': 2950, 'storageTotalRam': 3688, 'hostname': u'172.23.109.172:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x10961e2d0>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-4000-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'fts', u'index', u'kv', u'n1ql'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 3298758656, 'memoryTotal': 3867238400, 'memoryQuota': 1208, 'mcdMemoryAllocated': 2950, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-08-14 13:29:34,522] - [rest_client] [123145524682752] - INFO - pools/default params : memoryQuota=1976
+[2019-08-14 13:29:34,550] - [rest_client] [123145524682752] - ERROR - POST http://172.23.109.172:8091/pools/default body: memoryQuota=1976 headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 400 reason: unknown {"errors":{"_":"Total quota (2982MB) exceeds the maximum allowed quota (2950MB) on node 'ns_1@172.23.109.172'"}} auth: Administrator:password
+[2019-08-14 13:29:34,551] - [rest_client] [123145524682752] - INFO - settings/web params on 172.23.109.172:8091:username=Administrator&password=password&port=8091
+[2019-08-14 13:29:34,667] - [remote_util] [123145524682752] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-08-14 13:29:35,056] - [remote_util] [123145524682752] - INFO - Connected to 172.23.109.172
+[2019-08-14 13:29:35,439] - [remote_util] [123145524682752] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 13:29:36,343] - [remote_util] [123145524682752] - INFO - running command.raw on 172.23.109.172: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-08-14 13:29:36,444] - [remote_util] [123145524682752] - INFO - command executed successfully
+[2019-08-14 13:29:36,471] - [rest_client] [123145524682752] - INFO - /diag/eval status on 172.23.109.172:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-08-14 13:29:36,472] - [rest_client] [123145524682752] - INFO - settings/indexes params : storageMode=forestdb
+[2019-08-14 13:29:36,500] - [rest_client] [123145524682752] - ERROR - POST http://172.23.109.172:8091/settings/indexes body: storageMode=forestdb headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 400 reason: unknown {"errors":{"storageMode":"The value must be one of the following: [plasma,memory_optimized]"}} auth: Administrator:password
+[2019-08-14 13:29:36,563] - [fts_base] [123145499443200] - INFO - 172.23.109.179 will be configured with services kv,fts
+[2019-08-14 13:29:37,567] - [task] [123145524682752] - INFO - adding node 172.23.109.179:8091 to cluster
+[2019-08-14 13:29:37,568] - [rest_client] [123145524682752] - INFO - adding remote node @172.23.109.179:8091 to this cluster @172.23.109.172:8091
+[2019-08-14 13:29:40,803] - [rest_client] [123145524682752] - INFO - rebalance params : {'password': 'password', 'ejectedNodes': '', 'user': 'Administrator', 'knownNodes': u'ns_1@172.23.109.179,ns_1@172.23.109.172'}
+[2019-08-14 13:29:40,831] - [rest_client] [123145524682752] - INFO - rebalance operation started
+[2019-08-14 13:29:40,856] - [rest_client] [123145524682752] - INFO - rebalance percentage : 0.00 %
+[2019-08-14 13:29:40,857] - [task] [123145524682752] - INFO - Rebalance - status: running, progress: 0.00%
+[2019-08-14 13:29:50,944] - [task] [123145524682752] - INFO - Rebalance - status: none, progress: 100.00%
+[2019-08-14 13:29:50,978] - [task] [123145524682752] - INFO - rebalancing was completed with progress: 100% in 10.1462900639 sec
+[2019-08-14 13:29:51,034] - [remote_util] [123145499443200] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-08-14 13:29:51,395] - [remote_util] [123145499443200] - INFO - Connected to 172.23.109.172
+[2019-08-14 13:29:51,779] - [remote_util] [123145499443200] - INFO - It could be other operating system.  Go to check at other location
+[2019-08-14 13:29:52,637] - [remote_util] [123145499443200] - INFO - running command.raw on 172.23.109.172: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-08-14 13:29:52,702] - [remote_util] [123145499443200] - INFO - command executed successfully
+[2019-08-14 13:29:52,703] - [fts_base] [123145499443200] - INFO - Enabled diag/eval for non-local hosts from 172.23.109.172
+[2019-08-14 13:29:52,822] - [rest_client] [123145499443200] - ERROR - DELETE http://172.23.109.172:8091/settings/rbac/users/local/cbadminbucket body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "User was not found." auth: Administrator:password
+[2019-08-14 13:29:52,823] - [internal_user] [123145499443200] - INFO - Exception while deleting user. Exception is -"User was not found."
+[2019-08-14 13:29:54,143] - [rest_client] [123145524682752] - INFO - http://172.23.109.172:8091/pools/default/buckets with param: bucketType=membase&evictionPolicy=valueOnly&threadsNumber=3&ramQuotaMB=1476&authType=sasl&name=default&flushEnabled=1&replicaNumber=1&compressionMode=passive&saslPassword=None&replicaIndex=1
+[2019-08-14 13:29:54,176] - [rest_client] [123145524682752] - ERROR - POST http://172.23.109.172:8091/pools/default/buckets body: bucketType=membase&evictionPolicy=valueOnly&threadsNumber=3&ramQuotaMB=1476&authType=sasl&name=default&flushEnabled=1&replicaNumber=1&compressionMode=passive&saslPassword=None&replicaIndex=1 headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 400 reason: unknown {"errors":{"ramQuotaMB":"RAM quota specified is too large to be provisioned into this cluster."},"summaries":{"ramSummary":{"total":2533359616,"otherBuckets":0,"nodesCount":2,"perNodeMegs":1476,"thisAlloc":3095396352,"thisUsed":0,"free":-562036736},"hddSummary":{"total":97377722368,"otherData":11685326683,"otherBuckets":0,"thisUsed":0,"free":85692395685}}} auth: Administrator:password

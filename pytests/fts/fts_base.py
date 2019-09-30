@@ -30,6 +30,7 @@ from lib.membase.api.exception import FTSException
 from es_base import ElasticSearchBase
 from security.rbac_base import RbacBase
 from lib.couchbase_helper.tuq_helper import N1QLHelper
+from security.ntonencryptionBase import ntonencryptionBase
 
 
 class RenameNodeException(FTSException):
@@ -540,7 +541,8 @@ class FTSIndex:
             "sourceType": "couchbase",
             "sourceName": "default",
             "sourceUUID": "",
-            "planParams": {}
+            "planParams": {},
+            "sourceParams": {}
         }
         self.name = self.index_definition['name'] = name
         self.es_custom_map = None
@@ -956,6 +958,13 @@ class FTSIndex:
         status, index_def = self.get_index_defn()
         self.index_definition = index_def["indexDef"]
         self.index_definition['planParams']['indexPartitions'] = new
+        self.index_definition['uuid'] = self.get_uuid()
+        self.update()
+
+    def update_docvalues_email_custom_index(self, new):
+        status, index_def = self.get_index_defn()
+        self.index_definition = index_def["indexDef"]
+        self.index_definition['params']['mapping']['types']['emp']['properties']['email']['fields'][0]['docvalues'] = new
         self.index_definition['uuid'] = self.get_uuid()
         self.update()
 
@@ -2968,11 +2977,11 @@ class CouchbaseCluster:
         for failover_node in self.__fail_over_nodes:
             for server_node in server_nodes:
                 if server_node.ip == failover_node.ip:
-                    rest.add_back_node(server_node.id)
                     if recovery_type:
                         rest.set_recovery_type(
                             otpNode=server_node.id,
                             recoveryType=recovery_type)
+                    rest.add_back_node(server_node.id)
         for node in self.__fail_over_nodes:
             if node not in self.__nodes:
                 self.__nodes.append(node)
@@ -3192,6 +3201,7 @@ class FTSBaseTest(unittest.TestCase):
                 "====  FTSbasetests cleanup is started for test #{0} {1} ===="
                     .format(self.__case_number, self._testMethodName))
             self._cb_cluster.cleanup_cluster(self)
+            ntonencryptionBase().disable_nton_cluster(self._input.servers)
             if self.compare_es:
                 self.teardown_es()
             self.log.info(
@@ -3256,6 +3266,9 @@ class FTSBaseTest(unittest.TestCase):
         self.__error_count_dict = {}
         if len(self.__report_error_list) > 0:
             self.__initialize_error_count_dict()
+            
+        if self.ntonencrypt == 'enable':
+            self.setup_nton_encryption()
 
     def _enable_diag_eval_on_non_local_hosts(self):
         """
@@ -3275,6 +3288,10 @@ class FTSBaseTest(unittest.TestCase):
                         master.ip))
         else:
             self.log.info("Running in compatibility mode, not enabled diag/eval for non-local hosts")
+    
+    def setup_nton_encryption(self):
+        self.log.info('Setting up node to node encyrption from ')
+        ntonencryptionBase().setup_nton_cluster(self._input.servers,clusterEncryptionLevel=self.ntonencrypt_level)
     
     def construct_serv_list(self, serv_str):
         """
@@ -3399,6 +3416,8 @@ class FTSBaseTest(unittest.TestCase):
             if self.consistency_vectors is not None and self.consistency_vectors != '':
                 if type(self.consistency_vectors) != dict:
                     self.consistency_vectors = json.loads(self.consistency_vectors)
+        self.ntonencrypt = self._input.param('ntonencrypt','disable')
+        self.ntonencrypt_level = self._input.param('ntonencrypt_level','control')
 
     def __initialize_error_count_dict(self):
         """
@@ -4077,6 +4096,16 @@ class FTSBaseTest(unittest.TestCase):
                               doc['_type'],
                               key)
 
+    def get_zap_docvalue_disksize(self):
+        shell = RemoteMachineShellConnection(self._cb_cluster.get_random_fts_node())
+        command = "cd /opt/couchbase/var/lib/couchbase/data/\@fts; find . -name \"*.zap\"|  sort -n | tail -1 | xargs -I {} sh -c \"/opt/couchbase/bin/cbft-bleve zap docvalue {} | tail -1\""
+        output, error = shell.execute_command(command)
+        if error and "remoteClients registered for tls config updates" not in error[0]:
+            self.fail("error running command : {0} , error : {1}".format(command, error))
+        self.log.info(output)
+        self.log.info(re.findall("\d+\.\d+", output[0]))
+        return re.findall("\d+\.\d+", output[0])[0]
+
     def create_geo_index_and_load(self):
         """
         Indexes geo spatial data
@@ -4108,6 +4137,10 @@ class FTSBaseTest(unittest.TestCase):
         )
         geo_index.index_definition["params"] = {
             "mapping": {
+                "default_mapping": {
+                    "dynamic": True,
+                    "enabled": False
+                },
                 "types": {
                     "earthquake": {
                         "enabled": True,

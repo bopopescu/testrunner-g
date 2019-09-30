@@ -103,7 +103,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
                                   skip_timer_threshold=86400,
                                   sock_batch_size=1, tick_duration=5000, timer_processing_tick_interval=500,
                                   timer_worker_pool_size=3, worker_count=3, processing_status=True,
-                                  cpp_worker_thread_count=1, multi_dst_bucket=False, execution_timeout=60,
+                                  cpp_worker_thread_count=1, multi_dst_bucket=False, execution_timeout=20,
                                   data_chan_size=10000, worker_queue_cap=100000, deadline_timeout=62):
         body = {}
         body['appname'] = appname
@@ -236,6 +236,11 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
             stats_dst = self.rest.get_bucket_stats(bucket)
             if curr_items == stats_dst["curr_items"]:
                 count += 1
+        try:
+            stats_src = self.rest.get_bucket_stats(self.src_bucket_name)
+            log.info("Documents in source bucket : {}".format(stats_src["curr_items"]))
+        except :
+            pass
         if stats_dst["curr_items"] != expected_dcp_mutations:
             total_dcp_backlog = 0
             timers_in_past = 0
@@ -495,7 +500,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
         remote_client.reboot_node()
         remote_client.disconnect()
         # wait for restart and warmup on all node
-        self.sleep(self.wait_timeout * 5)
+        self.sleep(self.wait_timeout * 2)
         # disable firewall on these nodes
         self.stop_firewall_on_node(server)
         # wait till node is ready after warmup
@@ -632,3 +637,45 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
                 import docker
             except ImportError, e:
                 raise Exception("docker installation fails with {}".format(o))
+
+    def load_sample_buckets(self, server, bucketName):
+        from lib.remote.remote_util import RemoteMachineShellConnection
+        shell = RemoteMachineShellConnection(server)
+        shell.execute_command("""curl -v -u Administrator:password \
+                             -X POST http://{0}:8091/sampleBuckets/install \
+                          -d '["{1}"]'""".format(server.ip, bucketName))
+        shell.disconnect()
+        self.sleep(20)
+
+    def check_eventing_rebalance(self):
+        status=self.rest.get_eventing_rebalance_status()
+        self.log.info("Eventing rebalance status: {}".format(status))
+        if status=="true":
+            return True
+        else:
+            return False
+
+    def auto_retry_setup(self):
+        self.sleep_time = self.input.param("sleep_time", 15)
+        self.enabled = self.input.param("enabled", True)
+        self.afterTimePeriod = self.input.param("afterTimePeriod", 150)
+        self.maxAttempts = self.input.param("maxAttempts", 1)
+        self.log.info("Changing the retry rebalance settings ....")
+        self.change_retry_rebalance_settings(enabled=self.enabled, afterTimePeriod=self.afterTimePeriod,
+                                             maxAttempts=self.maxAttempts)
+
+    def change_retry_rebalance_settings(self, enabled=True,
+                                        afterTimePeriod=300, maxAttempts=1):
+        # build the body
+        body = dict()
+        if enabled:
+            body["enabled"] = "true"
+        else:
+            body["enabled"] = "false"
+        body["afterTimePeriod"] = afterTimePeriod
+        body["maxAttempts"] = maxAttempts
+        rest = RestConnection(self.master)
+        rest.set_retry_rebalance_settings(body)
+        result = rest.get_retry_rebalance_settings()
+        self.log.info("Retry Rebalance settings changed to : {0}"
+                      .format(json.loads(result)))

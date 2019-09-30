@@ -244,6 +244,7 @@ class BucketCreateTask(Task):
         Task.__init__(self, "bucket_create_task")
         self.server = bucket_params['server']
         self.bucket = bucket_params['bucket_name']
+        self.alt_addr = TestInputSingleton.input.param("alt_addr", False)
         self.replicas = bucket_params['replicas']
         self.port = bucket_params['port']
         self.size = bucket_params['size']
@@ -339,7 +340,7 @@ class BucketCreateTask(Task):
                 self.set_result(True)
                 self.state = FINISHED
                 return
-            if BucketOperationHelper.wait_for_memcached(self.server, self.bucket):
+            if BucketOperationHelper.wait_for_memcached(self.server, self.bucket, self.alt_addr):
                 self.log.info("bucket '{0}' was created with per node RAM quota: {1}".format(self.bucket, self.size))
                 self.set_result(True)
                 self.state = FINISHED
@@ -1415,7 +1416,20 @@ class ESRunQueryCompare(Task):
                 should_verify_n1ql = False
 
             if self.n1ql_executor and should_verify_n1ql:
-                n1ql_query = "select meta().id from default where type='emp' and search(default, " + str(
+                if self.fts_index.dataset == 'all':
+                    query_type = 'emp'
+                    if int(TestInputSingleton.input.param("doc_maps", 1)) > 1:
+                        query_type = 'wiki'
+                    wiki_fields = ["revision.text", "title"]
+                    if any(field in str(json.dumps(self.fts_query)) for field in wiki_fields):
+                        query_type = 'wiki'
+                else:
+                    query_type = self.fts_index.dataset
+                geo_strings = ["geo"]
+                if any(geo_str in str(json.dumps(self.fts_query)) for geo_str in geo_strings):
+                    query_type = 'earthquake'
+
+                n1ql_query = "select meta().id from default where type='" + str(query_type) + "' and search(default, " + str(
                     json.dumps(self.fts_query)) + ")"
                 self.log.info("Running N1QL query: "+str(n1ql_query))
                 n1ql_result = self.n1ql_executor.run_n1ql_query(query=n1ql_query)

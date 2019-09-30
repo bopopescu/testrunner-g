@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<testsuite errors="1" failures="1" name="fts.moving_topology_fts.MovingTopFTS" skip="0" tests="1" time="132.519672871">
+	<testcase name="fts.moving_topology_fts.MovingTopFTS.graceful_failover_and_full_recovery_during_index_building,get-coredumps:False,doc-per-day:1,logs_folder:/Users/girishbenakappa/IdeaProjects/testrunner/logs/testrunner-19-Sep-13_11-06-48/test_1,GROUP:P1,items:30000,spec:test,conf_file:test.conf,num_nodes:3,cluster_name:test,cluster:D,D+F,stop-on-failure:False,ini:test.ini,case_number:1,get-logs:False,scan_consistency:NOT_BOUNDED,get-cbcollect-info:False,bucket_size:200" time="132.519672871">
+		<error type="membase.error">['Traceback (most recent call last):\n  File &quot;pytests/fts/moving_topology_fts.py&quot;, line 326, in graceful_failover_and_full_recovery_during_index_building\n    self._cb_cluster.add_back_node(recovery_type=\'full\', services=[&quot;kv, fts&quot;])\n  File &quot;pytests/fts/fts_base.py&quot;, line 2979, in add_back_node\n    rest.add_back_node(server_node.id)\n  File &quot;lib/membase/api/rest_client.py&quot;, line 1474, in add_back_node\n    parameters=params)\nInvalidArgumentException: controller/reAddNode failed when invoked with parameters: otpNode=ns_1%40172.23.109.181\n']</error>
+	</testcase>
+</testsuite>

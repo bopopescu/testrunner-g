@@ -14,21 +14,9 @@ class IndexManagementAPI(FTSBaseTest):
         self.sample_bucket_name = "travel-sample"
         self.sample_index_name = "idx_travel_sample_fts"
         self.sample_index_name_1 = "idx_travel_sample_fts1"
-        self.ingest_control_api_name = "ingestControl"
-        self.planfreeze_control_api_name = "planFreezeControl"
-        self.query_control_api_name = "queryControl"
-        self.ingest_control_pause_op = "pause"
-        self.ingest_control_resume_op = "resume"
-        self.planfreeze_control_freeze_op = "freeze"
-        self.planfreeze_control_unfreeze_op = "unfreeze"
-        self.query_control_allow_op = "allow"
-        self.query_control_disallow_op = "disallow"
         self.second_index = self._input.param("second_index", None)
         self.run_in_parallel = self._input.param("run_in_parallel", None)
-        self.freeze_parallel = self._input.param("freeze_parallel", None)
         self.sample_query = {"match": "United States", "field": "country"}
-        self.api_on_test = self._input.param("api_on_test", None)
-        self.op_on_test = self._input.param("op_on_test", None)
 
     def tearDown(self):
         super(IndexManagementAPI, self).tearDown()
@@ -64,7 +52,7 @@ class IndexManagementAPI(FTSBaseTest):
     def test_planfreeze_control(self):
         self.load_sample_buckets(self._cb_cluster.get_master_node(), self.sample_bucket_name)
         fts_index = self._cb_cluster.create_fts_index(name=self.sample_index_name, source_name=self.sample_bucket_name)
-        self.sleep(5)
+        self.sleep(20)
         self.fts_rest.freeze_fts_index_partitions(fts_index.name)
         self.wait_for_indexing_complete()
         index_count_after_freeze = fts_index.get_indexed_doc_count()
@@ -147,3 +135,17 @@ class IndexManagementAPI(FTSBaseTest):
         self.sleep(5)
         self.generate_random_queries(fts_index_2, self.num_queries, self.query_types)
         self.run_query_and_compare(fts_index_2, n1ql_executor=self._cb_cluster)
+
+    def test_index_plan_update_disallow_query(self):
+        self.load_sample_buckets(self._cb_cluster.get_master_node(), self.sample_bucket_name)
+        fts_index = self._cb_cluster.create_fts_index(name=self.sample_index_name, source_name=self.sample_bucket_name)
+        self.sleep(3)
+        self.fts_rest.disable_querying_on_fts_index(fts_index.name)
+        self.wait_for_indexing_complete()
+        self.validate_index_count(equal_bucket_doc_count=True)
+
+        self.log.info("Updating the plan")
+
+        fts_index.update_index_partitions(1)
+        self.wait_for_indexing_complete()
+        self.validate_index_count(equal_bucket_doc_count=True)

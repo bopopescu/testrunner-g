@@ -81,6 +81,8 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         self.backupset.user_env = self.input.param("user-env", False)
         self.backupset.passwd_env = self.input.param("passwd-env", False)
         self.backupset.log_archive_env = self.input.param("log-archive-env", False)
+        self.backupset.log_redaction = self.input.param("log-redaction", False)
+        self.backupset.redaction_salt = self.input.param("redaction-salt", None)
         self.backupset.no_log_output_flag = self.input.param("no-log-output-flag", False)
         self.backupset.ex_logs_path = self.input.param("ex-logs-path", None)
         self.backupset.overwrite_user_env = self.input.param("overwrite-user-env", False)
@@ -158,6 +160,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         self.do_verify = self.input.param("do-verify", False)
         self.create_views = self.input.param("create-views", False)
         self.create_fts_index = self.input.param("create-fts-index", False)
+        self.test_fts = self.input.param("test_fts", False)
         self.cluster_new_user = self.input.param("new_user", None)
         self.cluster_new_role = self.input.param("new_role", None)
         self.new_replicas = self.input.param("new-replicas", None)
@@ -585,6 +588,9 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
             rest_conn = RestConnection(self.backupset.restore_cluster_host)
             restore_cluster_services = rest_conn.get_nodes_services()
             restore_services = restore_cluster_services.values()[0]
+            shell = RemoteMachineShellConnection(self.backupset.restore_cluster_host)
+            shell.enable_diag_eval_on_non_local_hosts()
+            shell.disconnect()
             self.log.info("Services in restore cluster: {0}".format(restore_services))
             rest_helper = RestHelper(rest_conn)
             total_mem = rest_conn.get_nodes_self().mcdMemoryReserved
@@ -625,7 +631,11 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
                         self.log.info("ephemeral bucket needs to set restore cluster "
                                       "to memopt for gsi.")
                         self.test_storage_mode = "memory_optimized"
-                        self._reset_storage_mode(rest_conn, self.test_storage_mode)
+                        kv_quota = self._reset_storage_mode(rest_conn, self.test_storage_mode)
+                        if self.test_fts:
+                            self._create_restore_cluster()
+                        if not self.self.dgm_run and int(kv_quota) > 0:
+                            bucket_size = kv_quota
 
                     self.log.info("replica in bucket {0} is {1}".format(bucket.name, replicas))
                     rest_conn.create_bucket(bucket=bucket_name,
@@ -711,7 +721,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
                 args += " --replace-ttl {0}".format(self.replace_ttl)
         command = "{3} {2} {0}/cbbackupmgr {1}".format(self.cli_command_location, args,
                                                    password_env, user_env)
-        output, error = shell.execute_command(command)
+        output, error = shell.execute_command_raw(command)
         shell.log_command_output(output, error)
         self._verify_bucket_compression_mode(bucket_compression_mode)
         errors_check = ["Unable to process value for", "Error restoring cluster",
@@ -1409,7 +1419,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         if status:
             if output:
                 for x in output:
-                    if "shard_0.sqlite.0" in x:
+                    if "Shards" in x:
                         if x.strip().split()[0][-2:] in unit_size:
                             file_info["file_size"] = \
                                       int(x.strip().split()[0][:-2].split(".")[0])
@@ -1521,11 +1531,27 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
     def _reset_storage_mode(self, rest, storageMode):
         nodes_in_cluster = rest.get_nodes()
         for node in nodes_in_cluster:
+            matched_server = None
+            for server in self.servers:
+                if node.hostname[:-5] == server.ip:
+                    matched_server = server
+                    break
+
             RestConnection(node).force_eject_node()
+            ready = RestHelper(rest).is_ns_server_running()
+            if ready:
+                if server is not None:
+                    shell = RemoteMachineShellConnection(server)
+                    shell.enable_diag_eval_on_non_local_hosts()
+                    shell.disconnect()
+            else:
+                self.fail("NS server is not ready after reset node")
         rest.set_indexer_storage_mode(username='Administrator',
                                           password='password',
                                           storageMode=storageMode)
-        rest.init_node()
+        self.log.info("Done reset node")
+        kv_quota = rest.init_node()
+        return kv_quota
 
     def _collect_logs(self):
         """
@@ -1564,13 +1590,19 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
             args += " -o {0}".format(ex_logs_path)
         log_archive_env = ""
         args_env = ""
+        if self.backupset.log_redaction:
+            args += " --redact"
+            args_env += " --redact"
+        if self.backupset.redaction_salt:
+            args += " --salt {}".format(self.backupset.redaction_salt)
+            args_env += " --salt {}".format(self.backupset.redaction_salt)
         if self.backupset.log_archive_env:
             self.log.info("set log arvhive env to {0}".format(self.backupset.directory))
             log_archive_env = "unset CB_ARCHIVE_PATH; export CB_ARCHIVE_PATH={0}; "\
                                                       .format(self.backupset.directory)
             if self.backupset.ex_logs_path:
                 self.log.info("overwrite env log path with flag -o")
-                args_env = " -o {0}".format(ex_logs_path)
+                args_env += " -o {0}".format(ex_logs_path)
             command = "{0} {1}/cbbackupmgr collect-logs {2}"\
                                             .format(log_archive_env,
                                                     self.cli_command_location,
@@ -1582,10 +1614,11 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
                                             .format(log_archive_env,
                                                     self.cli_command_location,
                                                     args)
+        collection_time = datetime.datetime.utcnow()
         output, error = shell.execute_command(command)
         shell.disconnect()
         if self._check_output("Collecting logs succeeded", output):
-            self._verify_cbbackupmgr_logs()
+            self._verify_cbbackupmgr_logs(collection_time)
         elif self.backupset.no_log_output_flag and self._check_output("error", output):
             self.log.info("This is negative test")
         elif self.backupset.ex_logs_path:
@@ -1596,7 +1629,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         else:
             self.fail("Failed to collect logs. Output: {0}".format(output))
 
-    def _verify_cbbackupmgr_logs(self):
+    def _verify_cbbackupmgr_logs(self, log_collect_datetime):
         shell = RemoteMachineShellConnection(self.backupset.backup_host)
         self.log.info("\n**** start to verify cbbackupmgr logs ****")
 
@@ -1608,44 +1641,172 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
             logs_path = self.backupset.directory
             if self.backupset.ex_logs_path:
                 logs_path = self.backupset.ex_logs_path
+
         output, _ = shell.execute_command("ls {0}".format(logs_path))
-        if self.debug_logs:
-            print "\nlog path: ", logs_path
-            print "output : ", output
-        log_name = ""
-        if output:
-            for x in output:
-                if "collectinfo" in x:
-                    log_name = x.split(".")[0]
-                    shell.execute_command("cd {0}; unzip {1}"
-                                             .format(logs_path, x))
-        else:
+
+        if not output:
             if self.backupset.log_archive_env:
                 self.fail("Failed to pass CB_ARCHIVE_PATH")
             if self.backupset.ex_logs_path:
                 self.fail("Failed to run with ex log path")
+            else:
+                self.fail("Unexpexted error in _verify_cbbackupmgr_logs with"
+                          "logs path of {}".format(logs_path))
 
-        output, _ = shell.execute_command("ls {0}".format(logs_path))
-        if output:
-            for ele in output:
-                if log_name == ele:
-                    output, _ = shell.execute_command("ls {0}"\
-                                               .format(logs_path + "/" + log_name))
         if "C_" in output:
             win_path = "/C_/tmp/entbackup"
-            output, _ = shell.execute_command("ls {0}".format(logs_path + win_path))
-        dir_list =  ["backup", "logs"]
-        for ele in dir_list:
-            if ele not in output:
-                self.fail("Missing dir/file {0} in cbbackupmgr logs".format(ele))
+            logs_path = logs_path + win_path
+            output, _ = shell.execute_command(
+                "ls {0}".format(logs_path + win_path))
 
-        output, _ = shell.execute_command("ls {0}".format(logs_path + "/backup"))
-        if output and "backup-meta.json" not in output[0]:
-            self.fail("Missing file 'backup-meta.json' in backup dir")
-        output, _ = shell.execute_command("ls {0}".format(logs_path + "/logs"))
-        if output and ".log" not in output[0]:
-            self.fail("Missing file 'backup.log' in backup logs dir")
+        if self.debug_logs:
+            print "\nlog path: ", logs_path
+            print "output : ", output
+
+        # While we extract logs, record the name of each backup's logs archive
+        log_archive_names = []
+        for zip_file in output:
+            if "collectinfo" in zip_file:
+                shell.execute_command("cd {0}; unzip {1}".format(
+                    logs_path, zip_file))
+                if 'redacted-' in zip_file:
+                    # Redacted logs include the backup archive one layer deeper
+                    log_archive_names.append("{}/{}".format(
+                        zip_file.split(".")[0],
+                        zip_file.split(".")[0].split('-', 1)[1]))
+                else:
+                    log_archive_names.append(zip_file.split(".")[0])
+
+        if self.backupset.log_redaction:
+            # Verify logs were redacted correctly
+            for log_archive in log_archive_names:
+                if not log_archive.startswith("redacted"):
+                    # First check redacted directory exists
+                    redacted_dir, _ = shell.execute_command(
+                        "ls {}/redacted-{}".format(logs_path, log_archive))
+                    if not redacted_dir:
+                        self.fail(
+                            "Log redaction is enabled, "
+                            "yet no redacted files exist for {}".format(
+                                log_archive))
+                    if not self.backupset.redaction_salt:
+                        self.log.info(
+                            "No salt provided for log redaction, "
+                            "so skipping hashing consistency test.")
+                    else:
+                        redacted_logs_path = "{0}/redacted-{1}/{1}/logs/".format(
+                            logs_path, log_archive)
+                        unredacted_logs_path = "{}/{}/logs/".format(
+                            logs_path, log_archive)
+                        redacted_logs, _ = shell.execute_command(
+                            "ls " + redacted_logs_path)
+                        for log_file in redacted_logs:
+                            self._validate_log_redaction_hashing(
+                                unredacted_logs_path + log_file,
+                                redacted_logs_path + log_file,
+                                self.backupset.redaction_salt)
+
+        for archive_path in log_archive_names:
+            list_for_time_check = []
+            archive_top_level, _ = shell.execute_command(
+                "ls -l --time-style=long-iso {}/{}".format(logs_path,
+                                                           archive_path))
+
+            # Verify that the correct directories/files exist in the backup
+            # directory
+            dir_file_list = ["backup", "logs", "archive_list.txt"]
+            for name in dir_file_list:
+                if not any(name in dir_file for dir_file in archive_top_level):
+                    self.fail(
+                        "Missing dir/file {0} in cbbackupmgr logs".format(
+                            name))
+            list_for_time_check.extend(archive_top_level[1:])
+
+            # Verify backup-meta.json exists in backup dir. Collect
+            # timestamps for timestamp verification
+            backup_dir, _ = shell.execute_command(
+                "ls -l --time-style=long-iso {}/{}/{}".format(
+                    logs_path, archive_path, self.backupset.name))
+            if not any(
+                    "backup-meta.json" in file_ for file_ in backup_dir):
+                self.fail("Missing file 'backup-meta.json' in backup dir")
+            list_for_time_check.extend(backup_dir[1:])
+
+            # Verify log files exist in the logs dir. Collect timestamps
+            # for timestamp verification
+            logs_dir, _ = shell.execute_command(
+                "ls -l --time-style=long-iso {}/{}/logs".format(
+                    logs_path, archive_path))
+            if not any(".log" in file_ for file_ in logs_dir):
+                self.fail("Missing log files in logs dir")
+            list_for_time_check.extend(logs_dir[1:])
+
+            # Check that collected timestamps for log files have been correctly
+            # generated
+            version = RestConnection(
+                self.backupset.backup_host).get_nodes_version()
+            if "6.5" <= version[:3]:
+                for log_file in list_for_time_check:
+
+                    # Extract and parse timestamp
+                    archive_path = log_file.split()[-1]
+                    file_timestamp = ' '.join(log_file.split()[5:7])
+                    file_timestamp = datetime.datetime.strptime(
+                        file_timestamp, "%Y-%m-%d %H:%M")
+
+                    # Ensure collection times are correct, with a grace period
+                    # of 30 minutes
+                    if not (file_timestamp - log_collect_datetime
+                            < datetime.timedelta(minutes=30)):
+                        self.fail(
+                            "File '{}' timestamp of '{}' inconsistent "
+                            "with collection time of '{}' ".format(
+                                archive_path,
+                                file_timestamp,
+                                log_collect_datetime))
         shell.disconnect()
+
+    def _validate_log_redaction_hashing(self, source_file, target_file, salt):
+        """For a given source file, redact it with cblogredaction, and diff its
+         output with the target file. The salt provided must be the same as
+         that used for the target file."""
+
+        shell = RemoteMachineShellConnection(self.backupset.backup_host)
+        stdout, stderr = shell.execute_command(
+            "mkdir -p /tmp/backup_redacted_files")
+        if stderr:
+            print stdout
+            raise Exception(stderr)
+        # Create redacted files in temp location
+        stdout, stderr = shell.execute_command(
+            "{}cblogredaction {} "
+            "-v --salt {} "
+            "--output /tmp/backup_redacted_files".format(
+                LINUX_COUCHBASE_BIN_PATH, source_file, salt))
+
+        if "ERROR" in stderr:
+            shell.execute_command("rm -f /tmp/backup_redacted_files/*")
+            raise Exception(stderr)
+
+        cblogredact_output = "/tmp/backup_redacted_files/redacted-{}".format(
+            source_file.split('/')[-1])
+
+        stdout, stderr = shell.execute_command(
+            "diff {} {}".format(cblogredact_output, target_file))
+
+        shell.execute_command("rm -f /tmp/backup_redacted_files/*")
+
+        if stderr:
+            print stdout
+            raise Exception(stderr)
+
+        if stdout:
+            self.fail("Log redaction hashing does not match cblogredaction's "
+                      "hashing for the same salt ({}). Diff of file {} and {}"
+                      " is: {}".format(salt,
+                                       cblogredact_output,
+                                       target_file,
+                                       stdout))
 
     def _validate_restore_vbucket_filter(self):
         data_collector = DataCollector()
@@ -1726,7 +1887,9 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         restore_buckets_items = rest.get_buckets_itemCount()
         buckets = rest.get_buckets()
         keys_fail = {}
+        max_failed_keys = 10
         for bucket in buckets:
+            count = 0
             keys_fail[bucket.name] = {}
             if len(bk_file_data[bucket.name].keys()) != \
                                     int(restore_buckets_items[bucket.name]):
@@ -1740,15 +1903,18 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
                         ttl_matched = False
                     if self.replace_ttl == "expired" and self.bk_with_ttl is not None:
                         ttl_matched = False
-                    keys_fail[bucket.name][key] = []
-                    keys_fail[bucket.name][key].append(items_info[key]['meta']['expiration'])
-                    keys_fail[bucket.name][key].append(int(ttl_set))
+                    if count < max_failed_keys:
+                        keys_fail[bucket.name][key] = []
+                        keys_fail[bucket.name][key].append(items_info[key]['meta']['expiration'])
+                        keys_fail[bucket.name][key].append(int(ttl_set))
+                        count += 1
                     if self.debug_logs:
                         print("ttl time set: ", ttl_set)
                         print("key {0} failed to set ttl with {1}".format(key,
                                    items_info[key]['meta']['expiration']))
 
             if not ttl_matched:
+                self.log.error("Here are keys not set correcttly {0}".format(keys_fail))
                 self.fail("ttl value did not set correctly")
             else:
                 self.log.info("all ttl value set matched")
@@ -2000,6 +2166,16 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
                     vbuckets_per_shard[bucket.name][i] = int(output[0])
         shell.disconnect()
 
+    def _create_restore_cluster(self, node_services=["kv"]):
+        if self.test_fts:
+            node_services = ["kv", "fts"]
+        rest_target = RestConnection(self.backupset.restore_cluster_host)
+        rest_target.add_node(self.input.clusters[0][1].rest_username,
+                             self.input.clusters[0][1].rest_password,
+                             self.input.clusters[0][1].ip, services=node_services)
+        rebalance = self.cluster.async_rebalance(self.cluster_to_restore, [], [])
+        rebalance.result()
+
 class Backupset:
     def __init__(self):
         self.backup_host = None
@@ -2047,6 +2223,8 @@ class Backupset:
         self.log_archive_env = False
         self.no_log_output_flag = False
         self.ex_logs_path = None
+        self.log_redaction = None
+        self.redaction_salt = None
         self.passwd_env = False
         self.overwrite_user_env = False
         self.overwrite_passwd_env = False

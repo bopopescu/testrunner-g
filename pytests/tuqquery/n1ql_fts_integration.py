@@ -371,7 +371,7 @@ class N1qlFTSIntegrationTest(QueryTests):
         node2:['index', 'query', 'search'] '''
     def test_mixed_cluster(self):
         services_map = self._get_services_map()
-        for node in self.servers:
+        for node in self.get_nodes_in_cluster():
             test_result = self._validate_query_against_node(node, services_map, self.test_fts_query, self.test_n1ql_query)
             self.assertEquals(test_result, True, "Node " + str(node) + " test is failed.")
 
@@ -388,7 +388,7 @@ class N1qlFTSIntegrationTest(QueryTests):
         test_n1ql_query = self.n1ql_syntax_tests[test_name]['n1ql_query']
         services_map = self._get_services_map()
 
-        for node in self.servers:
+        for node in self.get_nodes_in_cluster():
             test_result = self._validate_query_against_node(node, services_map, test_fts_query, test_n1ql_query)
             self.assertEquals(test_result, True, "Node "+str(node)+" test "+test_name+" is failed.")
 
@@ -401,18 +401,18 @@ class N1qlFTSIntegrationTest(QueryTests):
         tests = {
             "test_union":{
                 "operator": "union",
-                "left_set_value": "test_string",
-                "right_set_value": "string data 1"
+                "left_set_value": "100",
+                "right_set_value": "101"
             },
             "test_intersect": {
                 "operator": "intersect",
                 "left_set_value": "test_string",
-                "right_set_value": "test_string"
+                "right_set_value": "100"
             },
             "test_except": {
                 "operator": "except",
                 "left_set_value": "test_string",
-                "right_set_value": "string data 1"
+                "right_set_value": "100"
             },
         }
         all_distinct = [' ', ' all ']
@@ -438,11 +438,11 @@ class N1qlFTSIntegrationTest(QueryTests):
                                      "       'highlight' : {}, 'query' : { 'query' : 'string_field:\""+right_set_value+"\"' },"
                                      "       'size':100}) AS result) "
                                      "aa unnest aa.hits as ht order by ht.id) q1 ) a order by q1")
-                    n1ql_query = ("select * from (select * from (select raw meta().id from test_bucket where string_field like '"+left_set_value+"%') q1"
+                    n1ql_query = ("select * from (select * from (select raw meta().id from test_bucket where string_field like '%"+left_set_value+"%') q1"
                                      " " + operator + " "+ a_d + " " 
-                                     "select * from (select raw meta().id from test_bucket where string_field like '"+right_set_value+"') q1) a order by q1")
+                                     "select * from (select raw meta().id from test_bucket where string_field like '%"+right_set_value+"%') q1) a order by q1")
 
-                    for node in self.servers:
+                    for node in self.get_nodes_in_cluster():
                         test_result = self._validate_query_against_node(node, services_map, fts_query, n1ql_query)
                         self.assertEquals(test_result, True, "Node " + str(node) + " test is failed.")
 
@@ -487,7 +487,7 @@ class N1qlFTSIntegrationTest(QueryTests):
                 n1ql_query = "select * from (select * from (select raw meta().id from test_bucket where string_field like '"+left_set_value+"%') q1 " \
                              + operator + a_d + \
                              "select * from ( select raw meta().id from test_bucket where string_field like '"+right_set_value+"') q1) a order by q1"
-                for node in self.servers:
+                for node in self.get_nodes_in_cluster():
                     test_result = self._validate_query_against_node(node, services_map, fts_query, n1ql_query)
                     self.assertEquals(test_result, False, "Node " + str(node) + " test is not failed.")
 
@@ -508,7 +508,7 @@ class N1qlFTSIntegrationTest(QueryTests):
                                 "   'size':100}) AS result) " \
                                 "aa unnest aa.hits as ht order by ht.id"
                     n1ql_query = "select " + a_d + r_e_v + " ht.id from (SELECT meta().id from test_bucket where string_field like 'test_string%') ht order by ht.id"
-                    for node in self.servers:
+                    for node in self.get_nodes_in_cluster():
                         test_result = self._validate_query_against_node(node, services_map, fts_query, n1ql_query)
                         self.assertEquals(test_result, True, "Node " + str(node) + " test is failed.")
 
@@ -685,13 +685,15 @@ class N1qlFTSIntegrationTest(QueryTests):
 
             # https://issues.couchbase.com/browse/MB-32999
             # when this issue will be fixed, fts service will be no longer required.
+
             if 'n1ql' in node_services:
                 fts_result = self.run_cbq_query(query=fts_query, server=node, username=username, password=password)
                 n1ql_result = self.run_cbq_query(query=n1ql_query, server=node, username=username, password=password)
-                if sorted(fts_result['results'])!=sorted(n1ql_result['results']):
-                    return False
+                return sorted(fts_result['results'])==sorted(n1ql_result['results'])
+            else:
+                return True
 
-        return True
+        return False
 
     def _run_query_against_node(self, node, fts_query, username=None, password=None):
         fts_result = self.run_cbq_query(query=fts_query, server=node, username=username, password=password)

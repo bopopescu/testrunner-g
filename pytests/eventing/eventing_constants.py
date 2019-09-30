@@ -51,7 +51,9 @@ class HANDLER_CODE:
     BUCKET_OP_SOURCE_DOC_MUTATION = 'handler_code/bucket_op_source_doc_mutation.js'
     BUCKET_OP_SOURCE_DOC_MUTATION_WITH_TIMERS= 'handler_code/bucket_op_source_doc_mutation_with_timers.js'
     BUCKET_OP_WITH_SOURCE_BUCKET_MUTATION= 'handler_code/bucket_op_with_source_bucket_mutation.js'
+    BUCKET_OP_WITH_SOURCE_BUCKET_MUTATION_RECOVERY= 'handler_code/bucket_op_with_source_bucket_mutation_recovery.js'
     BUCKET_OP_SOURCE_BUCKET_MUTATION_WITH_TIMERS= 'handler_code/bucket_op_source_bucket_mutation_with_timer.js'
+    BUCKET_OP_SOURCE_BUCKET_MUTATION_WITH_TIMERS_RECOVERY= 'handler_code/bucket_op_source_bucket_mutation_with_timer_recovery.js'
     BUCKET_OP_SOURCE_BUCKET_MUTATION_DELETE='handler_code/bucket_op_with_source_bucket_mutation_delete.js'
     BUCKET_OP_SOURCE_BUCKET_MUTATION_TIMERS_DELETE='handler_code/bucket_op_source_bucket_mutation_with_timer_delete.js'
 
@@ -61,10 +63,12 @@ class HANDLER_CODE_CURL:
     BUCKET_OP_WITH_CURL_POST= 'handler_code/curl/bucket_op_curl_post.js'
     BUCKET_OP_WITH_CURL_PUT= 'handler_code/curl/bucket_op_curl_put.js'
     BUCKET_OP_WITH_CURL_DELETE= 'handler_code/curl/bucket_op_curl_delete.js'
+    BUCKET_OP_WITH_CURL_JENKINS= 'handler_code/curl/bucket_op_curl_jenkins.js'
     TIMER_OP_WITH_CURL_GET = 'handler_code/curl/timer_op_curl_get.js'
     TIMER_OP_WITH_CURL_POST = 'handler_code/curl/timer_op_curl_post.js'
     TIMER_OP_WITH_CURL_PUT = 'handler_code/curl/timer_op_curl_put.js'
     TIMER_OP_WITH_CURL_DELETE = 'handler_code/curl/timer_op_curl_delete.js'
+    TIMER_OP_WITH_CURL_JENKINS= 'handler_code/curl/timer_op_curl_jenkins.js'
     BUCKET_OP_WITH_CURL_BEARER = 'handler_code/curl/bucket_op_curl_bearer.js'
     BUCKET_OP_WITH_CURL_COOKIE = 'handler_code/curl/bucket_op_curl_get_cookies.js'
 
@@ -86,3 +90,4 @@ class EXPORTED_FUNCTION:
     NEW_BUCKET_OP ='exported_functions/Function_396275055_test_export_function.json'
     SBM_BUCKET_OP ='exported_functions/bucket_op_sbm.json'
     CURL_BUCKET_OP='exported_functions/bucket_op_curl.json'
+    N1QL_OP='exported_functions/n1ql_op.json'

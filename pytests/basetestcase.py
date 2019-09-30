@@ -34,6 +34,7 @@ from testconstants import MAX_COMPACTION_THRESHOLD
 from testconstants import LINUX_DIST_CONFIG
 from membase.helper.cluster_helper import ClusterOperationHelper
 from security.rbac_base import RbacBase
+from security.ntonencryptionBase import ntonencryptionBase
 
 
 from couchbase_cli import CouchbaseCLI
@@ -193,6 +194,8 @@ class BaseTestCase(unittest.TestCase):
             self.standard_bucket_priority = self.input.param("standard_bucket_priority", None)
             # end of bucket parameters spot (this is ongoing)
             self.disable_diag_eval_on_non_local_host = self.input.param("disable_diag_eval_non_local", False)
+            self.ntonencrypt = self.input.param('ntonencrypt','disable')
+            self.ntonencrypt_level = self.input.param('ntonencrypt_level','control')
 
             if self.skip_setup_cleanup:
                 self.buckets = RestConnection(self.master).get_buckets()
@@ -373,7 +376,10 @@ class BaseTestCase(unittest.TestCase):
                 self._bucket_creation()
             self.log.info("==============  basetestcase setup was finished for test #{0} {1} =============="
                           .format(self.case_number, self._testMethodName))
-
+            
+            if self.ntonencrypt == 'enable':
+                self.setup_nton_encryption()
+            
             if not self.skip_init_check_cbserver:
                 status, content, header = self._log_start(self)
                 if not status:
@@ -468,6 +474,7 @@ class BaseTestCase(unittest.TestCase):
                 BucketOperationHelper.delete_all_buckets_or_assert(self.servers, self)
                 ClusterOperationHelper.cleanup_cluster(self.servers, master=self.master)
                 ClusterOperationHelper.wait_for_ns_servers_or_assert(self.servers, self)
+                ntonencryptionBase().disable_nton_cluster(self.servers)
                 self.log.info("==============  basetestcase cleanup was finished for test #{0} {1} ==============" \
                               .format(self.case_number, self._testMethodName))
         except BaseException:
@@ -2893,3 +2900,43 @@ class BaseTestCase(unittest.TestCase):
                 stats = mc.stats()
                 self.assertEquals(int(stats['ep_flusher_batch_split_trigger']),
                                   flusher_batch_split_trigger)
+
+    def check_retry_rebalance_succeeded(self):
+        self.sleep(30)
+        attempts_remaining = retry_rebalance = retry_after_secs = None
+        for i in range(10):
+            self.log.info("Getting stats : try {0}".format(i))
+            result = json.loads(self.rest.get_pending_rebalance_info())
+            self.log.info(result)
+            if "retry_after_secs" in result:
+                retry_after_secs = result["retry_after_secs"]
+                attempts_remaining = result["attempts_remaining"]
+                retry_rebalance = result["retry_rebalance"]
+                break
+            self.sleep(self.sleep_time)
+        self.log.info("Attempts remaining : {0}, Retry rebalance : {1}".format(attempts_remaining, retry_rebalance))
+        while attempts_remaining:
+            # wait for the afterTimePeriod for the failed rebalance to restart
+            self.sleep(retry_after_secs, message="Waiting for the afterTimePeriod to complete")
+            try:
+                result = self.rest.monitorRebalance()
+                msg = "monitoring rebalance {0}"
+                self.log.info(msg.format(result))
+            except Exception:
+                result = json.loads(self.rest.get_pending_rebalance_info())
+                self.log.info(result)
+                try:
+                    attempts_remaining = result["attempts_remaining"]
+                    retry_rebalance = result["retry_rebalance"]
+                    retry_after_secs = result["retry_after_secs"]
+                except KeyError:
+                    self.fail("Retrying of rebalance still did not help. All the retries exhausted...")
+                self.log.info("Attempts remaining : {0}, Retry rebalance : {1}".format(attempts_remaining,
+                                                                                       retry_rebalance))
+            else:
+                self.log.info("Retry rebalanced fixed the rebalance failure")
+                break
+    
+    def setup_nton_encryption(self):
+        self.log.info('Setting up node to node encyrption from ')
+        ntonencryptionBase().setup_nton_cluster(self.servers,clusterEncryptionLevel=self.ntonencrypt_level)

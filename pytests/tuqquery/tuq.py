@@ -426,6 +426,7 @@ class QueryTests(BaseTestCase):
                 post_queries = test_dict[test_name].get('post_queries',[])
                 asserts = test_dict[test_name].get('asserts',[])
                 cleanups = test_dict[test_name].get('cleanups',[])
+                server = test_dict[test_name].get('server', None)
 
                 # INDEX STAGE
                 
@@ -461,7 +462,7 @@ class QueryTests(BaseTestCase):
 
                 self.log.info('Running Query Stage')
                 for query in queries:
-                    res = self.run_cbq_query(query)
+                    res = self.run_cbq_query(query, server=server)
                     res_dict['q_res'].append(res)
 
                 # POST_QUERIES STAGE
@@ -2355,9 +2356,12 @@ class QueryTests(BaseTestCase):
         res = self.curl_with_roles(self.query)
         role_list = ["query_delete(default)", "query_delete(standard_bucket0)", "delete(default)", "bucket_full_access(default)"]
         self.assertNotEquals(res['status'], 'success') if role in role_list else self.assertTrue(res['status'] == 'success')
-        self.query = 'delete from system:active_requests'
-        res = self.curl_with_roles(self.query)
-        self.assertTrue(res['status'] == 'stopped')
+        try:
+            self.query = 'delete from system:active_requests'
+            res = self.curl_with_roles(self.query)
+            self.assertTrue(res['status'] == 'stopped')
+        except:
+            self.assertTrue(res['status'] == 'fatal')
         if role not in role_list:
             self.query = 'delete from system:prepareds'
             res = self.curl_with_roles(self.query)
@@ -3116,9 +3120,35 @@ class QueryTests(BaseTestCase):
 
 ##############################################################################################
 #
-#   tuq_xattrs.py helpers
+#   tuq_cluster_ops helpers
 #
 ##############################################################################################
+
+    def run_queries_until_timeout(self,timeout=120):
+        self.log.info("Running queries for %s seconds to ensure no issues" % timeout)
+        init_time = time.time()
+        check = False
+        next_time = init_time
+        while not check:
+            try:
+                result = self.run_cbq_query("select * from default limit 10000")
+                time.sleep(2)
+                self.log.info("Query Succeeded")
+                check = next_time - init_time > timeout
+                next_time = time.time()
+                self.fail = False
+            except Exception as e:
+                self.log.error("Query Failed")
+                self.log.error(str(e))
+                time.sleep(2)
+                check = next_time - init_time > timeout
+                if next_time - init_time > timeout:
+                    self.log.error("Queries are failing after the interval, queries should have recovered by now!")
+                    self.fail = True
+                next_time = time.time()
+
+        return
+
 
 ##############################################################################################
 #

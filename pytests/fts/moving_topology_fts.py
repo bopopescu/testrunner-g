@@ -322,7 +322,7 @@ class MovingTopFTS(FTSBaseTest):
                           %(index.name,index.get_indexed_doc_count()))
         task = self._cb_cluster.async_failover(graceful=True)
         task.result()
-        self.sleep(30)
+        self.sleep(60)
         self._cb_cluster.add_back_node(recovery_type='full', services=["kv, fts"])
         for index in self._cb_cluster.get_indexes():
             self.is_index_partitioned_balanced(index)
@@ -803,6 +803,26 @@ class MovingTopFTS(FTSBaseTest):
         self.log.info("SUCCESS! Hits: %s" % hits)
         self._cb_cluster.disable_retry_rebalance()
 
+    def rebalance_out_during_querying(self):
+        #TESTED
+        index = self.create_index_generate_queries()
+        #self.run_query_and_compare(index)
+        tasks = []
+        tasks.append(self._cb_cluster.async_rebalance_out(
+            num_nodes=self.num_rebalance))
+        for count in range(0, len(index.fts_queries)):
+            tasks.append(self._cb_cluster.async_run_fts_query_compare(
+                fts_index=index,
+                es=self.es,
+                es_index_name=None,
+                query_index=count))
+        self.run_tasks_and_report(tasks, len(index.fts_queries))
+        self.is_index_partitioned_balanced(index)
+        self.run_query_and_compare(index)
+        hits, _, _, _ = index.execute_query(query=self.query,
+                                         expected_hits=self._num_items)
+        self.log.info("SUCCESS! Hits: %s" % hits)
+
     def retry_rebalance(self, services=None):
         try:
             if services:
@@ -841,28 +861,9 @@ class MovingTopFTS(FTSBaseTest):
         self.is_index_partitioned_balanced(index)
         self.run_query_and_compare(index)
         hits, _, _, _ = index.execute_query(query=self.query,
-                                         expected_hits=self._num_items)
-        self.log.info("SUCCESS! Hits: %s" % hits)
-        self._cb_cluster.disable_retry_rebalance()
-
-    def rebalance_out_during_querying(self):
-        #TESTED
-        index = self.create_index_generate_queries()
-        #self.run_query_and_compare(index)
-        tasks = []
-        tasks.append(self._cb_cluster.async_rebalance_out())
-        for count in range(0, len(index.fts_queries)):
-            tasks.append(self._cb_cluster.async_run_fts_query_compare(
-                fts_index=index,
-                es=self.es,
-                es_index_name=None,
-                query_index=count))
-        self.run_tasks_and_report(tasks, len(index.fts_queries))
-        self.is_index_partitioned_balanced(index)
-        self.run_query_and_compare(index)
-        hits, _, _, _ = index.execute_query(query=self.query,
                                             expected_hits=self._num_items)
         self.log.info("SUCCESS! Hits: %s" % hits)
+        self._cb_cluster.disable_retry_rebalance()
 
     def swap_rebalance_during_querying(self):
         #TESTED

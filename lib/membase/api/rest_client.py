@@ -909,6 +909,7 @@ class RestConnection(object):
             self.init_node_services(username=self.username, password=self.password,
                                                        services=self.node_services)
         self.init_cluster(username=self.username, password=self.password)
+        return kv_quota
 
     def init_node_services(self, username='Administrator', password='password', hostname='127.0.0.1', port='8091', services=None):
         api = self.baseUrl + '/node/controller/setupServices'
@@ -1952,6 +1953,19 @@ class RestConnection(object):
                 buckets.append(bucketInfo)
         return buckets
 
+    def get_bucket_by_name(self,bucket_name):
+        # get all the buckets
+        buckets = []
+        api = '{0}{1}'.format(self.baseUrl, 'pools/default/buckets?basic_stats=true')
+        status, content, header = self._http_request(api)
+        json_parsed = json.loads(content)
+        if status:
+            for item in json_parsed:
+                bucketInfo = RestParser().parse_get_bucket_json(item)
+                if bucketInfo.name == bucket_name:
+                    buckets.append(bucketInfo)
+        return buckets
+
     def get_buckets_itemCount(self):
         # get all the buckets
         bucket_map = {}
@@ -2374,6 +2388,18 @@ class RestConnection(object):
                            'threadsNumber': threadsNumber,
                            'flushEnabled': flushEnabled,
                            'evictionPolicy': evictionPolicy}
+        if bucketType == "memcached":
+            log.info("Create memcached bucket")
+            init_params = {'name': bucket,
+                           'ramQuotaMB': ramQuotaMB,
+                           'authType': authType,
+                           'saslPassword': saslPassword,
+                           'bucketType': bucketType,
+                           'replicaIndex': replica_index,
+                           'threadsNumber': threadsNumber,
+                           'flushEnabled': flushEnabled,
+                           'evictionPolicy': evictionPolicy}
+
         if lww:
             init_params['conflictResolutionType'] = 'lww'
 
@@ -2889,6 +2915,7 @@ class RestConnection(object):
     def stop_fts_index_update(self, name):
         """ method to stop fts index from updating"""
         api = self.fts_baseUrl + "api/index/{0}/ingestControl/pause".format(name)
+        log.info('calling api : {0}'.format(api))
         status, content, header = self._http_request(
             api,
             'POST',
@@ -2899,6 +2926,7 @@ class RestConnection(object):
     def resume_fts_index_update(self, name):
         """ method to stop fts index from updating"""
         api = self.fts_baseUrl + "api/index/{0}/ingestControl/resume".format(name)
+        log.info('calling api : {0}'.format(api))
         status, content, header = self._http_request(
             api,
             'POST',
@@ -2909,6 +2937,7 @@ class RestConnection(object):
     def freeze_fts_index_partitions(self, name):
         """ method to freeze index partitions asignment"""
         api = self.fts_baseUrl+ "api/index/{0}/planFreezeControl/freeze".format(name)
+        log.info('calling api : {0}'.format(api))
         status, content, header = self._http_request(
             api,
             'POST',
@@ -2919,6 +2948,7 @@ class RestConnection(object):
     def unfreeze_fts_index_partitions(self, name):
         """ method to freeze index partitions asignment"""
         api = self.fts_baseUrl+ "api/index/{0}/planFreezeControl/unfreeze".format(name)
+        log.info('calling api : {0}'.format(api))
         status, content, header = self._http_request(
             api,
             'POST',
@@ -2929,6 +2959,7 @@ class RestConnection(object):
     def disable_querying_on_fts_index(self, name):
         """ method to disable querying on index"""
         api = self.fts_baseUrl + "api/index/{0}/queryControl/disallow".format(name)
+        log.info('calling api : {0}'.format(api))
         status, content, header = self._http_request(
             api,
             'POST',
@@ -2939,6 +2970,7 @@ class RestConnection(object):
     def enable_querying_on_fts_index(self, name):
         """ method to enable querying on index"""
         api = self.fts_baseUrl + "api/index/{0}/queryControl/allow".format(name)
+        log.info('calling api : {0}'.format(api))
         status, content, header = self._http_request(
             api,
             'POST',
@@ -4603,6 +4635,18 @@ class RestConnection(object):
         if not status:
             raise Exception(content)
         return content
+
+    '''
+          Get eventing rebalance status
+    '''
+    def get_eventing_rebalance_status(self):
+        authorization = base64.encodestring('%s:%s' % (self.username, self.password))
+        url = "getAggRebalanceStatus"
+        api = self.eventing_baseUrl + url
+        headers = {'Content-type': 'application/json', 'Authorization': 'Basic %s' % authorization}
+        status, content, header = self._http_request(api, 'GET', headers=headers)
+        if status:
+            return content
 
     def create_function(self, name, body):
         authorization = base64.encodestring('%s:%s' % (self.username, self.password))

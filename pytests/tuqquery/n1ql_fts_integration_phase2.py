@@ -1257,6 +1257,7 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
         indexed_doc_count = 0
         while indexed_doc_count < doc_count:
             try:
+                self.sleep(10)
                 indexed_doc_count = fts_index.get_indexed_doc_count()
             except KeyError, k:
                 continue

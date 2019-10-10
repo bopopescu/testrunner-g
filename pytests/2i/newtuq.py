@@ -91,6 +91,25 @@ class QueryTests(BaseTestCase):
                 self.log.info(ex)
                 raise ex
 
+        self.__report_error_list = []
+        if self.__fail_on_errors:
+            self.__report_error_list = ["panic:"]
+
+        # for format {ip1: {"panic": 2}}
+        self.__error_count_dict = {}
+        if len(self.__report_error_list) > 0:
+            self.__initialize_error_count_dict()
+
+    def __initialize_error_count_dict(self):
+        """
+            initializes self.__error_count_dict with ip, error and err count
+            like {ip1: {"panic": 2}}
+        """
+        for node in self._input.servers:
+            self.__error_count_dict[node.ip] = {}
+        self.check_gsi_logs_for_panic(initial=True)
+        self.log.info(self.__error_count_dict)
+
     def tearDown(self):
         self.check_gsi_logs_for_panic()
         if hasattr(self, 'n1ql_helper'):
@@ -215,11 +234,12 @@ class QueryTests(BaseTestCase):
             self.n1ql_helper.full_docs_list = self.full_docs_list_after_ops
             self.gen_results = TuqGenerators(self.log, self.n1ql_helper.full_docs_list)
 
-    def check_gsi_logs_for_panic(self):
+    def check_gsi_logs_for_panic(self, initial=False):
         """ Checks if a string 'str' is present in goxdcr.log on server
             and returns the number of occurances
         """
         self.generate_map_nodes_out_dist()
+        error_found_logger = []
         panic_str = "panic"
         indexers = self.get_nodes_from_services_map(service_type="index", get_all_nodes=True)
         if not indexers:
@@ -236,8 +256,20 @@ class QueryTests(BaseTestCase):
                 else:
                     count = int(count)
                 shell.disconnect()
-                if count > 0:
-                    self.fail("===== PANIC OBSERVED IN INDEXER LOGS ON SERVER {0}=====".format(server.ip))
+
+                if initial:
+                    self.__error_count_dict[server.ip]["index_panic"] = count
+                else:
+                    self.log.info("Initial '{0}' count on {1} :{2}, now :{3}".
+                                  format(panic_str,
+                                         server.ip,
+                                         self.__error_count_dict[server.ip]["index_panic"],
+                                         count))
+                    if server.ip in self.__error_count_dict.keys():
+                        if (count > self.__error_count_dict[server.ip]["index_panic"]):
+                            error_found_logger.append("{0} found on {1}".format(panic_str,
+                                                                                server.ip))
+                            self.fail("===== PANIC OBSERVED IN INDEXER LOGS ON SERVER {0}=====".format(server.ip))
         projectors = self.get_nodes_from_services_map(service_type="kv", get_all_nodes=True)
         if not projectors:
             return None
@@ -253,5 +285,17 @@ class QueryTests(BaseTestCase):
                 else:
                     count = int(count)
                 shell.disconnect()
-                if count > 0:
-                    self.fail("===== PANIC OBSERVED IN PROJECTOR LOGS ON SERVER {0}=====".format(server.ip))
+
+                if initial:
+                    self.__error_count_dict[server.ip]["proj_panic"] = count
+                else:
+                    self.log.info("Initial '{0}' count on {1} :{2}, now :{3}".
+                                  format(panic_str,
+                                         server.ip,
+                                         self.__error_count_dict[server.ip]["proj_panic"],
+                                         count))
+                    if server.ip in self.__error_count_dict.keys():
+                        if (count > self.__error_count_dict[server.ip]["proj_panic"]):
+                            error_found_logger.append("{0} found on {1}".format(panic_str,
+                                                                                server.ip))
+                            self.fail("===== PANIC OBSERVED IN PROJECTOR LOGS ON SERVER {0}=====".format(server.ip))

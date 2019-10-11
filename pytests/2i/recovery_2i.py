@@ -553,7 +553,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
         try:
             self._create_replica_indexes()
             servr_out = self.nodes_out_list
-            remote = RemoteMachineShellConnection(servr_out[1])
+            remote = RemoteMachineShellConnection(servr_out[0])
             remote.stop_server()
             self.sleep(10)
             mid_recovery_tasks = self.async_run_operations(phase="in_between")

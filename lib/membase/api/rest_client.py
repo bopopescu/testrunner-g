@@ -2948,8 +2948,10 @@ class RestConnection(object):
     def set_bleve_max_result_window(self, bmrw_value):
         """create or edit fts index , returns {"status":"ok"} on success"""
         api = self.fts_baseUrl + "api/managerOptions"
-        params = '{"bleveMaxResultWindow": {0} }'.format(bmrw_value)
+        params = {"bleveMaxResultWindow": str(bmrw_value)}
         log.info(json.dumps(params))
+        params = urllib.urlencode(params)
+        
         status, content, header = self._http_request(api,
                                                      'PUT',
                                                      json.dumps(params, ensure_ascii=False),

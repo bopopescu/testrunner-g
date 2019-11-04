@@ -101,7 +101,7 @@ class SysTestMon():
             "logfiles": "info.log*",
             "services": "all",
             "keywords": ["exited with status"],
-            "ignore_keywords": "exited with status 0",
+            "ignore_keywords": "exited with status 0|exited with status 143",
             "check_stats_api": False
         },
         {

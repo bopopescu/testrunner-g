@@ -11,6 +11,7 @@ import commands
 import mc_bin_client
 import traceback
 import re
+import os
 
 
 from memcached.helper.data_helper import VBucketAwareMemcached
@@ -413,11 +414,11 @@ class BaseTestCase(unittest.TestCase):
         if run_eagle_eye:
             dirpath = os.getcwd()
             self.log.info(dirpath)
-            self.log.info(self._cb_cluster.get_master_node())
-            self.log.info(self._cb_cluster.get_master_node().ip)
+            self.log.info(self.master)
+            self.log.info(self.master.ip)
 
             sysmon = SysTestMon()
-            sysmon.run(str(self._cb_cluster.get_master_node().ip), "Administrator","password", "root", "couchbase", "false", "false", "girish.benakappa@couchbase.com", dirpath, False, self.log)
+            sysmon.run(str(self.master.ip), "Administrator","password", "root", "couchbase", "false", "false", "girish.benakappa@couchbase.com", dirpath, False, self.log)
 
 
         if self.skip_setup_cleanup:

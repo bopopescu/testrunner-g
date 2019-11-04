@@ -9,6 +9,7 @@ import logger
 import logging
 import re
 import json
+import os
 
 from couchbase_helper.cluster import Cluster
 from membase.api.rest_client import RestConnection, Bucket
@@ -23,6 +24,7 @@ from membase.helper.bucket_helper import BucketOperationHelper
 from memcached.helper.data_helper import MemcachedClientHelper
 from TestInput import TestInputSingleton
 from scripts.collect_server_info import cbcollectRunner
+from scripts.systestmon import SysTestMon
 from couchbase_helper.documentgenerator import *
 
 from couchbase_helper.documentgenerator import JsonDocGenerator
@@ -3156,6 +3158,16 @@ class FTSBaseTest(unittest.TestCase):
 
     def tearDown(self):
         """Clusters cleanup"""
+        run_eagle_eye = TestInputSingleton.input.param("run_eagle_eye", None)
+        if run_eagle_eye:
+            dirpath = os.getcwd()
+            self.log.info(dirpath)
+            self.log.info(self._cb_cluster.get_master_node())
+            self.log.info(self._cb_cluster.get_master_node().ip)
+
+            sysmon = SysTestMon()
+            sysmon.run(str(self._cb_cluster.get_master_node().ip), "Administrator","password", "root", "couchbase", "false", "false", "girish.benakappa@couchbase.com", dirpath, False, self.log)
+
         if len(self.__report_error_list) > 0:
             error_logger = self.check_error_count_in_fts_log()
             if error_logger:
@@ -3227,6 +3239,7 @@ class FTSBaseTest(unittest.TestCase):
     def _set_bleve_max_result_window(self):
         bmrw_value = self._input.param("bmrw_value", 100000000)
         for node in self._cb_cluster.get_fts_nodes():
+            self.log.info("updating bleve_max_result_window of node : {0}".format(node))
             rest = RestConnection(node)
             rest.set_bleve_max_result_window(bmrw_value)
 

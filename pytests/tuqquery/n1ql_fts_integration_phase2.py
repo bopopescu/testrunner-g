@@ -277,13 +277,13 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
 
         for option_val in test_cases[test_name]:
             self._create_fts_index(index_name='idx_beer_sample_fts', doc_count=7303, source_name='beer-sample')
-            n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"size\": 10000, \"sort\": [{\"by\":\"field\",\"field\":\"name\",\"mode\":\"max\",\"missing\":\"last\"}]}, {\""+test_name+"\": "+str(option_val)+"})"
+            n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"size\": 10000, \"sort\": [\"_id\"]}, {\""+test_name+"\": "+str(option_val)+"})"
             if test_name == "size":
-                n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"sort\": [{\"by\":\"field\",\"field\":\"name\",\"mode\":\"max\",\"missing\":\"last\"}], \""+test_name+"\":"+ str(option_val)+"})"
+                n1ql_query = "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"sort\": [\"_id\"], \""+test_name+"\":"+ str(option_val)+"})"
             if test_name == 'size':
-                fts_request_str = "{\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"size\":"+str(option_val)+ ", \"sort\": [{\"by\":\"field\",\"field\":\"name\",\"mode\":\"max\",\"missing\":\"last\"}]}"
+                fts_request_str = "{\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"size\":"+str(option_val)+ ", \"sort\": [\"_id\"]}"
             else:
-                fts_request_str = "{\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"sort\": [{\"by\":\"field\",\"field\":\"name\",\"mode\":\"max\",\"missing\":\"last\"}], \"size\":10000, \""+test_name+"\":"+str(option_val)+"}"
+                fts_request_str = "{\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"sort\": [\"_id\"], \"size\":10000, \""+test_name+"\":"+str(option_val)+"}"
             fts_request = json.loads(fts_request_str)
             n1ql_results = self.run_cbq_query(n1ql_query)['results']
             total_hits, hits, took, status = \
@@ -704,14 +704,14 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
             # MB-33724
             "named_prepared_option_index_name": {
                 "prepared": "select meta().id from `beer-sample` where search(`beer-sample`, 'state:California', $idx_name)",
-                "params": "$idx_name={'index': '$idx_name'}",
+                "params": "$idx_name={\"index\": \"idx_beer_sample_fts\"}",
                 "n1ql": "select meta().id from `beer-sample` where search(`beer-sample`, 'state:California', {'index': 'idx_beer_sample_fts'})",
                 "expected_result": "success"
             },
             "named_prepared_option_settings": {
-                "prepared": "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\": \"state\", \"match\":\"California\"},'size': $size})",
+                "prepared": "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\": \"state\", \"match\":\"California\"},'size': $size, \"sort\":[\"_id\"]})",
                 "params": "$size=15",
-                "n1ql": "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\": \"state\", \"match\":\"California\"},'size': 15})",
+                "n1ql": "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\": \"state\", \"match\":\"California\"},'size': 15, 'sort':['_id']})",
                 "expected_result": "success"
             },
             "named_prepared_option_out": {
@@ -735,10 +735,9 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
                 "expected_result": "cannot_execute"
             },
             "positional_prepared_option_settings": {
-                "prepared": "select meta().id from `beer-sample` where search(`beer-sample`, 'state:California', $1)",
-                "params": "args=[{'size': 15}]",
+                "prepared": "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\": \"state\", \"match\":\"California\"},'size': $1, \"sort\":[\"_id\"]})",
                 "params": "args=[15]",
-                "n1ql": "select meta().id from `beer-sample` where search(`beer-sample`, 'state:California', {'size': 15})",
+                "n1ql": "select meta().id from `beer-sample` where search(`beer-sample`, {\"query\":{\"field\": \"state\", \"match\":\"California\"},'size': 15, 'sort':['_id']})",
                 "expected_result": "success"
             },
             "positional_prepared_option_out": {
@@ -806,9 +805,9 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
             },
             # MB-33724
             "named_prepared_option_settings": {
-                "prepared": "select meta().id from `beer-sample` where search(`beer-sample`, \"state:California\", {\"size\": $size})",
+                "prepared": "select meta().id from `beer-sample` where search(`beer-sample`, \"state:California\", {\"size\": $size, \"sort\":[\"_id\"]})",
                 "params": "$size=15",
-                "n1ql": "select meta().id from `beer-sample` where search(`beer-sample`, 'state:California', {'size': 15})",
+                "n1ql": "select meta().id from `beer-sample` where search(`beer-sample`, 'state:California', {'size': 15, 'sort':['_id']})",
                 "expected_result": "success"
             },
             "named_prepared_option_out": {
@@ -830,9 +829,9 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
                 "expected_result": "success"
             },
             "positional_prepared_option_settings": {
-                "prepared": "select meta().id from `beer-sample` where search(`beer-sample`, \"state:California\", {\"size\": $1})",
+                "prepared": "select meta().id from `beer-sample` where search(`beer-sample`, \"state:California\", {\"size\": $1, \"sort\":[\"_id\"]})",
                 "params": "args=[15]",
-                "n1ql": "select meta().id from `beer-sample` where search(`beer-sample`, 'state:California', {'size': 15})",
+                "n1ql": "select meta().id from `beer-sample` where search(`beer-sample`, 'state:California', {'size': 15, 'sort':['_id']})",
                 "expected_result": "success"
             },
             "positional_prepared_option_out": {
@@ -895,10 +894,10 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
         # inner sort fields: single field, multiple fields, score, id
         # missing values: first, last
         # mode: min, max, offset
-        inner_sorting_field_values = ["", "city"]
+        inner_sorting_field_values = ["_id"]
         inner_sorting_order_values = ["", "min", "max"]
         inner_offset_values = ["", "10"]
-        outer_sorting_field_values = ["", "city", "name"]
+        outer_sorting_field_values = ["meta().id"]
         outer_sorting_order_values = ["", "asc", "desc"]
         outer_offset_values = ["", "10"]
 
@@ -932,7 +931,7 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
                                 search_results = self.run_cbq_query(search_query)['results']
                                 if outer_sort_expression == "":
                                     if inner_sort_expression != "":
-                                        fts_request_str = "{\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"size\":1000,"+inner_sort_expression+"}"
+                                        fts_request_str = "{\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"size\":1000 "+inner_sort_expression+"}"
                                     else:
                                         fts_request_str = "{\"query\":{\"field\": \"state\", \"match\":\"California\"}, \"size\":10000}"
                                     fts_request = json.loads(fts_request_str)
@@ -1079,7 +1078,7 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
             },
             "use_hash_keys_build_l": {
                 "query": "select * from `beer-sample` l join `beer-sample` r use hash(build) keys [\"512_brewing_company\"] on l.city=r.city where search(l, \"city:Austin\")",
-                "expected_result": "negative"
+                "expected_result": "positive"
             },
             "use_hash_keys_build_r": {
                 "query": "select * from `beer-sample` l join `beer-sample` r use hash(build) keys [\"512_brewing_company\"] on l.city=r.city where search(r, \"city:Austin\")",
@@ -1087,7 +1086,7 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
             },
             "use_hash_keys_probe_l": {
                 "query": "select * from `beer-sample` l join `beer-sample` r use hash(probe) keys [\"512_brewing_company\"] on l.city=r.city where search(l, \"city:Austin\")",
-                "expected_result": "negative"
+                "expected_result": "positive"
             },
             "use_hash_keys_probe_r": {
                 "query": "select * from `beer-sample` l join `beer-sample` r use hash(probe) keys [\"512_brewing_company\"] on l.city=r.city where search(r, \"city:Austin\")",
@@ -1095,7 +1094,7 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
             },
             "lookup_l": {
                 "query": "select * from `beer-sample` l join `beer-sample` r on keys l.brewery_id where search(l, \"city:Austin\")",
-                "expected_result": "negative"
+                "expected_result": "positive"
             },
             "lookup_r": {
                 "query": "select * from `beer-sample` l join `beer-sample` r on keys l.brewery_id  where search(r, \"city:Austin\")",
@@ -1103,7 +1102,7 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
             },
             "index_l": {
                 "query": "select * from `beer-sample` l join `beer-sample` r on key r.brewery_id for l where search(l, \"city:Austin\")",
-                "expected_result": "negative"
+                "expected_result": "positive"
             },
             "index_r": {
                 "query": "select * from `beer-sample` l join `beer-sample` r on key r.brewery_id for l where search(r, \"city:Austin\")",
@@ -1112,10 +1111,6 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
             "in_l": {
                 "query": "select * from `beer-sample` l join `beer-sample` r on l.brewery_id in r.code where search(l, \"city:Austin\")",
                 "expected_result": "positive"
-            },
-            "in_r": {
-                "query": "select * from `beer-sample` l join `beer-sample` r on l.brewery_id in r.code where search(r, \"city:Austin\")",
-                "expected_result": "negative"
             },
             "any_satisfies_l": {
                 "query": "select * from `beer-sample` l join `beer-sample` r on l.address=r.address and any v in r.address satisfies (v='563 Second Street') end where search(l, \"city:Austin\")",
@@ -1330,3 +1325,5 @@ class N1qlFTSIntegrationPhase2Test(QueryTests):
         rest.username = user
         rest.password = password
         return rest
+
+

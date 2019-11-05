@@ -989,7 +989,7 @@ class SubdocXattrSdkTest(SubdocBaseTest):
             try:
                 self.client.lookup_in(k, SD.exists(vxattr, xattr=True))
             except Exception as e:
-                self.assertEqual(e.message, 'Operational Error')
+                self.assertEqual(e.message, 'Subcommand failure')
                 self.assertEqual(e.result.errstr,
                                  'The server replied with an unrecognized status code. '
                                  'A newer version of this library may be able to decode it')
@@ -1728,7 +1728,7 @@ class XattrEnterpriseBackupRestoreTest(SubdocBaseTest):
                                                        output[
                                                            0], self.restore_extra_params))
         self.log.info(output)
-        self.assertEquals('Restore completed successfully', output[1])
+        self.assertEquals('Restore bucket "default" succeeded', output[1])
         # https://issues.couchbase.com/browse/MB-23864
         if self.override_data and '--force-updates' not in self.restore_extra_params:
             self._verify_all_buckets(postfix_xattr_value='updated')

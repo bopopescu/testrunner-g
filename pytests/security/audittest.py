@@ -218,7 +218,7 @@ class auditTest(BaseTestCase):
             type = self.input.param('type', None)
             self.cluster.failover(self.servers, servs_inout)
             self.cluster.rebalance(self.servers, [], [])
-            expectedResults = {'source':source, 'user':self.master.rest_username, "ip":self.ipAddress, "port":57457, 'type':type, 'nodes':'ns_1@' + servs_inout[0].ip}
+            expectedResults = {'source':source, 'user':self.master.rest_username, "ip":self.ipAddress, "port":57457, 'type':type, 'nodes':'[ns_1@' + servs_inout[0].ip + ']'}
 
         if (ops == 'nodeRecovery'):
             expectedResults = {'node':'ns_1@' + servs_inout[0].ip, 'type':'delta', 'source':source, 'user':self.master.rest_username, "ip":self.ipAddress, "port":57457}
@@ -247,7 +247,7 @@ class auditTest(BaseTestCase):
             #Get a REST Command for loading sample
 
         elif (ops == 'enableAutoFailover'):
-            expectedResults = {'max_nodes':1, "timeout":120, 'source':source, "user":user, 'ip':self.ipAddress, 'port':12345}
+            expectedResults = {'max_nodes':1, "timeout":120, 'source':source, "user":user, 'ip':self.ipAddress, 'port':12345,'failover_server_group':False}
             rest.update_autofailover_settings(True, expectedResults['timeout'])
 
         elif (ops == 'disableAutoFailover'):

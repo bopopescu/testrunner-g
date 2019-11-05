@@ -11,7 +11,6 @@ import commands
 import mc_bin_client
 import traceback
 import re
-import os
 
 
 from memcached.helper.data_helper import VBucketAwareMemcached
@@ -41,7 +40,6 @@ from couchbase_cli import CouchbaseCLI
 import testconstants
 
 from scripts.collect_server_info import cbcollectRunner
-from scripts.systestmon import SysTestMon
 
 
 class BaseTestCase(unittest.TestCase):
@@ -409,17 +407,6 @@ class BaseTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.print_cluster_stats()
-
-        run_eagle_eye = TestInputSingleton.input.param("run_eagle_eye", None)
-        if run_eagle_eye:
-            dirpath = os.getcwd()
-            self.log.info(dirpath)
-            self.log.info(self.master)
-            self.log.info(self.master.ip)
-
-            sysmon = SysTestMon()
-            sysmon.run(str(self.master.ip), "Administrator","password", "root", "couchbase", "false", "false", "girish.benakappa@couchbase.com", dirpath, False, self.log)
-
 
         if self.skip_setup_cleanup:
             return

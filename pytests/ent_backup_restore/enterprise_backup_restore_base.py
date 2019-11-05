@@ -4,6 +4,7 @@ import json
 import urllib, datetime
 
 from basetestcase import BaseTestCase
+from TestInput import TestInputSingleton, TestInputServer
 from couchbase_helper.data_analysis_helper import DataCollector
 from membase.helper.rebalance_helper import RebalanceHelper
 from couchbase_helper.documentgenerator import BlobGenerator,DocumentGenerator
@@ -145,6 +146,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
             raise Exception("OS not supported.")
         self.backup_validation_files_location = "/tmp/backuprestore" + self.master.ip
         self.backupset.backup_host = self.input.clusters[1][0]
+        self.backupset.directory += "_" + self.master.ip
         self.backupset.name = self.input.param("name", "backup")
         self.non_master_host = self.input.param("non-master", False)
         self.compact_backup = self.input.param("compact-backup", False)
@@ -156,6 +158,11 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         self.gsi_names = ["num1", "num2"]
         self.enable_firewall = False
         self.eventing_log_level = self.input.param('eventing_log_level', 'INFO')
+        self.timer_storage_chan_size = self.input.param('timer_storage_chan_size', 10000)
+        self.dcp_gen_chan_size = self.input.param('dcp_gen_chan_size', 10000)
+        self.is_sbm = self.input.param('source_bucket_mutation',False)
+        self.is_curl = self.input.param('curl',False)
+        self.print_eventing_handler_code_in_logs = self.input.param('print_eventing_handler_code_in_logs', True)
         self.do_restore = self.input.param("do-restore", False)
         self.do_verify = self.input.param("do-verify", False)
         self.create_views = self.input.param("create-views", False)
@@ -185,10 +192,12 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         self.bucket_delete = self.input.param("bucket_delete", False)
         self.bucket_flush = self.input.param("bucket_flush", False)
         if self.same_cluster:
+            self.backupset.restore_cluster = self.servers
             self.backupset.restore_cluster_host = self.servers[0]
             self.backupset.restore_cluster_host_username = self.servers[0].rest_username
             self.backupset.restore_cluster_host_password = self.servers[0].rest_password
         else:
+            self.backupset.restore_cluster = self.input.clusters[0]
             self.backupset.restore_cluster_host = self.input.clusters[0][0]
             self.backupset.restore_cluster_host_username = self.input.clusters[0][0].rest_username
             self.backupset.restore_cluster_host_password = self.input.clusters[0][0].rest_password
@@ -278,7 +287,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
                 backup_directory = WIN_TMP_PATH_RAW + "entbackup"
             else:
                 raise Exception("OS not supported.")
-            backup_directory += self.master.ip
+            backup_directory += "_" + self.master.ip
             validation_files_location = "%sbackuprestore" % self.tmp_path + self.master.ip
             if info == 'linux':
                 command = "rm -rf {0}".format(backup_directory)
@@ -367,7 +376,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         command = "{0}/cbbackupmgr {1}".format(self.cli_command_location, args)
         if del_old_backup:
             self.log.info("Remove any old dir before create new one")
-            remote_client.execute_command("rm -rf %s" % self.backupset.directory)
+            remote_client.execute_command("rm -rf {0}".format(self.backupset.directory))
         output, error = remote_client.execute_command(command)
         remote_client.log_command_output(output, error)
         remote_client.disconnect()
@@ -674,6 +683,26 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
                             self._create_restore_cluster()
                         if not self.dgm_run and int(kv_quota) > 0:
                             bucket_size = kv_quota
+
+                    self.log.info("Check services on restore and backup cluster")
+                    bk_rest = RestConnection(self.backupset.cluster_host)
+                    bk_servc_map = bk_rest.get_nodes_services()
+
+                    for key in bk_servc_map.keys():
+                        if self.backupset.cluster_host.ip in key:
+                            bk_servc_map = bk_servc_map[key]
+                            break
+                    rs_rest = RestConnection(self.backupset.restore_cluster_host)
+                    rs_servc_map = rs_rest.get_nodes_services()
+                    for key in rs_servc_map.keys():
+                        if self.backupset.restore_cluster_host.ip in key:
+                            rs_servc_map = rs_servc_map[key]
+                            break
+
+                    if bk_servc_map != rs_servc_map:
+                        bucket_size = self._reset_restore_cluster_with_bk_services(bk_servc_map)
+                        if int(bucket_size) > 256:
+                            rest_conn = RestConnection(self.backupset.restore_cluster_host)
 
                     self.log.info("replica in bucket {0} is {1}".format(bucket.name, replicas))
                     rest_conn.create_bucket(bucket=bucket_name,
@@ -1607,6 +1636,40 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         kv_quota = rest.init_node()
         return kv_quota
 
+    def _reset_restore_cluster_with_bk_services(self, bk_services):
+        master = self.backupset.restore_cluster_host
+
+        BucketOperationHelper.delete_all_buckets_or_assert(
+                                         self.backupset.restore_cluster, self)
+        ClusterOperationHelper.cleanup_cluster(
+                                self.backupset.restore_cluster, master=master)
+
+        rest = RestConnection(master).force_eject_node()
+        rest = RestConnection(master)
+        ready = RestHelper(rest).is_ns_server_running()
+        if ready:
+            shell = RemoteMachineShellConnection(master)
+            shell.enable_diag_eval_on_non_local_hosts()
+            shell.disconnect()
+        else:
+            self.fail("NS server is not ready after reset node")
+        bk_services =['kv', 'index', 'n1ql']
+        for i in range(len(self.servers)):
+            if self.servers[i].ip == master.ip:
+                self.backupset.restore_cluster_host.services = ",".join(bk_services)
+                break
+        rest = RestConnection(self.backupset.restore_cluster_host)
+        kv_quota = rest.init_node()
+        self.log.info("Done reset node")
+        if len(self.input.clusters[1]) > 1:
+            num_servers = len(self.backupset.restore_cluster) - 1
+            self.cluster.rebalance(
+                            self.backupset.restore_cluster[:num_servers],
+                            self.backupset.restore_cluster[1:num_servers],
+                            [],
+                            services=self.services)
+        return kv_quota
+
     def _collect_logs(self):
         """
            CB_ARCHIVE_PATH env: param log-archive-env=False
@@ -1725,11 +1788,19 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
                     logs_path, zip_file))
                 if 'redacted-' in zip_file:
                     # Redacted logs include the backup archive one layer deeper
-                    log_archive_names.append("{}/{}".format(
-                        zip_file.split(".")[0],
-                        zip_file.split(".")[0].split('-', 1)[1]))
+                    if self.master.ip in zip_file:
+                        log_archive_names.append("{}/{}".format(
+                            ".".join(zip_file.split(".")[:-1]),
+                            ".".join(zip_file.split(".")[:-1]).split('-', 1)[1]))
+                    else:
+                        log_archive_names.append("{}/{}".format(
+                            zip_file.split(".")[0],
+                            zip_file.split(".")[0].split('-', 1)[1]))
                 else:
-                    log_archive_names.append(zip_file.split(".")[0])
+                    if self.master.ip in zip_file:
+                        log_archive_names.append(".".join(zip_file.split(".")[:-1]))
+                    else:
+                        log_archive_names.append(zip_file.split(".")[0])
 
         if self.backupset.log_redaction:
             # Verify logs were redacted correctly
@@ -2073,6 +2144,49 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         body['settings']['deadline_timeout'] = deadline_timeout
         return body
 
+    def bkrs_resume_function(self, body, rest, wait_for_resume=True):
+        body['settings']['deployment_status'] = True
+        body['settings']['processing_status'] = True
+        if "dcp_stream_boundary" in body['settings']:
+            body['settings'].pop('dcp_stream_boundary')
+        self.log.info("Settings after deleting dcp_stream_boundary : {0}"
+                                               .format(body['settings']))
+        content1 = rest.set_settings_for_function(body['appname'], body['settings'])
+        self.log.info("Resume Application : {0}".format(body['appname']))
+        if wait_for_resume:
+            self.bkrs_wait_for_handler_state(body['appname'], "deployed", rest)
+
+    def bkrs_wait_for_handler_state(self, name, status, rest, iterations=20):
+        self.sleep(20, message="Waiting for {} to {}...".format(name,status))
+        result = rest.get_composite_eventing_status()
+        count = 0
+        composite_status = None
+        while composite_status != status and count < iterations:
+            self.sleep(20,"Waiting for {} to {}...".format(name,status))
+            result = rest.get_composite_eventing_status()
+            for i in range(len(result['apps'])):
+                if result['apps'][i]['name'] == name:
+                    composite_status = result['apps'][i]['composite_status']
+            count+=1
+        if count == iterations:
+            raise Exception('Eventing took lot of time for handler {} to {}'.format(name,status))
+
+    def bkrs_undeploy_and_delete_function(self, body, rest):
+        self.bkrs_undeploy_function(body, rest)
+        self.sleep(5)
+        self.bkrs_delete_function(body, rest)
+
+    def bkrs_undeploy_function(self, body, rest):
+        content = rest.undeploy_function(body['appname'])
+        self.log.info("Undeploy Application : {0}".format(body['appname']))
+        self.bkrs_wait_for_handler_state(body['appname'],"undeployed", rest)
+        return content
+
+    def bkrs_delete_function(self, body, rest):
+        content1 = rest.delete_single_function(body['appname'])
+        self.log.info("Delete Application : {0}".format(body['appname']))
+        return content1
+
     def _verify_backup_events_definition(self, bk_fxn):
         backup_path = self.backupset.directory + "/backup/{0}/".format(self.backups[0])
         events_file_name = "events.json"
@@ -2240,6 +2354,8 @@ class Backupset:
         self.cluster_host_password = ''
         self.cluster_new_user = None
         self.cluster_new_role = None
+        self.backup_cluster = None
+        self.restore_cluster = None
         self.restore_cluster_host = None
         self.restore_cluster_host_username = ''
         self.restore_cluster_host_password = ''

@@ -522,6 +522,7 @@ class UpgradeSecondaryIndex(BaseSecondaryIndexingTests, NewUpgradeBaseTest):
                 self.sleep(100)
                 node_version = RestConnection(node).get_nodes_versions()
                 log.info("{0} node {1} Upgraded to: {2}".format(service, node.ip, node_version))
+                self.sleep(100)
                 ops_map = self.generate_operation_map("in_between")
                 if not "drop_index" in ops_map:
                     if "index" in node_services_list:

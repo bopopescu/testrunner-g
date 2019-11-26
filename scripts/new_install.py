@@ -28,9 +28,9 @@ def node_installer(node, install_tasks):
             install_tasks.task_done()
 
 
-def on_install_error(install_task, node, err):
+def on_install_error(install_task, node, e):
     node.queue.empty()
-    log.error("Error {0} occurred on {1} during {2}".format(err, node.ip, install_task))
+    log.error("Error {0}:{1} occurred on {2} during {3}".format(repr(e), e.message, node.ip, install_task))
 
 
 def do_install_task(task, node):
@@ -45,7 +45,8 @@ def do_install_task(task, node):
             node.cleanup_cb()
         log.info("Done with %s on %s." % (task, node.ip))
     except Exception as e:
-        on_install_error(task, node, e.message)
+        on_install_error(task, node, e)
+        traceback.print_exc()
 
 
 def validate_install(version):
@@ -53,33 +54,22 @@ def validate_install(version):
     for node in install_utils.NodeHelpers:
         node.install_success = False
         if node.rest:
-            node_status = node.rest.cluster_status()["nodes"]
+            try:
+                node_status = node.rest.cluster_status()["nodes"]
+            except:
+                continue
             for item in node_status:
                 if version in item['version'] and item['status'] == "healthy":
                     node.install_success = True
-                    log.info("node:{0}\tversion:{1}\tstatus:{2}\tservices:{3}".format(item['hostname'],
-                                                                                      item['version'],
-                                                                                      item['status'],
-                                                                                      item['services']))
-    print_result()
 
+                if node.enable_ipv6 and not item["addressFamily"] == "inet6":
+                    node.install_success = False
 
-def print_result():
-    success = []
-    fail = []
-    for node in install_utils.NodeHelpers:
-        if node.install_success:
-            success.append(node.ip)
-        elif not node.install_success:
-            fail.append(node.ip)
-    log.info("-" * 100)
-    for _ in fail:
-        log.error("INSTALL FAILED ON: \t{0}".format(_))
-    log.info("-" * 100)
-    for _ in success:
-        log.info("INSTALL COMPLETED ON: \t{0}".format(_))
-    log.info("-" * 100)
-
+                log.info("node:{0}\tversion:{1}\taFamily:{2}\tservices:{3}".format(item['hostname'],
+                                                                              item['version'],
+                                                                              item['addressFamily'],
+                                                                              item['services']))
+    install_utils.print_result_and_exit()
 
 def do_install(params):
     # Per node, spawn one thread, which will process a queue of install tasks
@@ -95,7 +85,7 @@ def do_install(params):
         node_helper.queue = q
         node_helper.thread = t
 
-    force_stop = start_time + install_constants.INSTALL_TIMEOUT
+    force_stop = start_time + params["timeout"]
     for node in install_utils.NodeHelpers:
         try:
             while node.queue.unfinished_tasks and time.time() < force_stop:
@@ -104,7 +94,7 @@ def do_install(params):
                 raise InstallException
         except InstallException:
             if time.time() >= force_stop:
-                log.error("INSTALL TIMED OUT AFTER {0}s.VALIDATING..".format(install_constants.INSTALL_TIMEOUT))
+                log.error("INSTALL TIMED OUT AFTER {0}s.VALIDATING..".format(params["timeout"]))
                 break
     if "init" in params["install_tasks"]:
         validate_install(params["version"])
@@ -121,4 +111,4 @@ if __name__ == "__main__":
     main()
     end_time = time.time()
     log.info("TOTAL INSTALL TIME = {0} seconds".format(round(end_time - start_time)))
-    sys.exit()
+    sys.exit(0)

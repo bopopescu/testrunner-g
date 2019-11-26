@@ -916,13 +916,19 @@ class RestConnection(object):
         if services == None:
             log.info(" services are marked as None, will not work")
             return False
+
+        params_dict = {'user': username,
+                       'password': password,
+                       'services': ",".join(services)}
+
         if hostname == "127.0.0.1":
             hostname = "{0}:{1}".format(hostname, port)
-        params = urllib.urlencode({ 'hostname': hostname,
-                                    'user': username,
-                                    'password': password,
-                                    'services': ",".join(services)})
-        log.info('/node/controller/setupServices params on {0}: {1}:{2}'.format(self.ip, self.port, params))
+
+        if hostname:
+            params_dict['hostname'] = hostname
+
+        params = urllib.urlencode(params_dict)
+        log.info('/node/controller/setupServices params on {0}:{1}:{2}'.format(self.ip, self.port, params))
         status, content, header = self._http_request(api, 'POST', params)
         error_message = "cannot change node services after cluster is provisioned"
         if not status and error_message in content:
@@ -1039,8 +1045,11 @@ class RestConnection(object):
         api = self.cbas_base_url + "/analytics/service"
         headers = self._create_capi_headers_with_auth(username, password)
 
-        params = {'statement': statement, 'mode': mode, 'pretty': pretty,
-                  'client_context_id': client_context_id}
+        params = {'statement': statement, 'pretty': pretty, 'client_context_id': client_context_id}
+
+        if mode is not None:
+            params['mode'] = mode
+
         params = json.dumps(params)
         status, content, header = self._http_request(api, 'POST',
                                                      headers=headers,
@@ -4152,10 +4161,10 @@ class RestConnection(object):
                                                      params=params)
         if not status:
             raise Exception(content)
-        #Below line is there because of MB-20758
-        content = content.split("[]")[0]
+
         # Following line is added since the content uses chunked encoding
         chunkless_content = content.replace("][", ", \n")
+
         if chunkless_content:
             return json.loads(chunkless_content)
         else:

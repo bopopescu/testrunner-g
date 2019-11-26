@@ -411,6 +411,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             rest = RestConnection(self.master)
             recoveryType = self.input.param("recoveryType", "full")
             servr_out = self.nodes_out_list
+            print(servr_out)
             failover_task =self.cluster.async_failover([self.master],
                     failover_nodes=servr_out, graceful=self.graceful)
             failover_task.result()
@@ -420,6 +421,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             kvOps_tasks = self._run_kvops_tasks()
             nodes_all = rest.node_statuses()
             nodes = []
+            print(servr_out)
             if servr_out[0].ip == "127.0.0.1":
                 for failover_node in servr_out:
                     nodes.extend([node for node in nodes_all

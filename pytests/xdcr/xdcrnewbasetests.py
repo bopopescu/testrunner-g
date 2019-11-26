@@ -1245,10 +1245,11 @@ class CouchbaseCluster:
             # NRU eviction for src bkt implemented in 6.0.2
             # AllowSourceNRUCreation internal setting needs to be enabled for 6.0.2 to 6.5.0
             # It is enabled by default for 6.5.0 and up
-            if "6.0." in NodeHelper.get_cb_version(server):
+            rest = RestConnection(server)
+            if rest.check_node_versions("6.0"):
                 self.set_internal_setting("AllowSourceNRUCreation", "true")
                 bucket_params['eviction_policy'] = EVICTION_POLICY.NRU_EVICTION
-            elif "6.5." in NodeHelper.get_cb_version(server):
+            elif rest.check_node_versions("6.5"):
                 bucket_params['eviction_policy'] = EVICTION_POLICY.NRU_EVICTION
         else:
             if eviction_policy in EVICTION_POLICY.CB:
@@ -3657,6 +3658,7 @@ class XDCRNewBaseTest(unittest.TestCase):
                                  + "ON " + bucket)
 
     def _get_doc_count(self, server):
+        doc_count = 0
         for bucket in self.filter_exp.keys():
             exp = self.filter_exp[bucket]
             if len(exp) > 1:
@@ -3668,7 +3670,9 @@ class XDCRNewBaseTest(unittest.TestCase):
             doc_count = self.__execute_query(server, "SELECT COUNT(*) FROM "
                                              + bucket +
                                              " WHERE " + exp)
-        return doc_count if doc_count else 0
+            if not doc_count:
+                return 0
+        return doc_count
 
     def verify_filtered_items(self, src_master, dest_master, replications, skip_index=False):
         # Assuming src and dest bucket of replication have the same name

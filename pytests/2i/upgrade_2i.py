@@ -522,7 +522,6 @@ class UpgradeSecondaryIndex(BaseSecondaryIndexingTests, NewUpgradeBaseTest):
                 self.sleep(100)
                 node_version = RestConnection(node).get_nodes_versions()
                 log.info("{0} node {1} Upgraded to: {2}".format(service, node.ip, node_version))
-                self.sleep(100)
                 ops_map = self.generate_operation_map("in_between")
                 if not "drop_index" in ops_map:
                     if "index" in node_services_list:
@@ -640,10 +639,10 @@ class UpgradeSecondaryIndex(BaseSecondaryIndexingTests, NewUpgradeBaseTest):
             if not old_api:
                 log.info(str(ex))
                 raise
-            else:
-                drop_index_query = "DROP INDEX default.index_replica_index"
-                query_result = self.n1ql_helper.run_cbq_query(query=drop_index_query,
-                                               server=self.n1ql_node)
+        else:
+            drop_index_query = "DROP INDEX default.index_replica_index"
+            query_result = self.n1ql_helper.run_cbq_query(query=drop_index_query,
+                                           server=self.n1ql_node)
 
     def _recreate_equivalent_indexes(self, index_node):
         node_map = self._get_nodes_with_version()
@@ -804,9 +803,9 @@ class UpgradeSecondaryIndex(BaseSecondaryIndexingTests, NewUpgradeBaseTest):
         nodes_out_list = self.get_nodes_from_services_map(service_type="index")
         # rebalance out a node
         rebalance = self.cluster.async_rebalance(self.servers[:self.nodes_init], [], [nodes_out_list])
-        #reached = RestHelper(self.rest).rebalance_reached()
+        reached = RestHelper(self.rest).rebalance_reached()
         rebalance.result()
-        #self.assertTrue(reached, "rebalance failed, stuck or did not complete")
+        self.assertTrue(reached, "rebalance failed, stuck or did not complete")
 
         self.sleep(30)
         map_after_rebalance, stats_map_after_rebalance = self._return_maps()

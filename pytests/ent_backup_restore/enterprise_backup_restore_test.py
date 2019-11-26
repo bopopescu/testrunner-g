@@ -393,6 +393,8 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
             self.fail(message)
         backup_count = 0
         for line in output:
+            if "entbackup" in line:
+                continue
             if re.search("\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}.\d+-\d{2}_\d{2}", line):
                 backup_name = re.search("\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}.\d+-\d{2}_\d{2}", line).group()
                 if backup_name in self.backups:
@@ -1110,7 +1112,8 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
                                     end=self.num_items)
             index_definition = INDEX_DEFINITION
             index_name = index_definition['name'] = "age"
-            rest_fts = RestConnection(self.master)
+            fts_server = self.get_nodes_from_services_map(service_type="fts")
+            rest_fts = RestConnection(fts_server)
             try:
                 self.log.info("Create fts index")
                 rest_fts.create_fts_index(index_name, index_definition)
@@ -1234,21 +1237,18 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
             3. Restore data back to cluster
 
             Important:
-            This test need to copy entbackup.zip and entbackup-fts.zip
+            This test need to copy entbackup-mh.tgz
             to /root or /cygdrive/c/Users/Administrator in backup host.
-            Files location: 172.23.121.227:/root/entba*.zip
+            Files location: 172.23.121.227:/root/entba*.tgz
         """
         all_buckets = self.input.param("all_buckets", False)
         self.log.info("Copy backup dataset to tmp dir")
         shell = RemoteMachineShellConnection(self.backupset.backup_host)
-        shell.execute_command("rm -rf %s " % self.backupset.directory)
-        fts = ""
+        shell.execute_command("rm -rf {0} ".format(self.backupset.directory))
+        shell.execute_command("rm -rf {0} ".format(self.backupset.directory.split("_")[0]))
         backup_file = ENT_BKRS
-        if self.create_fts_index:
-            backup_file = ENT_BKRS_FTS
-            fts = "-fts"
         backup_dir_found = False
-        backup_dir = "entbackup" + fts
+        backup_dir = "entbackup_{0}".format(self.master.ip)
         output, error = shell.execute_command("ls | grep entbackup")
         self.log.info("check if %s dir exists on this server " % backup_dir)
         if output:
@@ -1258,17 +1258,16 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
         if not backup_dir_found:
             self.log.info("%s dir does not exist on this server.  Downloading.. "
                                                                    % backup_dir)
-            shell.execute_command("%s -q %s --no-check-certificate " % (self.wget, backup_file))
-            shell.execute_command("tar -zxvf %s.tgz " % backup_dir)
+            shell.execute_command("{0} -q {1} --no-check-certificate -O {2}.tgz "
+                                       .format(self.wget, backup_file, backup_dir))
+            shell.execute_command("tar -zxvf {0}.tgz ".format(backup_dir))
+            shell.execute_command("mv {0} {1}".format(backup_dir.split("_")[0], backup_dir))
         if "-" in self.cluster_new_role:
             self.cluster_new_role = self.cluster_new_role.replace("-", ",")
-        shell.check_cmd("unzip")
-        shell.execute_command("cp -r entbackup%s %s/entbackup" % (fts, self.tmp_path))
-        output, error = shell.execute_command("cd %s/backup/*/*/data; " \
-                                              "unzip shar*.zip" \
-                                              % self.backupset.directory)
-        shell.log_command_output(output, error)
-        shell.execute_command("echo '' > {0}/logs/backup.log" \
+        shell.execute_command("cp -r entbackup_{0} {1}/entbackup_{0}"\
+                                       .format(self.master.ip, self.tmp_path))
+
+        shell.execute_command("echo '' > {0}/logs/backup-0.log" \
                               .format(self.backupset.directory))
         shell.disconnect()
         status, _, message = self.backup_list()
@@ -1570,7 +1569,7 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
                                  self.value_size, end=self.num_items)
             self._load_all_buckets(self.master, gen, "create", 0)
             output, error = self.backup_cluster()
-        error_msg = "Error backing up cluster: Unable to read data because range.json is corrupt,"
+        error_msg = "no space left on device"
         self.assertTrue(self._check_output(error_msg, output),
                         "Expected error message not thrown by backup when disk is full")
         self.log.info("Expected error thrown by backup command")
@@ -1833,9 +1832,7 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
         conn.kill_erlang(self.os_name)
         conn.start_couchbase()
         conn.disconnect()
-        timeout_now = 400
-        if self.os_name == "windows":
-            timeout_now = 600
+        timeout_now = 600
         output = restore_result.result(timeout=timeout_now)
         self.assertTrue(self._check_output("Restore completed successfully", output),
                         "Restore failed with erlang crash and restart within 180 seconds")
@@ -3121,7 +3118,7 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
         if "ephemeral" in self.bucket_type:
             self.log.info("ephemeral bucket needs to set backup cluster to memopt for gsi.")
             self.test_storage_mode = "memory_optimized"
-            self._reset_storage_mode(rest_src, self.test_storage_mode)
+            self.quota = self._reset_storage_mode(rest_src, self.test_storage_mode)
             rest_src.add_node(self.servers[1].rest_username, self.servers[1].rest_password,
                           self.servers[1].ip, services=['kv', 'index'])
             rebalance = self.cluster.async_rebalance(self.cluster_to_backup, [], [])
@@ -3465,6 +3462,8 @@ class EnterpriseBackupRestoreTest(EnterpriseBackupRestoreBase, NewUpgradeBaseTes
                 self.fail(message)
             backup_count = 0
             for line in output:
+                if "entbackup" in line:
+                    continue
                 if re.search("\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}.\d+-\d{2}_\d{2}", line):
                     backup_name = re.search("\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}.\d+-\d{2}_\d{2}", line).group()
                     if backup_name in self.backups:

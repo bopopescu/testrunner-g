@@ -209,7 +209,7 @@ class RemoteMachineShellConnection:
             log.info("Can't establish SSH session with {0}".format(self.ip))
             exit(1)
 
-    def __init__(self, serverInfo):
+    def __init__(self, serverInfo, exit_on_failure=True):
         # let's create a connection
         self.username = serverInfo.ssh_username
         self.password = serverInfo.ssh_password
@@ -248,10 +248,17 @@ class RemoteMachineShellConnection:
                 break
             except paramiko.AuthenticationException:
                 log.error("Authentication failed")
-                exit(1)
+                if exit_on_failure:
+                    exit(1)
+                else:
+                    break
             except paramiko.BadHostKeyException:
                 log.error("Invalid Host key")
-                exit(1)
+                if exit_on_failure:
+                    exit(1)
+                else:
+                    break
+
             except Exception as e:
                 if str(e).find('PID check failed. RNG must be re-initialized') != -1 and\
                         attempt != max_attempts_connect:
@@ -262,7 +269,11 @@ class RemoteMachineShellConnection:
                 else:
                     log.error("Can't establish SSH session to node {1} :\
                                                    {0}".format(e, self.ip))
-                    exit(1)
+                    if exit_on_failure:
+                        exit(1)
+                    else:
+                        break
+
         log.info("Connected to {0}".format(serverInfo.ip))
         """ self.info.distribution_type.lower() == "ubuntu" """
         self.cmd_ext = ""
@@ -2146,7 +2157,7 @@ class RemoteMachineShellConnection:
 
             cmd1 = "cp -R /Volumes/Couchbase*/Couchbase\ Server.app /Applications"
             cmd2 = "sudo xattr -d -r com.apple.quarantine /Applications/Couchbase\ Server.app"
-            cmd3 = "sudo open -a /Applications/Couchbase\ Server.app"
+            cmd3 = "open /Applications/Couchbase\ Server.app"
             output, error = self.execute_command(cmd1)
             self.log_command_output(output, error)
             output, error = self.execute_command(cmd2)
@@ -2160,7 +2171,7 @@ class RemoteMachineShellConnection:
 
     def install_server_win(self, build, version, startserver=True,
                            vbuckets=None, fts_query_limit=None,
-                           windows_msi=False, cbft_env_options=None):
+                           windows_msi=False, cbft_env_options=None, enable_ipv6=False):
 
 
         log.info('******start install_server_win ********')
@@ -3301,9 +3312,7 @@ class RemoteMachineShellConnection:
                         os_distro = 'Oracle Linux'
                         os_version = etc_issue
                         is_linux_distro = True
-                    else:
-                        log.info("It could be other operating system."
-                                 "  Go to check at other location")
+
                     file.close()
                     # now remove this file
                     os.remove(filename)
@@ -3362,6 +3371,10 @@ class RemoteMachineShellConnection:
                         if redhat_release.lower().find('release 7') != -1:
                             os_distro = 'CentOS'
                             os_version = "CentOS 7"
+                            is_linux_distro = True
+                        elif redhat_release.lower().find('release 8') != -1:
+                            os_distro = 'CentOS'
+                            os_version = "CentOS 8"
                             is_linux_distro = True
                         elif redhat_release.lower().find('red hat enterprise') != -1:
                             if "8.0" in redhat_release.lower():
@@ -3971,13 +3984,15 @@ class RemoteMachineShellConnection:
             errors.extend(error)
         return outputs, errors
 
-    def delete_files(self, file_location):
+    def delete_files(self, file_location, debug=False):
         command = "%s%s" % ("rm -rf ", file_location)
-        output, error = self.execute_command(command)
-        self.log_command_output(output, error)
+        output, error = self.execute_command(command, debug=debug)
+        if debug:
+            self.log_command_output(output, error)
 
     def get_data_map_using_cbtransfer(self, buckets, data_path=None, userId="Administrator",
-                                      password="password", getReplica=False, mode="memory"):
+                                      password="password", getReplica=False, mode="memory",
+                                      debug=False):
         self.extract_remote_info()
         temp_path = "/tmp/"
         if self.info.type.lower() == 'windows':
@@ -4017,7 +4032,7 @@ class RemoteMachineShellConnection:
             dest_path = "/tmp/" + fileName
             destination = "csv:" + csv_path
             log.info("Run cbtransfer to get data map")
-            self.execute_cbtransfer(source, destination, options)
+            self.execute_cbtransfer(source, destination, options, debug)
             file_existed = self.file_exists(temp_path, genFileName)
             if file_existed:
                 self.copy_file_remote_to_local(path, dest_path)
@@ -4031,7 +4046,8 @@ class RemoteMachineShellConnection:
                 os.remove(dest_path)
         return headerInfo, bucketMap
 
-    def execute_cbtransfer(self, source, destination, command_options=''):
+    def execute_cbtransfer(self, source, destination, command_options='',
+                           debug=False):
         transfer_command = "%scbtransfer" % (LINUX_COUCHBASE_BIN_PATH)
         if self.nonroot:
             transfer_command = '/home/%s%scbtransfer' % (self.username,
@@ -4048,8 +4064,9 @@ class RemoteMachineShellConnection:
                                                           source,
                                                           destination,
                                                           command_options)
-        output, error = self.execute_command(command, use_channel=True)
-        self.log_command_output(output, error)
+        output, error = self.execute_command(command, debug=debug, use_channel=True)
+        if debug:
+            self.log_command_output(output, error)
         log.info("done execute cbtransfer")
         return output
 

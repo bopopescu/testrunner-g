@@ -1,0 +1,1183 @@
+[2019-11-13 12:47:57,447] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.66 with username:root 
+[2019-11-13 12:47:57,720] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.66
+[2019-11-13 12:47:58,068] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:47:58,966] - [rest_client] [123145560768512] - INFO - Node version in cluster 6.5.0-4744-enterprise
+[2019-11-13 12:47:59,011] - [rest_client] [123145560768512] - ERROR - GET http://172.23.121.66:8091/pools/default body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "unknown pool" auth: Administrator:password
+[2019-11-13 12:47:59,012] - [rest_client] [123145560768512] - INFO - Node versions in cluster []
+[2019-11-13 12:47:59,013] - [basetestcase] [123145560768512] - INFO - ==============  basetestcase setup was started for test #3 test_rebalance_in_out_multi_nodes==============
+[2019-11-13 12:47:59,058] - [rest_client] [123145560768512] - ERROR - GET http://172.23.121.66:8091/pools/default/ body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "unknown pool" auth: Administrator:password
+[2019-11-13 12:47:59,622] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.121.66:8091
+[2019-11-13 12:47:59,648] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.121.66:8091 is running
+[2019-11-13 12:47:59,673] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.121.67:8091
+[2019-11-13 12:47:59,698] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.121.67:8091 is running
+[2019-11-13 12:47:59,728] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.104.28:8091
+[2019-11-13 12:47:59,753] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.104.28:8091 is running
+[2019-11-13 12:47:59,779] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.109.172:8091
+[2019-11-13 12:47:59,806] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.109.172:8091 is running
+[2019-11-13 12:47:59,835] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.109.179:8091
+[2019-11-13 12:47:59,862] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.109.179:8091 is running
+[2019-11-13 12:47:59,888] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.109.180:8091
+[2019-11-13 12:47:59,912] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.109.180:8091 is running
+[2019-11-13 12:47:59,939] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.109.181:8091
+[2019-11-13 12:47:59,967] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.109.181:8091 is running
+[2019-11-13 12:47:59,969] - [basetestcase] [123145560768512] - INFO - initializing cluster
+[2019-11-13 12:47:59,970] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.66 with username:root 
+[2019-11-13 12:48:00,231] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.66
+[2019-11-13 12:48:00,603] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:01,394] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.66 with username:root 
+[2019-11-13 12:48:01,656] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.66
+[2019-11-13 12:48:02,005] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:02,900] - [remote_util] [123145560768512] - INFO - 172.23.121.66 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:03,131] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:03,132] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: systemctl stop couchbase-server.service
+[2019-11-13 12:48:04,655] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:04,656] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 12:48:04,782] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 12:48:04,834] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:04,835] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 12:48:04,930] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:04,933] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.66 with username:root 
+[2019-11-13 12:48:05,202] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.66
+[2019-11-13 12:48:05,984] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:06,867] - [remote_util] [123145560768512] - INFO - 172.23.121.66 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:07,149] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:07,150] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: systemctl start couchbase-server.service
+[2019-11-13 12:48:07,211] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:07,212] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 12:48:07,346] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.67 with username:root 
+[2019-11-13 12:48:07,581] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.67
+[2019-11-13 12:48:07,953] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:08,722] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.67 with username:root 
+[2019-11-13 12:48:08,972] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.67
+[2019-11-13 12:48:09,336] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:10,253] - [remote_util] [123145560768512] - INFO - 172.23.121.67 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:10,579] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:10,580] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.67: systemctl stop couchbase-server.service
+[2019-11-13 12:48:12,083] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:12,084] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 12:48:12,210] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.67: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 12:48:12,248] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:12,249] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.67: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 12:48:12,344] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:12,347] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.67 with username:root 
+[2019-11-13 12:48:12,616] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.67
+[2019-11-13 12:48:12,952] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:13,803] - [remote_util] [123145560768512] - INFO - 172.23.121.67 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:14,113] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:14,114] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.67: systemctl start couchbase-server.service
+[2019-11-13 12:48:14,176] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:14,177] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 12:48:14,301] - [remote_util] [123145560768512] - INFO - connecting to 172.23.104.28 with username:root 
+[2019-11-13 12:48:14,568] - [remote_util] [123145560768512] - INFO - Connected to 172.23.104.28
+[2019-11-13 12:48:14,830] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:15,585] - [remote_util] [123145560768512] - INFO - connecting to 172.23.104.28 with username:root 
+[2019-11-13 12:48:15,817] - [remote_util] [123145560768512] - INFO - Connected to 172.23.104.28
+[2019-11-13 12:48:16,105] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:16,974] - [remote_util] [123145560768512] - INFO - 172.23.104.28 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:17,192] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:17,193] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.104.28: systemctl stop couchbase-server.service
+[2019-11-13 12:48:18,691] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:18,693] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 12:48:18,811] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.104.28: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 12:48:18,852] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:18,853] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.104.28: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 12:48:18,970] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:18,973] - [remote_util] [123145560768512] - INFO - connecting to 172.23.104.28 with username:root 
+[2019-11-13 12:48:19,245] - [remote_util] [123145560768512] - INFO - Connected to 172.23.104.28
+[2019-11-13 12:48:19,525] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:20,381] - [remote_util] [123145560768512] - INFO - 172.23.104.28 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:20,590] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:20,591] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.104.28: systemctl start couchbase-server.service
+[2019-11-13 12:48:20,627] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:20,629] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 12:48:20,755] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-11-13 12:48:21,027] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.172
+[2019-11-13 12:48:21,391] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:22,253] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-11-13 12:48:22,552] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.172
+[2019-11-13 12:48:22,927] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:23,799] - [remote_util] [123145560768512] - INFO - 172.23.109.172 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:24,087] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:24,088] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.172: systemctl stop couchbase-server.service
+[2019-11-13 12:48:26,220] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:26,221] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 12:48:26,292] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.172: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 12:48:26,484] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:26,485] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.172: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 12:48:26,870] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:26,873] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-11-13 12:48:27,642] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.172
+[2019-11-13 12:48:28,707] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:30,090] - [remote_util] [123145560768512] - INFO - 172.23.109.172 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:30,440] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:30,441] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.172: systemctl start couchbase-server.service
+[2019-11-13 12:48:30,519] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:30,520] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 12:48:30,648] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-11-13 12:48:30,933] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.179
+[2019-11-13 12:48:31,306] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:32,234] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-11-13 12:48:32,524] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.179
+[2019-11-13 12:48:32,865] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:33,912] - [remote_util] [123145560768512] - INFO - 172.23.109.179 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:34,270] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:34,271] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.179: systemctl stop couchbase-server.service
+[2019-11-13 12:48:36,097] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:36,098] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 12:48:36,178] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.179: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 12:48:36,246] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:36,248] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.179: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 12:48:36,354] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:36,356] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-11-13 12:48:36,656] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.179
+[2019-11-13 12:48:37,008] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:38,634] - [remote_util] [123145560768512] - INFO - 172.23.109.179 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:38,998] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:39,000] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.179: systemctl start couchbase-server.service
+[2019-11-13 12:48:39,093] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:39,094] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 12:48:39,224] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-11-13 12:48:39,510] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.180
+[2019-11-13 12:48:39,902] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:40,777] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-11-13 12:48:41,060] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.180
+[2019-11-13 12:48:41,396] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:42,354] - [remote_util] [123145560768512] - INFO - 172.23.109.180 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:42,692] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:42,693] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.180: systemctl stop couchbase-server.service
+[2019-11-13 12:48:44,672] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:44,673] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 12:48:44,801] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.180: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 12:48:44,856] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:44,857] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.180: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 12:48:45,176] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:45,179] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-11-13 12:48:45,473] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.180
+[2019-11-13 12:48:45,839] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:46,866] - [remote_util] [123145560768512] - INFO - 172.23.109.180 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:47,207] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:47,208] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.180: systemctl start couchbase-server.service
+[2019-11-13 12:48:47,275] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:47,276] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 12:48:47,405] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-11-13 12:48:47,698] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.181
+[2019-11-13 12:48:48,048] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:48,909] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-11-13 12:48:49,232] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.181
+[2019-11-13 12:48:49,793] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:50,766] - [remote_util] [123145560768512] - INFO - 172.23.109.181 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:51,119] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:51,120] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.181: systemctl stop couchbase-server.service
+[2019-11-13 12:48:53,104] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:53,105] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 12:48:53,179] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.181: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 12:48:53,226] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:53,226] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.181: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 12:48:53,329] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:53,332] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-11-13 12:48:53,620] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.181
+[2019-11-13 12:48:53,971] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:48:54,946] - [remote_util] [123145560768512] - INFO - 172.23.109.181 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:48:55,244] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:48:55,245] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.181: systemctl start couchbase-server.service
+[2019-11-13 12:48:55,348] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:48:55,349] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 12:48:55,474] - [basetestcase] [123145560768512] - INFO - sleep for 10 secs.  ...
+[2019-11-13 12:49:05,765] - [task] [123145800544256] - INFO - server: ip:172.23.121.66 port:8091 ssh_username:root, nodes/self: {'ip': u'172.23.121.66', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@172.23.121.66', 'uptime': u'52', 'mcdMemoryReserved': 3331, 'storageTotalRam': 4164, 'hostname': u'172.23.121.66:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x12010b950>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-4744-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'kv'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 3836280832, 'memoryTotal': 4366938112, 'memoryQuota': 1832, 'mcdMemoryAllocated': 3331, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-11-13 12:49:05,786] - [rest_client] [123145800544256] - ERROR - GET http://172.23.121.66:8091/pools/default body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "unknown pool" auth: Administrator:password
+[2019-11-13 12:49:05,787] - [rest_client] [123145800544256] - INFO - pools/default params : memoryQuota=2231
+[2019-11-13 12:49:05,812] - [rest_client] [123145800544256] - INFO - /node/controller/setupServices params on 172.23.121.66: 8091:services=kv&password=password&hostname=172.23.121.66&user=Administrator
+[2019-11-13 12:49:05,841] - [rest_client] [123145800544256] - INFO - settings/web params on 172.23.121.66:8091:username=Administrator&password=password&port=8091
+[2019-11-13 12:49:05,910] - [remote_util] [123145800544256] - INFO - connecting to 172.23.121.66 with username:root 
+[2019-11-13 12:49:06,168] - [remote_util] [123145800544256] - INFO - Connected to 172.23.121.66
+[2019-11-13 12:49:06,509] - [remote_util] [123145800544256] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:49:07,288] - [remote_util] [123145800544256] - INFO - running command.raw on 172.23.121.66: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-11-13 12:49:07,356] - [remote_util] [123145800544256] - INFO - command executed successfully
+[2019-11-13 12:49:07,379] - [rest_client] [123145800544256] - INFO - /diag/eval status on 172.23.121.66:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-11-13 12:49:07,380] - [rest_client] [123145800544256] - INFO - settings/indexes params : storageMode=memory_optimized
+[2019-11-13 12:49:07,509] - [task] [123145800544256] - INFO - server: ip:172.23.121.67 port:8091 ssh_username:root, nodes/self: {'ip': u'172.23.121.67', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@172.23.121.67', 'uptime': u'47', 'mcdMemoryReserved': 3331, 'storageTotalRam': 4164, 'hostname': u'172.23.121.67:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x117e81390>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-4744-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'kv'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 3847880704, 'memoryTotal': 4366938112, 'memoryQuota': 1832, 'mcdMemoryAllocated': 3331, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-11-13 12:49:07,532] - [rest_client] [123145800544256] - ERROR - GET http://172.23.121.67:8091/pools/default body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "unknown pool" auth: Administrator:password
+[2019-11-13 12:49:07,533] - [rest_client] [123145800544256] - INFO - pools/default params : memoryQuota=2231
+[2019-11-13 12:49:07,559] - [rest_client] [123145800544256] - INFO - settings/web params on 172.23.121.67:8091:username=Administrator&password=password&port=8091
+[2019-11-13 12:49:07,618] - [remote_util] [123145800544256] - INFO - connecting to 172.23.121.67 with username:root 
+[2019-11-13 12:49:07,910] - [remote_util] [123145800544256] - INFO - Connected to 172.23.121.67
+[2019-11-13 12:49:08,247] - [remote_util] [123145800544256] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:49:09,001] - [remote_util] [123145800544256] - INFO - running command.raw on 172.23.121.67: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-11-13 12:49:09,061] - [remote_util] [123145800544256] - INFO - command executed successfully
+[2019-11-13 12:49:09,084] - [rest_client] [123145800544256] - INFO - /diag/eval status on 172.23.121.67:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-11-13 12:49:09,085] - [rest_client] [123145800544256] - INFO - settings/indexes params : storageMode=memory_optimized
+[2019-11-13 12:49:09,204] - [task] [123145800544256] - INFO - server: ip:172.23.104.28 port:8091 ssh_username:root, nodes/self: {'ip': u'172.23.104.28', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@172.23.104.28', 'uptime': u'43', 'mcdMemoryReserved': 2950, 'storageTotalRam': 3688, 'hostname': u'172.23.104.28:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x11f598a50>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-4744-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'kv'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 3497422848, 'memoryTotal': 3867246592, 'memoryQuota': 1547, 'mcdMemoryAllocated': 2950, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-11-13 12:49:09,222] - [rest_client] [123145800544256] - ERROR - GET http://172.23.104.28:8091/pools/default body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "unknown pool" auth: Administrator:password
+[2019-11-13 12:49:09,223] - [rest_client] [123145800544256] - INFO - pools/default params : memoryQuota=1976
+[2019-11-13 12:49:09,247] - [rest_client] [123145800544256] - INFO - settings/web params on 172.23.104.28:8091:username=Administrator&password=password&port=8091
+[2019-11-13 12:49:09,312] - [remote_util] [123145800544256] - INFO - connecting to 172.23.104.28 with username:root 
+[2019-11-13 12:49:09,567] - [remote_util] [123145800544256] - INFO - Connected to 172.23.104.28
+[2019-11-13 12:49:10,067] - [remote_util] [123145800544256] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:49:10,831] - [remote_util] [123145800544256] - INFO - running command.raw on 172.23.104.28: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-11-13 12:49:11,119] - [remote_util] [123145800544256] - INFO - command executed successfully
+[2019-11-13 12:49:11,213] - [rest_client] [123145800544256] - INFO - /diag/eval status on 172.23.104.28:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-11-13 12:49:11,214] - [rest_client] [123145800544256] - INFO - settings/indexes params : storageMode=memory_optimized
+[2019-11-13 12:49:11,359] - [task] [123145800544256] - INFO - server: ip:172.23.109.172 port:8091 ssh_username:root, nodes/self: {'ip': u'172.23.109.172', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@172.23.109.172', 'uptime': u'36', 'mcdMemoryReserved': 2950, 'storageTotalRam': 3688, 'hostname': u'172.23.109.172:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x117e81490>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-4744-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'kv'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 3484426240, 'memoryTotal': 3867238400, 'memoryQuota': 1547, 'mcdMemoryAllocated': 2950, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-11-13 12:49:11,383] - [rest_client] [123145800544256] - ERROR - GET http://172.23.109.172:8091/pools/default body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "unknown pool" auth: Administrator:password
+[2019-11-13 12:49:11,384] - [rest_client] [123145800544256] - INFO - pools/default params : memoryQuota=1976
+[2019-11-13 12:49:11,417] - [rest_client] [123145800544256] - INFO - settings/web params on 172.23.109.172:8091:username=Administrator&password=password&port=8091
+[2019-11-13 12:49:11,529] - [remote_util] [123145800544256] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-11-13 12:49:11,800] - [remote_util] [123145800544256] - INFO - Connected to 172.23.109.172
+[2019-11-13 12:49:12,170] - [remote_util] [123145800544256] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:49:13,073] - [remote_util] [123145800544256] - INFO - running command.raw on 172.23.109.172: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-11-13 12:49:13,143] - [remote_util] [123145800544256] - INFO - command executed successfully
+[2019-11-13 12:49:13,175] - [rest_client] [123145800544256] - INFO - /diag/eval status on 172.23.109.172:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-11-13 12:49:13,176] - [rest_client] [123145800544256] - INFO - settings/indexes params : storageMode=memory_optimized
+[2019-11-13 12:49:13,311] - [task] [123145800544256] - INFO - server: ip:172.23.109.179 port:8091 ssh_username:root, nodes/self: {'ip': u'172.23.109.179', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@172.23.109.179', 'uptime': u'27', 'mcdMemoryReserved': 2950, 'storageTotalRam': 3688, 'hostname': u'172.23.109.179:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x117c4da10>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-4744-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'kv'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 3281244160, 'memoryTotal': 3867238400, 'memoryQuota': 1547, 'mcdMemoryAllocated': 2950, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-11-13 12:49:13,334] - [rest_client] [123145800544256] - ERROR - GET http://172.23.109.179:8091/pools/default body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "unknown pool" auth: Administrator:password
+[2019-11-13 12:49:13,335] - [rest_client] [123145800544256] - INFO - pools/default params : memoryQuota=1976
+[2019-11-13 12:49:13,367] - [rest_client] [123145800544256] - INFO - settings/web params on 172.23.109.179:8091:username=Administrator&password=password&port=8091
+[2019-11-13 12:49:13,460] - [remote_util] [123145800544256] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-11-13 12:49:13,758] - [remote_util] [123145800544256] - INFO - Connected to 172.23.109.179
+[2019-11-13 12:49:14,078] - [remote_util] [123145800544256] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:49:15,110] - [remote_util] [123145800544256] - INFO - running command.raw on 172.23.109.179: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-11-13 12:49:15,174] - [remote_util] [123145800544256] - INFO - command executed successfully
+[2019-11-13 12:49:15,196] - [rest_client] [123145800544256] - INFO - /diag/eval status on 172.23.109.179:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-11-13 12:49:15,197] - [rest_client] [123145800544256] - INFO - settings/indexes params : storageMode=memory_optimized
+[2019-11-13 12:49:15,344] - [task] [123145800544256] - INFO - server: ip:172.23.109.180 port:8091 ssh_username:root, nodes/self: {'ip': u'172.23.109.180', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@cb.local', 'uptime': u'21', 'mcdMemoryReserved': 2950, 'storageTotalRam': 3688, 'hostname': u'172.23.109.180:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x12410f550>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-4744-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'kv'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 3458158592, 'memoryTotal': 3867238400, 'memoryQuota': 1547, 'mcdMemoryAllocated': 2950, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-11-13 12:49:15,375] - [rest_client] [123145800544256] - ERROR - GET http://172.23.109.180:8091/pools/default body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "unknown pool" auth: Administrator:password
+[2019-11-13 12:49:15,377] - [rest_client] [123145800544256] - INFO - pools/default params : memoryQuota=1976
+[2019-11-13 12:49:15,408] - [rest_client] [123145800544256] - INFO - settings/web params on 172.23.109.180:8091:username=Administrator&password=password&port=8091
+[2019-11-13 12:49:15,516] - [remote_util] [123145800544256] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-11-13 12:49:15,804] - [remote_util] [123145800544256] - INFO - Connected to 172.23.109.180
+[2019-11-13 12:49:16,163] - [remote_util] [123145800544256] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:49:16,979] - [remote_util] [123145800544256] - INFO - running command.raw on 172.23.109.180: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-11-13 12:49:17,046] - [remote_util] [123145800544256] - INFO - command executed successfully
+[2019-11-13 12:49:17,071] - [rest_client] [123145800544256] - INFO - /diag/eval status on 172.23.109.180:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-11-13 12:49:17,072] - [rest_client] [123145800544256] - INFO - settings/indexes params : storageMode=memory_optimized
+[2019-11-13 12:49:17,221] - [task] [123145800544256] - INFO - server: ip:172.23.109.181 port:8091 ssh_username:root, nodes/self: {'ip': u'172.23.109.181', 'availableStorage': [], 'rest_username': '', 'id': u'ns_1@cb.local', 'uptime': u'16', 'mcdMemoryReserved': 2950, 'storageTotalRam': 3688, 'hostname': u'172.23.109.181:8091', 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x11873d790>], 'moxi': 11211, 'port': u'8091', 'version': u'6.5.0-4744-enterprise', 'memcached': 11210, 'status': u'healthy', 'clusterCompatibility': 393221, 'curr_items': 0, 'services': [u'kv'], 'rest_password': '', 'clusterMembership': u'active', 'memoryFree': 3355303936, 'memoryTotal': 3867238400, 'memoryQuota': 1547, 'mcdMemoryAllocated': 2950, 'os': u'x86_64-unknown-linux-gnu', 'ports': []}
+[2019-11-13 12:49:17,244] - [rest_client] [123145800544256] - ERROR - GET http://172.23.109.181:8091/pools/default body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "unknown pool" auth: Administrator:password
+[2019-11-13 12:49:17,245] - [rest_client] [123145800544256] - INFO - pools/default params : memoryQuota=1976
+[2019-11-13 12:49:17,284] - [rest_client] [123145800544256] - INFO - settings/web params on 172.23.109.181:8091:username=Administrator&password=password&port=8091
+[2019-11-13 12:49:17,393] - [remote_util] [123145800544256] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-11-13 12:49:17,678] - [remote_util] [123145800544256] - INFO - Connected to 172.23.109.181
+[2019-11-13 12:49:18,002] - [remote_util] [123145800544256] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:49:18,802] - [remote_util] [123145800544256] - INFO - running command.raw on 172.23.109.181: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-11-13 12:49:18,873] - [remote_util] [123145800544256] - INFO - command executed successfully
+[2019-11-13 12:49:18,900] - [rest_client] [123145800544256] - INFO - /diag/eval status on 172.23.109.181:8091: True content: [6,5] command: cluster_compat_mode:get_compat_version().
+[2019-11-13 12:49:18,901] - [rest_client] [123145800544256] - INFO - settings/indexes params : storageMode=memory_optimized
+[2019-11-13 12:49:19,034] - [basetestcase] [123145560768512] - INFO - **** add built-in 'cbadminbucket' user to node 172.23.121.66 ****
+[2019-11-13 12:49:19,128] - [rest_client] [123145560768512] - ERROR - DELETE http://172.23.121.66:8091/settings/rbac/users/local/cbadminbucket body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==\n'} error: 404 reason: unknown "User was not found." auth: Administrator:password
+[2019-11-13 12:49:19,130] - [internal_user] [123145560768512] - INFO - Exception while deleting user. Exception is -"User was not found."
+[2019-11-13 12:49:19,256] - [basetestcase] [123145560768512] - INFO - **** add 'admin' role to 'cbadminbucket' user ****
+[2019-11-13 12:49:19,326] - [basetestcase] [123145560768512] - INFO - done initializing cluster
+[2019-11-13 12:49:19,984] - [task] [123145800544256] - INFO - adding node 172.23.121.67:8091 to cluster
+[2019-11-13 12:49:19,985] - [rest_client] [123145800544256] - INFO - adding remote node @172.23.121.67:8091 to this cluster @172.23.121.66:8091
+[2019-11-13 12:49:22,091] - [task] [123145800544256] - INFO - adding node 172.23.104.28:8091 to cluster
+[2019-11-13 12:49:22,092] - [rest_client] [123145800544256] - INFO - adding remote node @172.23.104.28:8091 to this cluster @172.23.121.66:8091
+[2019-11-13 12:49:23,947] - [task] [123145800544256] - INFO - adding node 172.23.109.172:8091 to cluster
+[2019-11-13 12:49:23,948] - [rest_client] [123145800544256] - INFO - adding remote node @172.23.109.172:8091 to this cluster @172.23.121.66:8091
+[2019-11-13 12:49:27,649] - [task] [123145800544256] - INFO - adding node 172.23.109.179:8091 to cluster
+[2019-11-13 12:49:27,650] - [rest_client] [123145800544256] - INFO - adding remote node @172.23.109.179:8091 to this cluster @172.23.121.66:8091
+[2019-11-13 12:49:31,338] - [rest_client] [123145800544256] - INFO - rebalance params : {'password': 'password', 'ejectedNodes': '', 'user': 'Administrator', 'knownNodes': u'ns_1@172.23.104.28,ns_1@172.23.121.66,ns_1@172.23.121.67,ns_1@172.23.109.179,ns_1@172.23.109.172'}
+[2019-11-13 12:49:31,365] - [rest_client] [123145800544256] - INFO - rebalance operation started
+[2019-11-13 12:49:31,385] - [rest_client] [123145800544256] - INFO - rebalance percentage : 0.00 %
+[2019-11-13 12:49:31,386] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 0.00%
+[2019-11-13 12:49:41,464] - [task] [123145800544256] - INFO - Rebalance - status: none, progress: 100.00%
+[2019-11-13 12:49:41,490] - [task] [123145800544256] - INFO - rebalancing was completed with progress: 100% in 10.1243898869 sec
+[2019-11-13 12:49:41,493] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.66 with username:root 
+[2019-11-13 12:49:41,751] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.66
+[2019-11-13 12:49:42,122] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:49:43,197] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2019-11-13 12:49:43,292] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:49:43,294] - [basetestcase] [123145560768512] - INFO - Enabled diag/eval for non-local hosts from 172.23.121.66
+[2019-11-13 12:49:43,646] - [rest_client] [123145800544256] - INFO - http://172.23.121.66:8091/pools/default/buckets with param: bucketType=membase&evictionPolicy=valueOnly&threadsNumber=3&ramQuotaMB=200&authType=sasl&name=default&flushEnabled=1&replicaNumber=1&compressionMode=passive&saslPassword=None&replicaIndex=1
+[2019-11-13 12:49:43,677] - [rest_client] [123145800544256] - INFO - 0.03 seconds to create bucket default
+[2019-11-13 12:49:43,678] - [bucket_helper] [123145800544256] - INFO - waiting for memcached bucket : default in 172.23.121.66 to accept set ops
+[2019-11-13 12:49:44,056] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:44,346] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:44,695] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:44,969] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:45,164] - [task] [123145800544256] - WARNING - vbucket map not ready after try 0
+[2019-11-13 12:49:45,165] - [bucket_helper] [123145800544256] - INFO - waiting for memcached bucket : default in 172.23.121.66 to accept set ops
+[2019-11-13 12:49:45,494] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:45,968] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:46,327] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:46,594] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:46,773] - [task] [123145800544256] - WARNING - vbucket map not ready after try 1
+[2019-11-13 12:49:46,774] - [bucket_helper] [123145800544256] - INFO - waiting for memcached bucket : default in 172.23.121.66 to accept set ops
+[2019-11-13 12:49:47,082] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:47,559] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:47,894] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:48,152] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:48,347] - [task] [123145800544256] - WARNING - vbucket map not ready after try 2
+[2019-11-13 12:49:48,348] - [bucket_helper] [123145800544256] - INFO - waiting for memcached bucket : default in 172.23.121.66 to accept set ops
+[2019-11-13 12:49:48,843] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:49,105] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:49,447] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:49,753] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:50,143] - [task] [123145800544256] - WARNING - vbucket map not ready after try 3
+[2019-11-13 12:49:50,144] - [bucket_helper] [123145800544256] - INFO - waiting for memcached bucket : default in 172.23.121.66 to accept set ops
+[2019-11-13 12:49:50,502] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:50,762] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:51,104] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:51,375] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:51,759] - [task] [123145800544256] - WARNING - vbucket map not ready after try 4
+[2019-11-13 12:49:51,760] - [bucket_helper] [123145800544256] - INFO - waiting for memcached bucket : default in 172.23.121.66 to accept set ops
+[2019-11-13 12:49:52,063] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:52,320] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:52,637] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:53,076] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:49:53,282] - [task] [123145800544256] - WARNING - vbucket map not ready after try 5
+[2019-11-13 12:49:53,286] - [basetestcase] [123145560768512] - INFO - ==============  basetestcase setup was finished for test #3 test_rebalance_in_out_multi_nodes ==============
+[2019-11-13 12:49:53,378] - [basetestcase] [123145560768512] - INFO - ------- Cluster statistics -------
+[2019-11-13 12:49:53,379] - [basetestcase] [123145560768512] - INFO - 172.23.104.28:8091 => {'swap_mem_used': 81199104, 'cpu_utilization': 1, 'mem_free': 3423928320, 'swap_mem_total': 3892310016, 'mem_total': 3867246592, 'services': [u'n1ql']}
+[2019-11-13 12:49:53,380] - [basetestcase] [123145560768512] - INFO - 172.23.121.66:8091 => {'swap_mem_used': 76283904, 'cpu_utilization': 3.03030303030303, 'mem_free': 3679490048, 'swap_mem_total': 3758092288, 'mem_total': 4366938112, 'services': [u'kv']}
+[2019-11-13 12:49:53,381] - [basetestcase] [123145560768512] - INFO - 172.23.121.67:8091 => {'swap_mem_used': 0, 'cpu_utilization': 2.763819095477387, 'mem_free': 3726483456, 'swap_mem_total': 3758092288, 'mem_total': 4366938112, 'services': [u'kv']}
+[2019-11-13 12:49:53,381] - [basetestcase] [123145560768512] - INFO - 172.23.109.179:8091 => {'swap_mem_used': 60235776, 'cpu_utilization': 0.75, 'mem_free': 3213328384, 'swap_mem_total': 3892310016, 'mem_total': 3867238400, 'services': [u'index']}
+[2019-11-13 12:49:53,382] - [basetestcase] [123145560768512] - INFO - 172.23.109.172:8091 => {'swap_mem_used': 54415360, 'cpu_utilization': 1.511335012594458, 'mem_free': 3410243584, 'swap_mem_total': 3892310016, 'mem_total': 3867238400, 'services': [u'index']}
+[2019-11-13 12:49:53,382] - [basetestcase] [123145560768512] - INFO - --- End of cluster statistics ---
+[2019-11-13 12:49:53,428] - [newtuq] [123145560768512] - INFO - Initial status of 172.23.121.66 cluster is healthy
+[2019-11-13 12:49:53,429] - [newtuq] [123145560768512] - INFO - current status of 172.23.121.66  is healthy
+[2019-11-13 12:49:53,498] - [newtuq] [123145560768512] - INFO - Initial status of 172.23.121.67 cluster is healthy
+[2019-11-13 12:49:53,498] - [newtuq] [123145560768512] - INFO - current status of 172.23.121.67  is healthy
+[2019-11-13 12:49:53,555] - [newtuq] [123145560768512] - INFO - Initial status of 172.23.104.28 cluster is healthy
+[2019-11-13 12:49:53,556] - [newtuq] [123145560768512] - INFO - current status of 172.23.104.28  is healthy
+[2019-11-13 12:49:53,625] - [newtuq] [123145560768512] - INFO - Initial status of 172.23.109.172 cluster is healthy
+[2019-11-13 12:49:53,626] - [newtuq] [123145560768512] - INFO - current status of 172.23.109.172  is healthy
+[2019-11-13 12:49:53,690] - [newtuq] [123145560768512] - INFO - Initial status of 172.23.109.179 cluster is healthy
+[2019-11-13 12:49:53,692] - [newtuq] [123145560768512] - INFO - current status of 172.23.109.179  is healthy
+[2019-11-13 12:49:53,744] - [newtuq] [123145560768512] - INFO - Initial status of 172.23.109.180 cluster is healthy
+[2019-11-13 12:49:53,745] - [newtuq] [123145560768512] - INFO - current status of 172.23.109.180  is healthy
+[2019-11-13 12:49:53,802] - [newtuq] [123145560768512] - INFO - Initial status of 172.23.109.181 cluster is healthy
+[2019-11-13 12:49:53,803] - [newtuq] [123145560768512] - INFO - current status of 172.23.109.181  is healthy
+[2019-11-13 12:49:53,850] - [basetestcase] [123145560768512] - INFO - list of index nodes in cluster: [ip:172.23.109.179 port:8091 ssh_username:root, ip:172.23.109.172 port:8091 ssh_username:root]
+[2019-11-13 12:49:53,924] - [rest_client] [123145560768512] - INFO - {'indexer.settings.storage_mode': 'memory_optimized'} set
+[2019-11-13 12:49:53,990] - [rest_client] [123145560768512] - INFO - {'indexer.api.enableTestServer': True} set
+[2019-11-13 12:49:53,992] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.66 with username:root 
+[2019-11-13 12:49:54,251] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.66
+[2019-11-13 12:49:54,608] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:49:57,837] - [basetestcase] [123145560768512] - INFO - create 20160 to default documents...
+[2019-11-13 12:49:57,988] - [data_helper] [123145560768512] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:49:58,246] - [data_helper] [123145560768512] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:53:40,168] - [rest_client] [123145560768512] - INFO - Node versions in cluster [u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise']
+[2019-11-13 12:53:40,214] - [basetestcase] [123145560768512] - INFO - list of kv nodes in cluster: [ip:172.23.121.66 port:8091 ssh_username:root, ip:172.23.121.67 port:8091 ssh_username:root]
+[2019-11-13 12:53:40,261] - [rest_client] [123145560768512] - INFO - Node versions in cluster [u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise']
+[2019-11-13 12:53:40,309] - [basetestcase] [123145560768512] - INFO - list of kv nodes in cluster: [ip:172.23.121.66 port:8091 ssh_username:root, ip:172.23.121.67 port:8091 ssh_username:root]
+[2019-11-13 12:53:41,072] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:53:41,293] - [task] [123145800544256] - INFO - Saw ep_queue_size 0 == 0 expected on '172.23.121.66:8091',default bucket
+[2019-11-13 12:53:41,342] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:53:41,555] - [task] [123145800544256] - INFO - Saw ep_queue_size 0 == 0 expected on '172.23.121.67:8091',default bucket
+[2019-11-13 12:53:41,809] - [data_helper] [123145560768512] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:53:42,656] - [data_helper] [123145560768512] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:53:43,356] - [task] [123145560768512] - INFO - 20160 items will be verified on default bucket
+[2019-11-13 12:53:43,566] - [task] [123145867849728] - INFO - 0 items were verified
+[2019-11-13 12:53:46,013] - [task] [123145867849728] - INFO - 10000 items were verified
+[2019-11-13 12:53:48,032] - [task] [123145867849728] - INFO - 20000 items were verified
+[2019-11-13 12:53:48,086] - [task] [123145867849728] - INFO - 20160 items were verified in 4.72882199287 sec.the average number of ops                - 4263.21820326 per second
+[2019-11-13 12:53:48,149] - [rest_client] [123145560768512] - INFO - Node versions in cluster [u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise']
+[2019-11-13 12:53:48,199] - [basetestcase] [123145560768512] - INFO - list of kv nodes in cluster: [ip:172.23.121.66 port:8091 ssh_username:root, ip:172.23.121.67 port:8091 ssh_username:root]
+[2019-11-13 12:53:48,661] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:53:48,930] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:53:49,167] - [task] [123145800544256] - INFO - Saw curr_items 20160 == 20160 expected on '172.23.121.66:8091''172.23.121.67:8091',default bucket
+[2019-11-13 12:53:49,215] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:53:49,479] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:53:49,692] - [task] [123145800544256] - INFO - Saw vb_active_curr_items 20160 == 20160 expected on '172.23.121.66:8091''172.23.121.67:8091',default bucket
+[2019-11-13 12:53:49,741] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:53:49,990] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:53:50,198] - [task] [123145800544256] - INFO - Saw vb_replica_curr_items 20160 == 20160 expected on '172.23.121.66:8091''172.23.121.67:8091',default bucket
+[2019-11-13 12:53:50,243] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:53:50,826] - [data_helper] [123145800544256] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:53:51,068] - [task] [123145800544256] - INFO - Saw curr_items_tot 40320 == 40320 expected on '172.23.121.66:8091''172.23.121.67:8091',default bucket
+[2019-11-13 12:53:51,073] - [rebalance_helper] [123145560768512] - INFO - waiting for sum_of_curr_items == total_items....
+[2019-11-13 12:53:51,390] - [rebalance_helper] [123145560768512] - INFO - curr_items from 172.23.121.66:8091 : 10080
+[2019-11-13 12:53:51,391] - [rebalance_helper] [123145560768512] - INFO - vb_pending_num from 172.23.121.66:8091 : 0
+[2019-11-13 12:53:51,392] - [rebalance_helper] [123145560768512] - INFO - vb_active_num from 172.23.121.66:8091 : 512
+[2019-11-13 12:53:51,393] - [rebalance_helper] [123145560768512] - INFO - vb_replica_num from 172.23.121.66:8091 : 512
+[2019-11-13 12:53:51,393] - [rebalance_helper] [123145560768512] - INFO - curr_items from 172.23.121.67:8091 : 10080
+[2019-11-13 12:53:51,394] - [rebalance_helper] [123145560768512] - INFO - vb_pending_num from 172.23.121.67:8091 : 0
+[2019-11-13 12:53:51,394] - [rebalance_helper] [123145560768512] - INFO - vb_active_num from 172.23.121.67:8091 : 512
+[2019-11-13 12:53:51,395] - [rebalance_helper] [123145560768512] - INFO - vb_replica_num from 172.23.121.67:8091 : 512
+[2019-11-13 12:53:51,396] - [rebalance_helper] [123145560768512] - INFO - summation of vb_active_num : 1024 vb_pending_num : 0 vb_replica_num : 1024
+[2019-11-13 12:53:51,396] - [rebalance_helper] [123145560768512] - INFO - sum : 20160 and sum * (replica_factor + 1) (2) : 40320
+[2019-11-13 12:53:51,475] - [rebalance_helper] [123145560768512] - INFO - curr_items_tot from master: 40320
+[2019-11-13 12:53:51,476] - [rebalance_helper] [123145560768512] - INFO - delta : 0 missing_percentage : 1 replica_factor : 1
+[2019-11-13 12:53:51,478] - [basetestcase] [123145560768512] - INFO - LOAD IS FINISHED
+[2019-11-13 12:53:51,503] - [newtuq] [123145560768512] - INFO - {'create': {'start': 10, 'end': 16}, 'remaining': {'start': 2, 'end': 10}, 'delete': {'start': 0, 'end': 2}}
+[2019-11-13 12:53:54,354] - [basetestcase] [123145560768512] - INFO - list of n1ql nodes in cluster: [ip:172.23.104.28 port:8091 ssh_username:root]
+[2019-11-13 12:53:54,355] - [newtuq] [123145560768512] - INFO - ip:172.23.104.28 port:8091 ssh_username:root
+[2019-11-13 12:53:54,356] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = '#primary'
+[2019-11-13 12:53:54,383] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27%23primary%27
+[2019-11-13 12:53:54,641] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 233.284277ms
+[2019-11-13 12:53:54,642] - [tuq_helper] [123145560768512] - INFO - RUN QUERY CREATE PRIMARY INDEX ON default  USING VIEW 
+[2019-11-13 12:53:54,667] - [rest_client] [123145560768512] - INFO - query params : statement=CREATE+PRIMARY+INDEX+ON+default++USING+VIEW+
+[2019-11-13 12:53:56,003] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 1.309169649s
+[2019-11-13 12:53:56,004] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = '#primary'
+[2019-11-13 12:53:56,028] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27%23primary%27
+[2019-11-13 12:53:56,073] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 21.029942ms
+[2019-11-13 12:53:57,132] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX index_name_0 ON default(VMs) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:53:57,178] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+index_name_0+ON+default%28VMs%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:53:58,517] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 1.312617079s
+[2019-11-13 12:53:58,518] - [base_2i] [123145560768512] - INFO - BUILD INDEX on default(index_name_0) USING GSI
+[2019-11-13 12:53:59,523] - [tuq_helper] [123145867849728] - INFO - RUN QUERY BUILD INDEX on default(index_name_0) USING GSI
+[2019-11-13 12:53:59,549] - [rest_client] [123145867849728] - INFO - query params : statement=BUILD+INDEX+on+default%28index_name_0%29+USING+GSI
+[2019-11-13 12:53:59,790] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 216.57598ms
+[2019-11-13 12:53:59,791] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_0'
+[2019-11-13 12:53:59,825] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_0%27
+[2019-11-13 12:53:59,860] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 14.393715ms
+[2019-11-13 12:54:00,864] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_0'
+[2019-11-13 12:54:00,892] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_0%27
+[2019-11-13 12:54:00,934] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 20.39439ms
+[2019-11-13 12:54:01,936] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_0'
+[2019-11-13 12:54:01,969] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_0%27
+[2019-11-13 12:54:02,011] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 19.715337ms
+[2019-11-13 12:54:03,809] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX index_name_1 ON default(VMs) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:54:03,836] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+index_name_1+ON+default%28VMs%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:54:04,255] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 393.707696ms
+[2019-11-13 12:54:04,256] - [base_2i] [123145560768512] - INFO - BUILD INDEX on default(index_name_1) USING GSI
+[2019-11-13 12:54:05,265] - [tuq_helper] [123145867849728] - INFO - RUN QUERY BUILD INDEX on default(index_name_1) USING GSI
+[2019-11-13 12:54:05,292] - [rest_client] [123145867849728] - INFO - query params : statement=BUILD+INDEX+on+default%28index_name_1%29+USING+GSI
+[2019-11-13 12:54:05,479] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 167.044431ms
+[2019-11-13 12:54:05,480] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_1'
+[2019-11-13 12:54:05,508] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_1%27
+[2019-11-13 12:54:05,546] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 15.157884ms
+[2019-11-13 12:54:06,547] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_1'
+[2019-11-13 12:54:06,663] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_1%27
+[2019-11-13 12:54:06,715] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 19.609192ms
+[2019-11-13 12:54:07,716] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_1'
+[2019-11-13 12:54:07,743] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_1%27
+[2019-11-13 12:54:07,784] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 18.831431ms
+[2019-11-13 12:54:09,492] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX index_name_2 ON default(VMs) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:54:09,519] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+index_name_2+ON+default%28VMs%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:54:11,338] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 1.796004451s
+[2019-11-13 12:54:11,340] - [base_2i] [123145560768512] - INFO - BUILD INDEX on default(index_name_2) USING GSI
+[2019-11-13 12:54:12,341] - [tuq_helper] [123145867849728] - INFO - RUN QUERY BUILD INDEX on default(index_name_2) USING GSI
+[2019-11-13 12:54:12,368] - [rest_client] [123145867849728] - INFO - query params : statement=BUILD+INDEX+on+default%28index_name_2%29+USING+GSI
+[2019-11-13 12:54:12,516] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 126.127485ms
+[2019-11-13 12:54:12,517] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_2'
+[2019-11-13 12:54:12,546] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_2%27
+[2019-11-13 12:54:12,582] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 15.164194ms
+[2019-11-13 12:54:13,588] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_2'
+[2019-11-13 12:54:13,622] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_2%27
+[2019-11-13 12:54:13,666] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 20.751462ms
+[2019-11-13 12:54:14,669] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_2'
+[2019-11-13 12:54:14,697] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_2%27
+[2019-11-13 12:54:14,736] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 14.820974ms
+[2019-11-13 12:54:15,738] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_2'
+[2019-11-13 12:54:15,766] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_2%27
+[2019-11-13 12:54:15,803] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 15.709042ms
+[2019-11-13 12:54:17,544] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX index_name_3 ON default(VMs) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:54:17,571] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+index_name_3+ON+default%28VMs%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:54:18,793] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 1.199060123s
+[2019-11-13 12:54:18,795] - [base_2i] [123145560768512] - INFO - BUILD INDEX on default(index_name_3) USING GSI
+[2019-11-13 12:54:19,795] - [tuq_helper] [123145867849728] - INFO - RUN QUERY BUILD INDEX on default(index_name_3) USING GSI
+[2019-11-13 12:54:19,824] - [rest_client] [123145867849728] - INFO - query params : statement=BUILD+INDEX+on+default%28index_name_3%29+USING+GSI
+[2019-11-13 12:54:19,955] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 111.25509ms
+[2019-11-13 12:54:19,956] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_3'
+[2019-11-13 12:54:19,985] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_3%27
+[2019-11-13 12:54:20,022] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 14.935033ms
+[2019-11-13 12:54:21,026] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_3'
+[2019-11-13 12:54:21,061] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_3%27
+[2019-11-13 12:54:21,122] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 22.85719ms
+[2019-11-13 12:54:22,129] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_3'
+[2019-11-13 12:54:22,162] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_3%27
+[2019-11-13 12:54:22,204] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 17.829279ms
+[2019-11-13 12:54:23,215] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_3'
+[2019-11-13 12:54:23,249] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_3%27
+[2019-11-13 12:54:23,295] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 20.999262ms
+[2019-11-13 12:54:24,963] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX index_name_4 ON default(VMs) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:54:24,990] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+index_name_4+ON+default%28VMs%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:54:27,527] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 2.301497559s
+[2019-11-13 12:54:27,528] - [base_2i] [123145560768512] - INFO - BUILD INDEX on default(index_name_4) USING GSI
+[2019-11-13 12:54:28,528] - [tuq_helper] [123145867849728] - INFO - RUN QUERY BUILD INDEX on default(index_name_4) USING GSI
+[2019-11-13 12:54:28,723] - [rest_client] [123145867849728] - INFO - query params : statement=BUILD+INDEX+on+default%28index_name_4%29+USING+GSI
+[2019-11-13 12:54:28,999] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 101.448635ms
+[2019-11-13 12:54:29,001] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_4'
+[2019-11-13 12:54:29,024] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_4%27
+[2019-11-13 12:54:29,088] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 17.768646ms
+[2019-11-13 12:54:30,095] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_4'
+[2019-11-13 12:54:30,285] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_4%27
+[2019-11-13 12:54:30,392] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 22.190528ms
+[2019-11-13 12:54:31,398] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_4'
+[2019-11-13 12:54:31,493] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_4%27
+[2019-11-13 12:54:31,652] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 18.481244ms
+[2019-11-13 12:54:32,656] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_4'
+[2019-11-13 12:54:32,681] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_4%27
+[2019-11-13 12:54:32,722] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 20.228028ms
+[2019-11-13 12:54:34,017] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX index_name_5 ON default(VMs) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:54:34,041] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+index_name_5+ON+default%28VMs%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:54:35,533] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 1.47103491s
+[2019-11-13 12:54:35,534] - [base_2i] [123145560768512] - INFO - BUILD INDEX on default(index_name_5) USING GSI
+[2019-11-13 12:54:36,540] - [tuq_helper] [123145867849728] - INFO - RUN QUERY BUILD INDEX on default(index_name_5) USING GSI
+[2019-11-13 12:54:36,566] - [rest_client] [123145867849728] - INFO - query params : statement=BUILD+INDEX+on+default%28index_name_5%29+USING+GSI
+[2019-11-13 12:54:36,688] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 102.812657ms
+[2019-11-13 12:54:36,689] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_5'
+[2019-11-13 12:54:36,717] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_5%27
+[2019-11-13 12:54:36,751] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 13.366658ms
+[2019-11-13 12:54:37,752] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_5'
+[2019-11-13 12:54:37,786] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_5%27
+[2019-11-13 12:54:37,831] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 19.775673ms
+[2019-11-13 12:54:38,841] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_5'
+[2019-11-13 12:54:38,880] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_5%27
+[2019-11-13 12:54:38,921] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 19.662245ms
+[2019-11-13 12:54:39,930] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_5'
+[2019-11-13 12:54:39,960] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_5%27
+[2019-11-13 12:54:39,998] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 14.095466ms
+[2019-11-13 12:54:41,700] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX index_name_6 ON default(VMs) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:54:41,738] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+index_name_6+ON+default%28VMs%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:54:44,626] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 2.809583132s
+[2019-11-13 12:54:44,628] - [base_2i] [123145560768512] - INFO - BUILD INDEX on default(index_name_6) USING GSI
+[2019-11-13 12:54:45,628] - [tuq_helper] [123145867849728] - INFO - RUN QUERY BUILD INDEX on default(index_name_6) USING GSI
+[2019-11-13 12:54:45,662] - [rest_client] [123145867849728] - INFO - query params : statement=BUILD+INDEX+on+default%28index_name_6%29+USING+GSI
+[2019-11-13 12:54:45,778] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 94.452529ms
+[2019-11-13 12:54:45,779] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_6'
+[2019-11-13 12:54:45,802] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_6%27
+[2019-11-13 12:54:45,843] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 15.149473ms
+[2019-11-13 12:54:46,844] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_6'
+[2019-11-13 12:54:46,875] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_6%27
+[2019-11-13 12:54:46,931] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 20.433119ms
+[2019-11-13 12:54:47,932] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_6'
+[2019-11-13 12:54:47,959] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_6%27
+[2019-11-13 12:54:48,002] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 20.845139ms
+[2019-11-13 12:54:49,004] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_6'
+[2019-11-13 12:54:49,032] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_6%27
+[2019-11-13 12:54:49,078] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 20.778287ms
+[2019-11-13 12:54:50,802] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX index_name_7 ON default(VMs) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:54:50,833] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+index_name_7+ON+default%28VMs%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:54:52,535] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 1.676351284s
+[2019-11-13 12:54:52,536] - [base_2i] [123145560768512] - INFO - BUILD INDEX on default(index_name_7) USING GSI
+[2019-11-13 12:54:53,541] - [tuq_helper] [123145867849728] - INFO - RUN QUERY BUILD INDEX on default(index_name_7) USING GSI
+[2019-11-13 12:54:53,568] - [rest_client] [123145867849728] - INFO - query params : statement=BUILD+INDEX+on+default%28index_name_7%29+USING+GSI
+[2019-11-13 12:54:53,707] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 115.387021ms
+[2019-11-13 12:54:53,709] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_7'
+[2019-11-13 12:54:53,733] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_7%27
+[2019-11-13 12:54:53,773] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 13.993701ms
+[2019-11-13 12:54:54,778] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_7'
+[2019-11-13 12:54:54,806] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_7%27
+[2019-11-13 12:54:54,846] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 14.061761ms
+[2019-11-13 12:54:55,853] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_7'
+[2019-11-13 12:54:55,877] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_7%27
+[2019-11-13 12:54:55,916] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 14.574979ms
+[2019-11-13 12:54:56,920] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_7'
+[2019-11-13 12:54:56,945] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_7%27
+[2019-11-13 12:54:56,988] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 19.230069ms
+[2019-11-13 12:54:58,715] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX index_name_8 ON default(VMs) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:54:58,755] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+index_name_8+ON+default%28VMs%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:55:02,231] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 3.453516465s
+[2019-11-13 12:55:02,232] - [base_2i] [123145560768512] - INFO - BUILD INDEX on default(index_name_8) USING GSI
+[2019-11-13 12:55:03,233] - [tuq_helper] [123145867849728] - INFO - RUN QUERY BUILD INDEX on default(index_name_8) USING GSI
+[2019-11-13 12:55:03,276] - [rest_client] [123145867849728] - INFO - query params : statement=BUILD+INDEX+on+default%28index_name_8%29+USING+GSI
+[2019-11-13 12:55:04,435] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 125.649747ms
+[2019-11-13 12:55:04,437] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_8'
+[2019-11-13 12:55:04,466] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_8%27
+[2019-11-13 12:55:04,507] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 15.465605ms
+[2019-11-13 12:55:05,516] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_8'
+[2019-11-13 12:55:05,552] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_8%27
+[2019-11-13 12:55:05,595] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 19.382852ms
+[2019-11-13 12:55:06,602] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_8'
+[2019-11-13 12:55:06,630] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_8%27
+[2019-11-13 12:55:06,675] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 22.709578ms
+[2019-11-13 12:55:07,686] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_8'
+[2019-11-13 12:55:07,712] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_8%27
+[2019-11-13 12:55:07,757] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 21.451413ms
+[2019-11-13 12:55:09,444] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX index_name_9 ON default(VMs) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:55:09,475] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+index_name_9+ON+default%28VMs%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:55:11,561] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 2.053473021s
+[2019-11-13 12:55:11,562] - [base_2i] [123145560768512] - INFO - BUILD INDEX on default(index_name_9) USING GSI
+[2019-11-13 12:55:12,565] - [tuq_helper] [123145867849728] - INFO - RUN QUERY BUILD INDEX on default(index_name_9) USING GSI
+[2019-11-13 12:55:12,590] - [rest_client] [123145867849728] - INFO - query params : statement=BUILD+INDEX+on+default%28index_name_9%29+USING+GSI
+[2019-11-13 12:55:12,724] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 110.039057ms
+[2019-11-13 12:55:12,726] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_9'
+[2019-11-13 12:55:12,750] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_9%27
+[2019-11-13 12:55:12,792] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 15.443569ms
+[2019-11-13 12:55:13,795] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_9'
+[2019-11-13 12:55:13,822] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_9%27
+[2019-11-13 12:55:13,863] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 18.732939ms
+[2019-11-13 12:55:14,866] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_9'
+[2019-11-13 12:55:14,898] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_9%27
+[2019-11-13 12:55:14,955] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 15.361527ms
+[2019-11-13 12:55:15,960] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_9'
+[2019-11-13 12:55:15,987] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_9%27
+[2019-11-13 12:55:16,029] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 15.131366ms
+[2019-11-13 12:55:17,088] - [base_2i] [123145560768512] - INFO - === BEFORE: ['create_index'] ===
+[2019-11-13 12:55:17,089] - [base_2i] [123145560768512] - INFO - []
+[2019-11-13 12:55:17,090] - [basetestcase] [123145560768512] - INFO - sleep for 3 secs.  ...
+[2019-11-13 12:55:17,745] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX employee620d5c8edd90465dae9b27b2692e641cjoin_yr ON default(join_yr) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:55:17,784] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+employee620d5c8edd90465dae9b27b2692e641cjoin_yr+ON+default%28join_yr%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:55:20,096] - [basetestcase] [123145560768512] - INFO - sleep for 3 secs.  ...
+[2019-11-13 12:55:22,096] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 4.274419355s
+[2019-11-13 12:55:22,098] - [tuq_helper] [123145867849728] - INFO - RUN QUERY CREATE INDEX employee620d5c8edd90465dae9b27b2692e641cjob_title ON default(job_title) USING GSI  WITH {'defer_build': True}
+[2019-11-13 12:55:22,122] - [rest_client] [123145867849728] - INFO - query params : statement=CREATE+INDEX+employee620d5c8edd90465dae9b27b2692e641cjob_title+ON+default%28job_title%29+USING+GSI++WITH+%7B%27defer_build%27%3A+True%7D
+[2019-11-13 12:55:22,637] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 486.343708ms
+[2019-11-13 12:55:23,097] - [base_2i] [123145560768512] - INFO - BUILD INDEX on default(employee620d5c8edd90465dae9b27b2692e641cjoin_yr,employee620d5c8edd90465dae9b27b2692e641cjob_title) USING GSI
+[2019-11-13 12:55:23,641] - [tuq_helper] [123145867849728] - INFO - RUN QUERY BUILD INDEX on default(employee620d5c8edd90465dae9b27b2692e641cjoin_yr,employee620d5c8edd90465dae9b27b2692e641cjob_title) USING GSI
+[2019-11-13 12:55:23,669] - [rest_client] [123145867849728] - INFO - query params : statement=BUILD+INDEX+on+default%28employee620d5c8edd90465dae9b27b2692e641cjoin_yr%2Cemployee620d5c8edd90465dae9b27b2692e641cjob_title%29+USING+GSI
+[2019-11-13 12:55:23,924] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 228.909789ms
+[2019-11-13 12:55:24,926] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'employee620d5c8edd90465dae9b27b2692e641cjoin_yr'
+[2019-11-13 12:55:24,952] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27employee620d5c8edd90465dae9b27b2692e641cjoin_yr%27
+[2019-11-13 12:55:24,995] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 17.851076ms
+[2019-11-13 12:55:25,997] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'employee620d5c8edd90465dae9b27b2692e641cjoin_yr'
+[2019-11-13 12:55:26,026] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27employee620d5c8edd90465dae9b27b2692e641cjoin_yr%27
+[2019-11-13 12:55:26,071] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 19.812812ms
+[2019-11-13 12:55:27,073] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'employee620d5c8edd90465dae9b27b2692e641cjoin_yr'
+[2019-11-13 12:55:27,099] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27employee620d5c8edd90465dae9b27b2692e641cjoin_yr%27
+[2019-11-13 12:55:27,144] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 23.826159ms
+[2019-11-13 12:55:27,145] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'employee620d5c8edd90465dae9b27b2692e641cjob_title'
+[2019-11-13 12:55:27,175] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27employee620d5c8edd90465dae9b27b2692e641cjob_title%27
+[2019-11-13 12:55:27,213] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 15.498553ms
+[2019-11-13 12:55:28,220] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'employee620d5c8edd90465dae9b27b2692e641cjob_title'
+[2019-11-13 12:55:28,243] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27employee620d5c8edd90465dae9b27b2692e641cjob_title%27
+[2019-11-13 12:55:28,285] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 20.080414ms
+[2019-11-13 12:55:28,619] - [basetestcase] [123145560768512] - INFO - create 12096 to default documents...
+[2019-11-13 12:55:29,343] - [data_helper] [123145560768512] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:55:30,328] - [data_helper] [123145560768512] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:55:31,385] - [basetestcase] [123145560768512] - INFO - delete 4032 to default documents...
+[2019-11-13 12:55:32,194] - [data_helper] [123145560768512] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:55:32,995] - [data_helper] [123145560768512] - INFO - creating direct client 172.23.121.67:11210 default
+[2019-11-13 12:55:33,248] - [newtuq] [123145560768512] - INFO - ------ KV OPS Done ------
+[2019-11-13 12:55:33,276] - [base_2i] [123145560768512] - INFO - === IN_BETWEEN: ['query'] ===
+[2019-11-13 12:55:33,277] - [base_2i] [123145560768512] - INFO - Query : SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id 
+[2019-11-13 12:55:33,278] - [tuq_generators] [123145560768512] - INFO - FROM clause ===== is default
+[2019-11-13 12:55:33,279] - [tuq_generators] [123145560768512] - INFO - WHERE clause ===== is   doc["join_yr"] > 2010 and doc["join_yr"] < 2014 
+[2019-11-13 12:55:33,280] - [tuq_generators] [123145560768512] - INFO - UNNEST clause ===== is None
+[2019-11-13 12:55:33,281] - [tuq_generators] [123145560768512] - INFO - SELECT clause ===== is {"*" : doc,}
+[2019-11-13 12:55:33,282] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["_id"],
+[2019-11-13 12:55:33,283] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["_id"],
+[2019-11-13 12:55:33,932] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["_id"],
+[2019-11-13 12:55:34,055] - [base_2i] [123145560768512] - INFO - Query : SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id
+[2019-11-13 12:55:34,055] - [tuq_generators] [123145560768512] - INFO - FROM clause ===== is default where job_title IS NOT NULL
+[2019-11-13 12:55:34,056] - [tuq_generators] [123145560768512] - INFO - WHERE clause ===== is None
+[2019-11-13 12:55:34,057] - [tuq_generators] [123145560768512] - INFO - UNNEST clause ===== is None
+[2019-11-13 12:55:34,058] - [tuq_generators] [123145560768512] - INFO - SELECT clause ===== is {"*" : doc,}
+[2019-11-13 12:55:34,058] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["job_title"],doc["_id"],
+[2019-11-13 12:55:34,059] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["job_title"],doc["_id"],
+[2019-11-13 12:55:35,044] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["job_title"],doc["_id"],
+[2019-11-13 12:55:35,046] - [task] [123145867849728] - INFO -  <<<<< START Executing Query SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id  >>>>>>
+[2019-11-13 12:55:35,364] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id 
+[2019-11-13 12:55:35,410] - [rest_client] [123145867849728] - INFO - query params : scan_consistency=NOT_BOUNDED&statement=SELECT+%2A+FROM+default+WHERE++join_yr+%3E+2010+and+join_yr+%3C+2014+ORDER+BY+_id+
+[2019-11-13 12:55:35,411] - [rest_client] [123145800544256] - INFO - Node versions in cluster [u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise']
+[2019-11-13 12:55:35,755] - [task] [123145800544256] - INFO - This is swap rebalance and we will monitor vbuckets shuffling
+[2019-11-13 12:55:35,756] - [task] [123145800544256] - INFO - adding node 172.23.109.180:8091 to cluster
+[2019-11-13 12:55:35,757] - [rest_client] [123145800544256] - INFO - adding remote node @172.23.109.180:8091 to this cluster @172.23.121.66:8091
+[2019-11-13 12:55:38,507] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 2.895251424s
+[2019-11-13 12:55:38,523] - [task] [123145867849728] - INFO -  <<<<< Done Executing Query SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id  >>>>>>
+[2019-11-13 12:55:38,526] - [task] [123145867849728] - INFO -  <<<<< Done VERIFYING Query SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id  >>>>>>
+[2019-11-13 12:55:38,527] - [task] [123145867849728] - INFO -  <<<<< START Executing Query SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id >>>>>>
+[2019-11-13 12:55:38,527] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id
+[2019-11-13 12:55:38,555] - [rest_client] [123145867849728] - INFO - query params : scan_consistency=NOT_BOUNDED&statement=SELECT+%2A+FROM+default+where+job_title+IS+NOT+NULL+ORDER+BY+job_title%2C_id
+[2019-11-13 12:55:39,862] - [rest_client] [123145800544256] - INFO - rebalance params : {'password': 'password', 'ejectedNodes': u'ns_1@172.23.121.67', 'user': 'Administrator', 'knownNodes': u'ns_1@172.23.109.179,ns_1@172.23.109.180,ns_1@172.23.121.66,ns_1@172.23.109.172,ns_1@172.23.104.28,ns_1@172.23.121.67'}
+[2019-11-13 12:55:39,892] - [rest_client] [123145800544256] - INFO - rebalance operation started
+[2019-11-13 12:55:39,893] - [task] [123145800544256] - INFO - This is swap rebalance and we will monitor vbuckets shuffling
+[2019-11-13 12:55:40,219] - [rest_client] [123145800544256] - INFO - rebalance percentage : 0.00 %
+[2019-11-13 12:55:40,220] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 0.00%
+[2019-11-13 12:55:44,449] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 5.144545591s
+[2019-11-13 12:55:44,487] - [task] [123145867849728] - INFO -  <<<<< Done Executing Query SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id >>>>>>
+[2019-11-13 12:55:44,488] - [task] [123145867849728] - INFO -  <<<<< Done VERIFYING Query SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id >>>>>>
+[2019-11-13 12:55:45,591] - [data_helper] [123145876262912] - INFO - Received forward map, reset vbucket map, new direct_client
+[2019-11-13 12:55:45,661] - [data_helper] [123145876262912] - INFO - creating direct client 172.23.109.180:11210 default
+[2019-11-13 12:55:46,004] - [data_helper] [123145872056320] - INFO - Received forward map, reset vbucket map, new direct_client
+[2019-11-13 12:55:46,084] - [data_helper] [123145872056320] - INFO - creating direct client 172.23.109.180:11210 default
+[2019-11-13 12:55:50,468] - [task] [123145800544256] - INFO - This is swap rebalance and we will monitor vbuckets shuffling
+[2019-11-13 12:55:50,883] - [rest_client] [123145800544256] - INFO - rebalance percentage : 1.69 %
+[2019-11-13 12:55:50,884] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 1.69%
+[2019-11-13 12:56:00,942] - [task] [123145800544256] - INFO - This is swap rebalance and we will monitor vbuckets shuffling
+[2019-11-13 12:56:01,395] - [rest_client] [123145800544256] - INFO - rebalance percentage : 10.45 %
+[2019-11-13 12:56:01,396] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 10.45%
+[2019-11-13 12:56:11,659] - [task] [123145800544256] - INFO - This is swap rebalance and we will monitor vbuckets shuffling
+[2019-11-13 12:56:12,422] - [rest_client] [123145800544256] - INFO - rebalance percentage : 20.41 %
+[2019-11-13 12:56:12,423] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 20.41%
+[2019-11-13 12:56:22,535] - [task] [123145800544256] - INFO - This is swap rebalance and we will monitor vbuckets shuffling
+[2019-11-13 12:56:22,943] - [rest_client] [123145800544256] - INFO - rebalance percentage : 27.77 %
+[2019-11-13 12:56:22,944] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 27.77%
+[2019-11-13 12:56:33,010] - [task] [123145800544256] - INFO - This is swap rebalance and we will monitor vbuckets shuffling
+[2019-11-13 12:56:33,758] - [rest_client] [123145800544256] - INFO - rebalance percentage : 34.64 %
+[2019-11-13 12:56:33,759] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 34.64%
+[2019-11-13 12:56:43,812] - [task] [123145800544256] - INFO - This is swap rebalance and we will monitor vbuckets shuffling
+[2019-11-13 12:56:44,537] - [rest_client] [123145800544256] - INFO - rebalance percentage : 41.67 %
+[2019-11-13 12:56:44,538] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 41.67%
+[2019-11-13 12:56:55,028] - [task] [123145800544256] - INFO - This is swap rebalance and we will monitor vbuckets shuffling
+[2019-11-13 12:56:55,775] - [rest_client] [123145800544256] - INFO - rebalance percentage : 47.85 %
+[2019-11-13 12:56:55,776] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 47.85%
+[2019-11-13 12:57:06,115] - [task] [123145800544256] - INFO - This is swap rebalance and we will monitor vbuckets shuffling
+[2019-11-13 12:57:06,526] - [rest_client] [123145800544256] - INFO - rebalance percentage : 50.00 %
+[2019-11-13 12:57:06,527] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 50.00%
+[2019-11-13 12:57:09,156] - [data_helper] [123145872056320] - ERROR - Connection reset with error: Got empty data (remote died?). from 172.23.121.67 while _send_op, server is alive?
+[2019-11-13 12:57:09,340] - [data_helper] [123145872056320] - INFO - creating direct client 172.23.121.66:11210 default
+[2019-11-13 12:57:09,609] - [data_helper] [123145872056320] - INFO - creating direct client 172.23.109.180:11210 default
+[2019-11-13 12:57:16,589] - [task] [123145800544256] - INFO - This is swap rebalance and we will monitor vbuckets shuffling
+[2019-11-13 12:57:16,902] - [task] [123145800544256] - INFO - Rebalance - status: none, progress: 100.00%
+[2019-11-13 12:57:16,998] - [task] [123145800544256] - INFO - rebalancing was completed with progress: 100% in 97.105891943 sec
+[2019-11-13 12:57:18,042] - [rest_client] [123145800544256] - INFO - Node versions in cluster [u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise', u'6.5.0-4744-enterprise']
+[2019-11-13 12:57:18,229] - [task] [123145800544256] - INFO - adding node 172.23.109.181:8091 to cluster
+[2019-11-13 12:57:18,230] - [rest_client] [123145800544256] - INFO - adding remote node @172.23.109.181:8091 to this cluster @172.23.121.66:8091
+[2019-11-13 12:57:22,490] - [rest_client] [123145800544256] - INFO - rebalance params : {'password': 'password', 'ejectedNodes': u'ns_1@172.23.109.179', 'user': 'Administrator', 'knownNodes': u'ns_1@172.23.109.179,ns_1@172.23.109.180,ns_1@172.23.121.66,ns_1@172.23.109.172,ns_1@172.23.104.28,ns_1@172.23.109.181'}
+[2019-11-13 12:57:22,531] - [rest_client] [123145800544256] - INFO - rebalance operation started
+[2019-11-13 12:57:22,569] - [rest_client] [123145800544256] - INFO - rebalance percentage : 0.00 %
+[2019-11-13 12:57:22,570] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 0.00%
+[2019-11-13 12:57:32,783] - [rest_client] [123145800544256] - INFO - rebalance percentage : 40.09 %
+[2019-11-13 12:57:32,784] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 40.09%
+[2019-11-13 12:57:42,872] - [rest_client] [123145800544256] - INFO - rebalance percentage : 83.00 %
+[2019-11-13 12:57:42,873] - [task] [123145800544256] - INFO - Rebalance - status: running, progress: 83.00%
+[2019-11-13 12:57:52,962] - [task] [123145800544256] - INFO - Rebalance - status: none, progress: 100.00%
+[2019-11-13 12:57:53,067] - [task] [123145800544256] - INFO - rebalancing was completed with progress: 100% in 30.5348081589 sec
+[2019-11-13 12:58:35,008] - [basetestcase] [123145560768512] - INFO - list of index nodes in cluster: [ip:172.23.109.181 port:8091 ssh_username:root, ip:172.23.109.172 port:8091 ssh_username:root]
+[2019-11-13 12:58:35,166] - [base_2i] [123145560768512] - INFO - Bucket: default
+[2019-11-13 12:58:35,167] - [base_2i] [123145560768512] - INFO - Index: employee620d5c8edd90465dae9b27b2692e641cjob_title
+[2019-11-13 12:58:35,168] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,169] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,170] - [base_2i] [123145560768512] - INFO - Index: employee620d5c8edd90465dae9b27b2692e641cjoin_yr
+[2019-11-13 12:58:35,170] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,171] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,171] - [base_2i] [123145560768512] - INFO - Index: index_name_9
+[2019-11-13 12:58:35,172] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,173] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,173] - [base_2i] [123145560768512] - INFO - Index: index_name_8
+[2019-11-13 12:58:35,174] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,175] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,175] - [base_2i] [123145560768512] - INFO - Index: index_name_3
+[2019-11-13 12:58:35,176] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,177] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,177] - [base_2i] [123145560768512] - INFO - Index: index_name_2
+[2019-11-13 12:58:35,178] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,179] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,179] - [base_2i] [123145560768512] - INFO - Index: index_name_1
+[2019-11-13 12:58:35,180] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,181] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,181] - [base_2i] [123145560768512] - INFO - Index: index_name_0
+[2019-11-13 12:58:35,182] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,183] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,184] - [base_2i] [123145560768512] - INFO - Index: index_name_7
+[2019-11-13 12:58:35,184] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,185] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,185] - [base_2i] [123145560768512] - INFO - Index: index_name_6
+[2019-11-13 12:58:35,186] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,187] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,187] - [base_2i] [123145560768512] - INFO - Index: index_name_5
+[2019-11-13 12:58:35,188] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,189] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,189] - [base_2i] [123145560768512] - INFO - Index: index_name_4
+[2019-11-13 12:58:35,190] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,190] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,240] - [basetestcase] [123145560768512] - INFO - list of index nodes in cluster: [ip:172.23.109.181 port:8091 ssh_username:root, ip:172.23.109.172 port:8091 ssh_username:root]
+[2019-11-13 12:58:35,377] - [base_2i] [123145560768512] - INFO - Bucket: default
+[2019-11-13 12:58:35,378] - [base_2i] [123145560768512] - INFO - Index: employee620d5c8edd90465dae9b27b2692e641cjob_title
+[2019-11-13 12:58:35,379] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,379] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,380] - [base_2i] [123145560768512] - INFO - Index: employee620d5c8edd90465dae9b27b2692e641cjoin_yr
+[2019-11-13 12:58:35,381] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,382] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,382] - [base_2i] [123145560768512] - INFO - Index: index_name_9
+[2019-11-13 12:58:35,383] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,384] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,385] - [base_2i] [123145560768512] - INFO - Index: index_name_8
+[2019-11-13 12:58:35,385] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,386] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,387] - [base_2i] [123145560768512] - INFO - Index: index_name_3
+[2019-11-13 12:58:35,387] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,388] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,388] - [base_2i] [123145560768512] - INFO - Index: index_name_2
+[2019-11-13 12:58:35,389] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,390] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,390] - [base_2i] [123145560768512] - INFO - Index: index_name_1
+[2019-11-13 12:58:35,391] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,391] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,392] - [base_2i] [123145560768512] - INFO - Index: index_name_0
+[2019-11-13 12:58:35,392] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,393] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,394] - [base_2i] [123145560768512] - INFO - Index: index_name_7
+[2019-11-13 12:58:35,394] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,395] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,395] - [base_2i] [123145560768512] - INFO - Index: index_name_6
+[2019-11-13 12:58:35,396] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,397] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,397] - [base_2i] [123145560768512] - INFO - Index: index_name_5
+[2019-11-13 12:58:35,398] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,398] - [base_2i] [123145560768512] - INFO - number of docs queued: 0
+[2019-11-13 12:58:35,399] - [base_2i] [123145560768512] - INFO - Index: index_name_4
+[2019-11-13 12:58:35,399] - [base_2i] [123145560768512] - INFO - number of docs pending: 0
+[2019-11-13 12:58:35,400] - [base_2i] [123145560768512] - INFO - number of docs queued: 1
+[2019-11-13 12:58:35,400] - [base_2i] [123145560768512] - INFO - === AFTER: ['query_with_explain', 'query'] ===
+[2019-11-13 12:58:35,401] - [base_2i] [123145560768512] - INFO - Query : SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id 
+[2019-11-13 12:58:35,402] - [tuq_generators] [123145560768512] - INFO - FROM clause ===== is default
+[2019-11-13 12:58:35,402] - [tuq_generators] [123145560768512] - INFO - WHERE clause ===== is   doc["join_yr"] > 2010 and doc["join_yr"] < 2014 
+[2019-11-13 12:58:35,403] - [tuq_generators] [123145560768512] - INFO - UNNEST clause ===== is None
+[2019-11-13 12:58:35,403] - [tuq_generators] [123145560768512] - INFO - SELECT clause ===== is {"*" : doc,}
+[2019-11-13 12:58:35,404] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["_id"],
+[2019-11-13 12:58:35,405] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["_id"],
+[2019-11-13 12:58:35,935] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["_id"],
+[2019-11-13 12:58:36,051] - [task] [123145867849728] - INFO -  <<<<< START Executing Query EXPLAIN SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id  >>>>>>
+[2019-11-13 12:58:36,056] - [tuq_helper] [123145867849728] - INFO - RUN QUERY EXPLAIN SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id 
+[2019-11-13 12:58:36,061] - [base_2i] [123145560768512] - INFO - Query : SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id
+[2019-11-13 12:58:36,062] - [tuq_generators] [123145560768512] - INFO - FROM clause ===== is default where job_title IS NOT NULL
+[2019-11-13 12:58:36,062] - [tuq_generators] [123145560768512] - INFO - WHERE clause ===== is None
+[2019-11-13 12:58:36,063] - [tuq_generators] [123145560768512] - INFO - UNNEST clause ===== is None
+[2019-11-13 12:58:36,063] - [tuq_generators] [123145560768512] - INFO - SELECT clause ===== is {"*" : doc,}
+[2019-11-13 12:58:36,064] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["job_title"],doc["_id"],
+[2019-11-13 12:58:36,064] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["job_title"],doc["_id"],
+[2019-11-13 12:58:36,520] - [tuq_generators] [123145560768512] - INFO - ORDER clause ========= is doc["job_title"],doc["_id"],
+[2019-11-13 12:58:36,870] - [rest_client] [123145867849728] - INFO - query params : statement=EXPLAIN+SELECT+%2A+FROM+default+WHERE++join_yr+%3E+2010+and+join_yr+%3C+2014+ORDER+BY+_id+
+[2019-11-13 12:58:36,896] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 3.317482ms
+[2019-11-13 12:58:36,897] - [task] [123145867849728] - INFO - {u'status': u'success', u'metrics': {u'elapsedTime': u'3.317482ms', u'executionTime': u'3.271231ms', u'resultSize': 894, u'resultCount': 1}, u'results': [{u'text': u'SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id', u'plan': {u'#operator': u'Sequence', u'~children': [{u'#operator': u'Sequence', u'~children': [{u'index': u'employee620d5c8edd90465dae9b27b2692e641cjoin_yr', u'namespace': u'default', u'keyspace': u'default', u'#operator': u'IndexScan3', u'index_projection': {u'primary_key': True}, u'spans': [{u'range': [{u'high': u'2014', u'low': u'2010', u'inclusion': 0}], u'exact': True}], u'using': u'gsi', u'index_id': u'2aadd835c5d8ee3'}, {u'keyspace': u'default', u'#operator': u'Fetch', u'namespace': u'default'}, {u'#operator': u'Parallel', u'~child': {u'#operator': u'Sequence', u'~children': [{u'#operator': u'Filter', u'condition': u'((2010 < (`default`.`join_yr`)) and ((`default`.`join_yr`) < 2014))'}, {u'#operator': u'InitialProject', u'result_terms': [{u'expr': u'self', u'star': True}]}]}}]}, {u'#operator': u'Order', u'sort_terms': [{u'expr': u'(`default`.`_id`)'}]}, {u'#operator': u'FinalProject'}]}}], u'requestID': u'fcd6bfb7-43c7-4b35-bba7-fa7998b8b524', u'signature': u'json'}
+[2019-11-13 12:58:36,898] - [task] [123145867849728] - INFO -  <<<<< Done Executing Query EXPLAIN SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id  >>>>>>
+[2019-11-13 12:58:36,899] - [task] [123145867849728] - INFO -  <<<<< START Executing Query EXPLAIN SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id >>>>>>
+[2019-11-13 12:58:36,900] - [tuq_helper] [123145867849728] - INFO - RUN QUERY EXPLAIN SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id
+[2019-11-13 12:58:36,925] - [rest_client] [123145867849728] - INFO - query params : statement=EXPLAIN+SELECT+%2A+FROM+default+where+job_title+IS+NOT+NULL+ORDER+BY+job_title%2C_id
+[2019-11-13 12:58:36,950] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 1.479475ms
+[2019-11-13 12:58:36,951] - [task] [123145867849728] - INFO - {u'status': u'success', u'metrics': {u'elapsedTime': u'1.479475ms', u'executionTime': u'1.442207ms', u'resultSize': 865, u'resultCount': 1}, u'results': [{u'text': u'SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id', u'plan': {u'#operator': u'Sequence', u'~children': [{u'#operator': u'Sequence', u'~children': [{u'index': u'employee620d5c8edd90465dae9b27b2692e641cjob_title', u'namespace': u'default', u'keyspace': u'default', u'#operator': u'IndexScan3', u'index_projection': {u'primary_key': True}, u'spans': [{u'range': [{u'low': u'null', u'inclusion': 0}], u'exact': True}], u'using': u'gsi', u'index_id': u'c658c077e4e01752'}, {u'keyspace': u'default', u'#operator': u'Fetch', u'namespace': u'default'}, {u'#operator': u'Parallel', u'~child': {u'#operator': u'Sequence', u'~children': [{u'#operator': u'Filter', u'condition': u'((`default`.`job_title`) is not null)'}, {u'#operator': u'InitialProject', u'result_terms': [{u'expr': u'self', u'star': True}]}]}}]}, {u'#operator': u'Order', u'sort_terms': [{u'expr': u'(`default`.`job_title`)'}, {u'expr': u'(`default`.`_id`)'}]}, {u'#operator': u'FinalProject'}]}}], u'requestID': u'00df386d-dcef-4fdc-b7c5-03b679e15274', u'signature': u'json'}
+[2019-11-13 12:58:36,952] - [task] [123145867849728] - INFO -  <<<<< Done Executing Query EXPLAIN SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id >>>>>>
+[2019-11-13 12:58:36,952] - [task] [123145867849728] - INFO -  <<<<< Done VERIFYING Query EXPLAIN SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id  >>>>>>
+[2019-11-13 12:58:36,953] - [task] [123145867849728] - INFO -  <<<<< Done VERIFYING Query EXPLAIN SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id >>>>>>
+[2019-11-13 12:58:36,954] - [task] [123145867849728] - INFO -  <<<<< START Executing Query SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id  >>>>>>
+[2019-11-13 12:58:36,955] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id 
+[2019-11-13 12:58:36,980] - [rest_client] [123145867849728] - INFO - query params : scan_consistency=NOT_BOUNDED&statement=SELECT+%2A+FROM+default+WHERE++join_yr+%3E+2010+and+join_yr+%3C+2014+ORDER+BY+_id+
+[2019-11-13 12:58:40,767] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 3.115186554s
+[2019-11-13 12:58:40,791] - [task] [123145867849728] - INFO -  <<<<< Done Executing Query SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id  >>>>>>
+[2019-11-13 12:58:40,793] - [task] [123145867849728] - INFO -  <<<<< START Executing Query SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id >>>>>>
+[2019-11-13 12:58:40,793] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id
+[2019-11-13 12:58:40,818] - [rest_client] [123145867849728] - INFO - query params : scan_consistency=NOT_BOUNDED&statement=SELECT+%2A+FROM+default+where+job_title+IS+NOT+NULL+ORDER+BY+job_title%2C_id
+[2019-11-13 12:58:46,186] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 4.825810627s
+[2019-11-13 12:58:46,239] - [task] [123145867849728] - INFO -  <<<<< Done Executing Query SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id >>>>>>
+[2019-11-13 12:58:46,240] - [task] [123145867849728] - INFO -  <<<<< Done VERIFYING Query SELECT * FROM default WHERE  join_yr > 2010 and join_yr < 2014 ORDER BY _id  >>>>>>
+[2019-11-13 12:58:46,241] - [task] [123145867849728] - INFO -  <<<<< Done VERIFYING Query SELECT * FROM default where job_title IS NOT NULL ORDER BY job_title,_id >>>>>>
+[2019-11-13 12:58:46,279] - [recovery_2i] [123145560768512] - INFO - <<<<<< WILL DROP THE INDEXES >>>>>
+[2019-11-13 12:58:47,246] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'employee620d5c8edd90465dae9b27b2692e641cjoin_yr'
+[2019-11-13 12:58:47,271] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27employee620d5c8edd90465dae9b27b2692e641cjoin_yr%27
+[2019-11-13 12:58:47,318] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 23.370361ms
+[2019-11-13 12:58:47,319] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.employee620d5c8edd90465dae9b27b2692e641cjoin_yr USING GSI
+[2019-11-13 12:58:47,344] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.employee620d5c8edd90465dae9b27b2692e641cjoin_yr+USING+GSI
+[2019-11-13 12:58:47,423] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 51.81913ms
+[2019-11-13 12:58:47,424] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'employee620d5c8edd90465dae9b27b2692e641cjob_title'
+[2019-11-13 12:58:47,454] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27employee620d5c8edd90465dae9b27b2692e641cjob_title%27
+[2019-11-13 12:58:47,497] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 18.552474ms
+[2019-11-13 12:58:47,498] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.employee620d5c8edd90465dae9b27b2692e641cjob_title USING GSI
+[2019-11-13 12:58:47,522] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.employee620d5c8edd90465dae9b27b2692e641cjob_title+USING+GSI
+[2019-11-13 12:58:47,574] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 30.891717ms
+[2019-11-13 12:58:47,575] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'employee620d5c8edd90465dae9b27b2692e641cjoin_yr'
+[2019-11-13 12:58:47,599] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27employee620d5c8edd90465dae9b27b2692e641cjoin_yr%27
+[2019-11-13 12:58:47,642] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 18.051307ms
+[2019-11-13 12:58:47,643] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'employee620d5c8edd90465dae9b27b2692e641cjob_title'
+[2019-11-13 12:58:47,669] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27employee620d5c8edd90465dae9b27b2692e641cjob_title%27
+[2019-11-13 12:58:47,708] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 17.264302ms
+[2019-11-13 12:58:47,819] - [basetestcase] [123145560768512] - INFO - list of index nodes in cluster: [ip:172.23.109.181 port:8091 ssh_username:root, ip:172.23.109.172 port:8091 ssh_username:root]
+[2019-11-13 12:58:47,822] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-11-13 12:58:48,121] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.172
+[2019-11-13 12:58:48,469] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:58:48,715] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_0'
+[2019-11-13 12:58:48,751] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_0%27
+[2019-11-13 12:58:48,801] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 26.351119ms
+[2019-11-13 12:58:48,802] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.index_name_0 USING GSI
+[2019-11-13 12:58:48,829] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.index_name_0+USING+GSI
+[2019-11-13 12:58:48,892] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 40.770678ms
+[2019-11-13 12:58:48,893] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_1'
+[2019-11-13 12:58:48,920] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_1%27
+[2019-11-13 12:58:48,998] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 54.134221ms
+[2019-11-13 12:58:48,999] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.index_name_1 USING GSI
+[2019-11-13 12:58:49,023] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.index_name_1+USING+GSI
+[2019-11-13 12:58:49,092] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 48.107601ms
+[2019-11-13 12:58:49,094] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_2'
+[2019-11-13 12:58:49,121] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_2%27
+[2019-11-13 12:58:49,167] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 16.652731ms
+[2019-11-13 12:58:49,168] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.index_name_2 USING GSI
+[2019-11-13 12:58:49,194] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.index_name_2+USING+GSI
+[2019-11-13 12:58:49,259] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 41.503819ms
+[2019-11-13 12:58:49,260] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_3'
+[2019-11-13 12:58:49,286] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_3%27
+[2019-11-13 12:58:49,326] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 15.13123ms
+[2019-11-13 12:58:49,328] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.index_name_3 USING GSI
+[2019-11-13 12:58:49,330] - [rest_client] [123145560768512] - INFO - /diag/eval status on 172.23.109.172:8091: True content: "/opt/couchbase/var/lib/couchbase/logs" command: filename:absname(element(2, application:get_env(ns_server,error_logger_mf_dir))).
+[2019-11-13 12:58:49,330] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.172: zgrep "panic" "/opt/couchbase/var/lib/couchbase/logs"/indexer.log* | wc -l
+[2019-11-13 12:58:49,351] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.index_name_3+USING+GSI
+[2019-11-13 12:58:49,435] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:58:49,445] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 71.728172ms
+[2019-11-13 12:58:49,446] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_4'
+[2019-11-13 12:58:49,475] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_4%27
+[2019-11-13 12:58:49,510] - [newtuq] [123145560768512] - INFO - ===== PANIC OBSERVED IN INDEXER LOGS ON SERVER 172.23.109.172=====
+[2019-11-13 12:58:49,517] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 15.764995ms
+[2019-11-13 12:58:49,518] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.index_name_4 USING GSI
+[2019-11-13 12:58:49,542] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.index_name_4+USING+GSI
+[2019-11-13 12:58:49,564] - [basetestcase] [123145560768512] - INFO - list of kv nodes in cluster: [ip:172.23.121.66 port:8091 ssh_username:root, ip:172.23.109.180 port:8091 ssh_username:root]
+[2019-11-13 12:58:49,567] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.66 with username:root 
+[2019-11-13 12:58:49,649] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 87.064768ms
+[2019-11-13 12:58:49,650] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_5'
+[2019-11-13 12:58:49,675] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_5%27
+[2019-11-13 12:58:49,716] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 17.389557ms
+[2019-11-13 12:58:49,718] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.index_name_5 USING GSI
+[2019-11-13 12:58:49,746] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.index_name_5+USING+GSI
+[2019-11-13 12:58:49,804] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 35.422732ms
+[2019-11-13 12:58:49,805] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_6'
+[2019-11-13 12:58:49,826] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.66
+[2019-11-13 12:58:49,832] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_6%27
+[2019-11-13 12:58:49,873] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 17.343203ms
+[2019-11-13 12:58:49,874] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.index_name_6 USING GSI
+[2019-11-13 12:58:49,902] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.index_name_6+USING+GSI
+[2019-11-13 12:58:49,959] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 35.309299ms
+[2019-11-13 12:58:49,960] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_7'
+[2019-11-13 12:58:49,984] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_7%27
+[2019-11-13 12:58:50,022] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 16.503752ms
+[2019-11-13 12:58:50,023] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.index_name_7 USING GSI
+[2019-11-13 12:58:50,047] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.index_name_7+USING+GSI
+[2019-11-13 12:58:50,101] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 34.755274ms
+[2019-11-13 12:58:50,102] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_8'
+[2019-11-13 12:58:50,129] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_8%27
+[2019-11-13 12:58:50,168] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 17.368773ms
+[2019-11-13 12:58:50,168] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.index_name_8 USING GSI
+[2019-11-13 12:58:50,197] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.index_name_8+USING+GSI
+[2019-11-13 12:58:50,210] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:58:50,253] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 35.331037ms
+[2019-11-13 12:58:50,254] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_9'
+[2019-11-13 12:58:50,280] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_9%27
+[2019-11-13 12:58:50,319] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 16.2698ms
+[2019-11-13 12:58:50,320] - [tuq_helper] [123145867849728] - INFO - RUN QUERY DROP INDEX default.index_name_9 USING GSI
+[2019-11-13 12:58:50,346] - [rest_client] [123145867849728] - INFO - query params : statement=DROP+INDEX+default.index_name_9+USING+GSI
+[2019-11-13 12:58:50,441] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 73.477453ms
+[2019-11-13 12:58:50,443] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_0'
+[2019-11-13 12:58:50,468] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_0%27
+[2019-11-13 12:58:50,520] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 27.425031ms
+[2019-11-13 12:58:50,522] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_1'
+[2019-11-13 12:58:50,549] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_1%27
+[2019-11-13 12:58:50,589] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 16.400444ms
+[2019-11-13 12:58:50,590] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_2'
+[2019-11-13 12:58:50,615] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_2%27
+[2019-11-13 12:58:50,654] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 17.824532ms
+[2019-11-13 12:58:50,655] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_3'
+[2019-11-13 12:58:50,682] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_3%27
+[2019-11-13 12:58:50,715] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 12.850088ms
+[2019-11-13 12:58:50,717] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_4'
+[2019-11-13 12:58:50,740] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_4%27
+[2019-11-13 12:58:50,773] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 12.724176ms
+[2019-11-13 12:58:50,774] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_5'
+[2019-11-13 12:58:50,800] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_5%27
+[2019-11-13 12:58:50,839] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 14.913867ms
+[2019-11-13 12:58:50,840] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_6'
+[2019-11-13 12:58:50,864] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_6%27
+[2019-11-13 12:58:50,901] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 14.245129ms
+[2019-11-13 12:58:50,902] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_7'
+[2019-11-13 12:58:50,937] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_7%27
+[2019-11-13 12:58:50,949] - [rest_client] [123145560768512] - INFO - /diag/eval status on 172.23.121.66:8091: True content: "/opt/couchbase/var/lib/couchbase/logs" command: filename:absname(element(2, application:get_env(ns_server,error_logger_mf_dir))).
+[2019-11-13 12:58:50,950] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: zgrep "panic" "/opt/couchbase/var/lib/couchbase/logs"/projector.log* | wc -l
+[2019-11-13 12:58:51,017] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 55.485144ms
+[2019-11-13 12:58:51,018] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_8'
+[2019-11-13 12:58:51,042] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_8%27
+[2019-11-13 12:58:51,043] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:58:51,087] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 18.701441ms
+[2019-11-13 12:58:51,089] - [tuq_helper] [123145867849728] - INFO - RUN QUERY SELECT * FROM system:indexes where name = 'index_name_9'
+[2019-11-13 12:58:51,116] - [rest_client] [123145867849728] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27index_name_9%27
+[2019-11-13 12:58:51,154] - [tuq_helper] [123145867849728] - INFO - TOTAL ELAPSED TIME: 15.552476ms
+[2019-11-13 12:58:51,169] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-11-13 12:58:51,477] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.180
+[2019-11-13 12:58:51,809] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:58:52,670] - [rest_client] [123145560768512] - INFO - /diag/eval status on 172.23.109.180:8091: True content: "/opt/couchbase/var/lib/couchbase/logs" command: filename:absname(element(2, application:get_env(ns_server,error_logger_mf_dir))).
+[2019-11-13 12:58:52,671] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.180: zgrep "panic" "/opt/couchbase/var/lib/couchbase/logs"/projector.log* | wc -l
+[2019-11-13 12:58:52,727] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:58:52,912] - [basetestcase] [123145560768512] - INFO - list of n1ql nodes in cluster: [ip:172.23.104.28 port:8091 ssh_username:root]
+[2019-11-13 12:58:52,913] - [tuq_helper] [123145560768512] - INFO - CHECK FOR PRIMARY INDEXES
+[2019-11-13 12:58:52,914] - [tuq_helper] [123145560768512] - INFO - DROP PRIMARY INDEX ON default USING VIEW 
+[2019-11-13 12:58:52,915] - [tuq_helper] [123145560768512] - INFO - RUN QUERY SELECT * FROM system:indexes where name = '#primary'
+[2019-11-13 12:58:52,938] - [rest_client] [123145560768512] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes+where+name+%3D+%27%23primary%27
+[2019-11-13 12:58:52,984] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 22.403184ms
+[2019-11-13 12:58:52,985] - [tuq_helper] [123145560768512] - INFO - RUN QUERY DROP PRIMARY INDEX ON default USING VIEW 
+[2019-11-13 12:58:53,009] - [rest_client] [123145560768512] - INFO - query params : statement=DROP+PRIMARY+INDEX+ON+default+USING+VIEW+
+[2019-11-13 12:58:53,040] - [tuq_helper] [123145560768512] - INFO - TOTAL ELAPSED TIME: 10.265539ms
+[2019-11-13 12:58:53,041] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: rm -f /opt/couchbase/var/lib/couchbase/meta;rm -f /tmp/log_upr_client.sock
+[2019-11-13 12:58:53,083] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:58:53,085] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: killall cbq-engine
+[2019-11-13 12:58:53,186] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:58:53,187] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: killall tuqtng
+[2019-11-13 12:58:53,284] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:58:53,285] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: killall indexer
+[2019-11-13 12:58:53,395] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:58:53,454] - [basetestcase] [123145560768512] - INFO - ------- Cluster statistics -------
+[2019-11-13 12:58:53,455] - [basetestcase] [123145560768512] - INFO - 172.23.104.28:8091 => {'swap_mem_used': 81199104, 'cpu_utilization': 7.360406091370558, 'mem_free': 3200323584, 'swap_mem_total': 3892310016, 'mem_total': 3867246592, 'services': [u'n1ql']}
+[2019-11-13 12:58:53,456] - [basetestcase] [123145560768512] - INFO - 172.23.121.66:8091 => {'swap_mem_used': 76283904, 'cpu_utilization': 14.50381679389313, 'mem_free': 3051905024, 'swap_mem_total': 3758092288, 'mem_total': 4366938112, 'services': [u'kv']}
+[2019-11-13 12:58:53,456] - [basetestcase] [123145560768512] - INFO - 172.23.109.181:8091 => {'swap_mem_used': 0, 'cpu_utilization': 1.256281407035176, 'mem_free': 3057709056, 'swap_mem_total': 3892310016, 'mem_total': 3867238400, 'services': [u'index']}
+[2019-11-13 12:58:53,457] - [basetestcase] [123145560768512] - INFO - 172.23.109.172:8091 => {'swap_mem_used': 54415360, 'cpu_utilization': 1.511335012594458, 'mem_free': 3139362816, 'swap_mem_total': 3892310016, 'mem_total': 3867238400, 'services': [u'index']}
+[2019-11-13 12:58:53,458] - [basetestcase] [123145560768512] - INFO - 172.23.109.180:8091 => {'swap_mem_used': 71950336, 'cpu_utilization': 3.807106598984772, 'mem_free': 2994679808, 'swap_mem_total': 3892310016, 'mem_total': 3867238400, 'services': [u'kv']}
+[2019-11-13 12:58:53,458] - [basetestcase] [123145560768512] - INFO - --- End of cluster statistics ---
+[2019-11-13 12:58:53,459] - [basetestcase] [123145560768512] - INFO - ==============  basetestcase cleanup was started for test #3 test_rebalance_in_out_multi_nodes ==============
+[2019-11-13 12:58:53,584] - [bucket_helper] [123145560768512] - INFO - deleting existing buckets [u'default'] on 172.23.121.66
+[2019-11-13 12:58:53,585] - [bucket_helper] [123145560768512] - INFO - remove bucket default ...
+[2019-11-13 12:58:55,692] - [bucket_helper] [123145560768512] - INFO - deleted bucket : default from 172.23.121.66
+[2019-11-13 12:58:55,693] - [bucket_helper] [123145560768512] - INFO - waiting for bucket deletion to complete....
+[2019-11-13 12:58:55,717] - [rest_client] [123145560768512] - INFO - node 172.23.121.66 existing buckets : []
+[2019-11-13 12:58:55,718] - [bucket_helper] [123145560768512] - INFO - sleep 2 seconds to make sure all buckets ([u'default']) were deleted completely.
+[2019-11-13 12:58:58,218] - [cluster_helper] [123145560768512] - INFO - rebalancing all nodes in order to remove nodes
+[2019-11-13 12:58:58,243] - [rest_client] [123145560768512] - INFO - rebalance params : {'password': 'password', 'ejectedNodes': u'ns_1@172.23.104.28,ns_1@172.23.109.181,ns_1@172.23.109.172,ns_1@172.23.109.180', 'user': 'Administrator', 'knownNodes': u'ns_1@172.23.104.28,ns_1@172.23.121.66,ns_1@172.23.109.181,ns_1@172.23.109.172,ns_1@172.23.109.180'}
+[2019-11-13 12:58:58,269] - [rest_client] [123145560768512] - INFO - rebalance operation started
+[2019-11-13 12:58:58,294] - [rest_client] [123145560768512] - INFO - rebalance percentage : 0.00 %
+[2019-11-13 12:59:08,342] - [rest_client] [123145560768512] - INFO - rebalance percentage : 80.00 %
+[2019-11-13 12:59:18,377] - [rest_client] [123145560768512] - INFO - rebalance percentage : 80.00 %
+[2019-11-13 12:59:38,448] - [rest_client] [123145560768512] - INFO - rebalance progress took 40.18 seconds 
+[2019-11-13 12:59:38,449] - [rest_client] [123145560768512] - INFO - sleep for 10 seconds after rebalance...
+[2019-11-13 12:59:48,671] - [cluster_helper] [123145560768512] - INFO - removed all the nodes from cluster associated with ip:172.23.121.66 port:8091 ssh_username:root ? [(u'ns_1@172.23.104.28', 8091), (u'ns_1@172.23.109.181', 8091), (u'ns_1@172.23.109.172', 8091), (u'ns_1@172.23.109.180', 8091)]
+[2019-11-13 12:59:48,697] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.121.66:8091
+[2019-11-13 12:59:48,727] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.121.66:8091 is running
+[2019-11-13 12:59:48,758] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.121.67:8091
+[2019-11-13 12:59:48,782] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.121.67:8091 is running
+[2019-11-13 12:59:48,807] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.104.28:8091
+[2019-11-13 12:59:48,832] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.104.28:8091 is running
+[2019-11-13 12:59:48,860] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.109.172:8091
+[2019-11-13 12:59:48,890] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.109.172:8091 is running
+[2019-11-13 12:59:48,918] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.109.179:8091
+[2019-11-13 12:59:48,947] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.109.179:8091 is running
+[2019-11-13 12:59:48,974] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.109.180:8091
+[2019-11-13 12:59:49,004] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.109.180:8091 is running
+[2019-11-13 12:59:49,032] - [cluster_helper] [123145560768512] - INFO - waiting for ns_server @ 172.23.109.181:8091
+[2019-11-13 12:59:49,062] - [cluster_helper] [123145560768512] - INFO - ns_server @ 172.23.109.181:8091 is running
+[2019-11-13 12:59:49,063] - [basetestcase] [123145560768512] - INFO - ==============  basetestcase cleanup was finished for test #3 test_rebalance_in_out_multi_nodes ==============
+[2019-11-13 12:59:49,065] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.66 with username:root 
+[2019-11-13 12:59:49,336] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.66
+[2019-11-13 12:59:49,701] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:59:50,482] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.66 with username:root 
+[2019-11-13 12:59:50,783] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.66
+[2019-11-13 12:59:51,167] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:59:52,028] - [remote_util] [123145560768512] - INFO - 172.23.121.66 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:59:52,321] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:59:52,322] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: systemctl stop couchbase-server.service
+[2019-11-13 12:59:53,959] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:59:53,960] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 12:59:54,085] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 12:59:54,141] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:59:54,142] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 12:59:54,234] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:59:54,237] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.66 with username:root 
+[2019-11-13 12:59:54,492] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.66
+[2019-11-13 12:59:54,863] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:59:55,707] - [remote_util] [123145560768512] - INFO - 172.23.121.66 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:59:55,993] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:59:55,995] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.66: systemctl start couchbase-server.service
+[2019-11-13 12:59:56,056] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 12:59:56,057] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 12:59:56,191] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.67 with username:root 
+[2019-11-13 12:59:56,486] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.67
+[2019-11-13 12:59:56,858] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:59:57,615] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.67 with username:root 
+[2019-11-13 12:59:57,908] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.67
+[2019-11-13 12:59:58,249] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 12:59:59,103] - [remote_util] [123145560768512] - INFO - 172.23.121.67 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 12:59:59,380] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 12:59:59,381] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.67: systemctl stop couchbase-server.service
+[2019-11-13 13:00:00,889] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:00,890] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 13:00:01,021] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.67: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 13:00:01,058] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:01,059] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.67: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 13:00:01,155] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:01,157] - [remote_util] [123145560768512] - INFO - connecting to 172.23.121.67 with username:root 
+[2019-11-13 13:00:01,445] - [remote_util] [123145560768512] - INFO - Connected to 172.23.121.67
+[2019-11-13 13:00:01,824] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:02,931] - [remote_util] [123145560768512] - INFO - 172.23.121.67 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 13:00:03,237] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 13:00:03,238] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.121.67: systemctl start couchbase-server.service
+[2019-11-13 13:00:03,303] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:03,305] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 13:00:03,433] - [remote_util] [123145560768512] - INFO - connecting to 172.23.104.28 with username:root 
+[2019-11-13 13:00:03,668] - [remote_util] [123145560768512] - INFO - Connected to 172.23.104.28
+[2019-11-13 13:00:03,982] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:04,735] - [remote_util] [123145560768512] - INFO - connecting to 172.23.104.28 with username:root 
+[2019-11-13 13:00:04,995] - [remote_util] [123145560768512] - INFO - Connected to 172.23.104.28
+[2019-11-13 13:00:05,259] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:06,111] - [remote_util] [123145560768512] - INFO - 172.23.104.28 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 13:00:06,420] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 13:00:06,421] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.104.28: systemctl stop couchbase-server.service
+[2019-11-13 13:00:07,918] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:07,920] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 13:00:08,048] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.104.28: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 13:00:08,089] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:08,090] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.104.28: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 13:00:08,196] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:08,198] - [remote_util] [123145560768512] - INFO - connecting to 172.23.104.28 with username:root 
+[2019-11-13 13:00:08,424] - [remote_util] [123145560768512] - INFO - Connected to 172.23.104.28
+[2019-11-13 13:00:08,725] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:09,593] - [remote_util] [123145560768512] - INFO - 172.23.104.28 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 13:00:09,914] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 13:00:09,916] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.104.28: systemctl start couchbase-server.service
+[2019-11-13 13:00:09,970] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:09,971] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 13:00:10,098] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-11-13 13:00:10,391] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.172
+[2019-11-13 13:00:10,783] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:11,674] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-11-13 13:00:11,965] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.172
+[2019-11-13 13:00:12,329] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:13,257] - [remote_util] [123145560768512] - INFO - 172.23.109.172 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 13:00:13,602] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 13:00:13,603] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.172: systemctl stop couchbase-server.service
+[2019-11-13 13:00:15,426] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:15,427] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 13:00:15,499] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.172: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 13:00:15,562] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:15,563] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.172: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 13:00:15,681] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:15,684] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.172 with username:root 
+[2019-11-13 13:00:15,987] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.172
+[2019-11-13 13:00:16,356] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:17,326] - [remote_util] [123145560768512] - INFO - 172.23.109.172 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 13:00:17,873] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 13:00:17,874] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.172: systemctl start couchbase-server.service
+[2019-11-13 13:00:17,934] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:17,935] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 13:00:18,070] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-11-13 13:00:18,365] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.179
+[2019-11-13 13:00:18,718] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:19,651] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-11-13 13:00:19,947] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.179
+[2019-11-13 13:00:20,299] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:21,264] - [remote_util] [123145560768512] - INFO - 172.23.109.179 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 13:00:21,614] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 13:00:21,615] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.179: systemctl stop couchbase-server.service
+[2019-11-13 13:00:23,485] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:23,486] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 13:00:23,555] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.179: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 13:00:23,603] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:23,604] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.179: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 13:00:23,725] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:23,728] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.179 with username:root 
+[2019-11-13 13:00:24,029] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.179
+[2019-11-13 13:00:24,411] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:25,381] - [remote_util] [123145560768512] - INFO - 172.23.109.179 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 13:00:25,719] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 13:00:25,720] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.179: systemctl start couchbase-server.service
+[2019-11-13 13:00:25,830] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:25,831] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 13:00:25,953] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-11-13 13:00:26,236] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.180
+[2019-11-13 13:00:26,597] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:27,442] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-11-13 13:00:27,708] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.180
+[2019-11-13 13:00:28,086] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:29,016] - [remote_util] [123145560768512] - INFO - 172.23.109.180 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 13:00:29,325] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 13:00:29,327] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.180: systemctl stop couchbase-server.service
+[2019-11-13 13:00:31,091] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:31,092] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 13:00:31,211] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.180: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 13:00:31,261] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:31,262] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.180: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 13:00:31,376] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:31,378] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.180 with username:root 
+[2019-11-13 13:00:31,791] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.180
+[2019-11-13 13:00:32,678] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:35,243] - [remote_util] [123145560768512] - INFO - 172.23.109.180 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 13:00:35,734] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 13:00:35,735] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.180: systemctl start couchbase-server.service
+[2019-11-13 13:00:35,792] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:35,793] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 13:00:35,925] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-11-13 13:00:36,217] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.181
+[2019-11-13 13:00:36,583] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:37,423] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-11-13 13:00:37,714] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.181
+[2019-11-13 13:00:38,073] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:39,042] - [remote_util] [123145560768512] - INFO - 172.23.109.181 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 13:00:39,412] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 13:00:39,413] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.181: systemctl stop couchbase-server.service
+[2019-11-13 13:00:41,215] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:41,217] - [basetestcase] [123145560768512] - INFO - Couchbase stopped
+[2019-11-13 13:00:41,302] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.181: rm -rf /opt/couchbase/var/lib/couchbase/data/*
+[2019-11-13 13:00:41,370] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:41,371] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.181: rm -rf /opt/couchbase/var/lib/couchbase/config/*
+[2019-11-13 13:00:41,450] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:41,452] - [remote_util] [123145560768512] - INFO - connecting to 172.23.109.181 with username:root 
+[2019-11-13 13:00:41,734] - [remote_util] [123145560768512] - INFO - Connected to 172.23.109.181
+[2019-11-13 13:00:42,093] - [remote_util] [123145560768512] - INFO - It could be other operating system.  Go to check at other location
+[2019-11-13 13:00:43,241] - [remote_util] [123145560768512] - INFO - 172.23.109.181 **** The version file /opt/couchbase/ VERSION.txt  exists
+[2019-11-13 13:00:43,548] - [remote_util] [123145560768512] - INFO - Running systemd command on this server
+[2019-11-13 13:00:43,549] - [remote_util] [123145560768512] - INFO - running command.raw on 172.23.109.181: systemctl start couchbase-server.service
+[2019-11-13 13:00:43,615] - [remote_util] [123145560768512] - INFO - command executed successfully
+[2019-11-13 13:00:43,616] - [basetestcase] [123145560768512] - INFO - Couchbase started
+[2019-11-13 13:00:43,743] - [basetestcase] [123145560768512] - INFO - sleep for 10 secs.  ...

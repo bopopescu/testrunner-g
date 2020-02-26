@@ -2,7 +2,7 @@ import json
 import logging
 import random
 import datetime
-import os,sys
+import os, sys
 import socket
 
 from TestInput import TestInputSingleton
@@ -50,7 +50,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
         self.docs_per_day = self.input.param("doc-per-day", 1)
         self.use_memory_manager = self.input.param('use_memory_manager', True)
         self.print_eventing_handler_code_in_logs = self.input.param('print_eventing_handler_code_in_logs', True)
-        random.seed(datetime.time)
+        random.seed(datetime.datetime.now())
         function_name = "Function_{0}_{1}".format(random.randint(1, 1000000000), self._testMethodName)
         # See MB-28447, From now function name can only be max of 100 chars
         self.function_name = function_name[0:90]
@@ -104,7 +104,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
                                   sock_batch_size=1, tick_duration=5000, timer_processing_tick_interval=500,
                                   timer_worker_pool_size=3, worker_count=3, processing_status=True,
                                   cpp_worker_thread_count=1, multi_dst_bucket=False, execution_timeout=20,
-                                  data_chan_size=10000, worker_queue_cap=100000, deadline_timeout=62):
+                                  data_chan_size=10000, worker_queue_cap=100000, deadline_timeout=62,language_compatibility='6.5.0'):
         body = {}
         body['appname'] = appname
         script_dir = os.path.dirname(__file__)
@@ -114,7 +114,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
         fh.close()
         body['depcfg'] = {}
         body['depcfg']['buckets'] = []
-        body['depcfg']['buckets'].append({"alias": self.dst_bucket_name, "bucket_name": self.dst_bucket_name,"access": "rw"})
+        body['depcfg']['buckets'].append({"alias": "dst_bucket", "bucket_name": self.dst_bucket_name,"access": "rw"})
         if multi_dst_bucket:
             body['depcfg']['buckets'].append({"alias": self.dst_bucket_name1, "bucket_name": self.dst_bucket_name1})
         body['depcfg']['metadata_bucket'] = self.metadata_bucket_name
@@ -151,7 +151,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
         body['settings']['dcp_gen_chan_size'] = self.dcp_gen_chan_size
         if self.is_sbm:
             del body['depcfg']['buckets'][0]
-            body['depcfg']['buckets'].append({"alias": self.src_bucket_name, "bucket_name": self.src_bucket_name,"access": "rw"})
+            body['depcfg']['buckets'].append({"alias": "src_bucket", "bucket_name": self.src_bucket_name,"access": "rw"})
         body['depcfg']['curl'] = []
         if self.is_curl:
             body['depcfg']['curl'].append({"hostname": self.hostname, "value": "server", "auth_type": self.auth_type,
@@ -159,7 +159,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
                                            "allow_cookies": self.cookies})
             if self.auth_type=="bearer":
                 body['depcfg']['curl'][0]['bearer_key']=self.bearer_key
-        body['settings']['language_compatibility']=self.cb_version[:5]
+        body['settings']['language_compatibility']=language_compatibility
         return body
 
     def wait_for_bootstrap_to_complete(self, name, iterations=20):
@@ -185,7 +185,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
             raise Exception('Eventing took lot of time to undeploy')
 
     def verify_eventing_results(self, name, expected_dcp_mutations, doc_timer_events=False, on_delete=False,
-                                skip_stats_validation=False, bucket=None, timeout=600):
+                                skip_stats_validation=False, bucket=None, timeout=600,expected_duplicate=False):
         # This resets the rest server as the previously used rest server might be out of cluster due to rebalance
         num_nodes = self.refresh_rest_server()
         eventing_nodes = self.get_nodes_from_services_map(service_type="eventing", get_all_nodes=True)
@@ -212,7 +212,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
                 # wait for eventing node to process dcp mutations
                 log.info("Number of {0} processed till now : {1}".format(mutation_type, actual_dcp_mutations))
                 while actual_dcp_mutations != expected_dcp_mutations and count < 20:
-                    self.sleep(timeout/20, message="Waiting for eventing to process all dcp mutations...")
+                    self.sleep(timeout//20, message="Waiting for eventing to process all dcp mutations...")
                     count += 1
                     if num_nodes <= 1:
                         stats = self.rest.get_event_processing_stats(name)
@@ -229,14 +229,16 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
         # wait for bucket operations to complete and verify it went through successfully
         count = 0
         stats_dst = self.rest.get_bucket_stats(bucket)
-        while stats_dst["curr_items"] != expected_dcp_mutations and count < 20:
+        while stats_dst["curr_items"] <= expected_dcp_mutations and count < 20:
             message = "Waiting for handler code {2} to complete bucket operations... Current : {0} Expected : {1}".\
-                      format(stats_dst["curr_items"], expected_dcp_mutations,name)
-            self.sleep(timeout/20, message=message)
+                      format(stats_dst["curr_items"], expected_dcp_mutations, name)
+            self.sleep(timeout//20, message=message)
             curr_items=stats_dst["curr_items"]
             stats_dst = self.rest.get_bucket_stats(bucket)
             if curr_items == stats_dst["curr_items"]:
                 count += 1
+            else:
+                count=0
         try:
             stats_src = self.rest.get_bucket_stats(self.src_bucket_name)
             log.info("Documents in source bucket : {}".format(stats_src["curr_items"]))
@@ -262,10 +264,25 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
                 log.debug("Full Stats for Node {0} is \n{1} ".format(eventing_node.ip, json.dumps(full_out,
                                                                                                 sort_keys=True,
                                                                                                 indent=4)))
-            raise Exception(
-                "Bucket operations from handler code took lot of time to complete or didn't go through. Current : {0} "
-                "Expected : {1}  dcp_backlog : {2}  TIMERS_IN_PAST : {3} lcb_exceptions : {4}".format(stats_dst["curr_items"],
-                                                                                 expected_dcp_mutations,
+            if stats_dst["curr_items"] < expected_dcp_mutations:
+                raise Exception(
+                    "missing data in destination bucket. Current : {0} "
+                    "Expected : {1}  dcp_backlog : {2}  TIMERS_IN_PAST : {3} lcb_exceptions : {4}".format(stats_dst["curr_items"],
+                                                                                     expected_dcp_mutations,
+                                                                                 total_dcp_backlog,
+                                                                                 timers_in_past,lcb))
+            elif stats_dst["curr_items"] > expected_dcp_mutations and not expected_duplicate:
+                raise Exception(
+                    "duplicated data in destination bucket which is not expected. Current : {0} "
+                    "Expected : {1}  dcp_backlog : {2}  TIMERS_IN_PAST : {3} lcb_exceptions : {4}".format(stats_dst["curr_items"],
+                                                                                     expected_dcp_mutations,
+                                                                                 total_dcp_backlog,
+                                                                                 timers_in_past,lcb))
+            elif stats_dst["curr_items"] > expected_dcp_mutations and expected_duplicate:
+                self.log.info(
+                    "duplicated data in destination bucket which is expected. Current : {0} "
+                    "Expected : {1}  dcp_backlog : {2}  TIMERS_IN_PAST : {3} lcb_exceptions : {4}".format(stats_dst["curr_items"],
+                                                                                     expected_dcp_mutations,
                                                                                  total_dcp_backlog,
                                                                                  timers_in_past,lcb))
         log.info("Final docs count... Current : {0} Expected : {1}".
@@ -296,7 +313,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
         body['settings']['deployment_status'] = True
         body['settings']['processing_status'] = True
         if self.print_eventing_handler_code_in_logs:
-            log.info("Deploying the following handler code : {0} with {1}".format(body['appname'],body['depcfg']))
+            log.info("Deploying the following handler code : {0} with {1}".format(body['appname'], body['depcfg']))
             log.info("\n{0}".format(body['appcode']))
         content1 = self.rest.create_function(body['appname'], body)
         log.info("deploy Application : {0}".format(content1))
@@ -310,7 +327,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
             # wait for the function to come out of bootstrap state
             self.wait_for_handler_state(body['appname'], "deployed")
         if pause_resume and pause_resume_number > 0:
-            self.pause_resume_n(body,pause_resume_number)
+            self.pause_resume_n(body, pause_resume_number)
 
 
     def undeploy_and_delete_function(self, body):
@@ -322,7 +339,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
         self.refresh_rest_server()
         content = self.rest.undeploy_function(body['appname'])
         log.info("Undeploy Application : {0}".format(body['appname']))
-        self.wait_for_handler_state(body['appname'],"undeployed")
+        self.wait_for_handler_state(body['appname'], "undeployed")
         return content
 
     def delete_function(self, body):
@@ -425,7 +442,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
                          eventing_node.ip, core_dump_count))
             shell.disconnect()
 
-    def print_execution_and_failure_stats(self,name):
+    def print_execution_and_failure_stats(self, name):
         out_event_execution = self.rest.get_event_execution_stats(name)
         log.info("Event execution stats : {0}".format(out_event_execution))
         out_event_failure = self.rest.get_event_failure_stats(name)
@@ -456,7 +473,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
 
     def bucket_stat(self, key, bucket):
         stats = StatsCommon.get_stats([self.master], bucket, "", key)
-        val = stats.values()[0]
+        val = list(stats.values())[0]
         if val.isdigit():
             val = int(val)
         return val
@@ -509,7 +526,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
 
     def undeploy_delete_all_functions(self):
         content=self.rest.get_deployed_eventing_apps()
-        res = content.keys()
+        res = list(content.keys())
         log.info("all keys {}".format(res))
         for a in res:
             self.rest.undeploy_function(a)
@@ -559,15 +576,15 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
         count=0
         result=0
         while count <= 20 and doc_count != result:
-            self.sleep(timeout / 20, message="Waiting for eventing to process all dcp mutations...")
+            self.sleep(timeout // 20, message="Waiting for eventing to process all dcp mutations...")
             if deletes:
                     query="select raw(count(*)) from {} where doc_deleted = 1".format(bucket)
             else:
                 query="select raw(count(*)) from {} where updated_field = 1".format(bucket)
-            result_set=self.n1ql_helper.run_cbq_query(query=query,server=self.n1ql_node)
+            result_set=self.n1ql_helper.run_cbq_query(query=query, server=self.n1ql_node)
             result=result_set["results"][0]
             if deletes:
-                self.log.info("deleted docs:{}  expected doc: {}".format(result,doc_count))
+                self.log.info("deleted docs:{}  expected doc: {}".format(result, doc_count))
             else:
                 self.log.info("updated docs:{}  expected doc: {}".format(result, doc_count))
             count=count+1
@@ -593,7 +610,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
                                                                      json.dumps(full_out, sort_keys=True, indent=4)))
             raise Exception("Eventing has not processed all the mutation in expected time, docs:{}  expected doc: {}".format(result, doc_count))
 
-    def pause_resume_n(self,body,num):
+    def pause_resume_n(self, body, num):
         for i in range(num):
             self.pause_function(body)
             self.sleep(30)
@@ -601,27 +618,32 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
 
 
     def wait_for_handler_state(self, name,status,iterations=20):
-        self.sleep(20, message="Waiting for {} to {}...".format(name,status))
+        self.sleep(20, message="Waiting for {} to {}...".format(name, status))
         result = self.rest.get_composite_eventing_status()
         count = 0
         composite_status = None
         while composite_status != status and count < iterations:
-            self.sleep(20,"Waiting for {} to {}...".format(name,status))
+            self.sleep(20, "Waiting for {} to {}...".format(name, status))
             result = self.rest.get_composite_eventing_status()
             for i in range(len(result['apps'])):
                 if result['apps'][i]['name'] == name:
                     composite_status = result['apps'][i]['composite_status']
             count+=1
         if count == iterations:
-            raise Exception('Eventing took lot of time for handler {} to {}'.format(name,status))
+            raise Exception('Eventing took lot of time for handler {} to {}'.format(name, status))
 
     def setup_curl(self,):
         o=os.system('python scripts/curl_setup.py start')
         self.log.info("=== started docker container =======".format(o))
         self.sleep(10)
+        if o!=0:
+            self.log.info("script result {}".format(o))
+            raise Exception("unable to start docker")
         o=os.system('python scripts/curl_setup.py setup')
         self.log.info("=== setup done =======")
-        self.log.info(o)
+        if o!=0:
+            self.log.info("script result {}".format(o))
+            raise Exception("curl setup fail")
 
     def teardown_curl(self):
         o = os.system('python scripts/curl_setup.py stop')
@@ -630,13 +652,13 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
     def insall_dependencies(self):
         try:
             import docker
-        except ImportError, e:
+        except ImportError as e:
             o = os.system("python scripts/install_docker.py docker")
             self.log.info("docker installation done: {}".format(o))
             self.sleep(30)
             try:
                 import docker
-            except ImportError, e:
+            except ImportError as e:
                 raise Exception("docker installation fails with {}".format(o))
 
     def load_sample_buckets(self, server, bucketName):
@@ -680,3 +702,23 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
         result = rest.get_retry_rebalance_settings()
         self.log.info("Retry Rebalance settings changed to : {0}"
                       .format(json.loads(result)))
+
+    def handler_status_map(self):
+        m={}
+        result=self.rest.get_composite_eventing_status()
+        try:
+            for i in range(len(result['apps'])):
+                m[result['apps'][i]['name']] = result['apps'][i]['composite_status']
+            return m
+        except TypeError as e:
+            self.log.info("no handler is available")
+
+    def deploy_handler_by_name(self,name,wait_for_bootstrap=True):
+        self.rest.deploy_function_by_name(name)
+        if wait_for_bootstrap:
+            self.wait_for_handler_state(name, "deployed")
+
+    def pause_handler_by_name(self,name,wait_for_pause=True):
+        self.rest.pause_function_by_name(name)
+        if wait_for_pause:
+            self.wait_for_handler_state(name, "paused")

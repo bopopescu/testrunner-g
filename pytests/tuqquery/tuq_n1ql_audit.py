@@ -1,19 +1,19 @@
 from membase.api.rest_client import RestHelper
 from security.rbac_base import RbacBase
 from security.audittest import auditTest
-from tuq import QueryTests
+from .tuq import QueryTests
 from membase.api.exception import CBQError
 import logger
 log = logger.Logger.get_logger()
 
-class QueryN1QLAuditTests(auditTest,QueryTests):
+class QueryN1QLAuditTests(auditTest, QueryTests):
     def setUp(self):
         super(QueryN1QLAuditTests, self).setUp()
         self.log.info("==============  QueryN1QLAuditTests setup has started ==============")
         self.audit_codes = [28672, 28673, 28674, 28675, 28676, 28677, 28678, 28679, 28680, 28681,
                             28682, 28683, 28684, 28685, 28686, 28687, 28688]
         self.unauditedID = self.input.param("unauditedID", "")
-        self.audit_url = "http://%s:%s/settings/audit" % (self.master.ip,self.master.port)
+        self.audit_url = "http://%s:%s/settings/audit" % (self.master.ip, self.master.port)
         self.filter = self.input.param("filter", False)
         self.log.info("==============  QueryN1QLAuditTests setup has completed ==============")
         self.log_config_info()
@@ -55,7 +55,7 @@ class QueryN1QLAuditTests(auditTest,QueryTests):
         query_type = self.input.param("ops", None)
         user = self.master.rest_username
         source = 'ns_server'
-
+        self.sleep(180)
         if (query_type =='create_index'):
             if self.filter:
                 self.execute_filtered_query()
@@ -134,25 +134,27 @@ class QueryN1QLAuditTests(auditTest,QueryTests):
                                'description': 'A N1QL EXPLAIN statement was executed'}
 
         elif(query_type == 'prepare'):
+            prepared_name = self.gen_vacant_prepared_name("a")
             if self.filter:
                 self.execute_filtered_query()
-            self.run_cbq_query(query="prepare a1 from select * from default")
+            self.run_cbq_query(query="prepare {0} from select * from default".format(prepared_name))
             expectedResults = {'node': '%s:%s' % (self.master.ip, self.master.port), 'status': 'success', 'isAdHoc': True,
                                'name': 'PREPARE statement', 'real_userid': {'source': source, 'user': user},
-                               'statement': 'prepare a1 from select * from default',
+                               'statement': 'prepare {0} from select * from default'.format(prepared_name),
                                'userAgent': 'Python-httplib2/$Rev: 259 $', 'id': self.eventID,
                                'description': 'A N1QL PREPARE statement was executed'}
 
         elif(query_type == 'adhoc_false'):
+            prepared_name = self.gen_vacant_prepared_name("a")
             if self.filter:
                 self.execute_filtered_query()
-            self.run_cbq_query(query="prepare a1 from select * from default")
-            self.run_cbq_query(query="execute a1")
+            self.run_cbq_query(query='prepare {0}'.format(prepared_name)+' from INFER default WITH {"sample_size":10000,"num_sample_values":1,"similarity_metric":0.0}')
+            self.run_cbq_query(query="execute {0}".format(prepared_name))
             expectedResults = {'node': '%s:%s' % (self.master.ip, self.master.port), 'status': 'success', 'isAdHoc': False,
-                               'name': 'SELECT statement', 'real_userid': {'source': source, 'user': user},
-                               'statement': 'prepare a1 from select * from default',
-                               'userAgent': 'Python-httplib2/$Rev: 259 $', 'id': self.eventID, 'preparedId': 'a1',
-                               'description': 'A N1QL SELECT statement was executed'}
+                               'name': 'INFER statement', 'real_userid': {'source': source, 'user': user},
+                               'statement': 'prepare {0}'.format(prepared_name) + ' from INFER default WITH {"sample_size":10000,"num_sample_values":1,"similarity_metric":0.0}',
+                               'userAgent': 'Python-httplib2/$Rev: 259 $', 'id': self.eventID, 'preparedId': '{0}'.format(prepared_name),
+                               'description': 'A N1QL INFER statement was executed'}
 
         elif(query_type == 'unrecognized'):
             if self.filter:
@@ -198,7 +200,7 @@ class QueryN1QLAuditTests(auditTest,QueryTests):
                 self.audit_codes.remove(self.eventID)
                 self.set_audit(set_disabled=True)
                 try:
-                    self.run_cbq_query(query="selec * fro default",server=self.servers[1])
+                    self.run_cbq_query(query="selec * fro default", server=self.servers[1])
                 except CBQError:
                     self.log.info("Query is unrecognized (expected)")
             self.run_cbq_query(query='DELETE FROM `travel-sample` WHERE type = "hotel"', server=self.servers[1])
@@ -272,6 +274,14 @@ class QueryN1QLAuditTests(auditTest,QueryTests):
             if self.filter:
                 self.checkFilter(self.unauditedID, self.master)
 
+    def gen_vacant_prepared_name(self, prefix):
+        vacant_prepared_name = "a"
+        for i in range(1, 10000):
+            query = "select count(*) from system:prepareds where name='{0}'".format(vacant_prepared_name+str(i))
+            result = self.run_cbq_query(query)["results"][0]["$1"]
+            if int(result) == 0:
+                return vacant_prepared_name+str(i)
+        raise Exception("Cannot generate vacant name for prepared statement!")
 
     def test_user_filter(self):
         self.set_audit(disable_user=True)
@@ -282,7 +292,7 @@ class QueryN1QLAuditTests(auditTest,QueryTests):
 
     def test_setting_propagation(self):
         self.set_audit(set_disabled=True)
-        audit_url = "http://%s:%s/settings/audit" % (self.servers[1].ip,self.servers[1].port)
+        audit_url = "http://%s:%s/settings/audit" % (self.servers[1].ip, self.servers[1].port)
         curl_output = self.shell.execute_command("%s -u Administrator:password %s" % (self.curl_path, audit_url))
         expected_curl = self.convert_list_to_json(curl_output[0])
         self.assertEqual(expected_curl['disabled'], self.audit_codes)

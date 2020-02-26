@@ -79,9 +79,7 @@ class EventingNegative(EventingBaseTest):
         # set both src and metadata bucket as same
         body['depcfg']['metadata_bucket'] = self.src_bucket_name
         try:
-            self.rest.save_function(body['appname'], body)
-            # Try to deploy the function
-            self.rest.deploy_function(body['appname'], body)
+            self.rest.create_function(self.function_name,body)
         except Exception as ex:
             if "Source bucket same as metadata bucket" not in str(ex):
                 self.fail("Eventing function allowed both source and metadata bucket to be same")
@@ -150,10 +148,10 @@ class EventingNegative(EventingBaseTest):
             self.pause_function(body)
         # delete source, metadata and destination buckets when eventing is processing_mutations
         for bucket in self.buckets:
-                self.log.info("deleting bucket: %s",bucket.name)
+                self.log.info("deleting bucket: %s", bucket.name)
                 self.rest.delete_bucket(bucket.name)
         # Wait for function to get undeployed automatically
-        self.wait_for_handler_state(body['appname'],"undeployed")
+        self.wait_for_handler_state(body['appname'], "undeployed")
         # Delete the function
         self.delete_function(body)
         self.sleep(60)
@@ -175,7 +173,7 @@ class EventingNegative(EventingBaseTest):
             self.log.info("deleting bucket: %s", bucket.name)
             self.rest.delete_bucket(bucket.name)
         # Wait for function to get undeployed automatically
-        self.wait_for_handler_state(body['appname'],"undeployed")
+        self.wait_for_handler_state(body['appname'], "undeployed")
         # Delete the function
         self.delete_function(body)
         self.sleep(60)
@@ -193,10 +191,10 @@ class EventingNegative(EventingBaseTest):
         # delete source, metadata and destination buckets when eventing is processing_mutations
         for bucket in self.buckets:
             if bucket.name == "src_bucket":
-                self.log.info("deleting bucket: %s",bucket.name)
+                self.log.info("deleting bucket: %s", bucket.name)
                 self.rest.delete_bucket(bucket.name)
         # Wait for function to get undeployed automatically
-        self.wait_for_handler_state(body['appname'],"undeployed")
+        self.wait_for_handler_state(body['appname'], "undeployed")
         # Delete the function
         self.delete_function(body)
         self.sleep(60)
@@ -214,10 +212,10 @@ class EventingNegative(EventingBaseTest):
         # delete source, metadata and destination buckets when eventing is processing_mutations
         for bucket in self.buckets:
             if bucket.name == "metadata":
-                self.log.info("deleting bucket: %s",bucket.name)
+                self.log.info("deleting bucket: %s", bucket.name)
                 self.rest.delete_bucket(bucket.name)
         # Wait for function to get undeployed automatically
-        self.wait_for_handler_state(body['appname'],"undeployed")
+        self.wait_for_handler_state(body['appname'], "undeployed")
         # Delete the function
         self.delete_function(body)
         self.sleep(60)
@@ -253,11 +251,11 @@ class EventingNegative(EventingBaseTest):
                                    'create', compression=self.sdk_compression)
         # create a function which sleeps for 5 secs and set execution_timeout to 1s
         body = self.create_save_function_body(self.function_name, HANDLER_CODE_ERROR.EXECUTION_TIME_MORE_THAN_TIMEOUT,
-                                              execution_timeout=30)
+                                              execution_timeout=10)
         # deploy the function
         self.deploy_function(body)
         # This is intentionally added so that we wait for some mutations to process and we decide none are processed
-        self.sleep(60)
+        self.sleep(100)
         # No docs should be present in dst_bucket as the all the function executions should have timed out
         self.verify_eventing_results(self.function_name, 0, skip_stats_validation=True)
         eventing_nodes = self.get_nodes_from_services_map(service_type="eventing", get_all_nodes=True)
@@ -381,7 +379,7 @@ class EventingNegative(EventingBaseTest):
         body = self.create_save_function_body(self.function_name, HANDLER_CODE.BUCKET_OPS_ON_UPDATE)
         self.deploy_function(body)
         self.pause_function(body)
-        self.resume_function(body,wait_for_resume=False)
+        self.resume_function(body, wait_for_resume=False)
         try:
             self.delete_function(body)
             self.fail("application is paused even before deployment")
@@ -462,3 +460,47 @@ class EventingNegative(EventingBaseTest):
         # Wait for eventing to catch up with all the delete mutations and verify results
         self.verify_eventing_results(self.function_name, 0, on_delete=True,skip_stats_validation=True)
         self.undeploy_and_delete_function(body)
+
+    #MB-32127
+    def test_field_boundary_update_for_deployed_function(self):
+        body = self.create_save_function_body(self.function_name, HANDLER_CODE.BUCKET_OPS_ON_UPDATE, worker_count=3,dcp_stream_boundary="from_now")
+        self.deploy_function(body)
+        update_body={"deployment_status":True, "processing_status":True, "dcp_stream_boundary":"everything"}
+        try:
+            self.rest.set_settings_for_function(self.function_name,update_body)
+        except Exception as e:
+            if "ERR_APP_ALREADY_DEPLOYED" not in str(e):
+                raise Exception("Feed boundary updated when app is deployed")
+
+    #MB-31140
+    def test_eventing_error_type(self):
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                  batch_size=self.batch_size)
+        body = self.create_save_function_body(self.function_name, 'handler_code/eventing_error.js', worker_count=1)
+        self.deploy_function(body)
+        self.verify_eventing_results(self.function_name, self.docs_per_day * 2016, skip_stats_validation=True)
+
+
+    #MB-31140
+    def test_n1ql_error_type(self):
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                  batch_size=self.batch_size)
+        body = self.create_save_function_body(self.function_name, 'handler_code/n1ql_error.js', worker_count=1)
+        self.deploy_function(body)
+        self.verify_eventing_results(self.function_name, self.docs_per_day * 2016, skip_stats_validation=True)
+
+    #MB-31140
+    def test_curl_error_type(self):
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                  batch_size=self.batch_size)
+        body = self.create_save_function_body(self.function_name, 'handler_code/curl_error.js', worker_count=1)
+        self.deploy_function(body)
+        self.verify_eventing_results(self.function_name, self.docs_per_day * 2016, skip_stats_validation=True)
+
+    #MB-35750
+    def test_non_json(self):
+        self.load(self.gens_load, buckets=self.src_bucket, flag=self.item_flag, verify_data=False,
+                  batch_size=self.batch_size)
+        body = self.create_save_function_body(self.function_name, 'handler_code/non_json.js', worker_count=1)
+        self.deploy_function(body)
+        self.verify_eventing_results(self.function_name, self.docs_per_day * 2016*3, skip_stats_validation=True)

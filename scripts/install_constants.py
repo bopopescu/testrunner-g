@@ -9,7 +9,7 @@ USAGE = """\
              debug_logs=False                               Print debug logs
              install_tasks=uninstall-install-init-cleanup   Pick 1 or more tasks  
              v, version=<numeric version>                   Example: "6.5.0-1234".
-             url=<build url>                                Example: "http://172.23.120.24/builds/latestbuilds/couchbase-server/mad-hatter/1234/couchbase-server-enterprise-6.5.0-1234-centos7.x86_64.rpm
+             url=<build url>                                Example: "http://latestbuilds.service.couchbase.com/builds/latestbuilds/couchbase-server/mad-hatter/1234/couchbase-server-enterprise-6.5.0-1234-centos7.x86_64.rpm
              edition, type=enterprise                       CB edition, community or enterprise
              timeout=600                                    End install after timeout seconds
              storage_mode=plasma                            Sets indexer storage mode
@@ -30,7 +30,7 @@ RHEL = ["rhel8"]
 SUSE = ["suse12", "suse15"]
 UBUNTU = ["ubuntu16.04", "ubuntu18.04"]
 LINUX_DISTROS = AMAZON + CENTOS + DEBIAN + OEL + RHEL + SUSE + UBUNTU
-MACOS_VERSIONS = ["10.13.5", "10.13.6", "10.14", "10.15", "macos"]
+MACOS_VERSIONS = ["10.13", "10.14", "10.15", "macos"]
 WINDOWS_SERVER = ["2016", "2019", "windows"]
 SUPPORTED_OS = LINUX_DISTROS + MACOS_VERSIONS + WINDOWS_SERVER
 X86 = CENTOS + SUSE + RHEL + OEL + AMAZON
@@ -57,7 +57,7 @@ CURL_CMD = "curl {0} -o {1} -z {1} -s -m 30"
 CB_ENTERPRISE = "couchbase-server-enterprise"
 CB_COMMUNITY = "couchbase-server-community"
 CB_EDITIONS = [CB_COMMUNITY, CB_ENTERPRISE]
-CB_DOWNLOAD_SERVER = "172.23.120.24"
+CB_DOWNLOAD_SERVER = "latestbuilds.service.couchbase.com"
 
 WIN_BROWSERS = ["MicrosoftEdge.exe", "iexplore.exe"]
 RETAIN_NUM_BINARIES_AFTER_INSTALL = "2"
@@ -83,15 +83,14 @@ CMDS = {
     },
     "dmg": {
         "uninstall": "osascript -e 'quit app \"Couchbase Server\"'; "
-                     "rm -rf " + DEFAULT_INSTALL_DIR["MACOS_VERSIONS"] + " ;&& "
-                                                                         "rm -rf ~/Library/Application\ Support/Couchbase && "
-                                                                         "rm -rf ~/Library/Application\ Support/membase && "
+                     "rm -rf " + DEFAULT_INSTALL_DIR["MACOS_VERSIONS"] + "; "
+                                                                         "rm -rf ~/Library/Application\ Support/Couchbase; "
+                                                                         "rm -rf ~/Library/Application\ Support/membase; "
                                                                          "rm -rf ~/Library/Python/couchbase-py; "
                                                                          "umount /Volumes/Couchbase* > /dev/null && echo 1 || echo 0",
         "pre_install": "HDIUTIL_DETACH_ATTACH",
         "install": "rm -rf /Applications\Couchbase\ Server.app; "
                    "cp -R mountpoint/Couchbase\ Server.app /Applications/Couchbase\ Server.app; "
-        # "sudo xattr -d -r com.apple.quarantine /Applications/Couchbase\ Server.app; "
                    "open /Applications/Couchbase\ Server.app > /dev/null && echo 1 || echo 0",
         "post_install": "launchctl list | grep couchbase-server > /dev/null && echo 1 || echo 0",
         "post_install_retry": None,

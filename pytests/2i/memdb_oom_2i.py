@@ -7,7 +7,7 @@ from membase.api.rest_client import RestConnection
 from membase.helper.cluster_helper import ClusterOperationHelper
 from membase.helper.bucket_helper import BucketOperationHelper
 from remote.remote_util import RemoteMachineShellConnection
-from base_2i import BaseSecondaryIndexingTests
+from .base_2i import BaseSecondaryIndexingTests
 
 log = logging.getLogger(__name__)
 QUERY_TEMPLATE = "SELECT {0} FROM %s "
@@ -22,7 +22,7 @@ class SecondaryIndexMemdbOomTests(BaseSecondaryIndexingTests):
         self.doc_ops = self.input.param("doc_ops", True)
         self.initial_index_number = self.input.param("initial_index_number", 2)
         self.oomServer = self.get_nodes_from_services_map(service_type="index")
-        self.whereCondition= self.input.param("whereCondition"," job_title != \"Sales\" ")
+        self.whereCondition= self.input.param("whereCondition", " job_title != \"Sales\" ")
         self.query_template += " WHERE {0}".format(self.whereCondition)
         rest = RestConnection(self.oomServer)
         if self.indexMemQuota > 256:
@@ -174,7 +174,7 @@ class SecondaryIndexMemdbOomTests(BaseSecondaryIndexingTests):
                     self.buckets = []
                 break
             self.log.info("Indexer Still in OOM...")
-        self.sleep(60)
+        self.sleep(180)
         self.assertFalse(self._validate_indexer_status_oom(), "Indexer still in OOM")
         self._verify_bucket_count_with_index_count(self.load_query_definitions)
         self.multi_query_using_index(buckets=self.buckets,
@@ -209,9 +209,11 @@ class SecondaryIndexMemdbOomTests(BaseSecondaryIndexingTests):
         :return:
         """
         self.assertTrue(self._push_indexer_off_the_cliff(), "OOM Can't be achieved")
-        kv_node = self.get_nodes_from_services_map(service_type="kv", get_all_nodes=True)[0]
-        self.log.info("Rebalancing KV node {ip} out...".format(ip=kv_node.ip))
-        rebalance = self.cluster.async_rebalance(self.servers, [], [kv_node])
+        kv_nodes = self.get_nodes_from_services_map(service_type="kv", get_all_nodes=True)
+        kv_node_to_rebalance = kv_nodes[0]
+        self.master = kv_nodes[1]
+        self.log.info("Rebalancing KV node {ip} out...".format(ip=kv_node_to_rebalance.ip))
+        rebalance = self.cluster.async_rebalance(self.servers, [], [kv_node_to_rebalance])
         rebalance.result()
         self._bring_indexer_back_to_life()
         self.sleep(60)
@@ -248,8 +250,8 @@ class SecondaryIndexMemdbOomTests(BaseSecondaryIndexingTests):
             self._verify_bucket_count_with_index_count(self.load_query_definitions)
             self.multi_query_using_index(buckets=self.buckets,
                                                       query_definitions=self.load_query_definitions)
-        except Exception, ex:
-            self.log.info(str(ex))
+        except Exception as ex:
+            log.info(str(ex))
         finally:
             self.log.info("Starting Couchbase on {0}".format(kv_node.ip))
             remote.start_server()
@@ -292,7 +294,7 @@ class SecondaryIndexMemdbOomTests(BaseSecondaryIndexingTests):
         while count < 5:
             used_memory = self.get_indexer_mem_quota()
             #Setting memory to 90 % of used memory.
-            set_memory = int(used_memory) * 90/100
+            set_memory = int(used_memory) * 90//100
             rest.set_service_memoryQuota(service='indexMemoryQuota', memoryQuota=set_memory)
             self.sleep(120)
             check = self._validate_indexer_status_oom()
@@ -318,7 +320,7 @@ class SecondaryIndexMemdbOomTests(BaseSecondaryIndexingTests):
         build_tasks = []
         index_info = {}
         for bucket in self.buckets:
-            if not bucket in index_info.keys():
+            if not bucket in list(index_info.keys()):
                 index_info[bucket] = []
             for query_definition in query_definitions:
                 index_info[bucket].append(query_definition.index_name)
@@ -367,7 +369,7 @@ class SecondaryIndexMemdbOomTests(BaseSecondaryIndexingTests):
                                            query_template="", groups=["simple"])
         try:
             self.create_index(self.buckets[0].name, query_definition, self.deploy_node_info)
-        except Exception, ex:
+        except Exception as ex:
             self.log.info("{0}".format(str(ex)))
 
     def test_oom_create_index(self):
@@ -383,7 +385,7 @@ class SecondaryIndexMemdbOomTests(BaseSecondaryIndexingTests):
         try:
             task = self.async_create_index(self.buckets[0].name, query_definition)
             task.result()
-        except Exception, ex:
+        except Exception as ex:
             self.log.info("Cannot Create Index om Paused Indexer as expected")
             self.log.info("{0}".format(str(ex)))
 
@@ -436,8 +438,8 @@ class SecondaryIndexMemdbOomTests(BaseSecondaryIndexingTests):
         host = "{0}:8091".format(self.oomServer.ip)
         rest = RestConnection(self.oomServer)
         index_status = rest.get_index_status()
-        for index in index_status.itervalues():
-            for vals in index.itervalues():
+        for index in index_status.values():
+            for vals in index.values():
                 if vals["status"].lower() != "paused":
                     if vals["hosts"] == host:
                         return False

@@ -55,15 +55,15 @@ class basic_ops(BaseTestCase):
 
         # MB-17231 - incr with full eviction
         rc = mcd.incr(KEY_NAME, 1)
-        print 'rc for incr', rc
+        print('rc for incr', rc)
 
 
 
         # MB-17289 del with meta
 
 
-        rc = mcd.set(KEY_NAME, 0,0, json.dumps({'value':'value2'}))
-        print 'set is', rc
+        rc = mcd.set(KEY_NAME, 0, 0, json.dumps({'value':'value2'}))
+        print('set is', rc)
         cas = rc[1]
 
 
@@ -105,18 +105,18 @@ class basic_ops(BaseTestCase):
             self.fail("Error on First setWithMeta()")
 
         stats = mc.stats()
-        self.log.info('curr_items: {} and curr_temp_items:{}'.format(stats['curr_items'], stats['curr_temp_items']))
+        self.log.info('curr_items: {} and curr_temp_items:{}'.format(stats[b'curr_items'], stats[b'curr_temp_items']))
         self.log.info("Sleeping for 5 and checking stats again")
         time.sleep(5)
         stats = mc.stats()
-        self.log.info('curr_items: {} and curr_temp_items:{}'.format(stats['curr_items'], stats['curr_temp_items']))
+        self.log.info('curr_items: {} and curr_temp_items:{}'.format(stats[b'curr_items'], stats[b'curr_temp_items']))
 
         try:
             mc.setWithMeta('1', '{"Hello":"World"}', 3600, 0, 1, 0x1512a3186faa0000)
         except MemcachedError as error:
             stats = mc.stats()
-            self.log.info('After 2nd setWithMeta(), curr_items: {} and curr_temp_items:{}'.format(stats['curr_items'], stats['curr_temp_items']))
-            if int(stats['curr_temp_items']) == 1:
+            self.log.info('After 2nd setWithMeta(), curr_items: {} and curr_temp_items:{}'.format(stats[b'curr_items'], stats[b'curr_temp_items']))
+            if int(stats[b'curr_temp_items']) == 1:
                 self.fail("Error on second setWithMeta(), expected curr_temp_items to be 0")
             else:
                 self.log.info("<MemcachedError #%d ``%s''>" % (error.status, error.message))
@@ -140,7 +140,7 @@ class basic_ops(BaseTestCase):
         mc.sasl_auth_plain(self.master.rest_username, self.master.rest_password)
         mc.bucket_select('default')
         stats = mc.stats()
-        self.assertEquals(int(stats['curr_items']), 250)
+        self.assertEqual(int(stats[b'curr_items']), 250)
 
 
     def test_large_doc_size_2MB(self):
@@ -158,7 +158,7 @@ class basic_ops(BaseTestCase):
         mc.sasl_auth_plain(self.master.rest_username, self.master.rest_password)
         mc.bucket_select('default')
         stats = mc.stats()
-        self.assertEquals(int(stats['curr_items']), 125)
+        self.assertEqual(int(stats[b'curr_items']), 125)
 
     def test_large_doc_20MB(self):
         # test reproducer for MB-29258,
@@ -173,13 +173,13 @@ class basic_ops(BaseTestCase):
         mc.bucket_select('default')
         stats = mc.stats()
         if (document_size > 20):
-            self.assertEquals(int(stats['curr_items']), 0) # failed with error "Data Too Big" when document size > 20MB
+            self.assertEqual(int(stats[b'curr_items']), 0) # failed with error "Data Too Big" when document size > 20MB
         else:
-            self.assertEquals(int(stats['curr_items']), 1)
+            self.assertEqual(int(stats[b'curr_items']), 1)
             gens_update = self.generate_docs_bigdata(docs_per_day=1, document_size=(21 * 1024000))
             self.load(gens_update, buckets=self.src_bucket, verify_data=False, batch_size=10)
             stats = mc.stats()
-            self.assertEquals(int(stats['curr_items']), 1)
+            self.assertEqual(int(stats[b'curr_items']), 1)
 
     def test_diag_eval_curl(self):
         # Check if diag/eval can be done only by local host
@@ -199,7 +199,7 @@ class basic_ops(BaseTestCase):
         shell = RemoteMachineShellConnection(self.master)
         for command in cmd:
             output, error = shell.execute_command(command)
-            self.assertNotEquals("API is accessible from localhost only", output[0])
+            self.assertNotEqual("API is accessible from localhost only", output[0])
 
         # Disable allow_nonlocal_eval
         if self.disable_diag_eval_on_non_local_host:
@@ -218,18 +218,18 @@ class basic_ops(BaseTestCase):
         for command in cmd:
             output, error = shell.execute_command(command)
             if self.disable_diag_eval_on_non_local_host:
-                self.assertEquals("API is accessible from localhost only", output[0])
+                self.assertEqual("API is accessible from localhost only", output[0])
             else:
-                self.assertNotEquals("API is accessible from localhost only", output[0])
+                self.assertNotEqual("API is accessible from localhost only", output[0])
 
-    def verify_stat(self,items, value="active" ):
+    def verify_stat(self,items, value=b"active" ):
         mc = MemcachedClient(self.master.ip, 11210)
         mc.sasl_auth_plain(self.master.rest_username, self.master.rest_password)
         mc.bucket_select('default')
         stats = mc.stats()
-        self.assertEquals(stats['ep_compression_mode'], value)
-        self.assertEquals(int(stats['ep_item_compressor_num_compressed']), items)
-        self.assertNotEquals(int(stats['vb_active_itm_memory']), int(stats['vb_active_itm_memory_uncompressed']))
+        self.assertEqual(stats[b'ep_compression_mode'], value)
+        self.assertEqual(int(stats[b'ep_item_compressor_num_compressed']), items)
+        self.assertNotEqual(int(stats[b'vb_active_itm_memory']), int(stats[b'vb_active_itm_memory_uncompressed']))
 
     def test_compression_active_and_off(self):
         '''
@@ -272,11 +272,19 @@ class basic_ops(BaseTestCase):
 
         for bucket in self.buckets:
             # Verify the stat for compression_mode off and compressed items should be still 10000
-            self.verify_stat(items=self.num_items, value="off")
+            self.verify_stat(items=self.num_items, value=b"off")
 
     def do_get_random_key(self):
-        # MB-31548, get_Random key from empty bucket gets hung sometimes.
+        # MB-31548, get_Random key gets hung sometimes.
+        self.log.info("Creating few docs in the bucket")
         rest = RestConnection(self.master)
+        client = VBucketAwareMemcached(rest, 'default')
+        key = "test_docs-"
+        for index in range(1000):
+            doc_key = key + str(index)
+            client.memcached(doc_key).set(doc_key, 0, 0,
+                                          json.dumps({'value': 'value1'}))
+
         self.log.info("Performing random_gets")
         mc = MemcachedClient(self.master.ip, 11210)
         mc.sasl_auth_plain(self.master.rest_username,

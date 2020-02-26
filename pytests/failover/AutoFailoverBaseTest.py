@@ -135,7 +135,7 @@ class AutoFailoverBaseTest(BaseTestCase):
             # Shuffle the nodesS
             for i in range(1, self.zone):
                 node_in_zone = list(set(nodes_in_zone[zones[i]]) -
-                                    set([node  for node in rest.get_nodes_in_zone(zones[i])]))
+                                    {node  for node in rest.get_nodes_in_zone(zones[i])})
                 rest.shuffle_nodes_in_zones(node_in_zone, zones[0], zones[i])
         self.zones = nodes_in_zone
         otpnodes = [node.id for node in rest.node_statuses()]
@@ -533,7 +533,7 @@ class AutoFailoverBaseTest(BaseTestCase):
 
     def _auto_failover_message_present_in_logs(self, ipaddress):
         return any("Rebalance interrupted due to auto-failover of nodes ['ns_1@{0}'].".format(ipaddress) in
-                   d.values()[2] for d in self.rest.get_logs(20))
+                   list(d.values()) for d in self.rest.get_logs(10))
 
     def wait_for_failover_or_assert(self, expected_failover_count, timeout):
         time_start = time.time()

@@ -2,7 +2,8 @@ import logging
 from threading import Thread
 import time
 
-from base_2i import BaseSecondaryIndexingTests
+from .base_2i import BaseSecondaryIndexingTests
+from couchbase.n1ql import CONSISTENCY_REQUEST
 from couchbase_helper.query_definitions import QueryDefinition
 from lib.memcached.helper.data_helper import MemcachedClientHelper
 from membase.api.rest_client import RestConnection
@@ -10,6 +11,7 @@ from membase.helper.cluster_helper import ClusterOperationHelper
 from remote.remote_util import RemoteMachineShellConnection
 
 log = logging.getLogger(__name__)
+
 
 class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
 
@@ -39,7 +41,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
                     task.result()
                 self.async_multi_drop_index(
                     buckets=self.buckets, query_definitions=self.load_query_definitions)
-            except Exception, ex:
+            except Exception as ex:
                 log.info(ex)
         super(SecondaryIndexingRecoveryTests, self).tearDown()
 
@@ -68,7 +70,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
                                            server=self.n1ql_node)
             self.n1ql_helper.run_cbq_query(query=create_index_query5,
                                            server=self.n1ql_node)
-        except Exception, ex:
+        except Exception as ex:
             self.log.info(str(ex))
             self.fail(
                 "index creation failed with error : {0}".format(str(ex)))
@@ -103,7 +105,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
         # Results are not garunteed to be accurate so the query successfully running is all we can check
         try:
             results = self.n1ql_helper.run_cbq_query(query=use_index_query, server=self.n1ql_node)
-        except Exception, ex:
+        except Exception as ex:
             self.log.info(str(ex))
             self.fail("query should run correctly, an index is available for use")
 
@@ -150,7 +152,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._check_all_bucket_items_indexed()
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
 
@@ -163,7 +165,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             #self._create_replica_indexes()
             rebalance = self.cluster.async_rebalance(
                 self.servers[:self.nodes_init],
-                [],self.nodes_out_list)
+                [], self.nodes_out_list)
             mid_recovery_tasks = self.async_run_operations(phase="in_between")
             rebalance.result()
             self._run_tasks([kvOps_tasks, mid_recovery_tasks])
@@ -174,7 +176,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._check_all_bucket_items_indexed()
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
 
@@ -198,7 +200,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._check_all_bucket_items_indexed()
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
 
@@ -253,7 +255,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._check_all_bucket_items_indexed()
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
 
@@ -269,12 +271,12 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
                 self.nodes_in_list,
                 self.nodes_out_list, services=self.services_in)
             stopped = RestConnection(self.master).stop_rebalance(
-                wait_timeout=self.wait_timeout / 3)
+                wait_timeout=self.wait_timeout // 3)
             self.assertTrue(stopped, msg="Unable to stop rebalance")
             rebalance.result()
             self.sleep(100)
             rebalance = self.cluster.async_rebalance(
-                self.servers[:self.nodes_init],self.nodes_in_list,
+                self.servers[:self.nodes_init], self.nodes_in_list,
                 self.nodes_out_list, services=self.services_in)
             mid_recovery_tasks = self.async_run_operations(phase="in_between")
             rebalance.result()
@@ -286,7 +288,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._check_all_bucket_items_indexed()
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
 
@@ -298,7 +300,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
         try:
             self.use_replica=False
             self._create_replica_indexes()
-            self.targetProcess= self.input.param("targetProcess",'memcached')
+            self.targetProcess= self.input.param("targetProcess", 'memcached')
             for node in self.nodes_out_list:
                 remote = RemoteMachineShellConnection(node)
                 if self.targetProcess == "memcached":
@@ -315,7 +317,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._check_all_bucket_items_indexed()
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
 
@@ -335,7 +337,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._run_tasks([kvOps_tasks, mid_recovery_tasks])
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
         finally:
@@ -367,7 +369,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._check_all_bucket_items_indexed()
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
 
@@ -402,7 +404,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._check_all_bucket_items_indexed()
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
 
@@ -411,7 +413,6 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             rest = RestConnection(self.master)
             recoveryType = self.input.param("recoveryType", "full")
             servr_out = self.nodes_out_list
-            print(servr_out)
             failover_task =self.cluster.async_failover([self.master],
                     failover_nodes=servr_out, graceful=self.graceful)
             failover_task.result()
@@ -421,7 +422,6 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             kvOps_tasks = self._run_kvops_tasks()
             nodes_all = rest.node_statuses()
             nodes = []
-            print(servr_out)
             if servr_out[0].ip == "127.0.0.1":
                 for failover_node in servr_out:
                     nodes.extend([node for node in nodes_all
@@ -447,7 +447,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._check_all_bucket_items_indexed()
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
 
@@ -504,7 +504,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._check_all_bucket_items_indexed()
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
 
@@ -528,7 +528,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
                 try:
                     self.query_using_index(bucket=bucket,
                                            query_definition=query)
-                except Exception, ex:
+                except Exception as ex:
                     msg = "queryport.indexNotFound"
                     if msg in str(ex):
                         continue
@@ -567,7 +567,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._check_all_bucket_items_indexed()
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
         finally:
@@ -588,7 +588,7 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
             self._run_tasks([kvOps_tasks, mid_recovery_tasks])
             post_recovery_tasks = self.async_run_operations(phase="after")
             self._run_tasks([post_recovery_tasks])
-        except Exception, ex:
+        except Exception as ex:
             log.info(str(ex))
             raise
         finally:
@@ -673,6 +673,62 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
         post_recovery_tasks = self.async_run_operations(phase="after")
         self.sleep(180)
         self._run_tasks([post_recovery_tasks])
+
+    def test_recover_index_from_in_memory_snapshot(self):
+        """
+        MB-32102
+        MB-35663
+        """
+        bucket_name = ""
+        for bucket in self.buckets:
+            bucket_name = bucket.name
+            break
+        index_name = self.get_index_map()[bucket_name].keys()[0]
+        # Blocking node B firewall
+        data_nodes = self.get_kv_nodes()
+        if len(data_nodes) < 3:
+            self.fail("Can't run this with less than 3 KV nodes")
+        node_b, node_c = (None, None)
+        for node in data_nodes:
+            if node.ip == self.master.ip:
+                continue
+            if not node_b:
+                node_b = node
+            else:
+                node_c = node
+                break
+        # get num_rollback stats before triggering in-memory recovery
+        conn = RestConnection(self.master)
+        num_rollback_before_recovery = conn.get_num_rollback_stat(bucket_name)
+        self.block_incoming_network_from_node(node_b, node_c)
+
+        # killing Memcached on Node B
+        remote_client = RemoteMachineShellConnection(node_b)
+        remote_client.kill_memcached()
+        remote_client.disconnect()
+
+        # Failing over Node B
+        self.cluster.failover(servers=self.servers, failover_nodes=[node_b])
+
+        # resume the communication between node B and node C
+        self.resume_blocked_incoming_network_from_node(node_b, node_c)
+        # get num_rollback stats after in-memory recovery of indexes
+        num_rollback_after_recovery = conn.get_num_rollback_stat(bucket_name)
+        self.assertEqual(num_rollback_before_recovery, num_rollback_after_recovery,
+                         "Recovery didn't happen from in-memory snapshot")
+        self.log.info("Node has recovered from in-memory snapshots")
+        # Loading few more docs so that indexer will index updated as well as new docs
+        gens_load = self.generate_docs(num_items=self.docs_per_day * 2)
+        self.load(gens_load, flag=self.item_flag, batch_size=self.batch_size, op_type="create", verify_data=False)
+
+        use_index_query = "select Count(*) from {0} USE INDEX ({1})".format(bucket_name, index_name)
+        result = self.n1ql_helper.run_cbq_query(query=use_index_query, server=self.n1ql_node,
+                                                scan_consistency=CONSISTENCY_REQUEST)["results"][0]["$1"]
+        expected_result = self.docs_per_day * 2 * 2016
+        self.assertEqual(result, expected_result, "Indexer hasn't recovered properly from in-memory as"
+                                                  " indexes haven't catch up with "
+                                                  "request_plus/consistency_request")
+        self.log.info("Indexer continues to index as expected")
 
     def test_partial_rollback(self):
         self.multi_create_index()
@@ -770,8 +826,8 @@ class SecondaryIndexingRecoveryTests(BaseSecondaryIndexingTests):
         log.info("index_map: {0}".format(index_map))
         for index_node in self.index_nodes_out:
             host = "{0}:8091".format(index_node.ip)
-            for index in index_map.itervalues():
-                for keys, vals in index.iteritems():
+            for index in index_map.values():
+                for keys, vals in index.items():
                     if vals["hosts"] == host:
                         lost_indexes.append(keys)
         log.info("Lost Indexes: {0}".format(lost_indexes))

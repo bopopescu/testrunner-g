@@ -1,6 +1,6 @@
 function OnUpdate(doc, meta) {
     var request = {
-	path : 'headers',
+	path : '/headers',
 	headers: {
     "sample-header": "test"
     }
@@ -27,7 +27,7 @@ function OnUpdate(doc, meta) {
 
 function OnDelete(meta) {
     var request = {
-	path : 'headers',
+	path : '/headers',
 	headers: {
     "sample-header": "test"
     }

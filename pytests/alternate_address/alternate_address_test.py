@@ -40,7 +40,7 @@ class AlternateAddressTests(AltAddrBaseTest):
         try:
             super(AlternateAddressTests, self).tearDown()
         except Exception as e:
-            print e
+            print(e)
         BucketOperationHelper.delete_all_buckets_or_assert(self.servers, self)
         ClusterOperationHelper.cleanup_cluster(self.servers, self.servers[0])
 
@@ -62,7 +62,7 @@ class AlternateAddressTests(AltAddrBaseTest):
                 secure_conn = "--no-ssl-verify"
         output = self.list_alt_address(server=server1, url_format = url_format,
                                           secure_port = secure_port, secure_conn = secure_conn)
-        if output:
+        if self._check_output(server1.ip, output):
             output, _ = self.remove_alt_address_setting(server=server1,
                                                         url_format = url_format,
                                                         secure_port = secure_port,
@@ -73,7 +73,7 @@ class AlternateAddressTests(AltAddrBaseTest):
         output = self.list_alt_address(server=server1, url_format = url_format,
                                           secure_port = secure_port,
                                           secure_conn = secure_conn)
-        if output and output[0] != "[]":
+        if output and self._check_output(server1.ip, output):
             self.fail("Fail to remove alternate address with remove command")
 
         self.log.info("Start to set alternate address")
@@ -84,16 +84,14 @@ class AlternateAddressTests(AltAddrBaseTest):
         setting_cmd += " -c http{0}://{1}:{2}{3} --username {4} --password {5} {6}"\
                        .format(url_format, internal_IP , secure_port, server1.port,
                                server1.rest_username, server1.rest_password, secure_conn)
-        setting_cmd = setting_cmd + "--set --hostname {0} ".format(server1.ip)
+        setting_cmd = setting_cmd + "--set --node {0} --hostname {1} "\
+                                        .format(internal_IP, server1.ip)
         shell.execute_command(setting_cmd)
         output = self.list_alt_address(server=server1, url_format = url_format,
                                                      secure_port = secure_port,
                                                      secure_conn = secure_conn)
-        if output and output[0]:
-            output = output[0]
-            output = output[1:-1]
-            output = ast.literal_eval(output)
-            if output["hostname"] != server1.ip:
+        if output and output[2]:
+            if not self._check_output(server1.ip, output):
                 self.fail("Fail to set correct hostname")
         else:
             self.fail("Fail to set alternate address")
@@ -367,7 +365,7 @@ class AlternateAddressTests(AltAddrBaseTest):
                             sub_command, url_format, server.ip, secure_port,
                             server.port, server.rest_username, server.rest_password,
                             secure_conn)
-        remove_cmd = cmd + " --remove"
+        remove_cmd = cmd + " --remove --node {0}".format(server.ip)
         shell = RemoteMachineShellConnection(server)
         output, error = shell.execute_command(remove_cmd)
         shell.disconnect()
@@ -401,7 +399,8 @@ class AlternateAddressTests(AltAddrBaseTest):
         setting_cmd += " -c http{0}://{1}:{2}{3} --username {4} --password {5} {6}"\
                        .format(url_format, internal_IP , secure_port, server.port,
                                server.rest_username, server.rest_password, secure_conn)
-        setting_cmd = setting_cmd + "--set --hostname {0} ".format(server.ip)
+        setting_cmd = setting_cmd + "--set --node {0} --hostname {1} "\
+                                         .format(internal_IP, server.ip)
         shell.execute_command(setting_cmd)
         output = self.list_alt_address(server=server, url_format = url_format,
                                           secure_port = secure_port,
@@ -447,7 +446,7 @@ class AlternateAddressTests(AltAddrBaseTest):
             if output:
                 self.log.info("Output from kv loader: {0}".format(output))
         except CalledProcessError as e:
-            print "Error return code: ", e.returncode
+            print("Error return code: ", e.returncode)
             if e.output:
                 if self.all_alt_addr_set:
                     if "No alternate address information found" in e.output:
@@ -565,7 +564,7 @@ class AlternateAddressTests(AltAddrBaseTest):
                 self.log.info("Create bucket {0}".format(bucket_name))
                 create_bucket = create_bucket_command
                 create_bucket += " -d name={0} ".format(bucket_name)
-                print "\ncreate bucket command: ", create_bucket
+                print("\ncreate bucket command: ", create_bucket)
                 output = check_output("{0}".format(create_bucket), shell=True,
                                                    stderr=STDOUT)
                 if output:

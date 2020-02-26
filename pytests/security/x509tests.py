@@ -1,8 +1,8 @@
 from basetestcase import BaseTestCase
 from security.x509main import x509main
-from newupgradebasetest import NewUpgradeBaseTest
+# from newupgradebasetest import NewUpgradeBaseTest
 from membase.api.rest_client import RestConnection, RestHelper
-import commands
+import subprocess
 import json
 import socket
 from couchbase.bucket import Bucket
@@ -15,6 +15,7 @@ import copy
 from couchbase.cluster import Cluster
 from couchbase.cluster import PasswordAuthenticator
 from ep_mc_bin_client import MemcachedClient
+from security.ntonencryptionBase import ntonencryptionBase
 
 
 class x509tests(BaseTestCase):
@@ -34,19 +35,22 @@ class x509tests(BaseTestCase):
         self.prefixs = self.input.param('prefixs', 'www.cb-:us.:www.').split(":")
         self.delimeters = self.input.param('delimeter', '.:.:.') .split(":")
         self.setup_once = self.input.param("setup_once", False)
-        self.upload_json_mode = self.input.param("upload_json_mode",'rest')
-        self.sdk_version = self.input.param('sdk_version','pre-vulcan')
+        self.upload_json_mode = self.input.param("upload_json_mode", 'rest')
+        self.sdk_version = self.input.param('sdk_version', 'pre-vulcan')
         
         self.dns = self.input.param('dns', None)
         self.uri = self.input.param('uri', None)
-        
+        self.enable_nton_local = self.input.param('enable_nton_local',False)
+        self.local_clusterEncryption = self.input.param('local_clusterEncryption','control')
+        self.wildcard_dns = self.input.param('wildcard_dns',None)
+
         copy_servers = copy.deepcopy(self.servers)
         
         # Generate cert and pass on the client ip for cert generation
         if (self.dns is not None) or (self.uri is not None):
-            x509main(self.master)._generate_cert(copy_servers, type=SSLtype, encryption=encryption_type, key_length=key_length, client_ip=self.ip_address, alt_names='non_default', dns=self.dns, uri=self.uri)
+            x509main(self.master)._generate_cert(copy_servers, type=SSLtype, encryption=encryption_type, key_length=key_length, client_ip=self.ip_address, alt_names='non_default', dns=self.dns, uri=self.uri,wildcard_dns=self.wildcard_dns)
         else:
-            x509main(self.master)._generate_cert(copy_servers, type=SSLtype, encryption=encryption_type, key_length=key_length, client_ip=self.ip_address)
+            x509main(self.master)._generate_cert(copy_servers, type=SSLtype, encryption=encryption_type, key_length=key_length, client_ip=self.ip_address,wildcard_dns=self.wildcard_dns)
         self.log.info(" Path is {0} - Prefixs - {1} -- Delimeters - {2}".format(self.paths, self.prefixs, self.delimeters))
         
         if (self.setup_once):
@@ -111,9 +115,9 @@ class x509tests(BaseTestCase):
         s.connect(('couchbase.com', 0))
         return s.getsockname()[0]
         '''
-        status, ipAddress = commands.getstatusoutput("ifconfig en0 | grep 'inet addr:' | cut -d: -f2 |awk '{print $1}'")
+        status, ipAddress = subprocess.getstatusoutput("ifconfig en0 | grep 'inet addr:' | cut -d: -f2 |awk '{print $1}'")
         if '1' not in ipAddress:
-            status, ipAddress = commands.getstatusoutput("ifconfig eth0 | grep  -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | awk '{print $2}'")
+            status, ipAddress = subprocess.getstatusoutput("ifconfig eth0 | grep  -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | awk '{print $2}'")
         return ipAddress
     
     def createBulkDocuments(self, client):
@@ -168,7 +172,7 @@ class x509tests(BaseTestCase):
                 if cb is not None:
                     result = True
                     return result, cb
-            except Exception, ex:
+            except Exception as ex:
                 self.log.info("Expection is  -{0}".format(ex))
         elif self.sdk_version == 'vulcan':
             key_file = x509main.CACERTFILEPATH + self.ip_address + ".key"
@@ -180,8 +184,9 @@ class x509tests(BaseTestCase):
                 cb = cluster.open_bucket(bucket)
                 if cb is not None:
                     result = True
+                    self.log.info('SDK connection created successfully')
                     return result, cb
-            except Exception, ex:
+            except Exception as ex:
                 self.log.info("Expection is  -{0}".format(ex))
         return result
 
@@ -261,7 +266,7 @@ class x509tests(BaseTestCase):
         x509main(self.master).setup_master()
         try:
             rest.add_node('Administrator', 'password', servs_inout.ip)
-        except Exception, ex:
+        except Exception as ex:
             ex = str(ex)
             # expected_result  = "Error adding node: " + servs_inout.ip + " to the cluster:" + self.master.ip + " - [\"Prepare join failed. Error applying node certificate. Unable to read certificate chain file\"]"
             expected_result = "Error adding node: " + servs_inout.ip + " to the cluster:" + self.master.ip
@@ -429,7 +434,7 @@ class x509tests(BaseTestCase):
             replication_id = restCluster1.start_replication('continuous', 'default', remote_cluster_name)
             if replication_id is not None:
                 self.assertTrue(True, "Replication was not created successfully")
-        except Exception, ex:
+        except Exception as ex:
             self.log.info("Exception is -{0}".format(ex))
         finally:
             restCluster2.delete_bucket()
@@ -708,6 +713,38 @@ class x509tests(BaseTestCase):
         for server in self.servers:
             result = self._sdk_connection(host_ip=server.ip)
             self.assertTrue(result, "Can create a ssl connection with correct certificate")
+    
+    def test_root_crt_rotate_cluster_n2n(self):
+        update_level = self.input.param('update_level','all')
+        #ntonencryptionBase().change_cluster_encryption_cli(self.servers, 'control')
+        #ntonencryptionBase().ntonencryption_cli(self.servers, 'disable')
+        rest = RestConnection(self.master)
+        x509main(self.master).setup_master()
+        x509main().setup_cluster_nodes_ssl(self.servers)
+        rest.create_bucket(bucket='default', ramQuotaMB=100)
+        self.sleep(30)
+        servers_in = self.servers[1:]
+        self.cluster.rebalance(self.servers, servers_in, [])
+
+        for server in self.servers:
+            result = self._sdk_connection(host_ip=server.ip)
+            self.assertTrue(result, "Can create a ssl connection with correct certificate")
+
+        result, cb = self._sdk_connection(host_ip=self.master.ip)
+        create_docs = Thread(name='create_docs', target=self.createBulkDocuments, args=(cb,))
+        create_docs.start()
+
+        x509main(self.master)._delete_inbox_folder()
+        x509main(self.master)._generate_cert(self.servers, root_cn="CB\ Authority", type='openssl', client_ip=self.ip_address)
+        x509main(self.master).setup_master()
+        x509main().setup_cluster_nodes_ssl(self.servers, reload_cert=True)
+        create_docs.join()
+        ntonencryptionBase().ntonencryption_cli(self.servers, 'enable')
+        ntonencryptionBase().change_cluster_encryption_cli(self.servers, update_level)
+
+        for server in self.servers:
+            result = self._sdk_connection(host_ip=server.ip)
+            self.assertTrue(result, "Can create a ssl connection with correct certificate")
 
     # Changing from self signed to ca signed, while there is a connection with self-signed
     def test_root_existing_connection_rotate_cert(self):
@@ -724,7 +761,7 @@ class x509tests(BaseTestCase):
             cb = Bucket(connection_string, password='password')
             if cb is not None:
                 result = True
-        except Exception, ex:
+        except Exception as ex:
             self.log.info("Exception is -{0}".format(ex))
         self.assertTrue(result, "Cannot create a client connection with server")
 
@@ -752,6 +789,9 @@ class x509tests(BaseTestCase):
     
     # Common test case for testing services and other parameter
     def test_add_node_with_cert_diff_services(self):
+        if self.enable_nton_local:
+            ntonencryptionBase().ntonencryption_cli(self.servers, 'enable')
+            ntonencryptionBase().change_cluster_encryption_cli(self.servers, self.local_clusterEncryption)
         servs_inout = self.servers[1:4]
         rest = RestConnection(self.master)
         services_in = []
@@ -975,7 +1015,7 @@ class x509tests(BaseTestCase):
             self.assertTrue(True, "CA Cert works with mandatory")
                               
         status, output = x509main()._execute_command_clientcert(host.ip, url='/pools/default', port=8091, headers=" -u Administrator:password ", client_cert=False, curl=False, verb='GET', plain_curl=True)
-        self.assertEqual(status, 401 , "Invalid user gets authenticated successfully")
+        self.assertEqual(status, 401, "Invalid user gets authenticated successfully")
     
     def test_incorrect_user(self):
         host = self.master
@@ -992,7 +1032,7 @@ class x509tests(BaseTestCase):
         if "Invalid value 'subject.test' for key 'path'" in content:
             self.assertTrue(True, " Correct error message for key path")
     
-
+'''
 class x509_upgrade(NewUpgradeBaseTest):
 
     def setUp(self):
@@ -1096,7 +1136,7 @@ class x509_upgrade(NewUpgradeBaseTest):
                 if cb is not None:
                     result = True
                     return result, cb
-            except Exception, ex:
+            except Exception as ex:
                 self.log.info("Expection is  -{0}".format(ex))
         elif sdk_version == 'vulcan':
             self.add_built_in_server_user([{'id': 'cbadminbucket', 'name': 'cbadminbucket', 'password': 'password'}], \
@@ -1111,7 +1151,7 @@ class x509_upgrade(NewUpgradeBaseTest):
                 if cb is not None:
                     result = True
                     return result, cb
-            except Exception, ex:
+            except Exception as ex:
                 self.log.info("Expection is  -{0}".format(ex))
         return result
 
@@ -1176,3 +1216,4 @@ class x509_upgrade(NewUpgradeBaseTest):
             result = self._sdk_connection(host_ip=server.ip, sdk_version='vulcan')
             self.assertTrue(result, "Cannot create a security connection with server")
             self.check_rest_api(server)
+'''

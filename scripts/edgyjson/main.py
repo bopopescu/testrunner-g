@@ -11,9 +11,8 @@ from couchbase.cluster import PasswordAuthenticator
 import couchbase.subdocument as SD
 from couchbase.exceptions import CouchbaseTransientError
 
-import constants
-from ValueGenerator import ValueGenerator
-
+from .constants import Constants as constants
+from .ValueGenerator import ValueGenerator
 
 # Example usage: python main.py -ip 192.168.56.111 -u Administrator -p password -b default -n 5
 class JSONDoc(object):
@@ -49,6 +48,8 @@ class JSONDoc(object):
         # connect to cb cluster
         try:
             connection = "couchbase://" + self.server
+            if "ip6" in self.server or self.server.startswith("["):
+                connection = connection+"?ipv6=allow"
             cluster = Cluster(connection)
             authenticator = PasswordAuthenticator(self.username, self.password)
             cluster.authenticate(authenticator)
@@ -68,7 +69,7 @@ class JSONDoc(object):
         cur_size = 0
         batches.append(cur_batch)
 
-        for key, value in json_docs.items():
+        for key, value in list(json_docs.items()):
             cur_batch[key] = value
             cur_size += len(key) + len(value) + 24
             if cur_size > BYTES_PER_BATCH:
@@ -88,7 +89,7 @@ class JSONDoc(object):
                 ok, fail = e.split_results()
                 new_batch = {}
                 for key in fail:
-                    new_batch[key] = all_data[key]
+                    new_batch[key] = list(json_docs.items())[key]
                 batches.pop()
                 batches.append(new_batch)
                 num_completed += len(ok)
@@ -150,8 +151,8 @@ class JSONDoc(object):
             logging.error("Unable to find template file , data not loaded!")
 
         valuegen = ValueGenerator()
-        for key, value in content.items():
-            if key in constants.generator_methods.keys():
+        for key, value in list(content.items()):
+            if key in list(constants.generator_methods.keys()):
                 if value:
                     argsdict = value
                 else:

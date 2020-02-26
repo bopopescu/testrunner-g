@@ -5,9 +5,9 @@ Copyright (c) 2007  Dustin Sallings <dustin@spy.net>
 """
 
 import array
-import exceptions
 import hmac
 import json
+import builtins as exceptions
 import random
 import re
 import select
@@ -89,8 +89,6 @@ class MemcachedErrorMetaclass(type):
 
 class MemcachedError(exceptions.Exception):
     """Error raised when a command fails."""
-
-    __metaclass__ = MemcachedErrorMetaclass
 
     def __init__(self, status, msg):
         supermsg='Memcached error #' + repr(status)
@@ -203,6 +201,21 @@ class MemcachedClient(object):
         msg=struct.pack(fmt, magic,
             cmd, len(key), len(extraHeader), dtype, vbucketId,
                 len(key) + len(extraHeader) + len(val), opaque, cas)
+        try:
+            key = key.encode()
+        except AttributeError:
+            pass
+
+        try:
+            extraHeader = extraHeader.encode()
+        except AttributeError:
+            pass
+
+        try:
+            val = val.encode()
+        except AttributeError:
+            pass
+
         self.s.sendall(msg + extraHeader + key + val)
 
     def _socketRecv(self, amount):
@@ -212,20 +225,20 @@ class MemcachedClient(object):
         raise TimeoutError(30)
 
     def _recvMsg(self):
-        response = ""
+        response = b""
         while len(response) < MIN_RECV_PACKET:
             data = self._socketRecv(MIN_RECV_PACKET - len(response))
-            if data == '':
+            if data == b'':
                 raise exceptions.EOFError("Got empty data (remote died?).")
             response += data
         assert len(response) == MIN_RECV_PACKET
         magic, cmd, keylen, extralen, dtype, errcode, remaining, opaque, cas=\
             struct.unpack(RES_PKT_FMT, response)
 
-        rv = ""
+        rv = b""
         while remaining > 0:
             data = self._socketRecv(remaining)
-            if data == '':
+            if data == b'':
                 raise exceptions.EOFError("Got empty data (remote died?).")
             rv += data
             remaining -= len(data)
@@ -408,7 +421,7 @@ class MemcachedClient(object):
         """Start a plan auth session."""
         try:
             self.sasl_auth_start('CRAM-MD5', '')
-        except MemcachedError, e:
+        except MemcachedError as e:
             if e.status != memcacheConstants.ERR_AUTH_CONTINUE:
                 raise
             challenge = e.msg
@@ -439,8 +452,8 @@ class MemcachedClient(object):
 
     def compact_db(self, vbucket, purgeBeforeTs, purgeBeforeSeq, dropDeletes):
         assert isinstance(vbucket, int)
-        assert isinstance(purgeBeforeTs, long)
-        assert isinstance(purgeBeforeSeq, long)
+        assert isinstance(purgeBeforeTs, int)
+        assert isinstance(purgeBeforeSeq, int)
         assert isinstance(dropDeletes, int)
         self.vbucketId = vbucket
         compact = struct.pack(memcacheConstants.COMPACT_DB_PKT_FMT,
@@ -467,7 +480,7 @@ class MemcachedClient(object):
         opaqued=dict(enumerate(keys))
         terminal=len(opaqued)+10
         # Send all of the keys in quiet
-        for k,v in opaqued.iteritems():
+        for k, v in opaqued.items():
             self._sendCmd(memcacheConstants.CMD_GETQ, v, '', k, collection=collection)
 
         self._sendCmd(memcacheConstants.CMD_NOOP, '', '', terminal)
@@ -489,15 +502,15 @@ class MemcachedClient(object):
         Give me (key, value) pairs."""
 
         # If this is a dict, convert it to a pair generator
-        if hasattr(items, 'iteritems'):
-            items = items.iteritems()
+        if hasattr(items, 'items'):
+            items = iter(items.items())
 
         opaqued=dict(enumerate(items))
         terminal=len(opaqued)+10
         extra=struct.pack(SET_PKT_FMT, flags, exp)
 
         # Send all of the keys in quiet
-        for opaque,kv in opaqued.iteritems():
+        for opaque, kv in opaqued.items():
             self._sendCmd(memcacheConstants.CMD_SETQ, kv[0], kv[1], opaque, extra, collection=collection)
 
         self._sendCmd(memcacheConstants.CMD_NOOP, '', '', terminal)
@@ -509,7 +522,7 @@ class MemcachedClient(object):
             try:
                 opaque, cas, data = self._handleSingleResponse(None)
                 done = opaque == terminal
-            except MemcachedError, e:
+            except MemcachedError as e:
                 failed.append(e)
 
         return failed
@@ -523,7 +536,7 @@ class MemcachedClient(object):
         extra = ''
 
         # Send all of the keys in quiet
-        for opaque, k in opaqued.iteritems():
+        for opaque, k in opaqued.items():
             self._sendCmd(memcacheConstants.CMD_DELETEQ, k, '', opaque, extra, collection=collection)
 
         self._sendCmd(memcacheConstants.CMD_NOOP, '', '', terminal)
@@ -535,7 +548,7 @@ class MemcachedClient(object):
             try:
                 opaque, cas, data = self._handleSingleResponse(None)
                 done = opaque == terminal
-            except MemcachedError, e:
+            except MemcachedError as e:
                 failed.append(e)
 
         return failed
@@ -593,7 +606,7 @@ class MemcachedClient(object):
 
         d = {}
 
-        for k,v in errmap['errors'].iteritems():
+        for k, v in errmap['errors'].items():
             d[int(k, 16)] = v
 
         errmap['errors'] = d
@@ -639,7 +652,7 @@ class MemcachedClient(object):
             # expect scope.collection for name API
             try:
                 collection = self.collection_map[collection]
-            except KeyError, e:
+            except KeyError as e:
                 self.log.info("Error: cannot map collection \"{}\" to an ID".format(collection))
                 self.log.info("name API expects \"scope.collection\" as the key")
                 raise e

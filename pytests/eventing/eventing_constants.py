@@ -20,6 +20,7 @@ class HANDLER_CODE:
     MULTIPLE_TIMER_OPS_OF_SAME_TYPE_ON_UPDATE = 'handler_code/multiple_timer_operations_of_same_type_on_update.js'
     MULTIPLE_ALIAS_BINDINGS_FOR_SAME_BUCKET = 'handler_code/multiple_alias_bindings_for_same_bucket.js'
     BUCKET_OPS_WITH_TIMERS = 'handler_code/bucket_op_with_timers.js'
+    BUCKET_OPS_WITH_TIMERS_RECOVERY = 'handler_code/bucket_op_with_timers_recovery.js'
     BUCKET_OPS_WITH_CRON_TIMERS = 'handler_code/bucket_op_with_cron_timers.js'
     BUCKET_OPS_WITH_CRON_TIMERS_RECOVERY = 'handler_code/bucket_op_with_cron_timer_recovery.js'
     READ_BUCKET_OP_ON_DST = 'handler_code/read_bucket_on_dst_bucket.js'
@@ -62,6 +63,7 @@ class HANDLER_CODE:
 class HANDLER_CODE_CURL:
     BUCKET_OP_WITH_CURL = 'handler_code/curl/bucket_op_curl.js'
     BUCKET_OP_WITH_CURL_GET= 'handler_code/curl/bucket_op_curl_get.js'
+    BUCKET_OP_WITH_CURL_GET_RECOVERY= 'handler_code/curl/bucket_op_curl_get_recovery.js'
     BUCKET_OP_WITH_CURL_POST= 'handler_code/curl/bucket_op_curl_post.js'
     BUCKET_OP_WITH_CURL_PUT= 'handler_code/curl/bucket_op_curl_put.js'
     BUCKET_OP_WITH_CURL_DELETE= 'handler_code/curl/bucket_op_curl_delete.js'
@@ -70,6 +72,7 @@ class HANDLER_CODE_CURL:
     TIMER_OP_WITH_CURL_POST = 'handler_code/curl/timer_op_curl_post.js'
     TIMER_OP_WITH_CURL_PUT = 'handler_code/curl/timer_op_curl_put.js'
     TIMER_OP_WITH_CURL_DELETE = 'handler_code/curl/timer_op_curl_delete.js'
+    TIMER_OP_WITH_CURL_DELETE_RECOVERY = 'handler_code/curl/timer_op_curl_delete_recovery.js'
     TIMER_OP_WITH_CURL_JENKINS= 'handler_code/curl/timer_op_curl_jenkins.js'
     BUCKET_OP_WITH_CURL_BEARER = 'handler_code/curl/bucket_op_curl_bearer.js'
     BUCKET_OP_WITH_CURL_COOKIE = 'handler_code/curl/bucket_op_curl_get_cookies.js'

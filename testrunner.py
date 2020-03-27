@@ -5,7 +5,7 @@ import gzip
 from http.client import BadStatusLine
 import os
 import urllib.request, urllib.error, urllib.parse
-import sys
+###import sys
 import threading
 from os.path import basename, splitext
 from multiprocessing import Process

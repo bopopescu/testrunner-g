@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import base664
+import base64
 import gzip
 from http.client import BadStatusLine
 import os

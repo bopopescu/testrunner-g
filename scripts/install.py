@@ -20,7 +20,7 @@ from builds.build_query import BuildQuery
 import logging.config
 from membase.api.exception import ServerUnavailableException
 from membase.api.rest_client import RestConnection, RestHelper
-from remote.remote_util import RemoteMachineShellConnection, RemoteUtilHelper
+from remote.remote_util import RemoteMachineShellConnection, RemoteUtilHelper, RemoteMachineHelper
 from membase.helper.cluster_helper import ClusterOperationHelper
 from testconstants import MV_LATESTBUILD_REPO
 from testconstants import SHERLOCK_BUILD_REPO
@@ -35,6 +35,7 @@ from testconstants import MIN_KV_QUOTA, INDEX_QUOTA, FTS_QUOTA, CBAS_QUOTA, CLUS
 from testconstants import LINUX_COUCHBASE_PORT_CONFIG_PATH, LINUX_COUCHBASE_OLD_CONFIG_PATH
 from testconstants import WIN_COUCHBASE_PORT_CONFIG_PATH, WIN_COUCHBASE_OLD_CONFIG_PATH,\
                           MACOS_NAME
+from testconstants import WIN_NUM_ERLANG_PROCESS
 import TestInput
 
 
@@ -253,7 +254,7 @@ class Installer(object):
 
         remote_client = RemoteMachineShellConnection(server)
         info = remote_client.extract_remote_info()
-        print("--> remote server architecture_type..{}".format(info.architecture_type))
+        print(("--> remote server architecture_type..{}".format(info.architecture_type)))
         server_os_type = info.distribution_version
         if info.distribution_type.lower() == "mac":
             macOS_name = info.distribution_version[:5]
@@ -263,8 +264,8 @@ class Installer(object):
             else:
                 server_os_type = "MacOS " + info.distribution_version
 
-        print("\n*** OS version of this server {0} is {1} ***"\
-                            .format(remote_client.ip, server_os_type))
+        print(("\n*** OS version of this server {0} is {1} ***"\
+                            .format(remote_client.ip, server_os_type)))
         if info.distribution_version.lower() == "suse 12":
             if version[:5] not in COUCHBASE_FROM_SPOCK:
                 mesg = "%s does not support cb version %s \n" % \
@@ -310,7 +311,7 @@ class Installer(object):
             elif "moxi-server" in names and version[:5] != "2.5.2":
                 """
                 moxi repo:
-                   http://latestbuilds.service.couchbase.com/builds/latestbuilds/moxi/4.6.0/101/moxi-server..
+                   http://172.23.126.166/builds/latestbuilds/moxi/4.6.0/101/moxi-server..
                 """
                 build_repo = CB_REPO.replace("couchbase-server", "moxi") + version[:5] + "/"
             elif version[:5] not in COUCHBASE_VERSION_2 and \
@@ -376,7 +377,7 @@ class Installer(object):
                     """ check if URL is live """
                     url_valid = False
                     remote_client = RemoteMachineShellConnection(server)
-                    print("check if {} is live".format(build.url))
+                    print(("check if {} is live".format(build.url)))
                     url_valid = remote_client.is_url_live(build.url)
                     remote_client.disconnect()
                     if url_valid:
@@ -507,6 +508,18 @@ class CouchbaseServerInstaller(Installer):
         remote_client = RemoteMachineShellConnection(params["server"])
         success = True
         success &= remote_client.is_couchbase_installed()
+        if remote_client.info.type.lower() == 'windows':
+            count = RemoteMachineHelper(remote_client).process_count("erl")
+            retry = 6
+            if count is None:
+                sys.exit("**** erlang service does not run ****")
+            while count < WIN_NUM_ERLANG_PROCESS and retry != 0:
+                time.sleep(10)
+                log.info("Wait 10 seconds for all erlang processes are up")
+                count = RemoteMachineHelper(remote_client).process_count("erl")
+                retry -= 1
+                if retry == 0:
+                    sys.exit("not all erlang processes up")
         if not success:
             mesg = "\n\nServer {0} failed to install".format(params["server"].ip)
             sys.exit(mesg)
@@ -769,7 +782,7 @@ class CouchbaseServerInstaller(Installer):
                                        windows_msi=self.msi,
                                        enable_ipv6=enable_ipv6)
             else:
-                print("Downloading the build...{}".format(build))
+                print(("Downloading the build...{}".format(build)))
                 downloaded = remote_client.download_build(build)
 
                 if not downloaded:
@@ -796,7 +809,7 @@ class CouchbaseServerInstaller(Installer):
                     traceback.print_exc()
                     exc_type, exc_obj, exc_tb = sys.exc_info()
                     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-                    print(exc_type, fname, exc_tb.tb_lineno)
+                    print((exc_type, fname, exc_tb.tb_lineno))
 
             remote_client.disconnect()
             if queue:
@@ -1084,12 +1097,12 @@ class InstallerJob(object):
                     success &= not shell.is_couchbase_installed()
                     shell.disconnect()
                 if not success:
-                    print("Server:{0}.Couchbase is still" + \
-                          " installed after uninstall".format(_params["server"]))
+                    print(("Server:{0}.Couchbase is still" + \
+                          " installed after uninstall".format(_params["server"])))
                     return success
                 print("uninstall succeeded")
             except Exception as ex:
-                print("unable to complete the uninstallation: ", ex)
+                print(("unable to complete the uninstallation: ", ex))
         success = True
         for installer, _params in installers:
             try:
@@ -1097,9 +1110,9 @@ class InstallerJob(object):
                 try:
                     installer.initialize(_params)
                 except Exception as ex:
-                    print("unable to initialize the server after successful installation", ex)
+                    print(("unable to initialize the server after successful installation", ex))
             except Exception as ex:
-                print("unable to complete the installation: ", ex)
+                print(("unable to complete the installation: ", ex))
         return success
 
     def parallel_install(self, servers, params):
@@ -1132,7 +1145,7 @@ class InstallerJob(object):
             t.start()
         for t in uninstall_threads:
             t.join()
-            print("thread {0} finished".format(t.name))
+            print(("thread {0} finished".format(t.name)))
         if "product" in params and params["product"] in ["couchbase", "couchbase-server", "cb"]:
             success = True
             for server in servers:
@@ -1140,13 +1153,13 @@ class InstallerJob(object):
                 success &= not shell.is_couchbase_installed()
                 shell.disconnect()
             if not success:
-                print("Server:{0}.Couchbase is still installed after uninstall".format(server))
+                print(("Server:{0}.Couchbase is still installed after uninstall".format(server)))
                 return success
         for t in install_threads:
             t.start()
         for t in install_threads:
             t.join()
-            print("thread {0} finished".format(t.name))
+            print(("thread {0} finished".format(t.name)))
         while not queue1.empty():
             success &= queue1.get()
         if not success:
@@ -1156,7 +1169,7 @@ class InstallerJob(object):
             t.start()
         for t in initializer_threads:
             t.join()
-            print("thread {0} finished".format(t.name))
+            print(("thread {0} finished".format(t.name)))
         """ remove any capture files left after install windows """
         remote_client = RemoteMachineShellConnection(servers[0])
         type = remote_client.extract_remote_info().distribution_type

@@ -32,6 +32,10 @@ import shutil
 import glob
 import xml.dom.minidom
 import logging
+from remote.remote_util import RemoteMachineShellConnection
+
+
+
 log = logging.getLogger(__name__)
 logging.info(__name__)
 print("*** TestRunner ***")
@@ -598,7 +602,7 @@ def runtests(names, options, arg_i, arg_p, runtime_test_params):
                 continue
 
             # there is a group for this test case, if that group is not specified at run time then do not run it
-            elif len( set(runtime_test_params["GROUP"].split(";")) & set(params["GROUP"].split(";")) ) == 0:
+            elif not set(runtime_test_params["GROUP"].split(";")).issubset(set(params["GROUP"].split(";"))):
                 print(("test '{0}' skipped, is not in the requested group".format(name)))
                 continue
             else:
@@ -606,7 +610,7 @@ def runtests(names, options, arg_i, arg_p, runtime_test_params):
 
         elif "EXCLUDE_GROUP" in runtime_test_params:
             if 'GROUP' in params and \
-                len(set(runtime_test_params["EXCLUDE_GROUP"].split(";")) & set(params["GROUP"].split(";"))) > 0:
+                set(runtime_test_params["EXCLUDE_GROUP"].split(";")).issubset(set(params["GROUP"].split(";"))):
                     print(("test '{0}' skipped, is in an excluded group".format(name)))
                     continue
 
@@ -757,6 +761,10 @@ def runtests(names, options, arg_i, arg_p, runtime_test_params):
                 print((result["name"], " pass"))
         if fail_count > 0:
             sys.exit(1)
+
+    print("During the test, Remote Connections: %s, Disconnections: %s" %
+              (RemoteMachineShellConnection.connections,
+               RemoteMachineShellConnection.disconnections))
 
     if TestInputSingleton.input.param("get-delays", False):
         sd.stop_measure_sched_delay()
@@ -972,6 +980,7 @@ def main():
     else:
         log.warning("Warning: No tests got selected. Please double check the .conf file and other "
               "options!")
+
 
     log.info("TestRunner: end...")
 

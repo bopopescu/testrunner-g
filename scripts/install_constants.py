@@ -9,7 +9,7 @@ USAGE = """\
              debug_logs=False                               Print debug logs
              install_tasks=uninstall-install-init-cleanup   Pick 1 or more tasks  
              v, version=<numeric version>                   Example: "6.5.0-1234".
-             url=<build url>                                Example: "http://latestbuilds.service.couchbase.com/builds/latestbuilds/couchbase-server/mad-hatter/1234/couchbase-server-enterprise-6.5.0-1234-centos7.x86_64.rpm
+             url=<build url>                                Example: "http://172.23.126.166/builds/latestbuilds/couchbase-server/mad-hatter/1234/couchbase-server-enterprise-6.5.0-1234-centos7.x86_64.rpm
              edition, type=enterprise                       CB edition, community or enterprise
              timeout=600                                    End install after timeout seconds
              storage_mode=plasma                            Sets indexer storage mode
@@ -25,7 +25,7 @@ SUPPORTED_PRODUCTS = ["couchbase", "couchbase-server", "cb"]
 AMAZON = ["amzn2"]
 CENTOS = ["centos6", "centos7", "centos8"]
 DEBIAN = ["debian8", "debian9", "debian10"]
-OEL = ["oel7"]
+OEL = ["oel7", "oel8"]
 RHEL = ["rhel8"]
 SUSE = ["suse12", "suse15"]
 UBUNTU = ["ubuntu16.04", "ubuntu18.04"]
@@ -52,12 +52,12 @@ DEFAULT_CLI_PATH = \
         "WINDOWS_SERVER": DEFAULT_INSTALL_DIR["WINDOWS_SERVER"] + "/bin/couchbase-cli"
     }
 
-WGET_CMD = "cd {0}; wget -N {1}"
+WGET_CMD = "cd {0}; wget -Nq {1}"
 CURL_CMD = "curl {0} -o {1} -z {1} -s -m 30"
 CB_ENTERPRISE = "couchbase-server-enterprise"
 CB_COMMUNITY = "couchbase-server-community"
 CB_EDITIONS = [CB_COMMUNITY, CB_ENTERPRISE]
-CB_DOWNLOAD_SERVER = "latestbuilds.service.couchbase.com"
+CB_DOWNLOAD_SERVER = "172.23.126.166"
 
 WIN_BROWSERS = ["MicrosoftEdge.exe", "iexplore.exe"]
 RETAIN_NUM_BINARIES_AFTER_INSTALL = "2"
@@ -70,6 +70,10 @@ CBFT_ENV_OPTIONS = \
     }
 
 CMDS = {
+    "processes_to_terminate": {
+        "beam.smp", "memcached", "moxi", "vbucketmigrator", "couchdb", "epmd", "memsup", "cpu_sup", "goxdcr", "erlang",
+        "eventing", "erl", "godu", "goport", "gosecrets", "projector"
+    },
     "deb": {
         "uninstall": "dpkg -r couchbase-server; "
                      "rm -rf " + DEFAULT_INSTALL_DIR["LINUX_DISTROS"] + " > /dev/null && echo 1 || echo 0",
@@ -142,7 +146,7 @@ WAIT_TIMES = {
     # unit seconds
     # (<sleep between retries>, <message>, <give up after>)
     "deb": {
-        "download_binary": (10, "Waiting {0}s for download to complete on {1}..", 100),
+        "download_binary": (10, "Waiting {0}s for download to complete on {1}..", 300),
         "uninstall": (10, "Waiting {0}s for uninstall to complete on {1}..", 30),
         "install": (20, "Waiting {0}s for install to complete on {1}..", 100),
         "post_install": (10, "Waiting {0}s for couchbase-service to become active on {1}..", 60),
@@ -150,7 +154,7 @@ WAIT_TIMES = {
 
     },
     "dmg": {
-        "download_binary": (20, "Waiting {0}s for download to complete on {1}..", 100),
+        "download_binary": (20, "Waiting {0}s for download to complete on {1}..", 300),
         "uninstall": (10, "Waiting {0}s for uninstall to complete on {1}..", 30),
         "pre_install": (30, "Waiting for dmg to be mounted..", 60),
         "install": (50, "Waiting {0}s for install to complete on {1}..", 100),
@@ -158,14 +162,14 @@ WAIT_TIMES = {
         "init": (30, "Waiting {0}s for {1} to be initialized..", 300)
     },
     "msi": {
-        "download_binary": (20, "Waiting {0}s for download to complete on {1}..", 100),
+        "download_binary": (20, "Waiting {0}s for download to complete on {1}..", 300),
         "uninstall": (10, "Waiting {0}s for uninstall to complete on {1}..", 30),
         "install": (50, "Waiting {0}s for install to complete on {1}..", 100),
         "post_install": (30, "Waiting {0}s for couchbase-service to become active on {1}..", 120),
         "init": (30, "Waiting {0}s for {1} to be initialized..", 300)
     },
     "rpm": {
-        "download_binary": (10, "Waiting {0}s for download to complete on {1}..", 100),
+        "download_binary": (10, "Waiting {0}s for download to complete on {1}..", 300),
         "uninstall": (10, "Waiting {0}s for uninstall to complete on {1}..", 30),
         "install": (20, "Waiting {0}s for install to complete on {1}..", 100),
         "post_install": (10, "Waiting {0}s for couchbase-service to become active on {1}..", 60),

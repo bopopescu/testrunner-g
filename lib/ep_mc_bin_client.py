@@ -143,13 +143,15 @@ class ErrorSubdocSuccessDeleted(MemcachedError): ERRCODE = 0xcd
 class ErrorSubdocXattrInvalidFlagCombo(MemcachedError): ERRCODE = 0xce
 class ErrorSubdocXattrInvalidKeyCombo(MemcachedError): ERRCODE = 0xcf
 class ErrorSubdocXattrUnknownMacro(MemcachedError): ERRCODE = 0xd0
+from cluster_run_manager import KeepRefs
 
-class MemcachedClient(object):
+class MemcachedClient(KeepRefs):
     """Simple memcached client."""
 
     vbucketId = 0
 
     def __init__(self, host='127.0.0.1', port=11211, family=socket.AF_UNSPEC):
+        super(MemcachedClient, self).__init__()
         self.host = host
         self.port = port
 
@@ -562,10 +564,17 @@ class MemcachedClient(object):
         while not done:
             cmd, opaque, cas, klen, extralen, data = self._handleKeyedResponse(None)
             if klen:
-                rv[data[0:klen]] = data[klen:]
+                rv[data[0:klen].decode()] = data[klen:].decode()
             else:
                 done = True
-        return rv
+        return self.get_decoded_dict(rv)
+
+    def get_decoded_dict(self, rv):
+        decoded_rv = {}
+        for key, value in list(rv.items()):
+            decoded_rv[key.decode("utf-8") if isinstance(key, bytes) else key] = \
+                value.decode("utf-8") if isinstance(value, bytes) else value
+        return decoded_rv
 
     def get_random_key(self):
         opaque=self.r.randint(0, 2**32)

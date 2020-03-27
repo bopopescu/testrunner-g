@@ -10,7 +10,7 @@ class RebalanceBaseTest(BaseTestCase):
         super(RebalanceBaseTest, self).setUp()
         self.value_size = self.input.param("value_size", 256)
         self.doc_ops = self.input.param("doc_ops", None)
-        self.withMutationOps = self.input.param("withMutationOps", True)
+        self.withMutationOps = self.input.param("withMutationOps", False)
         self.total_vbuckets = self.input.param("total_vbuckets", 1024)
         if self.doc_ops is not None:
             self.doc_ops = self.doc_ops.split(":")
@@ -26,12 +26,12 @@ class RebalanceBaseTest(BaseTestCase):
         # To validate MB-34173
         self.sleep_before_rebalance = \
             self.input.param("sleep_before_rebalance", None)
-        self.flusher_batch_split_trigger = \
-            self.input.param("flusher_batch_split_trigger", None)
+        self.flusher_total_batch_limit = \
+            self.input.param("flusher_total_batch_limit", None)
 
-        if self.flusher_batch_split_trigger:
-            self.set_flusher_batch_split_trigger(
-                self.flusher_batch_split_trigger, self.buckets)
+        if self.flusher_total_batch_limit:
+            self.set_flusher_total_batch_limit(
+                self.flusher_total_batch_limit, self.buckets)
 
         if self.blob_generator:
             # gen_load is used to create initial docs (1000 items by default)

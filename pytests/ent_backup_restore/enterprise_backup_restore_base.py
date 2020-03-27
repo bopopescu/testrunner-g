@@ -491,8 +491,6 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
             args += " --threads %s " % threads_count
         if self.backupset.backup_compressed:
             args += " --value-compression compressed"
-        if self.num_shards is not None:
-            args += " --shards {0} ".format(self.num_shards)
         if self.backupset.log_to_stdout:
             args += " --log-to-stdout"
         if self.backupset.auto_select_threads:
@@ -1037,7 +1035,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
                                              .format(self.backupset.directory))
         deleted_key_status = {}
         if "shard_0.sqlite.0" in output:
-            cmd = "{0}cbsqlitedump{1} " \
+            cmd = "{0}cbriftdump{1} " \
                   " -f {2}/backup/201*/default*/data/shard_0.sqlite.0 | grep -A 6 ent-backup " \
                   % (self.cli_command_location, self.cmd_ext, \
                      self.backupset.directory)
@@ -1063,8 +1061,6 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
 
     def bk_with_memcached_crash_and_restart(self):
         num_shards = ""
-        if self.num_shards is not None:
-            num_shards += " --shards {0} ".format(self.num_shards)
         backup_result = self.cluster.async_backup_cluster(
             cluster_host=self.backupset.cluster_host,
             backup_host=self.backupset.backup_host,
@@ -1112,8 +1108,6 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
 
     def bk_with_erlang_crash_and_restart(self):
         num_shards = ""
-        if self.num_shards is not None:
-            num_shards += " --shards {0} ".format(self.num_shards)
         backup_result = self.cluster.async_backup_cluster(
             cluster_host=self.backupset.cluster_host,
             backup_host=self.backupset.backup_host,
@@ -1156,8 +1150,6 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
 
     def bk_with_cb_server_stop_and_restart(self):
         num_shards = ""
-        if self.num_shards is not None:
-            num_shards += " --shards {0} ".format(self.num_shards)
         backup_result = self.cluster.async_backup_cluster(
             cluster_host=self.backupset.cluster_host,
             backup_host=self.backupset.backup_host,
@@ -1202,8 +1194,6 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         old_backup_name = ""
         new_backup_name = ""
         num_shards = ""
-        if self.num_shards is not None:
-            num_shards += " --shards {0} ".format(self.num_shards)
         conn = RemoteMachineShellConnection(self.backupset.cluster_host)
         started_couchbase = False
         try:
@@ -1935,7 +1925,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
 
             # Verify that the correct directories/files exist in the backup
             # directory
-            dir_file_list = ["backup", "logs", "archive_list.txt"]
+            dir_file_list = ["backup", "logs", "info.json", "system_info.log"]
             for name in dir_file_list:
                 if not any(name in dir_file for dir_file in archive_top_level):
                     self.fail(
@@ -2059,7 +2049,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
             """ get vbucket keys pair in data base """
             self.log.info("Collecting data from backup repo ...")
             for vb in vbucket_filter:
-                cmd = "{0}cbsqlitedump{1} --no-meta --no-body " \
+                cmd = "{0}cbriftdump{1} --no-meta --no-body " \
                       " -f {2}/backup/*/*/data/shard_{3}.sqlite.0 | grep 'Key:'" \
                     .format(self.cli_command_location, self.cmd_ext, \
                             self.backupset.directory, vb)

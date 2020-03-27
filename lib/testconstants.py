@@ -114,7 +114,8 @@ MACOS_NAME = {"10.10":"Yosemite", "10.11":"El Capitan", "10.12":"Sierra", "10.13
               "10.14":"Mojave", "10.15":"Catalina"}
 
 SYSTEMD_SERVER = ["centos 8", "centos 7", "suse 12", "suse 15", "ubuntu 16.04", "ubuntu 18.04",
-                  "debian gnu/linux 8", "debian gnu/linux 9", "rhel8"]
+                  "debian gnu/linux 8", "debian gnu/linux 9", "rhel8", "oel7", "oel8"]
+WIN_NUM_ERLANG_PROCESS = 4
 WIN_MEMBASE_DATA_PATH = '/cygdrive/c/Program\ Files/Membase/Server/var/lib/membase/data/'
 WIN_COUCHBASE_DATA_PATH = '/cygdrive/c/Program\ Files/Couchbase/Server/var/lib/couchbase/data/'
 WIN_COUCHBASE_DATA_PATH_RAW = 'c:/Program\ Files/Couchbase/Server/var/lib/couchbase/data/'
@@ -258,12 +259,12 @@ LOG_FILE_NAMES = ['cbcollect_info.log', 'couchbase.log', 'couchstore_local.log',
 # Allow for easy switch to a local mirror of the download stuff
 # (for people outside the mountain view office it's nice to be able to
 # be running this locally without being on VPN (which my test machines isn't)
-CB_DOWNLOAD_SERVER = "latestbuilds.service.couchbase.com"
-CB_DOWNLOAD_SERVER_FQDN = "nas.build.couchbase.com"
+CB_DOWNLOAD_SERVER = "172.23.126.166"
+CB_DOWNLOAD_SERVER_FQDN = "latestbuilds.service.couchbase.com"
 #CB_DOWNLOAD_SERVER = "10.0.0.117:8080"
 
 # old url MV_LATESTBUILD_REPO = "http://builds.hq.northscale.net/latestbuilds/"
-MV_LATESTBUILD_REPO = "http://latestbuilds.hq.couchbase.com/"
+MV_LATESTBUILD_REPO = "http://latestbuilds.service.couchbase.com/"
 #SHERLOCK_BUILD_REPO = "http://latestbuilds.hq.couchbase.com/couchbase-server/sherlock/"
 SHERLOCK_BUILD_REPO = "http://{0}/builds/latestbuilds/couchbase-server/sherlock/".format(CB_DOWNLOAD_SERVER)
 #COUCHBASE_REPO = "http://latestbuilds.hq.couchbase.com/couchbase-server/"
@@ -278,8 +279,8 @@ CB_RELEASE_REPO = "http://{0}/builds/releases/".format(CB_DOWNLOAD_SERVER)
 MC_BIN_CLIENT = "mc_bin_client"
 TESTRUNNER_CLIENT = "testrunner_client"
 PYTHON_SDK = "python_sdk"
-CB_RELEASE_APT_GET_REPO = "http://latestbuilds.hq.couchbase.com/couchbase-release/10/couchbase-release-1.0-0.deb"
-CB_RELEASE_YUM_REPO = "http://latestbuilds.hq.couchbase.com/couchbase-release/10/couchbase-release-1.0-0.noarch.rpm"
+CB_RELEASE_APT_GET_REPO = "http://latestbuilds.service.couchbase.com/couchbase-release/10/couchbase-release-1.0-0.deb"
+CB_RELEASE_YUM_REPO = "http://latestbuilds.service.couchbase.com/couchbase-release/10/couchbase-release-1.0-0.noarch.rpm"
 DEWIKI = "https://s3-us-west-1.amazonaws.com/qebucket/testrunner/data/dewiki.txt.gz"
 ENWIKI = "https://s3-us-west-1.amazonaws.com/qebucket/testrunner/data/enwiki.txt.gz"
 ESWIKI = "https://s3-us-west-1.amazonaws.com/qebucket/testrunner/data/eswiki.txt.gz"

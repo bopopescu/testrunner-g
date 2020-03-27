@@ -230,7 +230,7 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
         # wait for bucket operations to complete and verify it went through successfully
         count = 0
         stats_dst = self.rest.get_bucket_stats(bucket)
-        while stats_dst["curr_items"] <= expected_dcp_mutations and count < 20:
+        while stats_dst["curr_items"] != expected_dcp_mutations and count < 20:
             message = "Waiting for handler code {2} to complete bucket operations... Current : {0} Expected : {1}".\
                       format(stats_dst["curr_items"], expected_dcp_mutations, name)
             self.sleep(timeout//20, message=message)
@@ -634,27 +634,27 @@ class EventingBaseTest(QueryHelperTests, BaseTestCase):
             raise Exception('Eventing took lot of time for handler {} to {}'.format(name, status))
 
     def setup_curl(self,):
-        o=os.system('python scripts/curl_setup.py start')
+        o=os.system('python3 scripts/curl_setup.py start')
         self.log.info("=== started docker container =======".format(o))
         self.sleep(10)
         if o!=0:
             self.log.info("script result {}".format(o))
             raise Exception("unable to start docker")
-        o=os.system('python scripts/curl_setup.py setup')
+        o=os.system('python3 scripts/curl_setup.py setup')
         self.log.info("=== setup done =======")
         if o!=0:
             self.log.info("script result {}".format(o))
             raise Exception("curl setup fail")
 
     def teardown_curl(self):
-        o = os.system('python scripts/curl_setup.py stop')
+        o = os.system('python3 scripts/curl_setup.py stop')
         self.log.info("=== stopping docker container =======")
 
     def insall_dependencies(self):
         try:
             import docker
         except ImportError as e:
-            o = os.system("python scripts/install_docker.py docker")
+            o = os.system("python3 scripts/install_docker.py docker")
             self.log.info("docker installation done: {}".format(o))
             self.sleep(30)
             try:

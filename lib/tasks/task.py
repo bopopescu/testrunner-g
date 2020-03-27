@@ -23,15 +23,18 @@ from couchbase_helper.document import DesignDocument, View
 from mc_bin_client import MemcachedError, MemcachedClient
 from tasks.future import Future
 from couchbase_helper.stats_tools import StatsCommon
-from membase.api.exception import N1QLQueryException, DropIndexException, CreateIndexException, DesignDocCreationException, QueryViewException, ReadDocumentException, RebalanceFailedException, \
-                                    GetBucketInfoFailed, CompactViewFailed, SetViewInfoNotFound, FailoverFailedException, \
-                                    ServerUnavailableException, BucketFlushFailed, CBRecoveryFailedException, BucketCompactionException, AutoFailoverException
+from membase.api.exception import N1QLQueryException, DropIndexException, CreateIndexException, \
+    DesignDocCreationException, QueryViewException, ReadDocumentException, RebalanceFailedException, \
+    GetBucketInfoFailed, CompactViewFailed, SetViewInfoNotFound, FailoverFailedException, \
+    ServerUnavailableException, BucketFlushFailed, CBRecoveryFailedException, BucketCompactionException, \
+    AutoFailoverException
 from remote.remote_util import RemoteMachineShellConnection, RemoteUtilHelper
 from couchbase_helper.documentgenerator import BatchedDocumentGenerator
+from collection.collections_rest_client import Collections_Rest
 from TestInput import TestInputServer, TestInputSingleton
-from testconstants import MIN_KV_QUOTA, INDEX_QUOTA, FTS_QUOTA, COUCHBASE_FROM_4DOT6,\
-                          THROUGHPUT_CONCURRENCY, ALLOW_HTP, CBAS_QUOTA, COUCHBASE_FROM_VERSION_4,\
-                          CLUSTER_QUOTA_RATIO
+from testconstants import MIN_KV_QUOTA, INDEX_QUOTA, FTS_QUOTA, COUCHBASE_FROM_4DOT6, \
+    THROUGHPUT_CONCURRENCY, ALLOW_HTP, CBAS_QUOTA, COUCHBASE_FROM_VERSION_4, \
+    CLUSTER_QUOTA_RATIO
 from multiprocessing import Process, Manager, Semaphore
 import memcacheConstants
 from membase.api.exception import CBQError
@@ -39,15 +42,24 @@ from deepdiff import DeepDiff
 
 try:
     CHECK_FLAG = False
-    if (testconstants.TESTRUNNER_CLIENT in list(os.environ.keys())) and os.environ[testconstants.TESTRUNNER_CLIENT] == testconstants.PYTHON_SDK:
-        from sdk_client import SDKSmartClient as VBucketAwareMemcached
-        from sdk_client import SDKBasedKVStoreAwareSmartClient as KVStoreAwareSmartClient
+    if (testconstants.TESTRUNNER_CLIENT == testconstants.PYTHON_SDK):
+        try:
+            from sdk_client import SDKSmartClient as VBucketAwareMemcached
+            from sdk_client import SDKBasedKVStoreAwareSmartClient as KVStoreAwareSmartClient
+        except:
+            from sdk_client3 import SDKSmartClient as VBucketAwareMemcached
+            from sdk_client3 import SDKBasedKVStoreAwareSmartClient as KVStoreAwareSmartClient
     else:
         CHECK_FLAG = True
         from memcached.helper.data_helper import VBucketAwareMemcached, KVStoreAwareSmartClient
 except Exception as e:
-    CHECK_FLAG = True
-    from memcached.helper.data_helper import VBucketAwareMemcached, KVStoreAwareSmartClient
+    CHECK_FLAG = False
+    try:
+        from sdk_client import SDKSmartClient as VBucketAwareMemcached
+        from sdk_client import SDKBasedKVStoreAwareSmartClient as KVStoreAwareSmartClient
+    except:
+        from sdk_client3 import SDKSmartClient as VBucketAwareMemcached
+        from sdk_client3 import SDKBasedKVStoreAwareSmartClient as KVStoreAwareSmartClient
 
 # TODO: Setup stacktracer
 # TODO: Needs "easy_install pygments"
@@ -403,6 +415,194 @@ class BucketDeleteTask(Task):
             self.state = FINISHED
             self.log.info(StatsCommon.get_stats([self.server], self.bucket, "timings"))
             self.set_unexpected_exception(e)
+
+class CollectionCreateTask(Task):
+    def __init__(self, server, bucket, scope, collection, params):
+        Task.__init__(self, "collection_create_task")
+        self.server = server
+        self.bucket_name = bucket
+        self.scope_name = scope
+        self.collection_name = collection
+        self.collection_params = params
+
+    def execute(self, task_manager):
+        try:
+            RestConnection(self.server)
+        except ServerUnavailableException as error:
+            self.state = FINISHED
+            self.set_exception(error)
+            return
+        try:
+            Collections_Rest(self.server).create_collection(bucket=self.bucket_name, scope=self.scope_name,
+                                                                  collection=self.collection_name,
+                                                                  params=self.collection_params)
+            self.state = CHECKING
+            task_manager.schedule(self)
+
+        # catch and set all unexpected exceptions
+        except Exception as e:
+            self.state = FINISHED
+            self.set_unexpected_exception(e)
+
+    def check(self, task_manager):
+        self.set_result(True)
+        self.state = FINISHED
+        task_manager.schedule(self)
+
+class CollectionDeleteTask(Task):
+    def __init__(self, server, bucket, scope, collection):
+        Task.__init__(self, "collection_delete_task")
+        self.server = server
+        self.bucket_name = bucket
+        self.scope_name = scope
+        self.collection_name = collection
+
+    def execute(self, task_manager):
+        try:
+            RestConnection(self.server)
+        except ServerUnavailableException as error:
+            self.state = FINISHED
+            self.set_exception(error)
+            return
+        try:
+            Collections_Rest(self.server).delete_collection(bucket=self.bucket_name, scope=self.scope_name,
+                                                                  collection=self.collection_name)
+            self.state = CHECKING
+            task_manager.schedule(self)
+
+        # catch and set all unexpected exceptions
+        except Exception as e:
+            self.state = FINISHED
+            self.set_unexpected_exception(e)
+
+    def check(self, task_manager):
+        self.set_result(True)
+        self.state = FINISHED
+        task_manager.schedule(self)
+
+class ScopeCollectionCreateTask(Task):
+    def __init__(self, server, bucket, scope, collection, params):
+        Task.__init__(self, "collection_create_task")
+        self.server = server
+        self.bucket_name = bucket
+        self.scope_name = scope
+        self.collection_name = collection
+        self.collection_params = params
+
+    def execute(self, task_manager):
+        try:
+            RestConnection(self.server)
+        except ServerUnavailableException as error:
+            self.state = FINISHED
+            self.set_exception(error)
+            return
+        try:
+            Collections_Rest(self.server).create_scope_collection(bucket=self.bucket_name, scope=self.scope_name,
+                                                                  collection=self.collection_name,
+                                                                  params=self.collection_params)
+            self.state = CHECKING
+            task_manager.schedule(self)
+
+        # catch and set all unexpected exceptions
+        except Exception as e:
+            self.state = FINISHED
+            self.set_unexpected_exception(e)
+
+    def check(self, task_manager):
+        self.set_result(True)
+        self.state = FINISHED
+        task_manager.schedule(self)
+
+class ScopeCollectionDeleteTask(Task):
+    def __init__(self, server, bucket, scope, collection):
+        Task.__init__(self, "collection_delete_task")
+        self.server = server
+        self.bucket_name = bucket
+        self.scope_name = scope
+        self.collection_name = collection
+
+    def execute(self, task_manager):
+        try:
+            RestConnection(self.server)
+        except ServerUnavailableException as error:
+            self.state = FINISHED
+            self.set_exception(error)
+            return
+        try:
+            Collections_Rest(self.server).delete_scope_collection(bucket=self.bucket_name, scope=self.scope_name,
+                                                                  collection=self.collection_name)
+            self.state = CHECKING
+            task_manager.schedule(self)
+
+        # catch and set all unexpected exceptions
+        except Exception as e:
+            self.state = FINISHED
+            self.set_unexpected_exception(e)
+
+    def check(self, task_manager):
+        self.set_result(True)
+        self.state = FINISHED
+        task_manager.schedule(self)
+
+class ScopeCreateTask(Task):
+    def __init__(self, server, bucket, scope, params):
+        Task.__init__(self, "scope_create_task")
+        self.server = server
+        self.bucket_name = bucket
+        self.scope_name = scope
+        self.scope_params = params
+
+    def execute(self, task_manager):
+        try:
+            RestConnection(self.server)
+        except ServerUnavailableException as error:
+            self.state = FINISHED
+            self.set_exception(error)
+            return
+        try:
+            Collections_Rest(self.server).create_scope(bucket=self.bucket_name, scope=self.scope_name,
+                                                                  params=self.scope_params)
+            self.state = CHECKING
+            task_manager.schedule(self)
+
+        # catch and set all unexpected exceptions
+        except Exception as e:
+            self.state = FINISHED
+            self.set_unexpected_exception(e)
+
+    def check(self, task_manager):
+        self.set_result(True)
+        self.state = FINISHED
+        task_manager.schedule(self)
+
+class ScopeDeleteTask(Task):
+    def __init__(self, server, bucket, scope):
+        Task.__init__(self, "scope_delete_task")
+        self.server = server
+        self.bucket_name = bucket
+        self.scope_name = scope
+
+    def execute(self, task_manager):
+        try:
+            RestConnection(self.server)
+        except ServerUnavailableException as error:
+            self.state = FINISHED
+            self.set_exception(error)
+            return
+        try:
+            Collections_Rest(self.server).delete_scope(bucket=self.bucket_name, scope=self.scope_name)
+            self.state = CHECKING
+            task_manager.schedule(self)
+
+        # catch and set all unexpected exceptions
+        except Exception as e:
+            self.state = FINISHED
+            self.set_unexpected_exception(e)
+
+    def check(self, task_manager):
+        self.set_result(True)
+        self.state = FINISHED
+        task_manager.schedule(self)
 
 class RebalanceTask(Task):
     def __init__(self, servers, to_add=[], to_remove=[],
@@ -827,7 +1027,8 @@ class GenericLoadingTask(Thread, Task):
         try:
             self.client.set(key, self.exp, self.flag, value, collection=self.collection)
             if self.only_store_hash:
-                value = str(crc32.crc32_hash(value))
+                if value != None:
+                    value = str(crc32.crc32_hash(value))
             partition.set(key, value, self.exp, self.flag)
         except BaseException as error:
             self.state = FINISHED
@@ -1133,6 +1334,7 @@ class LoadDocumentsGeneratorsTask(LoadDocumentsTask):
             gen_end = max(int(gen.end), 1)
             gen_range = max(int(gen.end/self.process_concurrency), 1)
             for pos in range(gen_start, gen_end, gen_range):
+              try:
                 partition_gen = copy.deepcopy(gen)
                 partition_gen.start = pos
                 partition_gen.itr = pos
@@ -1143,6 +1345,8 @@ class LoadDocumentsGeneratorsTask(LoadDocumentsTask):
                         partition_gen,
                         self.batch_size)
                 self.generators.append(batch_gen)
+              except Exception as e:
+                traceback.print_exc()
 
 
         iterator = 0
@@ -1196,12 +1400,13 @@ class LoadDocumentsGeneratorsTask(LoadDocumentsTask):
                 client = VBucketAwareMemcached(
                     RestConnection(self.server),
                     self.bucket, compression=self.compression)
-            if self.op_types:
+            try:
+              if self.op_types:
                 self.op_type = self.op_types[iterator]
-            if self.buckets:
+              if self.buckets:
                 self.bucket = self.buckets[iterator]
 
-            while generator.has_next() and not self.done():
+              while generator.has_next() and not self.done():
 
                 # generate
                 key_value = generator.next_batch()
@@ -1210,6 +1415,8 @@ class LoadDocumentsGeneratorsTask(LoadDocumentsTask):
 
                 # cache
                 self.cache_items(tmp_kv_store, key_value)
+            except Exception as e:
+                traceback.print_exc()
 
         except Exception as ex:
             rv["err"] = ex

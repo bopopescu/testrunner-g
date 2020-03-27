@@ -8,7 +8,6 @@ import time
 import logging
 import stat
 import json
-import weakref
 
 import TestInput
 from subprocess import Popen, PIPE
@@ -32,7 +31,8 @@ from testconstants import COUCHBASE_FROM_VERSION_3,\
 from testconstants import COUCHBASE_RELEASE_VERSIONS_3, CB_RELEASE_BUILDS
 from testconstants import SHERLOCK_VERSION, WIN_PROCESSES_KILLED
 from testconstants import COUCHBASE_FROM_VERSION_4, COUCHBASE_FROM_WATSON,\
-                          COUCHBASE_FROM_SPOCK
+                          COUCHBASE_FROM_SPOCK,\
+                          COUCHBASE_FROM_CHESHIRE_CAT
 from testconstants import RPM_DIS_NAME
 from testconstants import LINUX_DISTRIBUTION_NAME, LINUX_CB_PATH, \
                           LINUX_COUCHBASE_BIN_PATH
@@ -53,7 +53,8 @@ from testconstants import LINUX_NONROOT_CB_BIN_PATH,\
                           NR_INSTALL_LOCATION_FILE, LINUX_DIST_CONFIG
 
 from membase.api.rest_client import RestConnection, RestHelper
-from collections import defaultdict
+from cluster_run_manager import KeepRefs
+
 
 log = logger.Logger.get_logger()
 logging.getLogger("paramiko").setLevel(logging.WARNING)
@@ -153,10 +154,11 @@ class RemoteMachineHelper(object):
             self.remote_shell.info = self.remote_shell.extract_remote_info()
 
         if self.remote_shell.info.type.lower() == 'windows':
-             output, error = self.remote_shell.execute_command('tasklist| grep {0}'
+             output, error = self.remote_shell.execute_command('tasklist | grep {0}'
                                                 .format(process_name), debug=False)
              if error or output == [""] or output == []:
                  return None
+             words = [' '.join(x.split()) for x in output]
              words = output[0].split(" ")
              words = [x for x in words if x != ""]
              process = RemoteMachineProcess()
@@ -176,27 +178,30 @@ class RemoteMachineHelper(object):
                     return process
         return None
 
-class KeepSSHConnRefs(object):
-    __refs__ = defaultdict(list)
+    def process_count(self, process_name, os_type="windows"):
+        if os_type == 'windows':
+            output, error = self.remote_shell.execute_command('tasklist | grep {0}'
+                                                .format(process_name), debug=False)
+            if error or output == [""] or output == []:
+                return None
+            processes = [' '.join(x.split()) for x in output]
+            log.info("Process {0} in this server: {1}".format(process_name, processes))
+            count = 0
+            for process in processes:
+                if process_name in process:
+                    count += 1
+            return count
 
-    def __init__(self):
-        self.__refs__[self.__class__].append(weakref.ref(self)())
-
-    @classmethod
-    def get_instances(cls):
-        for ins in cls.__refs__[cls]:
-            yield ins
-
-    def remove_refs(self):
-        self.__refs__[self.__class__].remove(weakref.ref(self)())
-
-class RemoteMachineShellConnection(KeepSSHConnRefs):
+class RemoteMachineShellConnection(KeepRefs):
+    connections = 0
+    disconnections = 0
     _ssh_client = None
 
     def __init__(self, username='root',
                  pkey_location='',
                  ip='', port=''):
         super(RemoteMachineShellConnection, self).__init__()
+        RemoteMachineShellConnection.connections += 1
         self.username = username
         self.use_sudo = True
         self.nonroot = False
@@ -540,7 +545,7 @@ class RemoteMachineShellConnection(KeepSSHConnRefs):
             self.log_command_output(o, r)
         if self.info.type.lower() == "linux":
             fv, sv, bn = self.get_cbversion("linux")
-            if "centos 7" in self.info.distribution_version.lower() \
+            if self.info.distribution_version.lower() in SYSTEMD_SERVER \
                     and sv in COUCHBASE_FROM_WATSON:
                 """from watson, systemd is used in centos 7 """
                 log.info("this node is centos 7.x")
@@ -3273,6 +3278,7 @@ class RemoteMachineShellConnection(KeepSSHConnRefs):
                 self.log_command_output(o, r, debug=False)
 
     def disconnect(self):
+        RemoteMachineShellConnection.disconnections += 1
         self._ssh_client.close()
 
     def extract_remote_info(self):
@@ -3306,68 +3312,49 @@ class RemoteMachineShellConnection(KeepSSHConnRefs):
             is_mac = False
             sftp = self._ssh_client.open_sftp()
             filenames = sftp.listdir('/etc/')
-            os_distro = ""
-            os_version = ""
+            os_distro = ''
+            os_version = ''
             is_linux_distro = False
             for name in filenames:
-                if name == 'issue':
-                    # it's a linux_distro . let's downlaod this file
-                    # format Ubuntu 10.04 LTS \n \l
-                    filename = 'etc-issue-{0}'.format(uuid.uuid4())
-                    sftp.get(localpath=filename, remotepath='/etc/issue')
+                if name == 'os-release':
+                    # /etc/os-release seems like standard across linux distributions
+                    filename = 'etc-os-release-{0}'.format(uuid.uuid4())
+                    sftp.get(localpath=filename, remotepath='/etc/os-release')
                     file = open(filename)
-                    etc_issue = ''
-                    # let's only read the first line
-                    for line in file:
-                        # for SuSE that has blank first line
-                        if line.rstrip('\n'):
-                            etc_issue = line
-                            break
-                        # strip all extra characters
-                    etc_issue = etc_issue.rstrip('\n').rstrip(' ').rstrip('\\l').rstrip(' ').rstrip('\\n').rstrip(' ')
-                    if etc_issue.lower().find('ubuntu') != -1:
-                        os_distro = 'Ubuntu'
-                        os_version = etc_issue
-                        tmp_str = etc_issue.split()
-                        if tmp_str and tmp_str[1][:2].isdigit():
-                            os_version = "Ubuntu %s" % tmp_str[1][:5]
-                        is_linux_distro = True
-                    elif etc_issue.lower().find('debian') != -1:
-                        os_distro = 'Ubuntu'
-                        os_version = etc_issue
-                        is_linux_distro = True
-                    elif etc_issue.lower().find('mint') != -1:
-                        os_distro = 'Ubuntu'
-                        os_version = etc_issue
-                        is_linux_distro = True
-                    elif etc_issue.lower().find('amazon linux ami') != -1:
-                        os_distro = 'CentOS'
-                        os_version = etc_issue
-                        is_linux_distro = True
-                    elif etc_issue.lower().find('centos') != -1:
-                        os_distro = 'CentOS'
-                        os_version = etc_issue
-                        is_linux_distro = True
-                    elif etc_issue.lower().find('red hat') != -1:
-                        os_distro = 'Red Hat'
-                        os_version = etc_issue
-                        is_linux_distro = True
-                    elif etc_issue.lower().find('opensuse') != -1:
-                        os_distro = 'openSUSE'
-                        os_version = etc_issue
-                        is_linux_distro = True
-                    elif etc_issue.lower().find('suse linux') != -1:
-                        os_distro = 'SUSE'
-                        os_version = etc_issue
-                        tmp_str = etc_issue.split()
-                        if tmp_str and tmp_str[6].isdigit():
-                            os_version = "SUSE %s" % tmp_str[6]
-                        is_linux_distro = True
-                    elif etc_issue.lower().find('oracle linux') != -1:
-                        os_distro = 'Oracle Linux'
-                        os_version = etc_issue
-                        is_linux_distro = True
+                    line = file.readline()
+                    is_version_id = False
+                    is_pretty_name = False
+                    os_pretty_name = ''
+                    while line and (not is_version_id or not is_pretty_name):
+                        log.debug(line)
+                        if line.startswith('VERSION_ID'):
+                            os_version = line.split('=')[1].replace('"','')
+                            os_version = os_version.rstrip('\n').rstrip(' ').rstrip('\\l').rstrip(
+                                ' ').rstrip('\\n').rstrip(' ')
+                            is_version_id = True
+                        elif line.startswith('PRETTY_NAME'):
+                            os_pretty_name = line.split('=')[1].replace('"','')
+                            is_pretty_name = True
+                        line = file.readline()
 
+                    os_distro_dict = {'ubuntu': 'Ubuntu', 'debian': 'Ubuntu', 'mint': 'Ubuntu',
+                        'amazon linux ami': 'CentOS', 'centos': 'CentOS', 'opensuse': 'openSUSE',
+                        'red': 'Red Hat', 'suse': 'SUSE', 'oracle': 'Oracle Linux'}
+                    os_shortname_dict = {'ubuntu': 'ubuntu', 'debian': 'debian', 'mint': 'ubuntu',
+                        'amazon linux ami': 'amzn2', 'centos': 'centos', 'opensuse': 'suse',
+                        'red': 'rhel', 'suse': 'suse', 'oracle': 'oel'}
+                    log.debug("os_pretty_name:" + os_pretty_name)
+                    if os_pretty_name:
+                        os_name = os_pretty_name.split(' ')[0].lower()
+                        os_distro = os_distro_dict[os_name]
+                        if os_name != 'ubuntu':
+                            os_version = os_shortname_dict[os_name] + " " + os_version.split('.')[0]
+                        else:
+                            os_version = os_shortname_dict[os_name] + " " + os_version
+                        if os_distro:
+                            is_linux_distro = True
+                    log.info("os_distro: " + os_distro + ", os_version: " + os_version +
+                             ", is_linux_distro: " + str(is_linux_distro))
                     file.close()
                     # now remove this file
                     os.remove(filename)
@@ -3396,17 +3383,28 @@ class RemoteMachineShellConnection(KeepSSHConnRefs):
                             etc_issue = line
                             break
                             # strip all extra characters
-                    etc_issue = etc_issue.rstrip('\n').rstrip(' ').rstrip('\\l').rstrip(' ').rstrip('\\n').rstrip(' ')
-                    os_distro = 'Amazon Linux 2'
-                    os_version = etc_issue
-                    is_linux_distro = True
-                    file.close()
-                    # now remove this file
-                    os.remove(filename)
-                    break
+                    if etc_issue.lower().find('oracle linux') != -1:
+                        os_distro = 'Oracle Linux'
+                        for i in etc_issue:
+                            if i.isdigit():
+                                dist_version = i
+                                break
+                        os_version = "oel{}".format(dist_version)
+                        is_linux_distro = True
+                        break
+                    elif etc_issue.lower().find('Amazon Linux 2') != -1:
+                        etc_issue = etc_issue.rstrip('\n').rstrip(' ').rstrip('\\l').rstrip(' ').rstrip('\\n').rstrip(
+                            ' ')
+                        os_distro = 'Amazon Linux 2'
+                        os_version = etc_issue
+                        is_linux_distro = True
+                        file.close()
+                        # now remove this file
+                        os.remove(filename)
+                        break
             """ for centos 7 or rhel8 """
             for name in filenames:
-                if name == "redhat-release":
+                if name == "redhat-release" and os_distro == "":
                     filename = 'redhat-release-{0}'.format(uuid.uuid4())
                     if self.remote:
                         sftp.get(localpath=filename, remotepath='/etc/redhat-release')
@@ -3508,6 +3506,8 @@ class RemoteMachineShellConnection(KeepSSHConnRefs):
             info.hostname = self.get_hostname()
             info.domain = self.get_domain()
             self.info = info
+            log.info("extract_remote_info-->distribution_type: " + info.distribution_type + ", "
+                    "distribution_version: " + info.distribution_version)
             return info
 
     def get_extended_windows_info(self):
@@ -3848,7 +3848,7 @@ class RemoteMachineShellConnection(KeepSSHConnRefs):
             shell.send('net start CouchbaseServer\n')
         elif self.info.type.lower() == "linux":
             shell.send('export {0}={1}\n'.format(name, value))
-            if "centos 7" in self.info.distribution_version.lower():
+            if self.info.distribution_version.lower() in SYSTEMD_SERVER:
                 """from watson, systemd is used in centos 7 """
                 log.info("this node is centos 7.x")
                 shell.send("systemctl restart couchbase-server.service\n")
@@ -3902,7 +3902,7 @@ class RemoteMachineShellConnection(KeepSSHConnRefs):
         self.log_command_output(o, r)
 
         if self.info.type.lower() == "linux":
-            if "centos 7" in self.info.distribution_version.lower():
+            if self.info.distribution_version.lower() in SYSTEMD_SERVER:
                 """from watson, systemd is used in centos 7 """
                 log.info("this node is centos 7.x")
                 o, r = self.execute_command("service couchbase-server restart")
@@ -3939,7 +3939,7 @@ class RemoteMachineShellConnection(KeepSSHConnRefs):
         o, r = self.execute_command("mv " + backupfile + " " + sourceFile)
         self.log_command_output(o, r)
         if self.info.type.lower() == "linux":
-            if "centos 7" in self.info.distribution_version.lower():
+            if self.info.distribution_version.lower() in SYSTEMD_SERVER:
                 """from watson, systemd is used in centos 7 """
                 log.info("this node is centos 7.x")
                 o, r = self.execute_command("service couchbase-server restart")
@@ -4611,7 +4611,7 @@ class RemoteMachineShellConnection(KeepSSHConnRefs):
                                     o, r = self.execute_command("dpkg --get-selections | grep libssl")
                                     log.info("package {0} should not appear below".format(s[:11]))
                                     self.log_command_output(o, r)
-           
+
     def check_pkgconfig(self, deliverable_type, openssl):
         if "SUSE" in self.info.distribution_type:
             o, r = self.execute_command("zypper -n if pkg-config 2>/dev/null| grep -i \"Installed: Yes\"")

@@ -797,8 +797,8 @@ class DataCollector(object):
                 master_key = ".\{12\}$"
             dump_output = []
             for i in range(0, 1024):
-                cmd2 = "{0}cbsqlitedump{1} "\
-                       " -f {2}/backup/{3}*/{4}*/data/shard_{5}.sqlite.0 | grep -A 8 'Key: {6}' "\
+                cmd2 = "{0}cbriftdump{1} "\
+                       " -f {2}/backup/{3}*/{4}*/data/index_{5}.sqlite.0 | grep -A 8 'Key: {6}' "\
                                                   .format(cli_command, cmd_ext,\
                                                    backup_dir, now.year, bucket.name,\
                                                    i, master_key)
@@ -825,16 +825,16 @@ class DataCollector(object):
                     status = True
 
             if not backup_data[bucket.name]:
-                print("Data base of bucket {0} is empty".format(bucket.name))
+                print(("Data base of bucket {0} is empty".format(bucket.name)))
                 return  backup_data, status
-            print("---- Done extract data from backup files in backup repo of bucket {0}"\
-                                                                   .format(bucket.name))
+            print(("---- Done extract data from backup files in backup repo of bucket {0}"\
+                                                                   .format(bucket.name)))
         if debug_logs:
-            print("---- shards with data in each bucket: {0}".format(shards_with_data))
+            print(("---- shards with data in each bucket: {0}".format(shards_with_data)))
         else:
             for bucket in buckets:
-                print("---- total vbuckets with data in bucket {0} are {1}"\
-                           .format(bucket.name, len(shards_with_data[bucket.name])))
+                print(("---- total vbuckets with data in bucket {0} are {1}"\
+                           .format(bucket.name, len(shards_with_data[bucket.name]))))
         return backup_data, status
 
     def get_views_definition_from_backup_file(self, server, backup_dir, buckets):

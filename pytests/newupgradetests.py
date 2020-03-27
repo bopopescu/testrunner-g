@@ -325,7 +325,7 @@ class MultiNodesUpgradeTests(NewUpgradeBaseTest):
                 for server in servers_with_not_default:
                     rest = RestConnection(server)
                     node = rest.get_nodes_self()
-                    print(node.storage[0])
+                    print((node.storage[0]))
                     self.assertEqual(node.storage[0].path.lower(), data_path.lower(),
                                      "Server %s. Data path expected:%s, actual %s." % (
                                          server.ip, data_path, node.storage[0].path))
@@ -2565,8 +2565,8 @@ class MultiNodesUpgradeTests(NewUpgradeBaseTest):
         rest = RestConnection(self.master)
         bucket = rest.get_buckets()[0]
         rest.update_autofailover_settings(False, 60)
-        if self.flusher_batch_split_trigger:
-            self.set_flusher_batch_split_trigger(self.flusher_batch_split_trigger, [bucket])
+        if self.flusher_total_batch_limit:
+            self.set_flusher_total_batch_limit(self.flusher_total_batch_limit, [bucket])
         load_thread = Thread(target=self.load_buckets_with_high_ops,
                              name="high_ops_load",
                              args=(self.master, self.buckets[0], self.num_items // 2,
@@ -2579,7 +2579,7 @@ class MultiNodesUpgradeTests(NewUpgradeBaseTest):
             self.cluster.rebalance([self.servers[0]], [self.servers[i]], [])
             self.sleep(30)
         load_thread.join()
-        if self.flusher_batch_split_trigger:
+        if self.flusher_total_batch_limit:
             try:
                 self.check_snap_start_corruption(servers_to_check=self.servers[:self.nodes_init])
             except AssertionError as error:
@@ -2672,8 +2672,8 @@ class MultiNodesUpgradeTests(NewUpgradeBaseTest):
         rest = RestConnection(self.master)
         bucket = rest.get_buckets()[0]
         rest.update_autofailover_settings(False, 60)
-        if self.flusher_batch_split_trigger:
-            self.set_flusher_batch_split_trigger(self.flusher_batch_split_trigger, [bucket])
+        if self.flusher_total_batch_limit:
+            self.set_flusher_total_batch_limit(self.flusher_total_batch_limit, [bucket])
         load_thread = Thread(target=self.load_buckets_with_high_ops,
                              name="high_ops_load",
                              args=(self.master, self.buckets[0], self.num_items // 2,
@@ -2686,7 +2686,7 @@ class MultiNodesUpgradeTests(NewUpgradeBaseTest):
             self.cluster.rebalance([self.servers[0]], [self.servers[i]], [])
             self.sleep(30)
         load_thread.join()
-        if self.flusher_batch_split_trigger:
+        if self.flusher_total_batch_limit:
             try:
                 self.check_snap_start_corruption(servers_to_check=self.servers[:self.nodes_init])
             except AssertionError as error:
@@ -2785,8 +2785,8 @@ class MultiNodesUpgradeTests(NewUpgradeBaseTest):
         rest = RestConnection(self.master)
         bucket = rest.get_buckets()[0]
         rest.update_autofailover_settings(False, 60)
-        if self.flusher_batch_split_trigger:
-            self.set_flusher_batch_split_trigger(self.flusher_batch_split_trigger, [bucket])
+        if self.flusher_total_batch_limit:
+            self.set_flusher_total_batch_limit(self.flusher_total_batch_limit, [bucket])
         load_thread = Thread(target=self.load_buckets_with_high_ops,
                              name="high_ops_load",
                              args=(self.master, self.buckets[0], self.num_items // 2,
@@ -2799,7 +2799,7 @@ class MultiNodesUpgradeTests(NewUpgradeBaseTest):
             self.cluster.rebalance([self.servers[0]], [self.servers[i]], [])
             self.sleep(30)
         load_thread.join()
-        if self.flusher_batch_split_trigger:
+        if self.flusher_total_batch_limit:
             try:
                 self.check_snap_start_corruption(servers_to_check=self.servers[:self.nodes_init])
             except AssertionError as error:
@@ -2894,8 +2894,8 @@ class MultiNodesUpgradeTests(NewUpgradeBaseTest):
         rest = RestConnection(self.master)
         bucket = rest.get_buckets()[0]
         rest.update_autofailover_settings(False, 60)
-        if self.flusher_batch_split_trigger:
-            self.set_flusher_batch_split_trigger(self.flusher_batch_split_trigger, [bucket])
+        if self.flusher_total_batch_limit:
+            self.set_flusher_total_batch_limit(self.flusher_total_batch_limit, [bucket])
         load_thread = Thread(target=self.load_buckets_with_high_ops,
                              name="high_ops_load",
                              args=(self.master, self.buckets[0], self.num_items // 2,
@@ -2908,7 +2908,7 @@ class MultiNodesUpgradeTests(NewUpgradeBaseTest):
             self.cluster.rebalance([self.servers[0]], [self.servers[i]], [])
             self.sleep(30)
         load_thread.join()
-        if self.flusher_batch_split_trigger:
+        if self.flusher_total_batch_limit:
             try:
                 self.check_snap_start_corruption(servers_to_check=self.servers[:self.nodes_init])
             except AssertionError as error:
@@ -3239,7 +3239,7 @@ class MultiNodesUpgradeTests(NewUpgradeBaseTest):
     def load_buckets_with_high_ops(self, server, bucket, items, batch=2000,
                                    threads=5, start_document=0, instances=1, ttl=0):
         import subprocess
-        cmd_format = "python scripts/thanosied.py  --spec couchbase://{0} --bucket {1} --user {2} --password {3} " \
+        cmd_format = "python3 scripts/thanosied.py  --spec couchbase://{0} --bucket {1} --user {2} --password {3} " \
                      "--count {4} --batch_size {5} --threads {6} --start_document {7} --cb_version {8} --workers {9} --ttl {10} --rate_limit {11} " \
                      "--passes 1"
         cb_version = RestConnection(server).get_nodes_version()[:3]
@@ -3285,7 +3285,7 @@ class MultiNodesUpgradeTests(NewUpgradeBaseTest):
                                            updated=False, ops=0, ttl=0, deleted=False, deleted_items=0):
         import subprocess
         from lib.memcached.helper.data_helper import VBucketAwareMemcached
-        cmd_format = "python scripts/thanosied.py  --spec couchbase://{0} --bucket {1} --user {2} --password {3} " \
+        cmd_format = "python3 scripts/thanosied.py  --spec couchbase://{0} --bucket {1} --user {2} --password {3} " \
                      "--count {4} --batch_size {5} --threads {6} --start_document {7} --cb_version {8} --validation 1 --rate_limit {9}  " \
                      "--passes 1"
         cb_version = RestConnection(server).get_nodes_version()[:3]

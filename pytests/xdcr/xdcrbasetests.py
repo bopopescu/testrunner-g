@@ -26,7 +26,8 @@ from security.rbac_base import RbacBase
 from couchbase_helper.documentgenerator import BlobGenerator
 from membase.api.exception import ServerUnavailableException, XDCRException
 from testconstants import STANDARD_BUCKET_PORT
-
+from lib.ep_mc_bin_client import MemcachedClient
+from lib.mc_bin_client import MemcachedClient as MC_MemcachedClient
 #===============================================================================
 # class: XDCRConstants
 # Constants used in XDCR application testing. It includes input parameters as well
@@ -170,6 +171,19 @@ class XDCRBaseTest(unittest.TestCase):
             self.log.info("==============  XDCRbasetests cleanup is finished for test #{0} {1} =============="\
                 .format(self.case_number, self._testMethodName))
         finally:
+            self.log.info("closing all ssh connections")
+            for ins in RemoteMachineShellConnection.get_instances():
+                #self.log.info(str(ins))
+                ins.disconnect()
+
+            self.log.info("closing all memcached connections")
+            for ins in MemcachedClient.get_instances():
+                #self.log.info(str(ins))
+                ins.close()
+
+            for ins in MC_MemcachedClient.get_instances():
+                #self.log.info(str(ins))
+                ins.close()
             self.cluster.shutdown(force=True)
             self._log_finish(self)
 

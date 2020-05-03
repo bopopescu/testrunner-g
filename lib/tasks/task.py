@@ -39,6 +39,7 @@ from multiprocessing import Process, Manager, Semaphore
 import memcacheConstants
 from membase.api.exception import CBQError
 from deepdiff import DeepDiff
+from functools import cmp_to_key
 
 try:
     CHECK_FLAG = False
@@ -138,11 +139,12 @@ class NodeInitializeTask(Task):
                 print("debuging hanging issue task 127" + str(error))
                 self.set_exception(error)
                 return
+        self.log.info("server: %s, nodes/self ", self.server)
         info = Future.wait_until(lambda: rest.get_nodes_self(),
-                                 lambda x: x.memoryTotal > 0,
+                                 lambda x: x.memoryTotal > 0 or x.storageTotalRam > 0,
                                  timeout_secs=60, interval_time=0.1,
                                  exponential_backoff=False)
-        self.log.info("server: %s, nodes/self: %s", self.server, info.__dict__)
+        self.log.info(" %s", info.__dict__)
 
         username = self.server.rest_username
         password = self.server.rest_password
@@ -3841,7 +3843,7 @@ class GenerateExpectedViewResultsTask(Task):
 
         # sort expected results to match view results
         expected_rows = sorted(self.emitted_rows,
-                               cmp=GenerateExpectedViewResultsTask.cmp_result_rows,
+                               key=cmp_to_key(lambda a, b: GenerateExpectedViewResultsTask.cmp_result_rows(a,b)),
                                reverse=descending_set)
 
         # filter rows according to query flags
@@ -3999,7 +4001,7 @@ class GenerateExpectedViewResultsTask(Task):
                     group = [int(k) for k in group]
                 expected_rows.append({"key" : group, "value" : value})
             expected_rows = sorted(expected_rows,
-                               cmp=GenerateExpectedViewResultsTask.cmp_result_rows,
+                               key=cmp_to_key(lambda a, b: GenerateExpectedViewResultsTask.cmp_result_rows(a,b)),
                                reverse=descending_set)
         if 'skip' in query:
             expected_rows = expected_rows[(int(query['skip'])):]

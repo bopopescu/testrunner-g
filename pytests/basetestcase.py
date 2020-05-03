@@ -36,6 +36,8 @@ from testconstants import LINUX_DIST_CONFIG
 from membase.helper.cluster_helper import ClusterOperationHelper
 from security.rbac_base import RbacBase
 from security.ntonencryptionBase import ntonencryptionBase
+from security.SecretsMasterBase import SecretsMasterBase
+
 
 from couchbase_cli import CouchbaseCLI
 import testconstants
@@ -201,6 +203,9 @@ class BaseTestCase(unittest.TestCase):
             self.ntonencrypt_level = self.input.param('ntonencrypt_level','control')
             self.hostname = self.input.param('hostname',False)
             self.x509enable = self.input.param('x509enable',False)
+            self.enable_secrets = self.input.param("enable_secrets", False)
+            self.secret_password = self.input.param("secret_password", 'p@ssw0rd')
+
 
             if self.skip_setup_cleanup:
                 self.buckets = RestConnection(self.master).get_buckets()
@@ -403,6 +408,9 @@ class BaseTestCase(unittest.TestCase):
             if self.ntonencrypt == 'enable' and not self.x509enable:
                 self.setup_nton_encryption()
             
+            if self.enable_secrets:
+                self._setup_node_secret(self.secret_password)
+            
             if not self.skip_init_check_cbserver:
                 status, content, header = self._log_start(self)
                 if not status:
@@ -481,6 +489,8 @@ class BaseTestCase(unittest.TestCase):
 
                 self.log.info("==============  basetestcase cleanup was started for test #{0} {1} ==============" \
                               .format(self.case_number, self._testMethodName))
+                if self.enable_secrets:
+                    self._setup_node_secret("")
                 rest = RestConnection(self.master)
                 alerts = rest.get_alerts()
                 if self.force_kill_memcached:
@@ -497,7 +507,8 @@ class BaseTestCase(unittest.TestCase):
                 BucketOperationHelper.delete_all_buckets_or_assert(self.servers, self)
                 ClusterOperationHelper.cleanup_cluster(self.servers, master=self.master)
                 ClusterOperationHelper.wait_for_ns_servers_or_assert(self.servers, self)
-                ntonencryptionBase().disable_nton_cluster(self.servers)
+                if self.ntonencrypt == 'enable' and not self.x509enable:
+                    ntonencryptionBase().disable_nton_cluster(self.servers)
                 self.log.info("==============  basetestcase cleanup was finished for test #{0} {1} ==============" \
                               .format(self.case_number, self._testMethodName))
         except BaseException:
@@ -736,7 +747,10 @@ class BaseTestCase(unittest.TestCase):
 
     def _get_bucket_size(self, mem_quota, num_buckets):
         # min size is 100MB now
-        return max(100, int(float(mem_quota) / float(num_buckets)))
+        if num_buckets > 0:
+            return max(100, int(float(mem_quota) / float(num_buckets)))
+        else:
+            return 100
 
     def _set_time_sync_on_buckets(self, buckets):
 
@@ -1777,7 +1791,7 @@ class BaseTestCase(unittest.TestCase):
                         map[vbucket]['purge_seqno'] = purge_seqno
                         nodeMap[vbucket] = node
             bucketMap[bucket] = map
-        self.assertTrue(logic, output)
+            self.assertTrue(logic, output)
         return bucketMap
 
     def print_results_per_node(self, map):

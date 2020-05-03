@@ -4171,6 +4171,21 @@ class RestConnection(object):
             return status
         else:
             return status, json.loads(content)
+    
+    def _set_secrets_password(self, new_password):
+        api = self.baseUrl + "/node/controller/changeMasterPassword"
+        params = urllib.parse.urlencode({
+            'newPassword': '{0}'.format(new_password.encode('utf-8').strip())
+                                        })
+        log.info("Params getting set is ---- {0}".format(params))
+        params = params.replace('%24', '$')
+        params = params.replace('%3D', '=')
+        log.info("Params getting set is ---- {0}".format(params))
+        status, content, header = self._http_request(api, 'POST', params)
+        log.info("Status of set password command - {0}".format(status))
+        log.info("Content of the response is {0}".format(content))
+        log.info ("Header of the response is {0}".format(header))
+        return status
 
     def set_downgrade_storage_mode_with_rest(self, downgrade=True, username="Administrator",
                                                                    password="password"):
@@ -4495,7 +4510,7 @@ class RestConnection(object):
     '''
 
     def deploy_function_by_name(self, name):
-        authorization = base64.encodestring('%s:%s' % (self.username, self.password))
+        authorization = self.get_authorization(self.username, self.password)
         url = "api/v1/functions/" + name + "/settings"
         body = {"deployment_status": True, "processing_status": True}
         api = self.eventing_baseUrl + url
@@ -4511,7 +4526,7 @@ class RestConnection(object):
     '''
 
     def pause_function_by_name(self, name):
-        authorization = base64.encodestring('%s:%s' % (self.username, self.password))
+        authorization = self.get_authorization(self.username, self.password)
         url = "api/v1/functions/" + name + "/settings"
         body = {"deployment_status": True, "processing_status": False}
         api = self.eventing_baseUrl + url
@@ -5271,6 +5286,8 @@ class RestParser(object):
                 if storageTotals["ram"].get("total"):
                     ramKB = storageTotals["ram"]["total"]
                     node.storageTotalRam = ramKB//(1024*1024)
+                    if node.mcdMemoryReserved == 0:
+                        node.mcdMemoryReserved = node.storageTotalRam
 
                     if IS_CONTAINER:
                         # the storage total values are more accurate than

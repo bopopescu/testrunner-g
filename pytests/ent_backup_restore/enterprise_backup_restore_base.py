@@ -369,9 +369,9 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
     def backup_create(self, del_old_backup=True):
         args = "config --archive {0} --repo {1}".format(self.backupset.directory, self.backupset.name)
         if self.backupset.exclude_buckets:
-            args += " --exclude-buckets \"{0}\"".format(",".join(self.backupset.exclude_buckets))
+            args += " --exclude-data \"{0}\"".format(",".join(self.backupset.exclude_buckets))
         if self.backupset.include_buckets:
-            args += " --include-buckets \"{0}\"".format(",".join(self.backupset.include_buckets))
+            args += " --include-data \"{0}\"".format(",".join(self.backupset.include_buckets))
         if self.backupset.disable_bucket_config:
             args += " --disable-bucket-config"
         if self.backupset.disable_views:
@@ -623,9 +623,9 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
             if not self.backupset.rt_no_cert:
                 args += " --cacert %s" % cacert
         if self.backupset.exclude_buckets:
-            args += " --exclude-buckets {0}".format(self.backupset.exclude_buckets)
+            args += " --exclude-data {0}".format(self.backupset.exclude_buckets)
         if self.backupset.include_buckets:
-            args += " --include-buckets {0}".format(self.backupset.include_buckets)
+            args += " --include-data {0}".format(self.backupset.include_buckets)
         if self.backupset.disable_bucket_config:
             args += " --disable-bucket-config {0}".format(self.backupset.disable_bucket_config)
         if self.backupset.disable_views:
@@ -904,7 +904,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         bk_dir = self.backupset.directory
         if ipv6_raw_ip:
             bk_dir = bk_raw_ipv6_dir
-        command = "grep 'Transfer plan finished successfully' " + bk_dir + \
+        command = "grep 'Restore completed successfully' " + bk_dir + \
                   "/logs/{0}".format(bk_log_file_name)
         output, error = remote_client.execute_command(command)
         if self.debug_logs:
@@ -1912,6 +1912,8 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
                         redacted_logs, _ = shell.execute_command(
                             "ls " + redacted_logs_path)
                         for log_file in redacted_logs:
+                            if not log_file.startswith("backup-"):
+                                continue
                             self._validate_log_redaction_hashing(
                                 unredacted_logs_path + log_file,
                                 redacted_logs_path + log_file,
@@ -1983,6 +1985,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
          that used for the target file."""
 
         shell = RemoteMachineShellConnection(self.backupset.backup_host)
+        shell.execute_command("rm -f /tmp/backup_redacted_files/*")
         stdout, stderr = shell.execute_command(
             "mkdir -p /tmp/backup_redacted_files")
         if stderr:
@@ -2005,19 +2008,19 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
         stdout, stderr = shell.execute_command(
             "diff {} {}".format(cblogredact_output, target_file))
 
-        shell.execute_command("rm -f /tmp/backup_redacted_files/*")
 
         if stderr:
             print(stdout)
             raise Exception(stderr)
-
         if stdout:
             self.fail("Log redaction hashing does not match cblogredaction's "
                       "hashing for the same salt ({}). Diff of file {} and {}"
-                      " is: {}".format(salt,
+                      " is: \n{}".format(salt,
                                        cblogredact_output,
                                        target_file,
                                        stdout))
+        shell.execute_command("rm -f /tmp/backup_redacted_files/*")
+        shell.disconnect()
 
     def _validate_restore_vbucket_filter(self):
         data_collector = DataCollector()
@@ -2433,6 +2436,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
                                                master=self.backupset.restore_cluster_host)
 
         rest_bk = RestConnection(self.backupset.cluster_host)
+        bk_storage_mode = rest_bk.get_index_settings()["indexer.settings.storage_mode"]
         eventing_service_in = False
         bk_cluster_services = list(rest_bk.get_nodes_services().values())
         for srv in bk_cluster_services:
@@ -2455,6 +2459,7 @@ class EnterpriseBackupRestoreBase(BaseTestCase):
             shell.enable_diag_eval_on_non_local_hosts()
             shell.disconnect()
         kv_quota = rest_rs.init_node(self.backupset.restore_cluster_host.services)
+        self._reset_storage_mode(rest_rs, bk_storage_mode)
         if len(bk_cluster_services) > 1:
             bk_cluster_services.remove(bk_services)
         if len(self.input.clusters[0]) > 1:

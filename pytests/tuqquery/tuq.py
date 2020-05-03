@@ -42,6 +42,7 @@ class QueryTests(BaseTestCase):
                 and str(self.__class__).find('N1qlFTSIntegrationTest') == -1 \
                 and str(self.__class__).find('N1qlFTSIntegrationPhase2Test') == -1 \
                 and str(self.__class__).find('N1qlFTSIntegrationPhase2ClusteropsTest') == -1 \
+                and str(self.__class__).find('FlexIndexTests') == -1 \
                 and str(self.__class__).find('AggregatePushdownRecoveryClass') == -1:
             self.skip_buckets_handle = True
         else:
@@ -133,7 +134,7 @@ class QueryTests(BaseTestCase):
             self.log.info("--> docs_per_day>0..generating TuqGenerators...")
             self.gen_results = TuqGenerators(self.log, self.generate_full_docs_list(self.gens_load))
             self.log.info("--> End: docs_per_day>0..generating TuqGenerators...")
-        if str(self.__class__).find('QueriesUpgradeTests') == -1:
+        if str(self.__class__).find('QueriesUpgradeTests') == -1 and str(self.__class__).find('FlexIndexTests') == -1:
             if not self.analytics:
                 self.log.info("--> start: create_primary_index_for_3_0_and_greater...")
                 self.create_primary_index_for_3_0_and_greater()
@@ -2647,6 +2648,10 @@ class QueryTests(BaseTestCase):
 ##############################################################################################
     def _kill_all_processes_cbq(self):
         if hasattr(self, 'shell'):
+            if self.input.tuq_client and "client" in self.input.tuq_client:
+                self.shell = RemoteMachineShellConnection(self.input.tuq_client["client"])
+            else:
+                self.shell = RemoteMachineShellConnection(self.master)
             o = self.shell.execute_command("ps -aef| grep cbq-engine")
             if len(o):
                 for cbq_engine in o[0]:

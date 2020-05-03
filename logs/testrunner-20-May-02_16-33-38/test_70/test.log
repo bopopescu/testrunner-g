@@ -1,0 +1,499 @@
+[2020-05-02 21:05:08,551] - [remote_util] [123145527455744] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-02 21:05:09,213] - [remote_util] [123145527455744] - INFO - Connected to 172.23.121.65
+[2020-05-02 21:05:09,956] - [remote_util] [123145527455744] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-02 21:05:10,742] - [remote_util] [123145527455744] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-02 21:05:10,987] - [rest_client] [123145527455744] - INFO - Node version in cluster 7.0.0-1834-enterprise
+[2020-05-02 21:05:11,113] - [rest_client] [123145527455744] - INFO - Node versions in cluster ['7.0.0-1834-enterprise']
+[2020-05-02 21:05:11,114] - [basetestcase] [123145527455744] - INFO - ==============  basetestcase setup was started for test #70 test_flex_single_typemapping==============
+[2020-05-02 21:05:12,014] - [cluster_helper] [123145527455744] - INFO - waiting for ns_server @ 172.23.121.65:8091
+[2020-05-02 21:05:12,082] - [cluster_helper] [123145527455744] - INFO - ns_server @ 172.23.121.65:8091 is running
+[2020-05-02 21:05:12,145] - [cluster_helper] [123145527455744] - INFO - waiting for ns_server @ 172.23.121.66:8091
+[2020-05-02 21:05:12,197] - [cluster_helper] [123145527455744] - INFO - ns_server @ 172.23.121.66:8091 is running
+[2020-05-02 21:05:12,242] - [cluster_helper] [123145527455744] - INFO - waiting for ns_server @ 172.23.121.67:8091
+[2020-05-02 21:05:12,294] - [cluster_helper] [123145527455744] - INFO - ns_server @ 172.23.121.67:8091 is running
+[2020-05-02 21:05:12,296] - [basetestcase] [123145527455744] - INFO - initializing cluster
+[2020-05-02 21:05:12,637] - [task] [123145532710912] - INFO - server: ip:172.23.121.65 port:8091 ssh_username:root, nodes/self 
+[2020-05-02 21:05:12,691] - [task] [123145532710912] - INFO -  {'uptime': '16325', 'memoryTotal': 4366925824, 'memoryFree': 258437120, 'mcdMemoryReserved': 3331, 'mcdMemoryAllocated': 3331, 'status': 'healthy', 'hostname': '172.23.121.65:8091', 'clusterCompatibility': 458752, 'clusterMembership': 'active', 'version': '7.0.0-1834-enterprise', 'os': 'x86_64-unknown-linux-gnu', 'ports': [], 'availableStorage': [], 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x11b273210>], 'memoryQuota': 1225, 'moxi': 11211, 'memcached': 11210, 'id': 'ns_1@172.23.121.65', 'ip': '172.23.121.65', 'rest_username': '', 'rest_password': '', 'port': '8091', 'services': ['fts', 'index', 'kv', 'n1ql'], 'storageTotalRam': 4164, 'curr_items': 0}
+[2020-05-02 21:05:12,757] - [task] [123145532710912] - INFO - quota for index service will be 256 MB
+[2020-05-02 21:05:12,758] - [task] [123145532710912] - INFO - set index quota to node 172.23.121.65 
+[2020-05-02 21:05:12,758] - [rest_client] [123145532710912] - INFO - pools/default params : indexMemoryQuota=256
+[2020-05-02 21:05:12,825] - [task] [123145532710912] - INFO - quota for fts service will be 750 MB
+[2020-05-02 21:05:12,826] - [task] [123145532710912] - INFO - set both index and fts quota at node 172.23.121.65 
+[2020-05-02 21:05:12,826] - [rest_client] [123145532710912] - INFO - pools/default params : ftsMemoryQuota=750
+[2020-05-02 21:05:12,882] - [rest_client] [123145532710912] - INFO - pools/default params : memoryQuota=1225
+[2020-05-02 21:05:12,935] - [rest_client] [123145532710912] - INFO - --> init_node_services(Administrator,password,172.23.121.65,8091,['kv', 'index', 'n1ql', 'fts'])
+[2020-05-02 21:05:12,936] - [rest_client] [123145532710912] - INFO - /node/controller/setupServices params on 172.23.121.65: 8091:hostname=172.23.121.65&user=Administrator&password=password&services=kv%2Cindex%2Cn1ql%2Cfts
+[2020-05-02 21:05:12,987] - [rest_client] [123145532710912] - ERROR - POST http://172.23.121.65:8091//node/controller/setupServices body: hostname=172.23.121.65&user=Administrator&password=password&services=kv%2Cindex%2Cn1ql%2Cfts headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 400 reason: unknown b'["cannot change node services after cluster is provisioned"]' auth: Administrator:password
+[2020-05-02 21:05:12,988] - [rest_client] [123145532710912] - INFO - This node is already provisioned with services, we do not consider this as failure for test case
+[2020-05-02 21:05:12,989] - [rest_client] [123145532710912] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-02 21:05:12,990] - [rest_client] [123145532710912] - INFO - settings/web params on 172.23.121.65:8091:port=8091&username=Administrator&password=password
+[2020-05-02 21:05:13,081] - [rest_client] [123145532710912] - INFO - --> status:True
+[2020-05-02 21:05:13,083] - [remote_util] [123145532710912] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-02 21:05:13,699] - [remote_util] [123145532710912] - INFO - Connected to 172.23.121.65
+[2020-05-02 21:05:14,369] - [remote_util] [123145532710912] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-02 21:05:15,192] - [remote_util] [123145532710912] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-02 21:05:15,311] - [remote_util] [123145532710912] - INFO - running command.raw on 172.23.121.65: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-02 21:05:15,405] - [remote_util] [123145532710912] - INFO - command executed successfully
+[2020-05-02 21:05:15,406] - [remote_util] [123145532710912] - INFO - ['ok']
+[2020-05-02 21:05:15,464] - [rest_client] [123145532710912] - INFO - /diag/eval status on 172.23.121.65:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-02 21:05:15,521] - [rest_client] [123145532710912] - INFO - /diag/eval status on 172.23.121.65:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-02 21:05:15,522] - [rest_client] [123145532710912] - INFO - settings/indexes params : storageMode=plasma
+[2020-05-02 21:05:15,762] - [task] [123145532710912] - INFO - server: ip:172.23.121.66 port:8091 ssh_username:root, nodes/self 
+[2020-05-02 21:05:15,815] - [task] [123145532710912] - INFO -  {'uptime': '16326', 'memoryTotal': 4366942208, 'memoryFree': 3672219648, 'mcdMemoryReserved': 3331, 'mcdMemoryAllocated': 3331, 'status': 'healthy', 'hostname': '172.23.121.66:8091', 'clusterCompatibility': 458752, 'clusterMembership': 'active', 'version': '7.0.0-1834-enterprise', 'os': 'x86_64-unknown-linux-gnu', 'ports': [], 'availableStorage': [], 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x11286c910>], 'memoryQuota': 1832, 'moxi': 11211, 'memcached': 11210, 'id': 'ns_1@172.23.121.66', 'ip': '172.23.121.66', 'rest_username': '', 'rest_password': '', 'port': '8091', 'services': ['kv'], 'storageTotalRam': 4164, 'curr_items': 0}
+[2020-05-02 21:05:15,862] - [rest_client] [123145532710912] - ERROR - GET http://172.23.121.66:8091/pools/default body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 404 reason: unknown b'"unknown pool"' auth: Administrator:password
+[2020-05-02 21:05:15,864] - [rest_client] [123145532710912] - INFO - pools/default params : memoryQuota=2231
+[2020-05-02 21:05:15,909] - [rest_client] [123145532710912] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-02 21:05:15,911] - [rest_client] [123145532710912] - INFO - settings/web params on 172.23.121.66:8091:port=8091&username=Administrator&password=password
+[2020-05-02 21:05:15,999] - [rest_client] [123145532710912] - INFO - --> status:True
+[2020-05-02 21:05:16,002] - [remote_util] [123145532710912] - INFO - connecting to 172.23.121.66 with username:root 
+[2020-05-02 21:05:16,629] - [remote_util] [123145532710912] - INFO - Connected to 172.23.121.66
+[2020-05-02 21:05:17,269] - [remote_util] [123145532710912] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-02 21:05:18,141] - [remote_util] [123145532710912] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-02 21:05:18,253] - [remote_util] [123145532710912] - INFO - running command.raw on 172.23.121.66: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-02 21:05:18,327] - [remote_util] [123145532710912] - INFO - command executed successfully
+[2020-05-02 21:05:18,328] - [remote_util] [123145532710912] - INFO - ['ok']
+[2020-05-02 21:05:18,383] - [rest_client] [123145532710912] - INFO - /diag/eval status on 172.23.121.66:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-02 21:05:18,441] - [rest_client] [123145532710912] - INFO - /diag/eval status on 172.23.121.66:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-02 21:05:18,442] - [rest_client] [123145532710912] - INFO - settings/indexes params : storageMode=plasma
+[2020-05-02 21:05:18,678] - [task] [123145532710912] - INFO - server: ip:172.23.121.67 port:8091 ssh_username:root, nodes/self 
+[2020-05-02 21:05:18,736] - [task] [123145532710912] - INFO -  {'uptime': '16331', 'memoryTotal': 4366938112, 'memoryFree': 3728060416, 'mcdMemoryReserved': 3331, 'mcdMemoryAllocated': 3331, 'status': 'healthy', 'hostname': '172.23.121.67:8091', 'clusterCompatibility': 458752, 'clusterMembership': 'active', 'version': '7.0.0-1834-enterprise', 'os': 'x86_64-unknown-linux-gnu', 'ports': [], 'availableStorage': [], 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x13ac70c10>], 'memoryQuota': 1832, 'moxi': 11211, 'memcached': 11210, 'id': 'ns_1@172.23.121.67', 'ip': '172.23.121.67', 'rest_username': '', 'rest_password': '', 'port': '8091', 'services': ['kv'], 'storageTotalRam': 4164, 'curr_items': 0}
+[2020-05-02 21:05:18,795] - [rest_client] [123145532710912] - ERROR - GET http://172.23.121.67:8091/pools/default body:  headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 404 reason: unknown b'"unknown pool"' auth: Administrator:password
+[2020-05-02 21:05:18,797] - [rest_client] [123145532710912] - INFO - pools/default params : memoryQuota=2231
+[2020-05-02 21:05:18,842] - [rest_client] [123145532710912] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-02 21:05:18,843] - [rest_client] [123145532710912] - INFO - settings/web params on 172.23.121.67:8091:port=8091&username=Administrator&password=password
+[2020-05-02 21:05:18,925] - [rest_client] [123145532710912] - INFO - --> status:True
+[2020-05-02 21:05:18,927] - [remote_util] [123145532710912] - INFO - connecting to 172.23.121.67 with username:root 
+[2020-05-02 21:05:19,535] - [remote_util] [123145532710912] - INFO - Connected to 172.23.121.67
+[2020-05-02 21:05:20,145] - [remote_util] [123145532710912] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-02 21:05:20,960] - [remote_util] [123145532710912] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-02 21:05:21,083] - [remote_util] [123145532710912] - INFO - running command.raw on 172.23.121.67: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-02 21:05:21,165] - [remote_util] [123145532710912] - INFO - command executed successfully
+[2020-05-02 21:05:21,166] - [remote_util] [123145532710912] - INFO - ['ok']
+[2020-05-02 21:05:21,223] - [rest_client] [123145532710912] - INFO - /diag/eval status on 172.23.121.67:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-02 21:05:21,294] - [rest_client] [123145532710912] - INFO - /diag/eval status on 172.23.121.67:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-02 21:05:21,295] - [rest_client] [123145532710912] - INFO - settings/indexes params : storageMode=plasma
+[2020-05-02 21:05:21,613] - [basetestcase] [123145527455744] - INFO - **** add built-in 'cbadminbucket' user to node 172.23.121.65 ****
+[2020-05-02 21:05:22,067] - [basetestcase] [123145527455744] - INFO - sleep for 5 secs.  ...
+[2020-05-02 21:05:27,075] - [basetestcase] [123145527455744] - INFO - **** add 'admin' role to 'cbadminbucket' user ****
+[2020-05-02 21:05:27,257] - [basetestcase] [123145527455744] - INFO - done initializing cluster
+[2020-05-02 21:05:27,545] - [task] [123145532710912] - INFO - adding node 172.23.121.66:8091 to cluster
+[2020-05-02 21:05:27,546] - [rest_client] [123145532710912] - INFO - adding remote node @172.23.121.66:8091 to this cluster @172.23.121.65:8091
+[2020-05-02 21:05:29,716] - [task] [123145532710912] - INFO - adding node 172.23.121.67:8091 to cluster
+[2020-05-02 21:05:29,717] - [rest_client] [123145532710912] - INFO - adding remote node @172.23.121.67:8091 to this cluster @172.23.121.65:8091
+[2020-05-02 21:05:31,997] - [rest_client] [123145532710912] - INFO - rebalance params : {'knownNodes': 'ns_1@172.23.121.65,ns_1@172.23.121.66,ns_1@172.23.121.67', 'ejectedNodes': '', 'user': 'Administrator', 'password': 'password'}
+[2020-05-02 21:05:32,054] - [rest_client] [123145532710912] - INFO - rebalance operation started
+[2020-05-02 21:05:32,099] - [rest_client] [123145532710912] - INFO - rebalance percentage : 0.00 %
+[2020-05-02 21:05:32,100] - [task] [123145532710912] - INFO - Rebalance - status: running, progress: 0.00%
+[2020-05-02 21:05:42,307] - [task] [123145532710912] - INFO - Rebalance - status: none, progress: 100.00%
+[2020-05-02 21:05:42,394] - [task] [123145532710912] - INFO - rebalancing was completed with progress: 100% in 10.339541912078857 sec
+[2020-05-02 21:05:42,397] - [remote_util] [123145527455744] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-02 21:05:43,394] - [remote_util] [123145527455744] - INFO - Connected to 172.23.121.65
+[2020-05-02 21:05:44,297] - [remote_util] [123145527455744] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-02 21:05:45,144] - [remote_util] [123145527455744] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-02 21:05:45,260] - [remote_util] [123145527455744] - INFO - running command.raw on 172.23.121.65: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-02 21:05:45,342] - [remote_util] [123145527455744] - INFO - command executed successfully
+[2020-05-02 21:05:45,343] - [remote_util] [123145527455744] - INFO - ['ok']
+[2020-05-02 21:05:45,344] - [basetestcase] [123145527455744] - INFO - Enabled diag/eval for non-local hosts from 172.23.121.65
+[2020-05-02 21:05:46,712] - [rest_client] [123145532710912] - INFO - http://172.23.121.65:8091/pools/default/buckets with param: name=default&authType=sasl&saslPassword=None&ramQuotaMB=200&replicaNumber=1&bucketType=membase&replicaIndex=1&threadsNumber=3&flushEnabled=1&evictionPolicy=valueOnly&compressionMode=passive
+[2020-05-02 21:05:46,770] - [rest_client] [123145532710912] - INFO - 0.06 seconds to create bucket default
+[2020-05-02 21:05:46,771] - [bucket_helper] [123145532710912] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-02 21:05:48,191] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:05:48,837] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:05:49,670] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:05:50,297] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:05:50,727] - [task] [123145532710912] - WARNING - vbucket map not ready after try 0
+[2020-05-02 21:05:50,728] - [bucket_helper] [123145532710912] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-02 21:05:51,379] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:05:51,976] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:05:52,769] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:05:53,365] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:05:53,784] - [task] [123145532710912] - WARNING - vbucket map not ready after try 1
+[2020-05-02 21:05:53,785] - [bucket_helper] [123145532710912] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-02 21:05:54,491] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:05:55,251] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:05:56,351] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:05:57,011] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:05:57,473] - [task] [123145532710912] - WARNING - vbucket map not ready after try 2
+[2020-05-02 21:05:57,474] - [bucket_helper] [123145532710912] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-02 21:05:58,113] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:05:58,686] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:05:59,453] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:06:00,085] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:06:00,498] - [task] [123145532710912] - WARNING - vbucket map not ready after try 3
+[2020-05-02 21:06:00,499] - [bucket_helper] [123145532710912] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-02 21:06:01,139] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:06:02,065] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:06:02,886] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:06:03,476] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:06:03,905] - [task] [123145532710912] - WARNING - vbucket map not ready after try 4
+[2020-05-02 21:06:03,906] - [bucket_helper] [123145532710912] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-02 21:06:04,761] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:06:05,387] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:06:06,154] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:06:06,742] - [data_helper] [123145532710912] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:06:07,243] - [task] [123145532710912] - WARNING - vbucket map not ready after try 5
+[2020-05-02 21:06:07,246] - [basetestcase] [123145527455744] - INFO - ==============  basetestcase setup was finished for test #70 test_flex_single_typemapping ==============
+[2020-05-02 21:06:07,498] - [basetestcase] [123145527455744] - INFO - ------- Cluster statistics -------
+[2020-05-02 21:06:07,499] - [basetestcase] [123145527455744] - INFO - 172.23.121.65:8091 => {'services': ['fts', 'index', 'kv', 'n1ql'], 'cpu_utilization': 11.25319693094629, 'mem_free': 221442048, 'mem_total': 4366925824, 'swap_mem_used': 1911832576, 'swap_mem_total': 3758092288}
+[2020-05-02 21:06:07,500] - [basetestcase] [123145527455744] - INFO - 172.23.121.66:8091 => {'services': ['fts', 'kv'], 'cpu_utilization': 4.30379746835443, 'mem_free': 3421343744, 'mem_total': 4366942208, 'swap_mem_used': 2621440, 'swap_mem_total': 3758092288}
+[2020-05-02 21:06:07,501] - [basetestcase] [123145527455744] - INFO - 172.23.121.67:8091 => {'services': ['fts'], 'cpu_utilization': 0.2512562814070352, 'mem_free': 3532820480, 'mem_total': 4366938112, 'swap_mem_used': 0, 'swap_mem_total': 3758092288}
+[2020-05-02 21:06:07,501] - [basetestcase] [123145527455744] - INFO - --- End of cluster statistics ---
+[2020-05-02 21:06:07,502] - [tuq] [123145527455744] - INFO - ==============  QueryTests setup has started ==============
+[2020-05-02 21:06:07,504] - [remote_util] [123145527455744] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-02 21:06:08,295] - [remote_util] [123145527455744] - INFO - Connected to 172.23.121.65
+[2020-05-02 21:06:09,038] - [remote_util] [123145527455744] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-02 21:06:09,833] - [remote_util] [123145527455744] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-02 21:06:09,974] - [remote_util] [123145527455744] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-02 21:06:10,681] - [remote_util] [123145527455744] - INFO - Connected to 172.23.121.65
+[2020-05-02 21:06:11,361] - [remote_util] [123145527455744] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-02 21:06:12,292] - [remote_util] [123145527455744] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-02 21:06:12,294] - [tuq] [123145527455744] - INFO - Generating default:default data...
+[2020-05-02 21:06:12,295] - [tuq] [123145527455744] - INFO - -->start:generate_docs_employee for default...
+[2020-05-02 21:06:12,635] - [tuq] [123145527455744] - INFO - -->end:generate_docs_employee for default...
+[2020-05-02 21:06:12,635] - [tuq] [123145527455744] - INFO - Completed Generating default:default data...
+[2020-05-02 21:06:12,636] - [tuq] [123145527455744] - INFO - --->gens_load is done...
+[2020-05-02 21:06:12,637] - [tuq] [123145527455744] - INFO - -->starting rest connection...
+[2020-05-02 21:06:17,476] - [tuq] [123145527455744] - INFO - --> docs_per_day>0..generating TuqGenerators...
+[2020-05-02 21:06:22,244] - [tuq] [123145527455744] - INFO - --> End: docs_per_day>0..generating TuqGenerators...
+[2020-05-02 21:06:22,245] - [tuq] [123145527455744] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-02 21:06:22,245] - [tuq] [123145527455744] - INFO - Temp fix for MB-16888
+[2020-05-02 21:06:22,246] - [remote_util] [123145527455744] - INFO - running command.raw on 172.23.121.65: killall -9 cbq-engine
+[2020-05-02 21:06:22,354] - [remote_util] [123145527455744] - INFO - command executed successfully
+[2020-05-02 21:06:22,356] - [remote_util] [123145527455744] - INFO - running command.raw on 172.23.121.65: killall -9 indexer
+[2020-05-02 21:06:22,493] - [remote_util] [123145527455744] - INFO - command executed successfully
+[2020-05-02 21:06:22,494] - [tuq] [123145527455744] - INFO - Error executing shell command: killall -9 cbq-engine! Error - bash: killall: command not found
+[2020-05-02 21:06:22,495] - [tuq] [123145527455744] - INFO - Error executing shell command: killall -9 indexer! Error - bash: killall: command not found
+[2020-05-02 21:06:22,496] - [tuq] [123145527455744] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-02 21:06:22,496] - [tuq] [123145527455744] - INFO - ==============  QueryTests setup has completed ==============
+[2020-05-02 21:06:22,497] - [flex_index_phase1] [123145527455744] - INFO - ==============  FlexIndexTests setuAp has started ==============
+[2020-05-02 21:06:22,572] - [tuq] [123145527455744] - INFO - RUN QUERY SELECT * FROM system:indexes
+[2020-05-02 21:06:22,573] - [rest_client] [123145527455744] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:22,766] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 132.245368ms
+[2020-05-02 21:06:22,833] - [tuq] [123145527455744] - INFO - RUN QUERY SELECT * FROM system:keyspaces
+[2020-05-02 21:06:22,834] - [rest_client] [123145527455744] - INFO - query params : statement=SELECT+%2A+FROM+system%3Akeyspaces&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:22,918] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 20.767264ms
+[2020-05-02 21:06:22,920] - [tuq] [123145527455744] - INFO - ==============  System Config: ==============
+
+[2020-05-02 21:06:22,987] - [tuq] [123145527455744] - INFO - RUN QUERY SELECT COUNT(*) FROM `default`
+[2020-05-02 21:06:22,988] - [rest_client] [123145527455744] - INFO - query params : statement=SELECT+COUNT%28%2A%29+FROM+%60default%60&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:23,070] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 25.926298ms
+[2020-05-02 21:06:23,071] - [tuq] [123145527455744] - INFO - Bucket: default
+[2020-05-02 21:06:23,072] - [tuq] [123145527455744] - INFO - Indexes: []
+[2020-05-02 21:06:23,072] - [tuq] [123145527455744] - INFO - Docs: 0
+
+[2020-05-02 21:06:23,073] - [tuq] [123145527455744] - INFO - =============================================
+[2020-05-02 21:06:23,073] - [flex_index_phase1] [123145527455744] - INFO - ==============  FlexIndexTests setup has completed ==============
+[2020-05-02 21:06:26,292] - [rest_client] [123145532710912] - INFO - Flush for bucket 'default' was triggered
+[2020-05-02 21:06:26,760] - [data_helper] [123145527455744] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:06:27,354] - [data_helper] [123145527455744] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:06:28,824] - [data_helper] [123145842765824] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:06:28,827] - [data_helper] [123145842765824] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:06:28,828] - [data_helper] [123145842765824] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:06:28,832] - [data_helper] [123145842765824] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-02 21:06:29,496] - [data_helper] [123145842765824] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:06:29,496] - [data_helper] [123145842765824] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:06:29,496] - [data_helper] [123145842765824] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:06:29,500] - [data_helper] [123145842765824] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-02 21:06:32,594] - [rest_client] [123145527455744] - INFO - SUCCESS: FTS RAM quota set to 750mb
+[2020-05-02 21:06:32,732] - [fts_base] [123145527455744] - INFO - Checking if index already exists ...
+[2020-05-02 21:06:32,989] - [rest_client] [123145527455744] - ERROR - GET http://172.23.121.65:8094/api/index/custom_index body:  headers: {'Content-Type': 'application/json', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 400 reason: rest_auth: preparePerms, err: index not found b'{"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"}\n' auth: Administrator:password
+[2020-05-02 21:06:33,046] - [rest_client] [123145527455744] - ERROR - DELETE http://172.23.121.65:8094/api/index/custom_index body:  headers: {'Content-Type': 'application/json', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 400 reason: rest_auth: preparePerms, err: index not found b'{"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"}\n' auth: Administrator:password
+[2020-05-02 21:06:33,046] - [fts_base] [123145527455744] - INFO - Creating fulltext-index custom_index on 172.23.121.65
+[2020-05-02 21:06:33,047] - [rest_client] [123145527455744] - INFO - {"type": "fulltext-index", "name": "custom_index", "uuid": "", "params": {"mapping": {"default_mapping": {"enabled": true, "dynamic": true, "default_analyzer": "keyword"}, "type_field": "type", "default_type": "_default", "default_analyzer": "standard", "default_datetime_parser": "dateTimeOptional", "default_field": "_all", "analysis": {}, "types": {"emp": {"dynamic": false, "enabled": true, "fields": [], "properties": {"name": {"dynamic": false, "enabled": true, "properties": {}, "fields": [{"include_in_all": true, "include_term_vectors": true, "index": true, "name": "name", "store": false, "type": "text", "analyzer": "keyword"}]}, "mutated": {"dynamic": false, "enabled": true, "properties": {}, "fields": [{"include_in_all": true, "include_term_vectors": true, "index": true, "name": "mutated", "store": false, "type": "number", "analyzer": ""}]}, "salary": {"dynamic": false, "enabled": true, "properties": {}, "fields": [{"include_in_all": true, "include_term_vectors": true, "index": true, "name": "salary", "store": false, "type": "number", "analyzer": ""}]}, "languages_known": {"dynamic": false, "enabled": true, "properties": {}, "fields": [{"include_in_all": true, "include_term_vectors": true, "index": true, "name": "languages_known", "store": false, "type": "text", "analyzer": "keyword"}]}}}}}, "store": {"kvStoreName": "mossStore", "mossStoreOptions": {}, "indexType": "scorch"}}, "sourceType": "couchbase", "sourceName": "default", "sourceUUID": "", "planParams": {"numReplicas": 0}, "sourceParams": {}}
+[2020-05-02 21:06:33,196] - [rest_client] [123145527455744] - INFO - Index custom_index created
+[2020-05-02 21:06:33,196] - [basetestcase] [123145527455744] - INFO - sleep for 10 secs.  ...
+[2020-05-02 21:06:43,444] - [basetestcase] [123145527455744] - INFO - sleep for 10 secs.  ...
+[2020-05-02 21:06:53,716] - [flex_index_phase1] [123145527455744] - INFO - expected_fts_index_map {'name': ['custom_index', 'custom_index'], 'dept': ['custom_index'], 'manages.reports': ['custom_index', 'custom_index'], 'languages_known': ['custom_index', 'custom_index'], 'email': ['custom_index'], 'type': ['custom_index', 'custom_index'], 'mutated': ['custom_index'], 'manages.team_size': ['custom_index'], 'salary': ['custom_index'], 'is_manager': ['custom_index'], 'join_date': ['custom_index']}
+[2020-05-02 21:06:53,783] - [tuq] [123145527455744] - INFO - RUN QUERY SELECT * FROM system:indexes
+[2020-05-02 21:06:53,784] - [rest_client] [123145527455744] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:53,889] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 42.534702ms
+[2020-05-02 21:06:53,890] - [tuq] [123145527455744] - INFO - waiting for: 
+('primary_gsi_index', 'default', 'online')
+
+[2020-05-02 21:06:53,891] - [tuq] [123145527455744] - INFO - current indexes: 
+[]
+
+[2020-05-02 21:06:53,952] - [tuq] [123145527455744] - INFO - RUN QUERY create primary index primary_gsi_index on default
+[2020-05-02 21:06:53,953] - [rest_client] [123145527455744] - INFO - query params : statement=create+primary+index+primary_gsi_index+on+default&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:57,285] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 3.167470448s
+[2020-05-02 21:06:57,294] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 1 =======
+[2020-05-02 21:06:57,295] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name = "Scott")
+[2020-05-02 21:06:57,349] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name = "Scott")
+[2020-05-02 21:06:57,351] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+%3D+%22Scott%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:57,517] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 112.858355ms
+[2020-05-02 21:06:57,518] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:57,519] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:57,519] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:57,520] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 2 =======
+[2020-05-02 21:06:57,521] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name = "Solita Aarón")
+[2020-05-02 21:06:57,578] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name = "Solita Aarón")
+[2020-05-02 21:06:57,579] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+%3D+%22Solita+Aar%C3%B3n%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:57,640] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 10.495224ms
+[2020-05-02 21:06:57,641] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:57,641] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:57,642] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:57,642] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 3 =======
+[2020-05-02 21:06:57,643] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name = "Davis")
+[2020-05-02 21:06:57,697] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name = "Davis")
+[2020-05-02 21:06:57,697] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+%3D+%22Davis%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:57,776] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 10.138435ms
+[2020-05-02 21:06:57,778] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:57,779] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:57,780] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:57,781] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 4 =======
+[2020-05-02 21:06:57,782] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name = "Devi Gerónimo")
+[2020-05-02 21:06:57,843] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name = "Devi Gerónimo")
+[2020-05-02 21:06:57,844] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+%3D+%22Devi+Ger%C3%B3nimo%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:57,900] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 9.305311ms
+[2020-05-02 21:06:57,900] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:57,901] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:57,902] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:57,902] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 5 =======
+[2020-05-02 21:06:57,903] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name = "Chatha Thompson")
+[2020-05-02 21:06:57,961] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name = "Chatha Thompson")
+[2020-05-02 21:06:57,962] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+%3D+%22Chatha+Thompson%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:58,032] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 5.898544ms
+[2020-05-02 21:06:58,033] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:58,034] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:58,034] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:58,035] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 6 =======
+[2020-05-02 21:06:58,036] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name > "Gerónimo" and name < "Hedda")
+[2020-05-02 21:06:58,090] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name > "Gerónimo" and name < "Hedda")
+[2020-05-02 21:06:58,091] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+%3E+%22Ger%C3%B3nimo%22+and+name+%3C+%22Hedda%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:58,157] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 9.496305ms
+[2020-05-02 21:06:58,158] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:58,158] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:58,159] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:58,159] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 7 =======
+[2020-05-02 21:06:58,160] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name >= "Balandria" and name <= "Winta")
+[2020-05-02 21:06:58,221] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name >= "Balandria" and name <= "Winta")
+[2020-05-02 21:06:58,222] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+%3E%3D+%22Balandria%22+and+name+%3C%3D+%22Winta%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:58,292] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 8.102079ms
+[2020-05-02 21:06:58,293] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:58,294] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:58,295] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:58,296] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 8 =======
+[2020-05-02 21:06:58,297] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name >= "Joby" and name < "Jr.")
+[2020-05-02 21:06:58,365] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name >= "Joby" and name < "Jr.")
+[2020-05-02 21:06:58,366] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+%3E%3D+%22Joby%22+and+name+%3C+%22Jr.%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:58,428] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 4.570424ms
+[2020-05-02 21:06:58,429] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:58,429] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:58,430] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:58,430] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 9 =======
+[2020-05-02 21:06:58,431] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name > "Tempest" and name <= "Vala")
+[2020-05-02 21:06:58,489] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name > "Tempest" and name <= "Vala")
+[2020-05-02 21:06:58,489] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+%3E+%22Tempest%22+and+name+%3C%3D+%22Vala%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:58,545] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 6.024187ms
+[2020-05-02 21:06:58,547] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:58,547] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:58,548] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:58,549] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 10 =======
+[2020-05-02 21:06:58,550] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name between "Parker" and "Adara")
+[2020-05-02 21:06:58,623] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name between "Parker" and "Adara")
+[2020-05-02 21:06:58,624] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+between+%22Parker%22+and+%22Adara%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:58,681] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 5.691535ms
+[2020-05-02 21:06:58,683] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:58,684] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:58,684] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:58,685] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 11 =======
+[2020-05-02 21:06:58,686] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name between "Allen" and "Kacila")
+[2020-05-02 21:06:58,740] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name between "Allen" and "Kacila")
+[2020-05-02 21:06:58,741] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+between+%22Allen%22+and+%22Kacila%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:58,814] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 6.92085ms
+[2020-05-02 21:06:58,816] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:58,817] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:58,818] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:58,819] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 12 =======
+[2020-05-02 21:06:58,822] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name between "Maura" and "Ciara")
+[2020-05-02 21:06:58,888] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name between "Maura" and "Ciara")
+[2020-05-02 21:06:58,890] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+between+%22Maura%22+and+%22Ciara%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:58,947] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 7.600486ms
+[2020-05-02 21:06:58,949] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:58,949] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:58,950] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:58,951] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 13 =======
+[2020-05-02 21:06:58,952] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name between "Basha" and "Simón")
+[2020-05-02 21:06:59,003] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name between "Basha" and "Simón")
+[2020-05-02 21:06:59,004] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+between+%22Basha%22+and+%22Sim%C3%B3n%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:59,099] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 34.553793ms
+[2020-05-02 21:06:59,100] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:59,101] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:59,102] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:59,103] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 14 =======
+[2020-05-02 21:06:59,104] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name between "Jerica" and "Cassandra")
+[2020-05-02 21:06:59,155] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name between "Jerica" and "Cassandra")
+[2020-05-02 21:06:59,157] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+between+%22Jerica%22+and+%22Cassandra%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:59,215] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 5.552667ms
+[2020-05-02 21:06:59,216] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:59,217] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:59,218] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:59,219] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 15 =======
+[2020-05-02 21:06:59,220] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name like "T%")
+[2020-05-02 21:06:59,289] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name like "T%")
+[2020-05-02 21:06:59,290] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+like+%22T%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:59,354] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 4.296047ms
+[2020-05-02 21:06:59,355] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:59,356] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:59,357] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:59,358] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 16 =======
+[2020-05-02 21:06:59,359] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name like "Beryl%")
+[2020-05-02 21:06:59,419] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name like "Beryl%")
+[2020-05-02 21:06:59,420] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+like+%22Beryl%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:59,490] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 13.072263ms
+[2020-05-02 21:06:59,492] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:59,493] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:59,493] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:59,494] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 17 =======
+[2020-05-02 21:06:59,495] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name like "De%")
+[2020-05-02 21:06:59,549] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name like "De%")
+[2020-05-02 21:06:59,550] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+like+%22De%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:59,623] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 16.404504ms
+[2020-05-02 21:06:59,624] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:59,625] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:59,626] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:59,627] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 18 =======
+[2020-05-02 21:06:59,628] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name like "Tem%")
+[2020-05-02 21:06:59,684] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name like "Tem%")
+[2020-05-02 21:06:59,685] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+like+%22Tem%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:59,747] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 4.858275ms
+[2020-05-02 21:06:59,749] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:59,749] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:59,750] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:59,751] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 19 =======
+[2020-05-02 21:06:59,752] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name like "C%")
+[2020-05-02 21:06:59,831] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( name like "C%")
+[2020-05-02 21:06:59,832] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+name+like+%22C%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:06:59,898] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 2.93518ms
+[2020-05-02 21:06:59,899] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:06:59,900] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:06:59,901] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:06:59,902] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 20 =======
+[2020-05-02 21:06:59,903] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( ( ( name between "Mia" and "Scott") AND ( name > "Treva" and name < "Cassandra")) AND ( name >= "Amara" and name < "Deandra") AND ( name = "Jerica Morgan")) AND ( name = "Antonia Gerónimo") OR ( name >= "Lucretia" and name <= "Wilson")) OR ( name >= "Lucretia" and name <= "Wilson") AND ( name like "A%")) AND ( name like "Br%")
+[2020-05-02 21:06:59,957] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( ( ( name between "Mia" and "Scott") AND ( name > "Treva" and name < "Cassandra")) AND ( name >= "Amara" and name < "Deandra") AND ( name = "Jerica Morgan")) AND ( name = "Antonia Gerónimo") OR ( name >= "Lucretia" and name <= "Wilson")) OR ( name >= "Lucretia" and name <= "Wilson") AND ( name like "A%")) AND ( name like "Br%")
+[2020-05-02 21:06:59,959] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+%28+%28+%28+%28+name+between+%22Mia%22+and+%22Scott%22%29+AND+%28+name+%3E+%22Treva%22+and+name+%3C+%22Cassandra%22%29%29+AND+%28+name+%3E%3D+%22Amara%22+and+name+%3C+%22Deandra%22%29+AND+%28+name+%3D+%22Jerica+Morgan%22%29%29+AND+%28+name+%3D+%22Antonia+Ger%C3%B3nimo%22%29+OR+%28+name+%3E%3D+%22Lucretia%22+and+name+%3C%3D+%22Wilson%22%29%29+OR+%28+name+%3E%3D+%22Lucretia%22+and+name+%3C%3D+%22Wilson%22%29+AND+%28+name+like+%22A%25%22%29%29+AND+%28+name+like+%22Br%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:00,022] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 12.072164ms
+[2020-05-02 21:07:00,023] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:07:00,024] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:07:00,025] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:07:00,026] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 21 =======
+[2020-05-02 21:07:00,027] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( ( ( name = "Thea Aarón") AND ( name = "Devi Brown")) AND ( name = "Devi Brown") AND ( name > "Kory" and name < "Gallia")) AND ( name > "Fuscienne" and name <= "Anderson") AND ( name like "Ga%")) AND ( name like "Gabi %") AND ( name between "Callia" and "Edwards")) AND ( name between "Sebastián" and "Hedda")
+[2020-05-02 21:07:00,079] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( ( ( name = "Thea Aarón") AND ( name = "Devi Brown")) AND ( name = "Devi Brown") AND ( name > "Kory" and name < "Gallia")) AND ( name > "Fuscienne" and name <= "Anderson") AND ( name like "Ga%")) AND ( name like "Gabi %") AND ( name between "Callia" and "Edwards")) AND ( name between "Sebastián" and "Hedda")
+[2020-05-02 21:07:00,081] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+%28+%28+%28+%28+name+%3D+%22Thea+Aar%C3%B3n%22%29+AND+%28+name+%3D+%22Devi+Brown%22%29%29+AND+%28+name+%3D+%22Devi+Brown%22%29+AND+%28+name+%3E+%22Kory%22+and+name+%3C+%22Gallia%22%29%29+AND+%28+name+%3E+%22Fuscienne%22+and+name+%3C%3D+%22Anderson%22%29+AND+%28+name+like+%22Ga%25%22%29%29+AND+%28+name+like+%22Gabi+%25%22%29+AND+%28+name+between+%22Callia%22+and+%22Edwards%22%29%29+AND+%28+name+between+%22Sebasti%C3%A1n%22+and+%22Hedda%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:00,148] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 12.528281ms
+[2020-05-02 21:07:00,149] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:07:00,151] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:07:00,152] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:07:00,152] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 22 =======
+[2020-05-02 21:07:00,153] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( name > "Tempest" and name <= "Kagami") OR ( name > "Araceli" and name < "Aarón")) OR ( name > "Quella" and name <= "Trista") OR ( name >= "Lilith" and name < "Maura")) OR ( name >= "White" and name <= "Ann")
+[2020-05-02 21:07:00,217] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( name > "Tempest" and name <= "Kagami") OR ( name > "Araceli" and name < "Aarón")) OR ( name > "Quella" and name <= "Trista") OR ( name >= "Lilith" and name < "Maura")) OR ( name >= "White" and name <= "Ann")
+[2020-05-02 21:07:00,218] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+%28+%28+name+%3E+%22Tempest%22+and+name+%3C%3D+%22Kagami%22%29+OR+%28+name+%3E+%22Araceli%22+and+name+%3C+%22Aar%C3%B3n%22%29%29+OR+%28+name+%3E+%22Quella%22+and+name+%3C%3D+%22Trista%22%29+OR+%28+name+%3E%3D+%22Lilith%22+and+name+%3C+%22Maura%22%29%29+OR+%28+name+%3E%3D+%22White%22+and+name+%3C%3D+%22Ann%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:00,283] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 9.553679ms
+[2020-05-02 21:07:00,284] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:07:00,285] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:07:00,286] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:07:00,286] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 23 =======
+[2020-05-02 21:07:00,287] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( ( name like "Dabr%") OR ( name = "Kerry")) OR ( name = "Kerry") OR ( name between "Severin" and "Jerica")) OR ( name between "Killian" and "Casondrah") AND ( name = "Ebony")) AND ( name = "Severin Martin")
+[2020-05-02 21:07:00,342] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( ( name like "Dabr%") OR ( name = "Kerry")) OR ( name = "Kerry") OR ( name between "Severin" and "Jerica")) OR ( name between "Killian" and "Casondrah") AND ( name = "Ebony")) AND ( name = "Severin Martin")
+[2020-05-02 21:07:00,343] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+%28+%28+%28+name+like+%22Dabr%25%22%29+OR+%28+name+%3D+%22Kerry%22%29%29+OR+%28+name+%3D+%22Kerry%22%29+OR+%28+name+between+%22Severin%22+and+%22Jerica%22%29%29+OR+%28+name+between+%22Killian%22+and+%22Casondrah%22%29+AND+%28+name+%3D+%22Ebony%22%29%29+AND+%28+name+%3D+%22Severin+Martin%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:00,416] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 11.46923ms
+[2020-05-02 21:07:00,417] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:07:00,418] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:07:00,419] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:07:00,419] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 24 =======
+[2020-05-02 21:07:00,420] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( name like "Beryl Gerón%") AND ( name like "Araceli Thomp%")) AND ( name like "Araceli Thomp%") OR ( name = "Riona")) OR ( name = "Cassandra Howard Jr.")
+[2020-05-02 21:07:00,475] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( name like "Beryl Gerón%") AND ( name like "Araceli Thomp%")) AND ( name like "Araceli Thomp%") OR ( name = "Riona")) OR ( name = "Cassandra Howard Jr.")
+[2020-05-02 21:07:00,476] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+%28+%28+name+like+%22Beryl+Ger%C3%B3n%25%22%29+AND+%28+name+like+%22Araceli+Thomp%25%22%29%29+AND+%28+name+like+%22Araceli+Thomp%25%22%29+OR+%28+name+%3D+%22Riona%22%29%29+OR+%28+name+%3D+%22Cassandra+Howard+Jr.%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:00,582] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 50.371208ms
+[2020-05-02 21:07:00,583] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:07:00,584] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:07:00,585] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:07:00,586] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 25 =======
+[2020-05-02 21:07:00,587] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( name >= "Lysha" and name <= "Kagami") OR ( name between "Wright" and "Ebony")) OR ( name between "Jerica" and "Ciara") AND ( name like "Mo%")) AND ( name like "De%")
+[2020-05-02 21:07:00,645] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( name >= "Lysha" and name <= "Kagami") OR ( name between "Wright" and "Ebony")) OR ( name between "Jerica" and "Ciara") AND ( name like "Mo%")) AND ( name like "De%")
+[2020-05-02 21:07:00,646] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+%28+%28+name+%3E%3D+%22Lysha%22+and+name+%3C%3D+%22Kagami%22%29+OR+%28+name+between+%22Wright%22+and+%22Ebony%22%29%29+OR+%28+name+between+%22Jerica%22+and+%22Ciara%22%29+AND+%28+name+like+%22Mo%25%22%29%29+AND+%28+name+like+%22De%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:00,724] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 20.39314ms
+[2020-05-02 21:07:00,725] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:07:00,726] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:07:00,727] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:07:00,727] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 26 =======
+[2020-05-02 21:07:00,728] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( name like "Adara Eva%") OR ( name = "Thea Russell")) OR ( name = "Hall")
+[2020-05-02 21:07:00,794] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( name like "Adara Eva%") OR ( name = "Thea Russell")) OR ( name = "Hall")
+[2020-05-02 21:07:00,795] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+%28+name+like+%22Adara+Eva%25%22%29+OR+%28+name+%3D+%22Thea+Russell%22%29%29+OR+%28+name+%3D+%22Hall%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:00,870] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 4.789207ms
+[2020-05-02 21:07:00,872] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:07:00,873] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:07:00,873] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:07:00,874] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 27 =======
+[2020-05-02 21:07:00,875] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( name = "Desdomna") AND ( name like "G%")) AND ( name like "Saf%") OR ( name between "Johnson" and "Quella")) OR ( name between "Cytheria" and "Wood")
+[2020-05-02 21:07:00,932] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( name = "Desdomna") AND ( name like "G%")) AND ( name like "Saf%") OR ( name between "Johnson" and "Quella")) OR ( name between "Cytheria" and "Wood")
+[2020-05-02 21:07:00,934] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+%28+%28+name+%3D+%22Desdomna%22%29+AND+%28+name+like+%22G%25%22%29%29+AND+%28+name+like+%22Saf%25%22%29+OR+%28+name+between+%22Johnson%22+and+%22Quella%22%29%29+OR+%28+name+between+%22Cytheria%22+and+%22Wood%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:00,999] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 6.748701ms
+[2020-05-02 21:07:01,000] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:07:01,001] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:07:01,002] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:07:01,003] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 28 =======
+[2020-05-02 21:07:01,003] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( ( ( name like "Perdita %") OR ( name = "Josué")) OR ( name = "Josué") OR ( name = "Safiya Lee")) OR ( name = "Morgan") OR ( name like "Cl%")) OR ( name like "W%") OR ( name > "Turner" and name <= "Lucretia")) OR ( name > "Turner" and name <= "Lucretia")
+[2020-05-02 21:07:01,059] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( ( ( ( name like "Perdita %") OR ( name = "Josué")) OR ( name = "Josué") OR ( name = "Safiya Lee")) OR ( name = "Morgan") OR ( name like "Cl%")) OR ( name like "W%") OR ( name > "Turner" and name <= "Lucretia")) OR ( name > "Turner" and name <= "Lucretia")
+[2020-05-02 21:07:01,060] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+%28+%28+%28+%28+name+like+%22Perdita+%25%22%29+OR+%28+name+%3D+%22Josu%C3%A9%22%29%29+OR+%28+name+%3D+%22Josu%C3%A9%22%29+OR+%28+name+%3D+%22Safiya+Lee%22%29%29+OR+%28+name+%3D+%22Morgan%22%29+OR+%28+name+like+%22Cl%25%22%29%29+OR+%28+name+like+%22W%25%22%29+OR+%28+name+%3E+%22Turner%22+and+name+%3C%3D+%22Lucretia%22%29%29+OR+%28+name+%3E+%22Turner%22+and+name+%3C%3D+%22Lucretia%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:01,121] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 7.47076ms
+[2020-05-02 21:07:01,123] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:07:01,123] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:07:01,124] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:07:01,125] - [flex_index_phase1] [123145527455744] - INFO - ======== Running Query # 29 =======
+[2020-05-02 21:07:01,126] - [flex_index_phase1] [123145527455744] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( name >= "Kerry" and name < "Severin") OR ( name like "Brow%")) OR ( name like "Devi Roger%")
+[2020-05-02 21:07:01,182] - [tuq] [123145527455744] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and ( ( name >= "Kerry" and name < "Severin") OR ( name like "Brow%")) OR ( name like "Devi Roger%")
+[2020-05-02 21:07:01,184] - [rest_client] [123145527455744] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and+%28+%28+name+%3E%3D+%22Kerry%22+and+name+%3C+%22Severin%22%29+OR+%28+name+like+%22Brow%25%22%29%29+OR+%28+name+like+%22Devi+Roger%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:01,244] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 4.047297ms
+[2020-05-02 21:07:01,245] - [flex_index_phase1] [123145527455744] - INFO - Actual indexes present: ['primary_gsi_index'], Expected Indexes: ['custom_index']
+[2020-05-02 21:07:01,246] - [flex_index_phase1] [123145527455744] - INFO - Failed to find fts index name in plan query
+[2020-05-02 21:07:01,246] - [flex_index_phase1] [123145527455744] - ERROR - False is not true
+[2020-05-02 21:07:01,247] - [flex_index_phase1] [123145527455744] - INFO - ==============  FlexIndexTests tearDown has started ==============
+[2020-05-02 21:07:01,310] - [tuq] [123145527455744] - INFO - RUN QUERY SELECT * FROM system:indexes
+[2020-05-02 21:07:01,311] - [rest_client] [123145527455744] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:01,395] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 34.090075ms
+[2020-05-02 21:07:01,448] - [tuq] [123145527455744] - INFO - RUN QUERY SELECT * FROM system:keyspaces
+[2020-05-02 21:07:01,449] - [rest_client] [123145527455744] - INFO - query params : statement=SELECT+%2A+FROM+system%3Akeyspaces&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:01,524] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 16.468235ms
+[2020-05-02 21:07:01,526] - [tuq] [123145527455744] - INFO - ==============  System Config: ==============
+
+[2020-05-02 21:07:01,590] - [tuq] [123145527455744] - INFO - RUN QUERY SELECT COUNT(*) FROM `default`
+[2020-05-02 21:07:01,591] - [rest_client] [123145527455744] - INFO - query params : statement=SELECT+COUNT%28%2A%29+FROM+%60default%60&scan_consistency=NOT_BOUNDED
+[2020-05-02 21:07:01,671] - [tuq] [123145527455744] - INFO - TOTAL ELAPSED TIME: 25.992723ms
+[2020-05-02 21:07:01,672] - [tuq] [123145527455744] - INFO - Bucket: default
+[2020-05-02 21:07:01,673] - [tuq] [123145527455744] - INFO - Indexes: ['primary_gsi_index']
+[2020-05-02 21:07:01,673] - [tuq] [123145527455744] - INFO - Docs: 1000
+
+[2020-05-02 21:07:01,674] - [tuq] [123145527455744] - INFO - =============================================
+[2020-05-02 21:07:01,675] - [flex_index_phase1] [123145527455744] - INFO - ==============  FlexIndexTests tearDown has completed ==============
+[2020-05-02 21:07:01,676] - [tuq] [123145527455744] - INFO - ==============  QueryTests tearDown has started ==============
+[2020-05-02 21:07:01,676] - [tuq] [123145527455744] - INFO - ==============  QueryTests tearDown has completed ==============
+[2020-05-02 21:07:01,795] - [basetestcase] [123145527455744] - INFO - ------- Cluster statistics -------
+[2020-05-02 21:07:01,796] - [basetestcase] [123145527455744] - INFO - 172.23.121.65:8091 => {'services': ['fts', 'index', 'kv', 'n1ql'], 'cpu_utilization': 10.30927835051546, 'mem_free': 230625280, 'mem_total': 4366925824, 'swap_mem_used': 2094194688, 'swap_mem_total': 3758092288}
+[2020-05-02 21:07:01,797] - [basetestcase] [123145527455744] - INFO - 172.23.121.66:8091 => {'services': ['fts', 'kv'], 'cpu_utilization': 6.045340050377834, 'mem_free': 3268894720, 'mem_total': 4366942208, 'swap_mem_used': 2621440, 'swap_mem_total': 3758092288}
+[2020-05-02 21:07:01,798] - [basetestcase] [123145527455744] - INFO - 172.23.121.67:8091 => {'services': ['fts'], 'cpu_utilization': 1.259445843828715, 'mem_free': 3419054080, 'mem_total': 4366938112, 'swap_mem_used': 0, 'swap_mem_total': 3758092288}
+[2020-05-02 21:07:01,799] - [basetestcase] [123145527455744] - INFO - --- End of cluster statistics ---
+[2020-05-02 21:07:01,800] - [basetestcase] [123145527455744] - INFO - ==============  basetestcase cleanup was started for test #70 test_flex_single_typemapping ==============
+[2020-05-02 21:07:02,128] - [bucket_helper] [123145527455744] - INFO - deleting existing buckets ['default'] on 172.23.121.65
+[2020-05-02 21:07:02,129] - [bucket_helper] [123145527455744] - INFO - remove bucket default ...
+[2020-05-02 21:07:03,716] - [bucket_helper] [123145527455744] - INFO - deleted bucket : default from 172.23.121.65
+[2020-05-02 21:07:03,717] - [bucket_helper] [123145527455744] - INFO - waiting for bucket deletion to complete....
+[2020-05-02 21:07:03,774] - [rest_client] [123145527455744] - INFO - node 172.23.121.65 existing buckets : []
+[2020-05-02 21:07:03,775] - [bucket_helper] [123145527455744] - INFO - sleep 2 seconds to make sure all buckets (['default']) were deleted completely.
+[2020-05-02 21:07:06,240] - [cluster_helper] [123145527455744] - INFO - rebalancing all nodes in order to remove nodes
+[2020-05-02 21:07:06,295] - [rest_client] [123145527455744] - INFO - rebalance params : {'knownNodes': 'ns_1@172.23.121.65,ns_1@172.23.121.66,ns_1@172.23.121.67', 'ejectedNodes': 'ns_1@172.23.121.66,ns_1@172.23.121.67', 'user': 'Administrator', 'password': 'password'}
+[2020-05-02 21:07:06,348] - [rest_client] [123145527455744] - INFO - rebalance operation started
+[2020-05-02 21:07:06,400] - [rest_client] [123145527455744] - INFO - rebalance percentage : 0.00 %
+[2020-05-02 21:07:16,456] - [rest_client] [123145527455744] - INFO - rebalance percentage : 33.00 %
+[2020-05-02 21:07:36,575] - [rest_client] [123145527455744] - INFO - rebalance progress took 30.22 seconds 
+[2020-05-02 21:07:36,576] - [rest_client] [123145527455744] - INFO - sleep for 10 seconds after rebalance...
+[2020-05-02 21:07:46,780] - [cluster_helper] [123145527455744] - INFO - removed all the nodes from cluster associated with ip:172.23.121.65 port:8091 ssh_username:root ? [('ns_1@172.23.121.66', 8091), ('ns_1@172.23.121.67', 8091)]
+[2020-05-02 21:07:46,836] - [cluster_helper] [123145527455744] - INFO - waiting for ns_server @ 172.23.121.65:8091
+[2020-05-02 21:07:46,901] - [cluster_helper] [123145527455744] - INFO - ns_server @ 172.23.121.65:8091 is running
+[2020-05-02 21:07:46,948] - [cluster_helper] [123145527455744] - INFO - waiting for ns_server @ 172.23.121.66:8091
+[2020-05-02 21:07:47,002] - [cluster_helper] [123145527455744] - INFO - ns_server @ 172.23.121.66:8091 is running
+[2020-05-02 21:07:47,049] - [cluster_helper] [123145527455744] - INFO - waiting for ns_server @ 172.23.121.67:8091
+[2020-05-02 21:07:47,122] - [cluster_helper] [123145527455744] - INFO - ns_server @ 172.23.121.67:8091 is running
+[2020-05-02 21:07:47,123] - [basetestcase] [123145527455744] - INFO - ==============  basetestcase cleanup was finished for test #70 test_flex_single_typemapping ==============
+[2020-05-02 21:07:47,124] - [basetestcase] [123145527455744] - INFO - closing all ssh connections
+[2020-05-02 21:07:47,132] - [basetestcase] [123145527455744] - INFO - closing all memcached connections

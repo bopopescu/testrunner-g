@@ -1,0 +1,135 @@
+[2020-05-01 15:49:57,817] - [install_utils] [4529946048] - WARNING - URL: is not valid, will use version to locate build
+[2020-05-01 15:49:57,819] - [remote_util] [4529946048] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-01 15:49:58,486] - [remote_util] [4529946048] - INFO - Connected to 172.23.121.68
+[2020-05-01 15:49:59,107] - [remote_util] [4529946048] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-01 15:49:59,926] - [remote_util] [4529946048] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-01 15:49:59,928] - [remote_util] [4529946048] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-01 15:50:00,595] - [remote_util] [4529946048] - INFO - Connected to 172.23.121.68
+[2020-05-01 15:50:01,288] - [remote_util] [4529946048] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-01 15:50:02,094] - [remote_util] [4529946048] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-01 15:50:02,213] - [remote_util] [4529946048] - INFO - This url http://172.23.126.166/builds/latestbuilds/couchbase-server/cheshire-cat/1834/couchbase-server-enterprise-7.0.0-1834-centos7.x86_64.rpm is live
+[2020-05-01 15:50:02,214] - [install_utils] [4529946048] - INFO - Downloading build binary to 172.23.121.68:/tmp/couchbase-server-enterprise-7.0.0-1834-centos7.x86_64.rpm..
+[2020-05-01 15:50:40,884] - [new_install] [123145418584064] - INFO - Done with uninstall on 172.23.121.68.
+[2020-05-01 15:51:37,127] - [new_install] [123145418584064] - INFO - Done with install on 172.23.121.68.
+[2020-05-01 15:52:37,128] - [remote_util] [123145418584064] - INFO - running command.raw on 172.23.121.68: /opt/couchbase/bin/couchbase-cli node-init -c 172.23.121.68 -u Administrator -p password
+[2020-05-01 15:52:37,440] - [remote_util] [123145418584064] - INFO - command executed successfully
+[2020-05-01 15:52:37,724] - [remote_util] [123145418584064] - INFO - running command.raw on 172.23.121.68: sed -i 's/export PATH/export PATH\nexport CBFT_ENV_OPTIONS=bleveMaxResultWindow=10000000/' /opt/couchbase/bin/couchbase-server; grep bleveMaxResultWindow=10000000 /opt/couchbase/bin/couchbase-server > /dev/null && echo 1 || echo 0
+[2020-05-01 15:52:37,824] - [remote_util] [123145418584064] - INFO - command executed successfully
+[2020-05-01 15:52:38,073] - [remote_util] [123145418584064] - INFO - 172.23.121.68 **** The linux version file /opt/couchbase/ VERSION.txt  exists
+[2020-05-01 15:52:38,838] - [remote_util] [123145418584064] - INFO - Running systemd stop command on this server
+[2020-05-01 15:52:38,838] - [remote_util] [123145418584064] - INFO - running command.raw on 172.23.121.68: systemctl stop couchbase-server.service
+[2020-05-01 15:52:40,427] - [remote_util] [123145418584064] - INFO - command executed successfully
+[2020-05-01 15:52:40,727] - [remote_util] [123145418584064] - INFO - 172.23.121.68 **** The linux version file /opt/couchbase/ VERSION.txt  exists
+[2020-05-01 15:52:41,491] - [remote_util] [123145418584064] - INFO - Running systemd start command on this server
+[2020-05-01 15:52:41,491] - [remote_util] [123145418584064] - INFO - running command.raw on 172.23.121.68: systemctl start couchbase-server.service
+[2020-05-01 15:52:41,562] - [remote_util] [123145418584064] - INFO - command executed successfully
+[2020-05-01 15:52:51,568] - [install_utils] [123145418584064] - INFO - fts_query_limit set to 10000000 on 172.23.121.68
+[2020-05-01 15:52:52,717] - [install_utils] [123145418584064] - INFO - Setting CBAS memory quota as 1024 MB on 172.23.121.68
+[2020-05-01 15:52:52,717] - [rest_client] [123145418584064] - INFO - pools/default params : cbasMemoryQuota=1024
+[2020-05-01 15:52:52,781] - [install_utils] [123145418584064] - INFO - Setting KV memory quota as 1207 MB on 172.23.121.68
+[2020-05-01 15:52:52,781] - [rest_client] [123145418584064] - INFO - pools/default params : memoryQuota=1207
+[2020-05-01 15:52:52,840] - [rest_client] [123145418584064] - INFO - --> init_node_services(Administrator,password,None,8091,['kv', 'cbas'])
+[2020-05-01 15:52:52,840] - [rest_client] [123145418584064] - INFO - /node/controller/setupServices params on 172.23.121.68: 8091:hostname=None&user=Administrator&password=password&services=kv%2Ccbas
+[2020-05-01 15:52:52,916] - [rest_client] [123145418584064] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-01 15:52:52,916] - [rest_client] [123145418584064] - INFO - settings/web params on 172.23.121.68:8091:port=8091&username=Administrator&password=password
+[2020-05-01 15:52:53,029] - [rest_client] [123145418584064] - INFO - --> status:True
+[2020-05-01 15:52:53,030] - [new_install] [123145418584064] - INFO - Done with init on 172.23.121.68.
+[2020-05-01 15:52:53,090] - [new_install] [123145418584064] - INFO - Done with cleanup on 172.23.121.68.
+[2020-05-01 15:53:04,170] - [new_install] [4529946048] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 15:53:04,232] - [new_install] [4529946048] - INFO - node:172.23.121.68:8091	version:7.0.0-1834-enterprise	aFamily:inet	services:['cbas', 'kv']
+[2020-05-01 15:53:04,232] - [install_utils] [4529946048] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 15:53:04,232] - [install_utils] [4529946048] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 15:53:04,232] - [install_utils] [4529946048] - INFO - INSTALL COMPLETED ON: 	172.23.121.68
+[2020-05-01 15:53:04,232] - [install_utils] [4529946048] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 15:53:04,232] - [new_install] [4529946048] - INFO - TOTAL INSTALL TIME = 186 seconds
+[2020-05-01 15:54:55,282] - [install_utils] [4606991808] - WARNING - URL: is not valid, will use version to locate build
+[2020-05-01 15:54:55,284] - [remote_util] [4606991808] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-01 15:54:55,900] - [remote_util] [4606991808] - INFO - Connected to 172.23.121.68
+[2020-05-01 15:54:56,525] - [remote_util] [4606991808] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-01 15:54:57,324] - [remote_util] [4606991808] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-01 15:54:57,326] - [remote_util] [4606991808] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-01 15:54:57,952] - [remote_util] [4606991808] - INFO - Connected to 172.23.121.68
+[2020-05-01 15:54:58,561] - [remote_util] [4606991808] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-01 15:54:59,349] - [remote_util] [4606991808] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-01 15:54:59,482] - [remote_util] [4606991808] - INFO - This url http://172.23.126.166/builds/latestbuilds/couchbase-server/cheshire-cat/1939/couchbase-server-enterprise-7.0.0-1939-centos7.x86_64.rpm is live
+[2020-05-01 15:54:59,482] - [install_utils] [4606991808] - INFO - Downloading build binary to 172.23.121.68:/tmp/couchbase-server-enterprise-7.0.0-1939-centos7.x86_64.rpm..
+[2020-05-01 15:55:35,189] - [new_install] [123145529098240] - INFO - Done with uninstall on 172.23.121.68.
+[2020-05-01 15:56:33,951] - [new_install] [123145529098240] - INFO - Done with install on 172.23.121.68.
+[2020-05-01 15:57:33,954] - [remote_util] [123145529098240] - INFO - running command.raw on 172.23.121.68: /opt/couchbase/bin/couchbase-cli node-init -c 172.23.121.68 -u Administrator -p password
+[2020-05-01 15:57:34,297] - [remote_util] [123145529098240] - INFO - command executed successfully
+[2020-05-01 15:57:34,590] - [remote_util] [123145529098240] - INFO - running command.raw on 172.23.121.68: sed -i 's/export PATH/export PATH\nexport CBFT_ENV_OPTIONS=bleveMaxResultWindow=10000000/' /opt/couchbase/bin/couchbase-server; grep bleveMaxResultWindow=10000000 /opt/couchbase/bin/couchbase-server > /dev/null && echo 1 || echo 0
+[2020-05-01 15:57:34,725] - [remote_util] [123145529098240] - INFO - command executed successfully
+[2020-05-01 15:57:34,959] - [remote_util] [123145529098240] - INFO - 172.23.121.68 **** The linux version file /opt/couchbase/ VERSION.txt  exists
+[2020-05-01 15:57:35,603] - [remote_util] [123145529098240] - INFO - Running systemd stop command on this server
+[2020-05-01 15:57:35,603] - [remote_util] [123145529098240] - INFO - running command.raw on 172.23.121.68: systemctl stop couchbase-server.service
+[2020-05-01 15:57:37,219] - [remote_util] [123145529098240] - INFO - command executed successfully
+[2020-05-01 15:57:37,423] - [remote_util] [123145529098240] - INFO - 172.23.121.68 **** The linux version file /opt/couchbase/ VERSION.txt  exists
+[2020-05-01 15:57:38,014] - [remote_util] [123145529098240] - INFO - Running systemd start command on this server
+[2020-05-01 15:57:38,014] - [remote_util] [123145529098240] - INFO - running command.raw on 172.23.121.68: systemctl start couchbase-server.service
+[2020-05-01 15:57:38,082] - [remote_util] [123145529098240] - INFO - command executed successfully
+[2020-05-01 15:57:48,087] - [install_utils] [123145529098240] - INFO - fts_query_limit set to 10000000 on 172.23.121.68
+[2020-05-01 15:57:49,201] - [install_utils] [123145529098240] - INFO - Setting CBAS memory quota as 1024 MB on 172.23.121.68
+[2020-05-01 15:57:49,201] - [rest_client] [123145529098240] - INFO - pools/default params : cbasMemoryQuota=1024
+[2020-05-01 15:57:49,250] - [install_utils] [123145529098240] - INFO - Setting KV memory quota as 1207 MB on 172.23.121.68
+[2020-05-01 15:57:49,250] - [rest_client] [123145529098240] - INFO - pools/default params : memoryQuota=1207
+[2020-05-01 15:57:49,300] - [rest_client] [123145529098240] - INFO - --> init_node_services(Administrator,password,None,8091,['kv', 'cbas'])
+[2020-05-01 15:57:49,300] - [rest_client] [123145529098240] - INFO - /node/controller/setupServices params on 172.23.121.68: 8091:hostname=None&user=Administrator&password=password&services=kv%2Ccbas
+[2020-05-01 15:57:49,355] - [rest_client] [123145529098240] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-01 15:57:49,355] - [rest_client] [123145529098240] - INFO - settings/web params on 172.23.121.68:8091:port=8091&username=Administrator&password=password
+[2020-05-01 15:57:49,444] - [rest_client] [123145529098240] - INFO - --> status:True
+[2020-05-01 15:57:49,444] - [new_install] [123145529098240] - INFO - Done with init on 172.23.121.68.
+[2020-05-01 15:57:49,502] - [new_install] [123145529098240] - INFO - Done with cleanup on 172.23.121.68.
+[2020-05-01 15:57:59,694] - [new_install] [4606991808] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 15:57:59,755] - [new_install] [4606991808] - INFO - node:172.23.121.68:8091	version:7.0.0-1939-enterprise	aFamily:inet	services:['cbas', 'kv']
+[2020-05-01 15:57:59,755] - [install_utils] [4606991808] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 15:57:59,755] - [install_utils] [4606991808] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 15:57:59,755] - [install_utils] [4606991808] - INFO - INSTALL COMPLETED ON: 	172.23.121.68
+[2020-05-01 15:57:59,756] - [install_utils] [4606991808] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 15:57:59,756] - [new_install] [4606991808] - INFO - TOTAL INSTALL TIME = 184 seconds
+[2020-05-01 16:15:17,752] - [install_utils] [4633402816] - WARNING - URL: is not valid, will use version to locate build
+[2020-05-01 16:15:17,754] - [remote_util] [4633402816] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-01 16:15:18,387] - [remote_util] [4633402816] - INFO - Connected to 172.23.121.68
+[2020-05-01 16:15:19,065] - [remote_util] [4633402816] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-01 16:15:19,932] - [remote_util] [4633402816] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-01 16:15:19,934] - [remote_util] [4633402816] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-01 16:15:20,591] - [remote_util] [4633402816] - INFO - Connected to 172.23.121.68
+[2020-05-01 16:15:21,298] - [remote_util] [4633402816] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-01 16:15:22,130] - [remote_util] [4633402816] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-01 16:15:22,211] - [remote_util] [4633402816] - INFO - This url http://172.23.126.166/builds/latestbuilds/couchbase-server/cheshire-cat/1939/couchbase-server-enterprise-7.0.0-1939-centos7.x86_64.rpm is live
+[2020-05-01 16:15:22,211] - [install_utils] [4633402816] - INFO - Downloading build binary to 172.23.121.68:/tmp/couchbase-server-enterprise-7.0.0-1939-centos7.x86_64.rpm..
+[2020-05-01 16:15:57,934] - [new_install] [123145431924736] - INFO - Done with uninstall on 172.23.121.68.
+[2020-05-01 16:16:53,004] - [new_install] [123145431924736] - INFO - Done with install on 172.23.121.68.
+[2020-05-01 16:17:53,005] - [remote_util] [123145431924736] - INFO - running command.raw on 172.23.121.68: /opt/couchbase/bin/couchbase-cli node-init -c 172.23.121.68 -u Administrator -p password
+[2020-05-01 16:17:53,340] - [remote_util] [123145431924736] - INFO - command executed successfully
+[2020-05-01 16:17:53,639] - [remote_util] [123145431924736] - INFO - running command.raw on 172.23.121.68: sed -i 's/export PATH/export PATH\nexport CBFT_ENV_OPTIONS=bleveMaxResultWindow=10000000/' /opt/couchbase/bin/couchbase-server; grep bleveMaxResultWindow=10000000 /opt/couchbase/bin/couchbase-server > /dev/null && echo 1 || echo 0
+[2020-05-01 16:17:53,740] - [remote_util] [123145431924736] - INFO - command executed successfully
+[2020-05-01 16:17:53,990] - [remote_util] [123145431924736] - INFO - 172.23.121.68 **** The linux version file /opt/couchbase/ VERSION.txt  exists
+[2020-05-01 16:17:54,841] - [remote_util] [123145431924736] - INFO - Running systemd stop command on this server
+[2020-05-01 16:17:54,842] - [remote_util] [123145431924736] - INFO - running command.raw on 172.23.121.68: systemctl stop couchbase-server.service
+[2020-05-01 16:17:56,387] - [remote_util] [123145431924736] - INFO - command executed successfully
+[2020-05-01 16:17:56,585] - [remote_util] [123145431924736] - INFO - 172.23.121.68 **** The linux version file /opt/couchbase/ VERSION.txt  exists
+[2020-05-01 16:17:57,189] - [remote_util] [123145431924736] - INFO - Running systemd start command on this server
+[2020-05-01 16:17:57,190] - [remote_util] [123145431924736] - INFO - running command.raw on 172.23.121.68: systemctl start couchbase-server.service
+[2020-05-01 16:17:57,260] - [remote_util] [123145431924736] - INFO - command executed successfully
+[2020-05-01 16:18:07,261] - [install_utils] [123145431924736] - INFO - fts_query_limit set to 10000000 on 172.23.121.68
+[2020-05-01 16:18:08,399] - [install_utils] [123145431924736] - INFO - Setting INDEX memory quota as 256 MB on 172.23.121.68
+[2020-05-01 16:18:08,399] - [rest_client] [123145431924736] - INFO - pools/default params : indexMemoryQuota=256
+[2020-05-01 16:18:08,456] - [install_utils] [123145431924736] - INFO - Setting FTS memory quota as 512 MB on 172.23.121.68
+[2020-05-01 16:18:08,456] - [rest_client] [123145431924736] - INFO - pools/default params : ftsMemoryQuota=512
+[2020-05-01 16:18:08,523] - [install_utils] [123145431924736] - INFO - Setting KV memory quota as 1463 MB on 172.23.121.68
+[2020-05-01 16:18:08,523] - [rest_client] [123145431924736] - INFO - pools/default params : memoryQuota=1463
+[2020-05-01 16:18:08,578] - [rest_client] [123145431924736] - INFO - --> init_node_services(Administrator,password,None,8091,['kv', 'index', 'n1ql', 'fts'])
+[2020-05-01 16:18:08,578] - [rest_client] [123145431924736] - INFO - /node/controller/setupServices params on 172.23.121.68: 8091:hostname=None&user=Administrator&password=password&services=kv%2Cindex%2Cn1ql%2Cfts
+[2020-05-01 16:18:08,665] - [rest_client] [123145431924736] - INFO - settings/indexes params : storageMode=plasma
+[2020-05-01 16:18:08,730] - [rest_client] [123145431924736] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-01 16:18:08,731] - [rest_client] [123145431924736] - INFO - settings/web params on 172.23.121.68:8091:port=8091&username=Administrator&password=password
+[2020-05-01 16:18:08,820] - [rest_client] [123145431924736] - INFO - --> status:True
+[2020-05-01 16:18:08,820] - [new_install] [123145431924736] - INFO - Done with init on 172.23.121.68.
+[2020-05-01 16:18:08,887] - [new_install] [123145431924736] - INFO - Done with cleanup on 172.23.121.68.
+[2020-05-01 16:18:22,430] - [new_install] [4633402816] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 16:18:22,512] - [new_install] [4633402816] - INFO - node:172.23.121.68:8091	version:7.0.0-1939-enterprise	aFamily:inet	services:['fts', 'index', 'kv', 'n1ql']
+[2020-05-01 16:18:22,513] - [install_utils] [4633402816] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 16:18:22,513] - [install_utils] [4633402816] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 16:18:22,513] - [install_utils] [4633402816] - INFO - INSTALL COMPLETED ON: 	172.23.121.68
+[2020-05-01 16:18:22,513] - [install_utils] [4633402816] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-01 16:18:22,513] - [new_install] [4633402816] - INFO - TOTAL INSTALL TIME = 185 seconds

@@ -179,7 +179,7 @@ class CollectinfoTests(CliBaseTest):
                     raise Exception("unable to list the files. Check ls command output for help")
                 missing_logs = False
                 nodes_services = RestConnection(self.master).get_nodes_services()
-                for node, services in nodes_services.items():
+                for node, services in list(nodes_services.items()):
                     for service in services:
                         if service.encode("ascii") == "fts" and \
                                      self.master.ip in node and \
@@ -233,8 +233,10 @@ class CollectinfoTests(CliBaseTest):
                 for output_line in output:
                     output_line = output_line.split()
                     file_size = int(output_line[0])
+                    if "dist_cfg" in output_line[1]:
+                        continue
                     if self.debug_logs:
-                        print("File size: ", file_size)
+                        print(("File size: ", file_size))
                     if file_size == 0:
                         if "kv_trace" in output_line[1] and self.node_down:
                             continue

@@ -1,9 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import base64
 import gzip
 from http.client import BadStatusLine
-#import os
+import os
 import urllib.request, urllib.error, urllib.parse
 import sys
 import threading
@@ -12,8 +12,8 @@ from multiprocessing import Process
 from pprint import pprint
 sys.path = ["lib", "pytests", "pysystests"] + sys.path
 
-if sys.hexversion < 0x02060000:
-    print("Testrunner requires version 2.6+ of python")
+if sys.hexversion < 0x30706f0:
+    print("Testrunner requires version 3.7.6+ of python")
     sys.exit()
 
 import re

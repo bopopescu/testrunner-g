@@ -38,6 +38,7 @@ from .random_query_generator.rand_query_gen import FTSESQueryGenerator
 from security.ntonencryptionBase import ntonencryptionBase
 from lib.ep_mc_bin_client import MemcachedClient
 from lib.mc_bin_client import MemcachedClient as MC_MemcachedClient
+from security.SecretsMasterBase import SecretsMasterBase
 
 
 class RenameNodeException(FTSException):
@@ -570,6 +571,7 @@ class FTSIndex:
         self.custom_map_add_non_indexed_fields = TestInputSingleton.input.param("custom_map_add_non_indexed_fields",
                                                                                 True)
         self.num_custom_analyzers = TestInputSingleton.input.param("num_custom_analyzers", 0)
+        self.text_analyzer = TestInputSingleton.input.param("text_analyzer", None)
         self.multiple_filters = TestInputSingleton.input.param("multiple_filters", False)
         self.cm_id = TestInputSingleton.input.param("cm_id", 0)
         if self.custom_map:
@@ -659,7 +661,8 @@ class FTSIndex:
         cm_gen = CustomMapGenerator(seed=seed, dataset=self.dataset,
                                     num_custom_analyzers=self.num_custom_analyzers,
                                     multiple_filters=self.multiple_filters,
-                                    custom_map_add_non_indexed_fields=self.custom_map_add_non_indexed_fields)
+                                    custom_map_add_non_indexed_fields=self.custom_map_add_non_indexed_fields,
+                                    text_analyzer=self.text_analyzer)
         fts_map, self.es_custom_map = cm_gen.get_map()
         self.smart_query_fields = cm_gen.get_smart_query_fields()
         print((self.smart_query_fields))
@@ -3103,6 +3106,8 @@ class FTSBaseTest(unittest.TestCase):
         self.field_name = self._input.param("field_name", None)
         self.field_type = self._input.param("field_type", None)
         self.field_alias = self._input.param("field_alias", None)
+        self.enable_secrets = self._input.param("enable_secrets", False)
+        self.secret_password = self._input.param("secret_password", 'p@ssw0rd')
 
         self.log.info(
             "==== FTSbasetests setup is started for test #{0} {1} ===="
@@ -3130,7 +3135,11 @@ class FTSBaseTest(unittest.TestCase):
                 self._input.param("skip-cleanup", False))
 
     def __is_cluster_run(self):
-        return len({server.ip for server in self._input.servers}) == 1
+        return len(set([server.ip for server in self._input.servers])) == 1
+    
+    def _setup_node_secret(self, secret_password):
+        for server in self._input.servers:
+            SecretsMasterBase(server).setup_pass_node(server, secret_password)
 
     def _check_retry_rebalance_succeeded(self):
         rest = RestConnection(self._cb_cluster.get_master_node())
@@ -3168,6 +3177,9 @@ class FTSBaseTest(unittest.TestCase):
             error_logger = self.check_error_count_in_fts_log()
             if error_logger:
                 self.fail("Errors found in logs : {0}".format(error_logger))
+        
+        if self.enable_secrets:
+            self._setup_node_secret("")
 
         if self._input.param("negative_test", False):
             if hasattr(self, '_resultForDoCleanups') \

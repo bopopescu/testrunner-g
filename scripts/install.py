@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # TODO: add installer support for membasez
-#TODO
+
 import getopt
 import copy, re
 import logging

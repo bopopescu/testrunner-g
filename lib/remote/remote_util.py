@@ -150,9 +150,10 @@ class RemoteMachineHelper(object):
         return vsz, rss
 
     def is_process_running(self, process_name):
+
         if getattr(self.remote_shell, "info", None) is None:
             self.remote_shell.info = self.remote_shell.extract_remote_info()
-
+        log.info("Checking for process " + process_name+ " on " + self.remote_shell.info.type.lower())
         if self.remote_shell.info.type.lower() == 'windows':
              output, error = self.remote_shell.execute_command('tasklist | grep {0}'
                                                 .format(process_name), debug=False)
@@ -470,7 +471,7 @@ class RemoteMachineShellConnection(KeepRefs):
         if os == "windows":
             o, r = self.execute_command("net start couchbaseserver")
             self.log_command_output(o, r)
-        elif os == "unix" or os == "linux":
+        elif os == "unix" or "linux" in os:
             if self.is_couchbase_installed():
                 if self.nonroot:
                     log.info("Start Couchbase Server with non root method")
@@ -482,7 +483,7 @@ class RemoteMachineShellConnection(KeepRefs):
                     if self.info.distribution_version.lower() in SYSTEMD_SERVER \
                                                  and sv in COUCHBASE_FROM_WATSON:
                         """from watson, systemd is used in centos 7, suse 12 """
-                        log.info("Running systemd command on this server")
+                        log.info("Running systemd start command on this server")
                         o, r = self.execute_command("systemctl start couchbase-server.service")
                         self.log_command_output(o, r)
                     else:
@@ -492,7 +493,7 @@ class RemoteMachineShellConnection(KeepRefs):
             o, r = self.execute_command("open /Applications/Couchbase\ Server.app")
             self.log_command_output(o, r)
         else:
-            log.error("don't know operating system or product version")
+            log.error("start_server: don't know operating system " + os + " or product version")
 
     def stop_server(self, os="unix"):
         self.extract_remote_info()
@@ -502,7 +503,7 @@ class RemoteMachineShellConnection(KeepRefs):
         if os == "windows":
             o, r = self.execute_command("net stop couchbaseserver")
             self.log_command_output(o, r)
-        elif os == "unix" or os == "linux":
+        elif os == "unix" or "linux" in os:
             if self.is_couchbase_installed():
                 if self.nonroot:
                     o, r = self.execute_command("%s%scouchbase-server -k"
@@ -514,7 +515,7 @@ class RemoteMachineShellConnection(KeepRefs):
                     if self.info.distribution_version.lower() in SYSTEMD_SERVER \
                                                  and sv in COUCHBASE_FROM_WATSON:
                         """from watson, systemd is used in centos 7, suse 12 """
-                        log.info("Running systemd command on this server")
+                        log.info("Running systemd stop command on this server")
                         o, r = self.execute_command("systemctl stop couchbase-server.service")
                         self.log_command_output(o, r)
                     else:
@@ -530,7 +531,7 @@ class RemoteMachineShellConnection(KeepRefs):
             o, r = self.execute_command("killall -9 epmd")
             self.log_command_output(o, r)
         else:
-            log.error("don't know operating system or product version")
+            log.error("stop_server: don't know operating system " + os + " or product version")
 
     def restart_couchbase(self):
         """
@@ -824,8 +825,11 @@ class RemoteMachineShellConnection(KeepRefs):
         return False
 
     def is_couchbase_running(self):
+        process_name = 'beam.smp'
         self.extract_remote_info()
-        o=RemoteMachineHelper(self).is_process_running('beam.smp')
+        if self.info.type.lower() == 'windows':
+            process_name='erl.exe'
+        o=RemoteMachineHelper(self).is_process_running(process_name)
         if o !=None:
             return True
         return False
@@ -1834,9 +1838,9 @@ class RemoteMachineShellConnection(KeepRefs):
                 command = 'INSTALL_UPGRADE_CONFIG_DIR=/opt/couchbase/var/lib/membase/config {0}'\
                                              .format(install_command)
             else:
-                command = 'rpm -U /tmp/{0}'.format(build.name)
+                command = 'export CB_MASTER_PASSWORD=password; rpm -U /tmp/{0}'.format(build.name)
                 if forcefully:
-                    command = 'rpm -U --force /tmp/{0}'.format(build.name)
+                    command = 'export CB_MASTER_PASSWORD=password; rpm -U --force /tmp/{0}'.format(build.name)
         elif self.info.deliverable_type == 'deb':
             if save_upgrade_config:
                 self.couchbase_uninstall()
@@ -3304,6 +3308,10 @@ class RemoteMachineShellConnection(KeepRefs):
             ver, err = p.communicate()
         if not err and ver:
             os_distro = "Mac"
+            try:
+                ver = ver.decode()
+            except AttributeError:
+                pass
             os_version = ver
             is_linux_distro = True
             is_mac = True
@@ -3700,6 +3708,7 @@ class RemoteMachineShellConnection(KeepRefs):
             if self.info.type.lower() == 'windows':
                 o, r = self.execute_command("net start couchbaseserver")
                 self.log_command_output(o, r)
+                self.sleep(1, "Waiting for 1 secs to start...on " + self.info.ip)
                 running = self.is_couchbase_running()
                 retry=retry+1
             if self.info.type.lower() == "linux":
@@ -3735,7 +3744,7 @@ class RemoteMachineShellConnection(KeepRefs):
                 running = self.is_couchbase_running()
                 retry = retry + 1
         if not running and retry >= 3:
-            sys.exit("Server not started even after 3 retries")
+            sys.exit("Server not started even after 3 retries on "+self.info.ip)
 
 
 
@@ -4849,6 +4858,11 @@ class RemoteMachineShellConnection(KeepRefs):
             log.info("Enabling diag/eval on non-local hosts is available only post 5.5.2 or 6.0 releases")
             return None, "Enabling diag/eval on non-local hosts is available only post 5.5.2 or 6.0 releases"
         output, error = self.execute_command(command)
+        log.info(output)
+        try:
+            output = output.decode()
+        except AttributeError:
+            pass
         return output, error
 
 

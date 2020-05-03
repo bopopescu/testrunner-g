@@ -1976,10 +1976,6 @@ class StableTopFTS(FTSBaseTest):
 
         self.log.info("Running command : {0}".format(cmd))
         output = subprocess.check_output(cmd, shell=True)
-        try:
-            output = output.decode()
-        except AttributeError:
-            pass
         if json.loads(output)["status"] == "ok":
             query = "curl -g -k " + \
                     "-XPOST -H \"Content-Type: application/json\" " + \
@@ -1989,10 +1985,6 @@ class StableTopFTS(FTSBaseTest):
                     "\'{0}\'".format(json.dumps(qry))
             self.sleep(20, "wait for indexing to complete")
             output = subprocess.check_output(query, shell=True)
-            try:
-                output = output.decode()
-            except AttributeError:
-                pass
             self.log.info("Hits: {0}".format(json.loads(output)["total_hits"]))
             if int(json.loads(output)["total_hits"]) != 1000:
                 self.fail("Query over ssl failed!")

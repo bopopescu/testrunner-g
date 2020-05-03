@@ -1226,18 +1226,6 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
             match_str = match_str[:pos] + '%'
             flex_query_predicate_list.append("( SOME v IN {0} SATISFIES v like \"{1}\" END)".format(fieldname, match_str))
 
-        for x in range(5):
-            fieldname = self.get_random_value(self.fields['array'])
-            match_str = self.get_term(fieldname)
-            flex_query_predicate_list.append("( EVERY v IN {0} SATISFIES v = \"{1}\" END)".format(fieldname, match_str))
-
-        for x in range(5):
-            fieldname = self.get_random_value(self.fields['array'])
-            match_str = self.get_term(fieldname)
-            pos = random.randint(0, len(match_str) - 1)
-            match_str = match_str[:pos] + '%'
-            flex_query_predicate_list.append("( EVERY v IN {0} SATISFIES v like \"{1}\" END)".format(fieldname, match_str))
-
         return flex_query_predicate_list
 
     def construct_flex_conjunction_disjunction_query(self):

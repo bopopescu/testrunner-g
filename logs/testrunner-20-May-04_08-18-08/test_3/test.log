@@ -1,0 +1,290 @@
+[2020-05-04 08:29:27,604] - [remote_util] [123145476173824] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-04 08:29:28,098] - [remote_util] [123145476173824] - INFO - Connected to 172.23.121.65
+[2020-05-04 08:29:28,923] - [remote_util] [123145476173824] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-04 08:29:29,794] - [remote_util] [123145476173824] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-04 08:29:30,109] - [rest_client] [123145476173824] - INFO - Node version in cluster 7.0.0-1834-enterprise
+[2020-05-04 08:29:30,250] - [rest_client] [123145476173824] - INFO - Node versions in cluster ['7.0.0-1834-enterprise']
+[2020-05-04 08:29:30,252] - [basetestcase] [123145476173824] - INFO - ==============  basetestcase setup was started for test #3 test_flex_default_typemapping==============
+[2020-05-04 08:29:31,255] - [cluster_helper] [123145476173824] - INFO - waiting for ns_server @ 172.23.121.65:8091
+[2020-05-04 08:29:31,320] - [cluster_helper] [123145476173824] - INFO - ns_server @ 172.23.121.65:8091 is running
+[2020-05-04 08:29:31,387] - [cluster_helper] [123145476173824] - INFO - waiting for ns_server @ 172.23.121.66:8091
+[2020-05-04 08:29:31,459] - [cluster_helper] [123145476173824] - INFO - ns_server @ 172.23.121.66:8091 is running
+[2020-05-04 08:29:31,533] - [cluster_helper] [123145476173824] - INFO - waiting for ns_server @ 172.23.121.67:8091
+[2020-05-04 08:29:31,602] - [cluster_helper] [123145476173824] - INFO - ns_server @ 172.23.121.67:8091 is running
+[2020-05-04 08:29:31,612] - [basetestcase] [123145476173824] - INFO - initializing cluster
+[2020-05-04 08:29:32,684] - [task] [123145491939328] - INFO - server: ip:172.23.121.65 port:8091 ssh_username:root, nodes/self 
+[2020-05-04 08:29:32,762] - [task] [123145491939328] - INFO -  {'uptime': '60606', 'memoryTotal': 4366925824, 'memoryFree': 2964180992, 'mcdMemoryReserved': 3331, 'mcdMemoryAllocated': 3331, 'status': 'healthy', 'hostname': '172.23.121.65:8091', 'clusterCompatibility': 458752, 'clusterMembership': 'active', 'version': '7.0.0-1834-enterprise', 'os': 'x86_64-unknown-linux-gnu', 'ports': [], 'availableStorage': [], 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x10ed80d50>], 'memoryQuota': 1225, 'moxi': 11211, 'memcached': 11210, 'id': 'ns_1@172.23.121.65', 'ip': '172.23.121.65', 'rest_username': '', 'rest_password': '', 'port': '8091', 'services': ['fts', 'index', 'kv', 'n1ql'], 'storageTotalRam': 4164, 'curr_items': 0}
+[2020-05-04 08:29:32,834] - [task] [123145491939328] - INFO - quota for index service will be 256 MB
+[2020-05-04 08:29:32,837] - [task] [123145491939328] - INFO - set index quota to node 172.23.121.65 
+[2020-05-04 08:29:32,838] - [rest_client] [123145491939328] - INFO - pools/default params : indexMemoryQuota=256
+[2020-05-04 08:29:32,920] - [task] [123145491939328] - INFO - quota for fts service will be 750 MB
+[2020-05-04 08:29:32,922] - [task] [123145491939328] - INFO - set both index and fts quota at node 172.23.121.65 
+[2020-05-04 08:29:32,924] - [rest_client] [123145491939328] - INFO - pools/default params : ftsMemoryQuota=750
+[2020-05-04 08:29:33,004] - [rest_client] [123145491939328] - INFO - pools/default params : memoryQuota=1225
+[2020-05-04 08:29:33,079] - [rest_client] [123145491939328] - INFO - --> init_node_services(Administrator,password,172.23.121.65,8091,['kv', 'index', 'n1ql', 'fts'])
+[2020-05-04 08:29:33,082] - [rest_client] [123145491939328] - INFO - /node/controller/setupServices params on 172.23.121.65: 8091:hostname=172.23.121.65&user=Administrator&password=password&services=kv%2Cindex%2Cn1ql%2Cfts
+[2020-05-04 08:29:33,143] - [rest_client] [123145491939328] - ERROR - POST http://172.23.121.65:8091//node/controller/setupServices body: hostname=172.23.121.65&user=Administrator&password=password&services=kv%2Cindex%2Cn1ql%2Cfts headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 400 reason: unknown b'["cannot change node services after cluster is provisioned"]' auth: Administrator:password
+[2020-05-04 08:29:33,158] - [rest_client] [123145491939328] - INFO - This node is already provisioned with services, we do not consider this as failure for test case
+[2020-05-04 08:29:33,160] - [rest_client] [123145491939328] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-04 08:29:33,161] - [rest_client] [123145491939328] - INFO - settings/web params on 172.23.121.65:8091:port=8091&username=Administrator&password=password
+[2020-05-04 08:29:33,276] - [rest_client] [123145491939328] - INFO - --> status:True
+[2020-05-04 08:29:33,291] - [remote_util] [123145491939328] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-04 08:29:33,701] - [remote_util] [123145491939328] - INFO - Connected to 172.23.121.65
+[2020-05-04 08:29:34,469] - [remote_util] [123145491939328] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-04 08:29:35,321] - [remote_util] [123145491939328] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-04 08:29:35,470] - [remote_util] [123145491939328] - INFO - running command.raw on 172.23.121.65: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-04 08:29:35,584] - [remote_util] [123145491939328] - INFO - command executed successfully
+[2020-05-04 08:29:35,586] - [remote_util] [123145491939328] - INFO - ['ok']
+[2020-05-04 08:29:35,657] - [rest_client] [123145491939328] - INFO - /diag/eval status on 172.23.121.65:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-04 08:29:35,720] - [rest_client] [123145491939328] - INFO - /diag/eval status on 172.23.121.65:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-04 08:29:35,722] - [rest_client] [123145491939328] - INFO - settings/indexes params : storageMode=plasma
+[2020-05-04 08:29:36,029] - [task] [123145491939328] - INFO - server: ip:172.23.121.66 port:8091 ssh_username:root, nodes/self 
+[2020-05-04 08:29:36,115] - [task] [123145491939328] - INFO -  {'uptime': '60610', 'memoryTotal': 4366942208, 'memoryFree': 3639304192, 'mcdMemoryReserved': 3331, 'mcdMemoryAllocated': 3331, 'status': 'healthy', 'hostname': '172.23.121.66:8091', 'clusterCompatibility': 458752, 'clusterMembership': 'active', 'version': '7.0.0-1834-enterprise', 'os': 'x86_64-unknown-linux-gnu', 'ports': [], 'availableStorage': [], 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x10ed80310>], 'memoryQuota': 2231, 'moxi': 11211, 'memcached': 11210, 'id': 'ns_1@172.23.121.66', 'ip': '172.23.121.66', 'rest_username': '', 'rest_password': '', 'port': '8091', 'services': ['kv'], 'storageTotalRam': 4164, 'curr_items': 0}
+[2020-05-04 08:29:36,185] - [rest_client] [123145491939328] - INFO - pools/default params : memoryQuota=2231
+[2020-05-04 08:29:36,256] - [rest_client] [123145491939328] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-04 08:29:36,258] - [rest_client] [123145491939328] - INFO - settings/web params on 172.23.121.66:8091:port=8091&username=Administrator&password=password
+[2020-05-04 08:29:36,357] - [rest_client] [123145491939328] - INFO - --> status:True
+[2020-05-04 08:29:36,371] - [remote_util] [123145491939328] - INFO - connecting to 172.23.121.66 with username:root 
+[2020-05-04 08:29:36,787] - [remote_util] [123145491939328] - INFO - Connected to 172.23.121.66
+[2020-05-04 08:29:37,569] - [remote_util] [123145491939328] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-04 08:29:38,405] - [remote_util] [123145491939328] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-04 08:29:38,544] - [remote_util] [123145491939328] - INFO - running command.raw on 172.23.121.66: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-04 08:29:38,639] - [remote_util] [123145491939328] - INFO - command executed successfully
+[2020-05-04 08:29:38,641] - [remote_util] [123145491939328] - INFO - ['ok']
+[2020-05-04 08:29:38,708] - [rest_client] [123145491939328] - INFO - /diag/eval status on 172.23.121.66:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-04 08:29:38,776] - [rest_client] [123145491939328] - INFO - /diag/eval status on 172.23.121.66:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-04 08:29:38,778] - [rest_client] [123145491939328] - INFO - settings/indexes params : storageMode=plasma
+[2020-05-04 08:29:39,041] - [task] [123145491939328] - INFO - server: ip:172.23.121.67 port:8091 ssh_username:root, nodes/self 
+[2020-05-04 08:29:39,108] - [task] [123145491939328] - INFO -  {'uptime': '60612', 'memoryTotal': 4366938112, 'memoryFree': 3678724096, 'mcdMemoryReserved': 3331, 'mcdMemoryAllocated': 3331, 'status': 'healthy', 'hostname': '172.23.121.67:8091', 'clusterCompatibility': 458752, 'clusterMembership': 'active', 'version': '7.0.0-1834-enterprise', 'os': 'x86_64-unknown-linux-gnu', 'ports': [], 'availableStorage': [], 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x10ed85690>], 'memoryQuota': 2231, 'moxi': 11211, 'memcached': 11210, 'id': 'ns_1@172.23.121.67', 'ip': '172.23.121.67', 'rest_username': '', 'rest_password': '', 'port': '8091', 'services': ['kv'], 'storageTotalRam': 4164, 'curr_items': 0}
+[2020-05-04 08:29:39,177] - [rest_client] [123145491939328] - INFO - pools/default params : memoryQuota=2231
+[2020-05-04 08:29:39,259] - [rest_client] [123145491939328] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-04 08:29:39,261] - [rest_client] [123145491939328] - INFO - settings/web params on 172.23.121.67:8091:port=8091&username=Administrator&password=password
+[2020-05-04 08:29:39,352] - [rest_client] [123145491939328] - INFO - --> status:True
+[2020-05-04 08:29:39,368] - [remote_util] [123145491939328] - INFO - connecting to 172.23.121.67 with username:root 
+[2020-05-04 08:29:39,753] - [remote_util] [123145491939328] - INFO - Connected to 172.23.121.67
+[2020-05-04 08:29:40,500] - [remote_util] [123145491939328] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-04 08:29:41,332] - [remote_util] [123145491939328] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-04 08:29:41,469] - [remote_util] [123145491939328] - INFO - running command.raw on 172.23.121.67: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-04 08:29:41,570] - [remote_util] [123145491939328] - INFO - command executed successfully
+[2020-05-04 08:29:41,572] - [remote_util] [123145491939328] - INFO - ['ok']
+[2020-05-04 08:29:41,637] - [rest_client] [123145491939328] - INFO - /diag/eval status on 172.23.121.67:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-04 08:29:41,693] - [rest_client] [123145491939328] - INFO - /diag/eval status on 172.23.121.67:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-04 08:29:41,695] - [rest_client] [123145491939328] - INFO - settings/indexes params : storageMode=plasma
+[2020-05-04 08:29:42,025] - [basetestcase] [123145476173824] - INFO - **** add built-in 'cbadminbucket' user to node 172.23.121.65 ****
+[2020-05-04 08:29:42,642] - [basetestcase] [123145476173824] - INFO - sleep for 5 secs.  ...
+[2020-05-04 08:29:47,646] - [basetestcase] [123145476173824] - INFO - **** add 'admin' role to 'cbadminbucket' user ****
+[2020-05-04 08:29:47,854] - [basetestcase] [123145476173824] - INFO - done initializing cluster
+[2020-05-04 08:29:48,906] - [task] [123145491939328] - INFO - adding node 172.23.121.66:8091 to cluster
+[2020-05-04 08:29:48,909] - [rest_client] [123145491939328] - INFO - adding remote node @172.23.121.66:8091 to this cluster @172.23.121.65:8091
+[2020-05-04 08:29:51,475] - [task] [123145491939328] - INFO - adding node 172.23.121.67:8091 to cluster
+[2020-05-04 08:29:51,477] - [rest_client] [123145491939328] - INFO - adding remote node @172.23.121.67:8091 to this cluster @172.23.121.65:8091
+[2020-05-04 08:29:53,875] - [rest_client] [123145491939328] - INFO - rebalance params : {'knownNodes': 'ns_1@172.23.121.65,ns_1@172.23.121.66,ns_1@172.23.121.67', 'ejectedNodes': '', 'user': 'Administrator', 'password': 'password'}
+[2020-05-04 08:29:53,952] - [rest_client] [123145491939328] - INFO - rebalance operation started
+[2020-05-04 08:29:54,021] - [rest_client] [123145491939328] - INFO - rebalance percentage : 0.00 %
+[2020-05-04 08:29:54,023] - [task] [123145491939328] - INFO - Rebalance - status: running, progress: 0.00%
+[2020-05-04 08:30:04,191] - [task] [123145491939328] - INFO - Rebalance - status: none, progress: 100.00%
+[2020-05-04 08:30:04,258] - [task] [123145491939328] - INFO - rebalancing was completed with progress: 100% in 10.304219007492065 sec
+[2020-05-04 08:30:04,273] - [remote_util] [123145476173824] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-04 08:30:04,659] - [remote_util] [123145476173824] - INFO - Connected to 172.23.121.65
+[2020-05-04 08:30:05,431] - [remote_util] [123145476173824] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-04 08:30:06,257] - [remote_util] [123145476173824] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-04 08:30:06,407] - [remote_util] [123145476173824] - INFO - running command.raw on 172.23.121.65: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-04 08:30:06,511] - [remote_util] [123145476173824] - INFO - command executed successfully
+[2020-05-04 08:30:06,513] - [remote_util] [123145476173824] - INFO - ['ok']
+[2020-05-04 08:30:06,514] - [basetestcase] [123145476173824] - INFO - Enabled diag/eval for non-local hosts from 172.23.121.65
+[2020-05-04 08:30:07,624] - [rest_client] [123145491939328] - INFO - http://172.23.121.65:8091/pools/default/buckets with param: name=default&authType=sasl&saslPassword=None&ramQuotaMB=200&replicaNumber=1&bucketType=membase&replicaIndex=1&threadsNumber=3&flushEnabled=1&evictionPolicy=valueOnly&compressionMode=passive
+[2020-05-04 08:30:07,699] - [rest_client] [123145491939328] - INFO - 0.07 seconds to create bucket default
+[2020-05-04 08:30:07,702] - [bucket_helper] [123145491939328] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-04 08:30:08,844] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:09,762] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:11,276] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:12,153] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:13,166] - [task] [123145491939328] - WARNING - vbucket map not ready after try 0
+[2020-05-04 08:30:13,168] - [bucket_helper] [123145491939328] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-04 08:30:14,252] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:15,108] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:16,643] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:17,487] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:18,506] - [task] [123145491939328] - WARNING - vbucket map not ready after try 1
+[2020-05-04 08:30:18,508] - [bucket_helper] [123145491939328] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-04 08:30:19,624] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:20,508] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:22,018] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:22,855] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:24,118] - [task] [123145491939328] - WARNING - vbucket map not ready after try 2
+[2020-05-04 08:30:24,120] - [bucket_helper] [123145491939328] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-04 08:30:25,382] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:26,273] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:27,814] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:28,683] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:29,722] - [task] [123145491939328] - WARNING - vbucket map not ready after try 3
+[2020-05-04 08:30:29,724] - [bucket_helper] [123145491939328] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-04 08:30:30,833] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:31,690] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:33,212] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:34,056] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:35,070] - [task] [123145491939328] - WARNING - vbucket map not ready after try 4
+[2020-05-04 08:30:35,072] - [bucket_helper] [123145491939328] - INFO - waiting for memcached bucket : default in 172.23.121.65 to accept set ops
+[2020-05-04 08:30:36,266] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:37,250] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:38,809] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:30:39,658] - [data_helper] [123145491939328] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:30:40,699] - [task] [123145491939328] - WARNING - vbucket map not ready after try 5
+[2020-05-04 08:30:40,713] - [basetestcase] [123145476173824] - INFO - ==============  basetestcase setup was finished for test #3 test_flex_default_typemapping ==============
+[2020-05-04 08:30:41,005] - [basetestcase] [123145476173824] - INFO - ------- Cluster statistics -------
+[2020-05-04 08:30:41,007] - [basetestcase] [123145476173824] - INFO - 172.23.121.65:8091 => {'services': ['fts', 'index', 'kv', 'n1ql'], 'cpu_utilization': 5.555555555555555, 'mem_free': 2683600896, 'mem_total': 4366925824, 'swap_mem_used': 533680128, 'swap_mem_total': 3758092288}
+[2020-05-04 08:30:41,008] - [basetestcase] [123145476173824] - INFO - 172.23.121.66:8091 => {'services': ['fts', 'kv'], 'cpu_utilization': 2.506265664160401, 'mem_free': 3481260032, 'mem_total': 4366942208, 'swap_mem_used': 2097152, 'swap_mem_total': 3758092288}
+[2020-05-04 08:30:41,010] - [basetestcase] [123145476173824] - INFO - 172.23.121.67:8091 => {'services': ['fts'], 'cpu_utilization': 0.2512562814070352, 'mem_free': 3615744000, 'mem_total': 4366938112, 'swap_mem_used': 0, 'swap_mem_total': 3758092288}
+[2020-05-04 08:30:41,011] - [basetestcase] [123145476173824] - INFO - --- End of cluster statistics ---
+[2020-05-04 08:30:41,013] - [tuq] [123145476173824] - INFO - ==============  QueryTests setup has started ==============
+[2020-05-04 08:30:41,026] - [remote_util] [123145476173824] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-04 08:30:41,435] - [remote_util] [123145476173824] - INFO - Connected to 172.23.121.65
+[2020-05-04 08:30:42,309] - [remote_util] [123145476173824] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-04 08:30:43,171] - [remote_util] [123145476173824] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-04 08:30:43,419] - [remote_util] [123145476173824] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-04 08:30:43,805] - [remote_util] [123145476173824] - INFO - Connected to 172.23.121.65
+[2020-05-04 08:30:44,639] - [remote_util] [123145476173824] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-04 08:30:45,503] - [remote_util] [123145476173824] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-04 08:30:45,507] - [tuq] [123145476173824] - INFO - Generating default:default data...
+[2020-05-04 08:30:45,508] - [tuq] [123145476173824] - INFO - -->start:generate_docs_employee for default...
+[2020-05-04 08:30:45,666] - [tuq] [123145476173824] - INFO - -->end:generate_docs_employee for default...
+[2020-05-04 08:30:45,668] - [tuq] [123145476173824] - INFO - Completed Generating default:default data...
+[2020-05-04 08:30:45,669] - [tuq] [123145476173824] - INFO - --->gens_load is done...
+[2020-05-04 08:30:45,670] - [tuq] [123145476173824] - INFO - -->starting rest connection...
+[2020-05-04 08:31:10,207] - [tuq] [123145476173824] - INFO - --> docs_per_day>0..generating TuqGenerators...
+[2020-05-04 08:31:34,687] - [tuq] [123145476173824] - INFO - --> End: docs_per_day>0..generating TuqGenerators...
+[2020-05-04 08:31:34,690] - [tuq] [123145476173824] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-04 08:31:34,692] - [tuq] [123145476173824] - INFO - Temp fix for MB-16888
+[2020-05-04 08:31:34,693] - [remote_util] [123145476173824] - INFO - running command.raw on 172.23.121.65: killall -9 cbq-engine
+[2020-05-04 08:31:34,774] - [remote_util] [123145476173824] - INFO - command executed successfully
+[2020-05-04 08:31:34,776] - [remote_util] [123145476173824] - INFO - running command.raw on 172.23.121.65: killall -9 indexer
+[2020-05-04 08:31:34,898] - [remote_util] [123145476173824] - INFO - command executed successfully
+[2020-05-04 08:31:34,900] - [tuq] [123145476173824] - INFO - Error executing shell command: killall -9 cbq-engine! Error - bash: killall: command not found
+[2020-05-04 08:31:34,901] - [tuq] [123145476173824] - INFO - Error executing shell command: killall -9 indexer! Error - bash: killall: command not found
+[2020-05-04 08:31:34,903] - [tuq] [123145476173824] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-04 08:31:34,904] - [tuq] [123145476173824] - INFO - ==============  QueryTests setup has completed ==============
+[2020-05-04 08:31:34,906] - [flex_index_phase1] [123145476173824] - INFO - ==============  FlexIndexTests setuAp has started ==============
+[2020-05-04 08:31:34,982] - [tuq] [123145476173824] - INFO - RUN QUERY SELECT * FROM system:indexes
+[2020-05-04 08:31:34,985] - [rest_client] [123145476173824] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes&scan_consistency=NOT_BOUNDED
+[2020-05-04 08:31:35,227] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 183.767148ms
+[2020-05-04 08:31:35,305] - [tuq] [123145476173824] - INFO - RUN QUERY SELECT * FROM system:keyspaces
+[2020-05-04 08:31:35,308] - [rest_client] [123145476173824] - INFO - query params : statement=SELECT+%2A+FROM+system%3Akeyspaces&scan_consistency=NOT_BOUNDED
+[2020-05-04 08:31:35,392] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 12.798633ms
+[2020-05-04 08:31:35,394] - [tuq] [123145476173824] - INFO - ==============  System Config: ==============
+
+[2020-05-04 08:31:35,470] - [tuq] [123145476173824] - INFO - RUN QUERY SELECT COUNT(*) FROM `default`
+[2020-05-04 08:31:35,473] - [rest_client] [123145476173824] - INFO - query params : statement=SELECT+COUNT%28%2A%29+FROM+%60default%60&scan_consistency=NOT_BOUNDED
+[2020-05-04 08:31:35,561] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 18.960844ms
+[2020-05-04 08:31:35,563] - [tuq] [123145476173824] - INFO - Bucket: default
+[2020-05-04 08:31:35,565] - [tuq] [123145476173824] - INFO - Indexes: []
+[2020-05-04 08:31:35,566] - [tuq] [123145476173824] - INFO - Docs: 0
+
+[2020-05-04 08:31:35,568] - [tuq] [123145476173824] - INFO - =============================================
+[2020-05-04 08:31:35,569] - [flex_index_phase1] [123145476173824] - INFO - ==============  FlexIndexTests setup has completed ==============
+[2020-05-04 08:31:38,264] - [rest_client] [123145491939328] - INFO - Flush for bucket 'default' was triggered
+[2020-05-04 08:31:41,357] - [data_helper] [123145476173824] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:31:42,212] - [data_helper] [123145476173824] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:31:49,318] - [data_helper] [123145507704832] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:31:49,319] - [data_helper] [123145507704832] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:31:49,318] - [data_helper] [123145507704832] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:31:49,319] - [data_helper] [123145507704832] - INFO - creating direct client 172.23.121.65:11210 default
+[2020-05-04 08:31:50,184] - [data_helper] [123145507704832] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:31:50,204] - [data_helper] [123145507704832] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:31:50,204] - [data_helper] [123145507704832] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:31:50,206] - [data_helper] [123145507704832] - INFO - creating direct client 172.23.121.66:11210 default
+[2020-05-04 08:31:53,064] - [rest_client] [123145476173824] - INFO - SUCCESS: FTS RAM quota set to 750mb
+[2020-05-04 08:31:53,280] - [fts_base] [123145476173824] - INFO - Checking if index already exists ...
+[2020-05-04 08:31:53,546] - [rest_client] [123145476173824] - ERROR - GET http://172.23.121.65:8094/api/index/default_index body:  headers: {'Content-Type': 'application/json', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 400 reason: rest_auth: preparePerms, err: index not found b'{"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"}\n' auth: Administrator:password
+[2020-05-04 08:31:53,630] - [rest_client] [123145476173824] - ERROR - DELETE http://172.23.121.65:8094/api/index/default_index body:  headers: {'Content-Type': 'application/json', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 400 reason: rest_auth: preparePerms, err: index not found b'{"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"}\n' auth: Administrator:password
+[2020-05-04 08:31:53,635] - [fts_base] [123145476173824] - INFO - Creating fulltext-index default_index on 172.23.121.65
+[2020-05-04 08:31:53,637] - [rest_client] [123145476173824] - INFO - {"type": "fulltext-index", "name": "default_index", "uuid": "", "params": {"mapping": {"default_mapping": {"enabled": true, "dynamic": true, "default_analyzer": "keyword"}, "type_field": "type", "default_type": "_default", "default_analyzer": "standard", "default_datetime_parser": "dateTimeOptional", "default_field": "_all", "analysis": {}}, "store": {"kvStoreName": "mossStore", "mossStoreOptions": {}, "indexType": "scorch"}}, "sourceType": "couchbase", "sourceName": "default", "sourceUUID": "", "planParams": {"numReplicas": 0}, "sourceParams": {}}
+[2020-05-04 08:31:53,785] - [rest_client] [123145476173824] - INFO - Index default_index created
+[2020-05-04 08:31:53,787] - [basetestcase] [123145476173824] - INFO - sleep for 10 secs.  ...
+[2020-05-04 08:32:04,076] - [basetestcase] [123145476173824] - INFO - sleep for 10 secs.  ...
+[2020-05-04 08:32:14,358] - [basetestcase] [123145476173824] - INFO - sleep for 10 secs.  ...
+[2020-05-04 08:32:24,635] - [basetestcase] [123145476173824] - INFO - sleep for 10 secs.  ...
+[2020-05-04 08:32:34,927] - [flex_index_phase1] [123145476173824] - INFO - expected_fts_index_map {'name': ['default_index', 'default_index'], 'dept': ['default_index'], 'manages.reports': ['default_index', 'default_index', 'default_index'], 'languages_known': ['default_index', 'default_index'], 'email': ['default_index'], 'type': ['default_index', 'default_index'], 'mutated': ['default_index'], 'manages.team_size': ['default_index'], 'salary': ['default_index'], 'is_manager': ['default_index'], 'join_date': ['default_index']}
+[2020-05-04 08:32:34,997] - [tuq] [123145476173824] - INFO - RUN QUERY SELECT * FROM system:indexes
+[2020-05-04 08:32:35,000] - [rest_client] [123145476173824] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes&scan_consistency=NOT_BOUNDED
+[2020-05-04 08:32:35,084] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 24.24245ms
+[2020-05-04 08:32:35,085] - [tuq] [123145476173824] - INFO - waiting for: 
+('primary_gsi_index', 'default', 'online')
+
+[2020-05-04 08:32:35,087] - [tuq] [123145476173824] - INFO - current indexes: 
+[('default_index', 'default', 'online')]
+
+[2020-05-04 08:32:35,148] - [tuq] [123145476173824] - INFO - RUN QUERY create primary index primary_gsi_index on default
+[2020-05-04 08:32:35,150] - [rest_client] [123145476173824] - INFO - query params : statement=create+primary+index+primary_gsi_index+on+default&scan_consistency=NOT_BOUNDED
+[2020-05-04 08:32:37,996] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 2.782590031s
+[2020-05-04 09:04:29,080] - [flex_index_phase1] [123145476173824] - INFO - ======== Running Query # 1 =======
+[2020-05-04 09:04:29,084] - [flex_index_phase1] [123145476173824] - INFO - Query : explain select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size > 8 and manages.team_size < 673)
+[2020-05-04 09:04:29,164] - [tuq] [123145476173824] - INFO - RUN QUERY explain select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size > 8 and manages.team_size < 673)
+[2020-05-04 09:04:29,167] - [rest_client] [123145476173824] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28USING+FTS%29+where+type+%3D+%22emp%22+and+%28+manages.team_size+%3E+8+and+manages.team_size+%3C+673%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:29,236] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 3.66933ms
+[2020-05-04 09:04:29,243] - [flex_index_phase1] [123145476173824] - INFO - Actual indexes present: ['default_index'], Expected Indexes: ['default_index']
+[2020-05-04 09:04:29,316] - [tuq] [123145476173824] - INFO - RUN QUERY select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size > 8 and manages.team_size < 673)
+[2020-05-04 09:04:29,319] - [rest_client] [123145476173824] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28USING+FTS%29+where+type+%3D+%22emp%22+and+%28+manages.team_size+%3E+8+and+manages.team_size+%3C+673%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:29,586] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 199.498313ms
+[2020-05-04 09:04:29,588] - [flex_index_phase1] [123145476173824] - INFO - Number of results from flex query: select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size > 8 and manages.team_size < 673) is 155
+[2020-05-04 09:04:29,653] - [tuq] [123145476173824] - INFO - RUN QUERY select meta().id from default where type = "emp" and ( manages.team_size > 8 and manages.team_size < 673)
+[2020-05-04 09:04:29,656] - [rest_client] [123145476173824] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and+%28+manages.team_size+%3E+8+and+manages.team_size+%3C+673%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:29,850] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 129.408258ms
+[2020-05-04 09:04:29,852] - [flex_index_phase1] [123145476173824] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and ( manages.team_size > 8 and manages.team_size < 673) is 155
+[2020-05-04 09:04:29,853] - [flex_index_phase1] [123145476173824] - INFO - ======== Done =======
+[2020-05-04 09:04:29,855] - [flex_index_phase1] [123145476173824] - INFO - ======== Running Query # 2 =======
+[2020-05-04 09:04:29,857] - [flex_index_phase1] [123145476173824] - INFO - Query : explain select meta().id from default USE INDEX (USING FTS) where type = "emp" and (manages.team_size > 9 and manages.team_size < 7972)
+[2020-05-04 09:04:29,923] - [tuq] [123145476173824] - INFO - RUN QUERY explain select meta().id from default USE INDEX (USING FTS) where type = "emp" and (manages.team_size > 9 and manages.team_size < 7972)
+[2020-05-04 09:04:29,925] - [rest_client] [123145476173824] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28USING+FTS%29+where+type+%3D+%22emp%22+and+%28manages.team_size+%3E+9+and+manages.team_size+%3C+7972%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:30,000] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 2.019444ms
+[2020-05-04 09:04:30,004] - [flex_index_phase1] [123145476173824] - INFO - Actual indexes present: ['default_index'], Expected Indexes: ['default_index']
+[2020-05-04 09:04:30,087] - [tuq] [123145476173824] - INFO - RUN QUERY select meta().id from default USE INDEX (USING FTS) where type = "emp" and (manages.team_size > 9 and manages.team_size < 7972)
+[2020-05-04 09:04:30,092] - [rest_client] [123145476173824] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28USING+FTS%29+where+type+%3D+%22emp%22+and+%28manages.team_size+%3E+9+and+manages.team_size+%3C+7972%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:30,323] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 145.988629ms
+[2020-05-04 09:04:30,325] - [flex_index_phase1] [123145476173824] - INFO - Number of results from flex query: select meta().id from default USE INDEX (USING FTS) where type = "emp" and (manages.team_size > 9 and manages.team_size < 7972) is 75
+[2020-05-04 09:04:30,393] - [tuq] [123145476173824] - INFO - RUN QUERY select meta().id from default where type = "emp" and (manages.team_size > 9 and manages.team_size < 7972)
+[2020-05-04 09:04:30,396] - [rest_client] [123145476173824] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and+%28manages.team_size+%3E+9+and+manages.team_size+%3C+7972%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:30,560] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 99.938956ms
+[2020-05-04 09:04:30,563] - [flex_index_phase1] [123145476173824] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and (manages.team_size > 9 and manages.team_size < 7972) is 75
+[2020-05-04 09:04:30,565] - [flex_index_phase1] [123145476173824] - INFO - ======== Done =======
+[2020-05-04 09:04:30,567] - [flex_index_phase1] [123145476173824] - INFO - ======== Running Query # 3 =======
+[2020-05-04 09:04:30,569] - [flex_index_phase1] [123145476173824] - INFO - Query : explain select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size >= 7 and manages.team_size <= 7817)
+[2020-05-04 09:04:30,637] - [tuq] [123145476173824] - INFO - RUN QUERY explain select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size >= 7 and manages.team_size <= 7817)
+[2020-05-04 09:04:30,640] - [rest_client] [123145476173824] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28USING+FTS%29+where+type+%3D+%22emp%22+and+%28+manages.team_size+%3E%3D+7+and+manages.team_size+%3C%3D+7817%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:30,712] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 2.310396ms
+[2020-05-04 09:04:30,717] - [flex_index_phase1] [123145476173824] - INFO - Actual indexes present: ['default_index'], Expected Indexes: ['default_index']
+[2020-05-04 09:04:30,785] - [tuq] [123145476173824] - INFO - RUN QUERY select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size >= 7 and manages.team_size <= 7817)
+[2020-05-04 09:04:30,789] - [rest_client] [123145476173824] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28USING+FTS%29+where+type+%3D+%22emp%22+and+%28+manages.team_size+%3E%3D+7+and+manages.team_size+%3C%3D+7817%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:30,936] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 82.468158ms
+[2020-05-04 09:04:30,938] - [flex_index_phase1] [123145476173824] - INFO - Number of results from flex query: select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size >= 7 and manages.team_size <= 7817) is 320
+[2020-05-04 09:04:31,005] - [tuq] [123145476173824] - INFO - RUN QUERY select meta().id from default where type = "emp" and ( manages.team_size >= 7 and manages.team_size <= 7817)
+[2020-05-04 09:04:31,009] - [rest_client] [123145476173824] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and+%28+manages.team_size+%3E%3D+7+and+manages.team_size+%3C%3D+7817%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:31,192] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 108.634357ms
+[2020-05-04 09:04:31,194] - [flex_index_phase1] [123145476173824] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and ( manages.team_size >= 7 and manages.team_size <= 7817) is 320
+[2020-05-04 09:04:31,196] - [flex_index_phase1] [123145476173824] - INFO - ======== Done =======
+[2020-05-04 09:04:31,197] - [flex_index_phase1] [123145476173824] - INFO - ======== Running Query # 4 =======
+[2020-05-04 09:04:31,199] - [flex_index_phase1] [123145476173824] - INFO - Query : explain select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size >= 9 and manages.team_size < 3589)
+[2020-05-04 09:04:31,272] - [tuq] [123145476173824] - INFO - RUN QUERY explain select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size >= 9 and manages.team_size < 3589)
+[2020-05-04 09:04:31,274] - [rest_client] [123145476173824] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28USING+FTS%29+where+type+%3D+%22emp%22+and+%28+manages.team_size+%3E%3D+9+and+manages.team_size+%3C+3589%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:31,341] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 2.103099ms
+[2020-05-04 09:04:31,346] - [flex_index_phase1] [123145476173824] - INFO - Actual indexes present: ['default_index'], Expected Indexes: ['default_index']
+[2020-05-04 09:04:31,416] - [tuq] [123145476173824] - INFO - RUN QUERY select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size >= 9 and manages.team_size < 3589)
+[2020-05-04 09:04:31,418] - [rest_client] [123145476173824] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28USING+FTS%29+where+type+%3D+%22emp%22+and+%28+manages.team_size+%3E%3D+9+and+manages.team_size+%3C+3589%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:31,567] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 89.052615ms
+[2020-05-04 09:04:31,569] - [flex_index_phase1] [123145476173824] - INFO - Number of results from flex query: select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( manages.team_size >= 9 and manages.team_size < 3589) is 155
+[2020-05-04 09:04:31,644] - [tuq] [123145476173824] - INFO - RUN QUERY select meta().id from default where type = "emp" and ( manages.team_size >= 9 and manages.team_size < 3589)
+[2020-05-04 09:04:31,646] - [rest_client] [123145476173824] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and+%28+manages.team_size+%3E%3D+9+and+manages.team_size+%3C+3589%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:31,789] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 74.192483ms
+[2020-05-04 09:04:31,792] - [flex_index_phase1] [123145476173824] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and ( manages.team_size >= 9 and manages.team_size < 3589) is 155
+[2020-05-04 09:04:31,794] - [flex_index_phase1] [123145476173824] - INFO - ======== Done =======
+[2020-05-04 09:04:31,797] - [flex_index_phase1] [123145476173824] - INFO - ======== Running Query # 5 =======
+[2020-05-04 09:04:31,801] - [flex_index_phase1] [123145476173824] - INFO - Query : explain select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( salary > 64000.0 and salary <= 66291.0)
+[2020-05-04 09:04:31,880] - [tuq] [123145476173824] - INFO - RUN QUERY explain select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( salary > 64000.0 and salary <= 66291.0)
+[2020-05-04 09:04:31,883] - [rest_client] [123145476173824] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28USING+FTS%29+where+type+%3D+%22emp%22+and+%28+salary+%3E+64000.0+and+salary+%3C%3D+66291.0%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:31,951] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 1.961686ms
+[2020-05-04 09:04:31,955] - [flex_index_phase1] [123145476173824] - INFO - Actual indexes present: ['default_index'], Expected Indexes: ['default_index']
+[2020-05-04 09:04:32,035] - [tuq] [123145476173824] - INFO - RUN QUERY select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( salary > 64000.0 and salary <= 66291.0)
+[2020-05-04 09:04:32,039] - [rest_client] [123145476173824] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28USING+FTS%29+where+type+%3D+%22emp%22+and+%28+salary+%3E+64000.0+and+salary+%3C%3D+66291.0%29&scan_consistency=NOT_BOUNDED
+[2020-05-04 09:04:32,172] - [tuq] [123145476173824] - INFO - TOTAL ELAPSED TIME: 66.888151ms
+[2020-05-04 09:04:32,174] - [flex_index_phase1] [123145476173824] - INFO - Number of results from flex query: select meta().id from default USE INDEX (USING FTS) where type = "emp" and ( salary > 64000.0 and salary <= 66291.0) is 25
+[2020-05-04 09:04:32,245] - [tuq] [123145476173824] - INFO - RUN QUERY select meta().id from default where type = "emp" and ( salary > 64000.0 and salary <= 66291.0)
+[2020-05-04 09:04:32,248] - [rest_client] [123145476173824] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and+%28+salary+%3E+64000.0+and+salary+%3C%3D+66291.0%29&scan_consistency=NOT_BOUNDED

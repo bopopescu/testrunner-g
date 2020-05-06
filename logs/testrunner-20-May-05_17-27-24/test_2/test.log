@@ -1,0 +1,100 @@
+[2020-05-05 17:33:53,769] - [remote_util] [123145525747712] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-05 17:33:54,178] - [remote_util] [123145525747712] - INFO - Connected to 172.23.121.65
+[2020-05-05 17:33:54,880] - [remote_util] [123145525747712] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-05 17:33:55,696] - [remote_util] [123145525747712] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-05 17:33:55,926] - [rest_client] [123145525747712] - INFO - Node version in cluster 7.0.0-1993-enterprise
+[2020-05-05 17:33:56,038] - [rest_client] [123145525747712] - INFO - Node versions in cluster ['7.0.0-1993-enterprise']
+[2020-05-05 17:33:56,039] - [basetestcase] [123145525747712] - INFO - ==============  basetestcase setup was started for test #2 test_flex_multi_typemapping==============
+[2020-05-05 17:33:56,845] - [cluster_helper] [123145525747712] - INFO - waiting for ns_server @ 172.23.121.65:8091
+[2020-05-05 17:33:56,898] - [cluster_helper] [123145525747712] - INFO - ns_server @ 172.23.121.65:8091 is running
+[2020-05-05 17:33:56,957] - [cluster_helper] [123145525747712] - INFO - waiting for ns_server @ 172.23.121.66:8091
+[2020-05-05 17:33:57,014] - [cluster_helper] [123145525747712] - INFO - ns_server @ 172.23.121.66:8091 is running
+[2020-05-05 17:33:57,073] - [cluster_helper] [123145525747712] - INFO - waiting for ns_server @ 172.23.121.67:8091
+[2020-05-05 17:33:57,129] - [cluster_helper] [123145525747712] - INFO - ns_server @ 172.23.121.67:8091 is running
+[2020-05-05 17:33:57,130] - [basetestcase] [123145525747712] - INFO - initializing cluster
+[2020-05-05 17:33:57,826] - [task] [123145531002880] - INFO - server: ip:172.23.121.65 port:8091 ssh_username:root, nodes/self 
+[2020-05-05 17:33:57,879] - [task] [123145531002880] - INFO -  {'uptime': '5200', 'memoryTotal': 4366925824, 'memoryFree': 2093137920, 'mcdMemoryReserved': 3331, 'mcdMemoryAllocated': 3331, 'status': 'healthy', 'hostname': '172.23.121.65:8091', 'clusterCompatibility': 458752, 'clusterMembership': 'active', 'version': '7.0.0-1993-enterprise', 'os': 'x86_64-unknown-linux-gnu', 'ports': [], 'availableStorage': [], 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x127ac6290>], 'memoryQuota': 1225, 'moxi': 11211, 'memcached': 11210, 'id': 'ns_1@172.23.121.65', 'ip': '172.23.121.65', 'rest_username': '', 'rest_password': '', 'port': '8091', 'services': ['fts', 'index', 'kv', 'n1ql'], 'storageTotalRam': 4164, 'curr_items': 0}
+[2020-05-05 17:33:57,935] - [task] [123145531002880] - INFO - quota for index service will be 256 MB
+[2020-05-05 17:33:57,936] - [task] [123145531002880] - INFO - set index quota to node 172.23.121.65 
+[2020-05-05 17:33:57,937] - [rest_client] [123145531002880] - INFO - pools/default params : indexMemoryQuota=256
+[2020-05-05 17:33:57,997] - [task] [123145531002880] - INFO - quota for fts service will be 750 MB
+[2020-05-05 17:33:57,998] - [task] [123145531002880] - INFO - set both index and fts quota at node 172.23.121.65 
+[2020-05-05 17:33:57,999] - [rest_client] [123145531002880] - INFO - pools/default params : ftsMemoryQuota=750
+[2020-05-05 17:33:58,050] - [rest_client] [123145531002880] - INFO - pools/default params : memoryQuota=1225
+[2020-05-05 17:33:58,106] - [rest_client] [123145531002880] - INFO - --> init_node_services(Administrator,password,172.23.121.65,8091,['kv', 'index', 'n1ql', 'fts'])
+[2020-05-05 17:33:58,107] - [rest_client] [123145531002880] - INFO - /node/controller/setupServices params on 172.23.121.65: 8091:hostname=172.23.121.65&user=Administrator&password=password&services=kv%2Cindex%2Cn1ql%2Cfts
+[2020-05-05 17:33:58,162] - [rest_client] [123145531002880] - ERROR - POST http://172.23.121.65:8091//node/controller/setupServices body: hostname=172.23.121.65&user=Administrator&password=password&services=kv%2Cindex%2Cn1ql%2Cfts headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 400 reason: unknown b'["cannot change node services after cluster is provisioned"]' auth: Administrator:password
+[2020-05-05 17:33:58,163] - [rest_client] [123145531002880] - INFO - This node is already provisioned with services, we do not consider this as failure for test case
+[2020-05-05 17:33:58,164] - [rest_client] [123145531002880] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-05 17:33:58,164] - [rest_client] [123145531002880] - INFO - settings/web params on 172.23.121.65:8091:port=8091&username=Administrator&password=password
+[2020-05-05 17:33:58,244] - [rest_client] [123145531002880] - INFO - --> status:True
+[2020-05-05 17:33:58,247] - [remote_util] [123145531002880] - INFO - connecting to 172.23.121.65 with username:root 
+[2020-05-05 17:33:58,659] - [remote_util] [123145531002880] - INFO - Connected to 172.23.121.65
+[2020-05-05 17:33:59,366] - [remote_util] [123145531002880] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-05 17:34:00,154] - [remote_util] [123145531002880] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-05 17:34:00,271] - [remote_util] [123145531002880] - INFO - running command.raw on 172.23.121.65: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-05 17:34:00,347] - [remote_util] [123145531002880] - INFO - command executed successfully
+[2020-05-05 17:34:00,348] - [remote_util] [123145531002880] - INFO - ['ok']
+[2020-05-05 17:34:00,403] - [rest_client] [123145531002880] - INFO - /diag/eval status on 172.23.121.65:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-05 17:34:00,456] - [rest_client] [123145531002880] - INFO - /diag/eval status on 172.23.121.65:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-05 17:34:00,457] - [rest_client] [123145531002880] - INFO - settings/indexes params : storageMode=plasma
+[2020-05-05 17:34:00,683] - [task] [123145531002880] - INFO - server: ip:172.23.121.66 port:8091 ssh_username:root, nodes/self 
+[2020-05-05 17:34:00,737] - [task] [123145531002880] - INFO -  {'uptime': '5207', 'memoryTotal': 4366942208, 'memoryFree': 3778994176, 'mcdMemoryReserved': 3331, 'mcdMemoryAllocated': 3331, 'status': 'healthy', 'hostname': '172.23.121.66:8091', 'clusterCompatibility': 458752, 'clusterMembership': 'active', 'version': '7.0.0-1993-enterprise', 'os': 'x86_64-unknown-linux-gnu', 'ports': [], 'availableStorage': [], 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x127fb9790>], 'memoryQuota': 2231, 'moxi': 11211, 'memcached': 11210, 'id': 'ns_1@172.23.121.66', 'ip': '172.23.121.66', 'rest_username': '', 'rest_password': '', 'port': '8091', 'services': ['kv'], 'storageTotalRam': 4164, 'curr_items': 0}
+[2020-05-05 17:34:00,799] - [rest_client] [123145531002880] - INFO - pools/default params : memoryQuota=2231
+[2020-05-05 17:34:00,883] - [rest_client] [123145531002880] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-05 17:34:00,884] - [rest_client] [123145531002880] - INFO - settings/web params on 172.23.121.66:8091:port=8091&username=Administrator&password=password
+[2020-05-05 17:34:00,971] - [rest_client] [123145531002880] - INFO - --> status:True
+[2020-05-05 17:34:00,973] - [remote_util] [123145531002880] - INFO - connecting to 172.23.121.66 with username:root 
+[2020-05-05 17:34:01,416] - [remote_util] [123145531002880] - INFO - Connected to 172.23.121.66
+[2020-05-05 17:34:02,085] - [remote_util] [123145531002880] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-05 17:34:02,881] - [remote_util] [123145531002880] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-05 17:34:02,998] - [remote_util] [123145531002880] - INFO - running command.raw on 172.23.121.66: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-05 17:34:03,068] - [remote_util] [123145531002880] - INFO - command executed successfully
+[2020-05-05 17:34:03,069] - [remote_util] [123145531002880] - INFO - ['ok']
+[2020-05-05 17:34:03,125] - [rest_client] [123145531002880] - INFO - /diag/eval status on 172.23.121.66:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-05 17:34:03,183] - [rest_client] [123145531002880] - INFO - /diag/eval status on 172.23.121.66:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-05 17:34:03,184] - [rest_client] [123145531002880] - INFO - settings/indexes params : storageMode=plasma
+[2020-05-05 17:34:03,420] - [task] [123145531002880] - INFO - server: ip:172.23.121.67 port:8091 ssh_username:root, nodes/self 
+[2020-05-05 17:34:03,479] - [task] [123145531002880] - INFO -  {'uptime': '5207', 'memoryTotal': 4366938112, 'memoryFree': 3808997376, 'mcdMemoryReserved': 3331, 'mcdMemoryAllocated': 3331, 'status': 'healthy', 'hostname': '172.23.121.67:8091', 'clusterCompatibility': 458752, 'clusterMembership': 'active', 'version': '7.0.0-1993-enterprise', 'os': 'x86_64-unknown-linux-gnu', 'ports': [], 'availableStorage': [], 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x127fa4150>], 'memoryQuota': 2231, 'moxi': 11211, 'memcached': 11210, 'id': 'ns_1@172.23.121.67', 'ip': '172.23.121.67', 'rest_username': '', 'rest_password': '', 'port': '8091', 'services': ['kv'], 'storageTotalRam': 4164, 'curr_items': 0}
+[2020-05-05 17:34:03,549] - [rest_client] [123145531002880] - INFO - pools/default params : memoryQuota=2231
+[2020-05-05 17:34:03,626] - [rest_client] [123145531002880] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-05 17:34:03,627] - [rest_client] [123145531002880] - INFO - settings/web params on 172.23.121.67:8091:port=8091&username=Administrator&password=password
+[2020-05-05 17:34:03,708] - [rest_client] [123145531002880] - INFO - --> status:True
+[2020-05-05 17:34:03,711] - [remote_util] [123145531002880] - INFO - connecting to 172.23.121.67 with username:root 
+[2020-05-05 17:34:04,132] - [remote_util] [123145531002880] - INFO - Connected to 172.23.121.67
+[2020-05-05 17:34:04,798] - [remote_util] [123145531002880] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-05 17:34:05,572] - [remote_util] [123145531002880] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-05 17:34:05,684] - [remote_util] [123145531002880] - INFO - running command.raw on 172.23.121.67: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-05 17:34:05,768] - [remote_util] [123145531002880] - INFO - command executed successfully
+[2020-05-05 17:34:05,769] - [remote_util] [123145531002880] - INFO - ['ok']
+[2020-05-05 17:34:05,832] - [rest_client] [123145531002880] - INFO - /diag/eval status on 172.23.121.67:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-05 17:34:05,901] - [rest_client] [123145531002880] - INFO - /diag/eval status on 172.23.121.67:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-05 17:34:05,903] - [rest_client] [123145531002880] - INFO - settings/indexes params : storageMode=plasma
+[2020-05-05 17:34:06,184] - [basetestcase] [123145525747712] - INFO - **** add built-in 'cbadminbucket' user to node 172.23.121.65 ****
+[2020-05-05 17:34:06,652] - [basetestcase] [123145525747712] - INFO - sleep for 5 secs.  ...
+[2020-05-05 17:34:11,655] - [basetestcase] [123145525747712] - INFO - **** add 'admin' role to 'cbadminbucket' user ****
+[2020-05-05 17:34:11,817] - [basetestcase] [123145525747712] - INFO - done initializing cluster
+[2020-05-05 17:34:12,093] - [task] [123145531002880] - INFO - adding node 172.23.121.66:8091 to cluster
+[2020-05-05 17:34:12,094] - [rest_client] [123145531002880] - INFO - adding remote node @172.23.121.66:8091 to this cluster @172.23.121.65:8091
+[2020-05-05 17:34:14,002] - [task] [123145531002880] - INFO - adding node 172.23.121.67:8091 to cluster
+[2020-05-05 17:34:14,003] - [rest_client] [123145531002880] - INFO - adding remote node @172.23.121.67:8091 to this cluster @172.23.121.65:8091
+[2020-05-05 17:34:16,019] - [rest_client] [123145531002880] - INFO - rebalance params : {'knownNodes': 'ns_1@172.23.121.65,ns_1@172.23.121.66,ns_1@172.23.121.67', 'ejectedNodes': '', 'user': 'Administrator', 'password': 'password'}
+[2020-05-05 17:34:16,089] - [rest_client] [123145531002880] - INFO - rebalance operation started
+[2020-05-05 17:34:16,145] - [rest_client] [123145531002880] - INFO - rebalance percentage : 25.00 %
+[2020-05-05 17:34:16,146] - [task] [123145531002880] - INFO - Rebalance - status: running, progress: 25.00%
+[2020-05-05 17:34:26,304] - [rest_client] [123145531002880] - INFO - rebalance percentage : 30.00 %
+[2020-05-05 17:34:26,306] - [task] [123145531002880] - INFO - Rebalance - status: running, progress: 30.00%
+[2020-05-05 17:34:36,428] - [rest_client] [123145531002880] - INFO - rebalance percentage : 30.00 %
+[2020-05-05 17:34:36,430] - [task] [123145531002880] - INFO - Rebalance - status: running, progress: 30.00%
+[2020-05-05 17:34:46,559] - [rest_client] [123145531002880] - INFO - rebalance percentage : 30.00 %
+[2020-05-05 17:34:46,560] - [task] [123145531002880] - INFO - Rebalance - status: running, progress: 30.00%
+[2020-05-05 17:34:56,701] - [rest_client] [123145531002880] - INFO - rebalance percentage : 30.00 %
+[2020-05-05 17:34:56,702] - [task] [123145531002880] - INFO - Rebalance - status: running, progress: 30.00%
+[2020-05-05 17:35:06,840] - [rest_client] [123145531002880] - INFO - rebalance percentage : 30.00 %
+[2020-05-05 17:35:06,841] - [task] [123145531002880] - INFO - Rebalance - status: running, progress: 30.00%
+[2020-05-05 17:35:17,003] - [rest_client] [123145531002880] - INFO - rebalance percentage : 30.00 %
+[2020-05-05 17:35:17,005] - [task] [123145531002880] - INFO - Rebalance - status: running, progress: 30.00%
+[2020-05-05 17:35:27,143] - [rest_client] [123145531002880] - INFO - rebalance percentage : 30.00 %
+[2020-05-05 17:35:27,144] - [task] [123145531002880] - INFO - Rebalance - status: running, progress: 30.00%
+[2020-05-05 17:35:37,299] - [rest_client] [123145531002880] - INFO - rebalance percentage : 30.00 %
+[2020-05-05 17:35:37,300] - [task] [123145531002880] - INFO - Rebalance - status: running, progress: 30.00%

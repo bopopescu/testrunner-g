@@ -511,7 +511,7 @@ class FTSIndex:
 
     def __init__(self, cluster, name, source_type='couchbase',
                  source_name=None, index_type='fulltext-index', index_params=None,
-                 plan_params=None, source_params=None, source_uuid=None):
+                 plan_params=None, source_params=None, source_uuid=None, dataset=None):
 
         """
          @param name : name of index/alias
@@ -564,7 +564,9 @@ class FTSIndex:
             self.index_definition['sourceType'] = self._source_type
             self.index_definition['sourceName'] = self._source_name
 
-        self.dataset = TestInputSingleton.input.param("dataset", "emp")
+        self.dataset = dataset
+        if not self.dataset:
+            self.dataset = TestInputSingleton.input.param("dataset", "emp")
 
         # Support for custom map
         self.custom_map = TestInputSingleton.input.param("custom_map", False)

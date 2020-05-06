@@ -4,6 +4,8 @@ from pytests.fts.fts_base import FTSIndex
 from pytests.fts.random_query_generator.rand_query_gen import DATASET
 import copy
 from couchbase_helper.documentgenerator import JsonDocGenerator
+from couchbase_helper.documentgenerator import WikiJSONGenerator
+from fts.random_query_generator.rand_query_gen import FTSFlexQueryGenerator
 from collections import Mapping, Sequence, Set, deque
 
 class FlexIndexTests(QueryTests):
@@ -20,12 +22,13 @@ class FlexIndexTests(QueryTests):
 
         self.log.info("==============  FlexIndexTests setuAp has started ==============")
         self.log_config_info()
-        self.dataset = self.input.param("custommap_dataset", "emp")
+        self.dataset = self.input.param("flex_dataset", "emp")
         self.use_index_name_in_query = bool(self.input.param("use_index_name_in_query", True))
         self.expected_gsi_index_map = {}
         self.expected_fts_index_map = {}
         self.custom_map = self.input.param("custom_map", False)
         self.flex_query_option = self.input.param("flex_query_option", "flex_use_fts_query")
+        self.cbcluster = CouchbaseCluster(name='cluster', nodes=self.servers, log=self.log)
         self.log.info("==============  FlexIndexTests setup has completed ==============")
 
     def tearDown(self):
@@ -49,6 +52,21 @@ class FlexIndexTests(QueryTests):
 
         if end > 0:
             self._kv_gen = JsonDocGenerator("emp_",
+                                            encoding="utf-8",
+                                            start=start,
+                                            end=end)
+            gen = copy.deepcopy(self._kv_gen)
+
+            self._load_bucket(self.buckets[0], self.servers[0], gen, op_type,
+                              expiration)
+
+    def _load_wiki_dataset(self, op_type="create", expiration=0, start=0,
+                          end=1000):
+        # Load Emp Dataset
+        #self.cluster.bucket_flush(self.master)
+
+        if end > 0:
+            self._kv_gen = WikiJSONGenerator("wiki_",
                                             encoding="utf-8",
                                             start=start,
                                             end=end)
@@ -135,7 +153,6 @@ class FlexIndexTests(QueryTests):
                                 INDEX_DEFAULTS.SOURCE_FILE_PARAMS
         @param source_uuid: UUID of the source, may not be used
         """
-        self.cbcluster = CouchbaseCluster(name='cluster', nodes=self.servers, log=self.log)
         fts_index = FTSIndex(
             self.cbcluster,
             name,
@@ -145,7 +162,8 @@ class FlexIndexTests(QueryTests):
             index_params,
             plan_params,
             source_params,
-            source_uuid
+            source_uuid,
+            self.dataset
         )
         fts_index.create()
         return fts_index
@@ -153,14 +171,12 @@ class FlexIndexTests(QueryTests):
     def generate_random_queries(self, fts_index_fields=None, num_queries=1, query_type=["match"],
                                 seed=0):
         """
-         Calls FTS-ES Query Generator for employee dataset
+         Calls FTS-FLex Query Generator for employee dataset
          @param num_queries: number of queries to return
          @query_type: a list of different types of queries to generate
                       like: query_type=["match", "match_phrase","bool",
                                         "conjunction", "disjunction"]
         """
-        from fts.random_query_generator.rand_query_gen import FTSFlexQueryGenerator
-
         self.query_gen = FTSFlexQueryGenerator(num_queries, query_type=query_type,
                                         seed=seed, dataset=self.dataset,
                                         fields=fts_index_fields)
@@ -370,6 +386,26 @@ class FlexIndexTests(QueryTests):
             self.run_cbq_query("create primary index primary_gsi_index on default")
         self.generate_random_queries(fts_index.smart_query_fields)
         failed_to_run_query, not_found_index_in_response, result_mismatch = self.run_queries_and_validate()
+        self.cbcluster.delete_all_fts_indexes()
+
+        if failed_to_run_query or not_found_index_in_response or result_mismatch:
+            self.fail("Found queries not runnable: {0} or required index not found in the query resonse: {1} "
+                      "or flex query and gsi query results not matching: {2}"
+                      .format(failed_to_run_query, not_found_index_in_response, result_mismatch))
+
+    def test_flex_multi_typemapping(self):
+
+        self._load_emp_dataset(end=(self.num_items/2))
+        self._load_wiki_dataset(end=(self.num_items/2))
+
+        fts_index = self.create_index(
+            index_name="custom_index")
+        self.update_expected_index_map(fts_index)
+        if not self.is_index_present("default", "primary_gsi_index"):
+            self.run_cbq_query("create primary index primary_gsi_index on default")
+        self.generate_random_queries(fts_index.smart_query_fields)
+        failed_to_run_query, not_found_index_in_response, result_mismatch = self.run_queries_and_validate()
+        self.cbcluster.delete_all_fts_indexes()
 
         if failed_to_run_query or not_found_index_in_response or result_mismatch:
             self.fail("Found queries not runnable: {0} or required index not found in the query resonse: {1} "
@@ -388,6 +424,7 @@ class FlexIndexTests(QueryTests):
             self.run_cbq_query("create primary index primary_gsi_index on default")
         self.generate_random_queries()
         failed_to_run_query, not_found_index_in_response, result_mismatch = self.run_queries_and_validate()
+        self.cbcluster.delete_all_fts_indexes()
 
         if failed_to_run_query or not_found_index_in_response or result_mismatch:
             self.fail("Found queries not runnable: {0} or required index not found in the query resonse: {1} "
@@ -409,6 +446,7 @@ class FlexIndexTests(QueryTests):
         self.create_gsi_indexes(gsi_fields)
         self.generate_random_queries()
         failed_to_run_query, not_found_index_in_response, result_mismatch = self.run_queries_and_validate()
+        self.cbcluster.delete_all_fts_indexes()
 
         if failed_to_run_query or not_found_index_in_response or result_mismatch:
             self.fail("Found queries not runnable: {0} or required index not found in the query resonse: {1} "
@@ -436,6 +474,7 @@ class FlexIndexTests(QueryTests):
         self.create_gsi_indexes(gsi_fields)
         self.generate_random_queries()
         failed_to_run_query, not_found_index_in_response, result_mismatch = self.run_queries_and_validate()
+        self.cbcluster.delete_all_fts_indexes()
 
         if failed_to_run_query or not_found_index_in_response or result_mismatch:
             self.fail("Found queries not runnable: {0} or required index not found in the query resonse: {1} "

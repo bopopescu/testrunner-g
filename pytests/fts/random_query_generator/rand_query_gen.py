@@ -55,8 +55,7 @@ class QUERY_TYPE:
         'str': ["term_equal", "term_range",
                 "term_between", "term_like", "conjunction_disjunction"],
         'num': ["num_equal", "num_range", "num_between"],
-        'date': [],
-       # 'date': ["date_equal", "date_range", "date_between"],
+        'date': ["date_equal", "date_range", "date_between"],
         'bool': ["boolean"],
         'array': ["array_any"]
     }
@@ -949,7 +948,8 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
     def get_custom_n1ql_query_types(self):
         query_types = []
         for field_type in list(self.fields.keys()):
-            query_types += QUERY_TYPE.N1QL_QUERY_TYPES[field_type]
+            if self.fields[field_type].__len__() != 0:
+                query_types += QUERY_TYPE.N1QL_QUERY_TYPES[field_type]
         return list(set(query_types))
 
     def construct_flex_num_queries(self):
@@ -974,42 +974,36 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
                 continue
             for predicate in flex_query_predicate_list:
                 self.fts_flex_queries.append(self.replace_underscores(self.fts_flex_query_template.format(self.dataset, predicate)))
-                self.gsi_queries.append(self.replace_underscores(self.gsi_query_template.format(self.dataset, predicate)))
+                self.gsi_queries.append(self.replace_underscores(self.gsi_query_template.format(
+                    self.dataset, predicate.replace("Z", ""))))
 
     def construct_flex_term_range_query(self):
         flex_query_predicate_list = []
 
         fieldname = self.get_random_value(self.fields['str'])
-        str1 = self.get_term(fieldname)
-        str2 = self.get_term(fieldname)
-
-        #flex_query_predicate = "{0} > \"{1}\" and {0} < \"{2}\"".format(fieldname, str1, str2)
-        #flex_query_predicate_list.append(flex_query_predicate)
-
-        #fieldname = self.get_random_value(self.fields['str'])
-        #str1 = self.get_term(fieldname)
-        #str2 = self.get_term(fieldname)
+        str1 = eval("self.get_queryable_%s_range" % fieldname + "()")
+        str2 = eval("self.get_queryable_%s_range" % fieldname + "(min=False)")
 
         flex_query_predicate = "( {0} > \"{1}\" and {0} < \"{2}\")".format(fieldname, str1, str2)
         flex_query_predicate_list.append(flex_query_predicate)
 
         fieldname = self.get_random_value(self.fields['str'])
-        str1 = self.get_term(fieldname)
-        str2 = self.get_term(fieldname)
+        str1 = eval("self.get_queryable_%s_range" % fieldname + "()")
+        str2 = eval("self.get_queryable_%s_range" % fieldname + "(min=False)")
 
         flex_query_predicate = "( {0} >= \"{1}\" and {0} <= \"{2}\")".format(fieldname, str1, str2)
         flex_query_predicate_list.append(flex_query_predicate)
 
         fieldname = self.get_random_value(self.fields['str'])
-        str1 = self.get_term(fieldname)
-        str2 = self.get_term(fieldname)
+        str1 = eval("self.get_queryable_%s_range" % fieldname + "()")
+        str2 = eval("self.get_queryable_%s_range" % fieldname + "(min=False)")
 
         flex_query_predicate = "( {0} >= \"{1}\" and {0} < \"{2}\")".format(fieldname, str1, str2)
         flex_query_predicate_list.append(flex_query_predicate)
 
         fieldname = self.get_random_value(self.fields['str'])
-        str1 = self.get_term(fieldname)
-        str2 = self.get_term(fieldname)
+        str1 = eval("self.get_queryable_%s_range" % fieldname + "()")
+        str2 = eval("self.get_queryable_%s_range" % fieldname + "(min=False)")
 
         flex_query_predicate = "( {0} > \"{1}\" and {0} <= \"{2}\")".format(fieldname, str1, str2)
         flex_query_predicate_list.append(flex_query_predicate)
@@ -1248,7 +1242,7 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
                 if mixed:
                     logical_operator = "AND" if bool(random.getrandbits(1)) else "OR"
                 query_predicate = "( " + query_predicate + " " + logical_operator + " " + self.get_random_value(query_predicate_list) + ")"
-                query_predicate = query_predicate + " " + logical_operator + " " + self.get_random_value(query_predicate_list)
+                #query_predicate = query_predicate + " " + logical_operator + " " + self.get_random_value(query_predicate_list)
             flex_query_predicate_list.append(query_predicate)
         return flex_query_predicate_list
 

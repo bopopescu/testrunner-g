@@ -28,7 +28,6 @@ class FlexIndexTests(QueryTests):
         self.expected_fts_index_map = {}
         self.custom_map = self.input.param("custom_map", False)
         self.flex_query_option = self.input.param("flex_query_option", "flex_use_fts_query")
-        self.cbcluster = CouchbaseCluster(name='cluster', nodes=self.servers, log=self.log)
         self.log.info("==============  FlexIndexTests setup has completed ==============")
 
     def tearDown(self):
@@ -113,7 +112,7 @@ class FlexIndexTests(QueryTests):
         return fts_index
 
     def update_expected_index_map(self, fts_index):
-        if not self.custom_map:
+        if not fts_index.smart_query_fields:
             fts_index.smart_query_fields = DATASET.FIELDS["emp"]
         for f, v in fts_index.smart_query_fields.items():
             for field in v:
@@ -121,6 +120,12 @@ class FlexIndexTests(QueryTests):
                     field = "manages.team_size"
                 if field == "manages_reports":
                     field = "manages.reports"
+                if field == "revision_timestamp":
+                    field = "revision.timestamp"
+                if field == "revision_text_text":
+                    field = "`revision.text.#text`"
+                if field == "revision_contributor_username":
+                    field = "revision.contributor.username"
                 if field not in self.expected_fts_index_map.keys():
                     self.expected_fts_index_map[field] = [fts_index.name]
                 else:
@@ -153,6 +158,7 @@ class FlexIndexTests(QueryTests):
                                 INDEX_DEFAULTS.SOURCE_FILE_PARAMS
         @param source_uuid: UUID of the source, may not be used
         """
+        self.cbcluster = CouchbaseCluster(name='cluster', nodes=self.servers, log=self.log)
         fts_index = FTSIndex(
             self.cbcluster,
             name,
@@ -231,11 +237,21 @@ class FlexIndexTests(QueryTests):
                 field_proxy = field
                 if field == "manages_team_size":
                     field_proxy = "manages.team_size"
+                    field = "manages.team_size"
                 if field == "languages_known":
                     field = "ALL ARRAY v for v in languages_known END"
                 if field == "manages_reports":
                     field = "ALL ARRAY v for v in manages.reports END"
                     field_proxy = "manages.reports"
+                if field == "revision_timestamp":
+                    field_proxy = "revision.timestamp"
+                    field = "revision.timestamp"
+                if field == "revision_text_text":
+                    field_proxy = "`revision.text.#text`"
+                    field = "`revision.text.#text`"
+                if field == "revision_contributor_username":
+                    field_proxy = "revision.contributor.username"
+                    field = "revision.contributor.username"
                 if field_proxy not in self.expected_gsi_index_map.keys() and field_proxy is not "type":
                     gsi_index_name = "gsi_index_" + str(count)
                     self.run_cbq_query("create index {0} on default({1})".format(gsi_index_name, field))
@@ -273,17 +289,22 @@ class FlexIndexTests(QueryTests):
         return found
 
     def get_expected_indexes(self, flex_query, expected_index_map):
-        available_fields = DATASET.FIELDS["emp"]
+        available_fields = DATASET.CONSOLIDATED_FIELDS
         expected_indexes = []
-        for k, v in available_fields.items():
-            for field in v:
-                if field == "manages_team_size":
-                    field = "manages.team_size"
-                if field == "manages_reports":
-                    field = "manages.reports"
-                if " {0}".format(field) in flex_query and field in expected_index_map.keys():
-                    for index in expected_index_map[field]:
-                        expected_indexes.append(index)
+        for field in available_fields:
+            if field == "manages_team_size":
+                field = "manages.team_size"
+            if field == "manages_reports":
+                field = "manages.reports"
+            if field == "revision_timestamp":
+                field = "revision.timestamp"
+            if field == "revision_text_text":
+                field = "`revision.text.#text`"
+            if field == "revision_contributor_username":
+                field = "revision.contributor.username"
+            if " {0}".format(field) in flex_query and field in expected_index_map.keys():
+                for index in expected_index_map[field]:
+                    expected_indexes.append(index)
 
         return list(set(expected_indexes))
 
@@ -392,6 +413,8 @@ class FlexIndexTests(QueryTests):
             self.fail("Found queries not runnable: {0} or required index not found in the query resonse: {1} "
                       "or flex query and gsi query results not matching: {2}"
                       .format(failed_to_run_query, not_found_index_in_response, result_mismatch))
+        else:
+            self.log.info("All {0} queries passed".format(len(self.query_gen.fts_flex_queries)))
 
     def test_flex_multi_typemapping(self):
 
@@ -411,18 +434,22 @@ class FlexIndexTests(QueryTests):
             self.fail("Found queries not runnable: {0} or required index not found in the query resonse: {1} "
                       "or flex query and gsi query results not matching: {2}"
                       .format(failed_to_run_query, not_found_index_in_response, result_mismatch))
+        else:
+            self.log.info("All {0} queries passed".format(len(self.query_gen.fts_flex_queries)))
 
 
     def test_flex_default_typemapping(self):
 
-        self._load_emp_dataset(end=self.num_items)
+        self._load_emp_dataset(end=self.num_items/2)
+        self._load_wiki_dataset(end=(self.num_items/2))
 
         fts_index = self.create_index(
             index_name="default_index")
-        self.update_expected_index_map(fts_index)
         if not self.is_index_present("default", "primary_gsi_index"):
             self.run_cbq_query("create primary index primary_gsi_index on default")
         self.generate_random_queries()
+        fts_index.smart_query_fields = self.query_gen.fields
+        self.update_expected_index_map(fts_index)
         failed_to_run_query, not_found_index_in_response, result_mismatch = self.run_queries_and_validate()
         self.cbcluster.delete_all_fts_indexes()
 
@@ -430,6 +457,8 @@ class FlexIndexTests(QueryTests):
             self.fail("Found queries not runnable: {0} or required index not found in the query resonse: {1} "
                       "or flex query and gsi query results not matching: {2}"
                       .format(failed_to_run_query, not_found_index_in_response, result_mismatch))
+        else:
+            self.log.info("All {0} queries passed".format(len(self.query_gen.fts_flex_queries)))
 
 
     def test_flex_single_typemapping_partial_sargability(self):
@@ -452,6 +481,32 @@ class FlexIndexTests(QueryTests):
             self.fail("Found queries not runnable: {0} or required index not found in the query resonse: {1} "
                       "or flex query and gsi query results not matching: {2}"
                       .format(failed_to_run_query, not_found_index_in_response, result_mismatch))
+        else:
+            self.log.info("All {0} queries passed".format(len(self.query_gen.fts_flex_queries)))
+
+    def test_flex_multi_typemapping_partial_sargability(self):
+
+        self._load_emp_dataset(end=(self.num_items/2))
+        self._load_wiki_dataset(end=(self.num_items/2))
+
+        fts_index = self.create_index(
+            index_name="custom_index")
+        self.update_expected_index_map(fts_index)
+        if not self.is_index_present("default", "primary_gsi_index"):
+            self.run_cbq_query("create primary index primary_gsi_index on default")
+        self.generate_random_queries(fts_index.smart_query_fields)
+        gsi_fields = self.get_gsi_fields_partial_sargability()
+        self.create_gsi_indexes(gsi_fields)
+        self.generate_random_queries()
+        failed_to_run_query, not_found_index_in_response, result_mismatch = self.run_queries_and_validate()
+        self.cbcluster.delete_all_fts_indexes()
+
+        if failed_to_run_query or not_found_index_in_response or result_mismatch:
+            self.fail("Found queries not runnable: {0} or required index not found in the query resonse: {1} "
+                      "or flex query and gsi query results not matching: {2}"
+                      .format(failed_to_run_query, not_found_index_in_response, result_mismatch))
+        else:
+            self.log.info("All {0} queries passed".format(len(self.query_gen.fts_flex_queries)))
 
     def test_flex_single_typemapping_2_fts_indexes(self):
         self._load_emp_dataset(end=self.num_items)
@@ -480,5 +535,7 @@ class FlexIndexTests(QueryTests):
             self.fail("Found queries not runnable: {0} or required index not found in the query resonse: {1} "
                       "or flex query and gsi query results not matching: {2}"
                       .format(failed_to_run_query, not_found_index_in_response, result_mismatch))
+        else:
+            self.log.info("All {0} queries passed".format(len(self.query_gen.fts_flex_queries)))
 
 

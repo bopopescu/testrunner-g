@@ -27,6 +27,9 @@ class DATASET:
                        'date': ["revision_timestamp"],
                        'array': []}
               }
+    CONSOLIDATED_FIELDS = ["name", "dept", "manages_reports", "languages_known", "email", "mutated",
+                           "manages_team_size", "salary", "is_manager", "join_date", "title", "revision_text_text",
+                           "revision_contributor_username", "mutated", "revision_timestamp"]
 
 
 class QUERY_TYPE:
@@ -99,7 +102,7 @@ class FTSESQueryGenerator(EmployeeQuerables, WikiQuerables):
             all_fields = DATASET.FIELDS['emp']
         elif self.dataset == "wiki":
             all_fields = DATASET.FIELDS['wiki']
-        elif self.dataset == "all":
+        elif self.dataset == "all" or self.dataset == "default":
             fields_set = set()
             for _, fields in DATASET.FIELDS.items():
                 fields_set |= set(fields.keys())
@@ -139,10 +142,11 @@ class FTSESQueryGenerator(EmployeeQuerables, WikiQuerables):
     def replace_underscores(self, query):
         replace_dict = {
             "manages_": "manages.",
-            "revision_text_text": "revision.text.#text",
+            "revision_text_text": "`revision.text.#text`",
             "revision_contributor_username": "revision.contributor.username",
             "revision_contributor_id": "revision.contributor.id",
-            "revision_date": "revision.date"
+            "revision_date": "revision.date",
+            "revision_timestamp": "revision.timestamp"
         }
         query_str = json.dumps(query, ensure_ascii=False)
         for key, val in replace_dict.items():
@@ -896,7 +900,7 @@ class FTSESQueryGenerator(EmployeeQuerables, WikiQuerables):
 class FTSFlexQueryGenerator(FTSESQueryGenerator):
 
     def __init__(self, num_queries=1, query_type=None, seed=0, dataset="emp", fields=None):
-        super().__init__(num_queries, query_type=None, fields=None)
+        super().__init__(num_queries, query_type=None, fields=None, dataset=dataset)
         self.queries_to_generate = num_queries
         self.iterator = 0
         self.fts_flex_queries = []
@@ -904,8 +908,8 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
         self.fts_gsi_flex_queries = []
         self.gsi_queries = []
         self.fts_flex_query_template = "select meta().id from default USE INDEX " \
-                                       "({{flex_hint}}) where type = \"{0}\" and {1}"
-        self.gsi_query_template = "select meta().id from default where type = \"{0}\" and {1}"
+                                       "({{flex_hint}}) where {0} {1}"
+        self.gsi_query_template = "select meta().id from default where {0} {1}"
         if fields:
             # Smart query generation
             self.fields = {}
@@ -928,12 +932,11 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
         if 'text' in self.fields.keys():
             del self.fields['text']
 
-        temp_fields = copy.deepcopy(self.fields)
-        if "str" in temp_fields.keys():
+        if "str" in self.fields.keys():
+            self.fields['str'] = list(set(self.fields['str']))
+            temp_fields = copy.deepcopy(self.fields)
             for text_field in temp_fields['str']:
-                if text_field in DATASET.FIELDS[self.dataset]["array"]:
-                    print(text_field)
-                    print(self.fields)
+                if text_field in DATASET.FIELDS['emp']["array"]:
                     if "array" not in self.fields.keys():
                         self.fields["array"] = [text_field]
                     elif text_field not in self.fields["array"]:
@@ -952,6 +955,12 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
                 query_types += QUERY_TYPE.N1QL_QUERY_TYPES[field_type]
         return list(set(query_types))
 
+    def check_for_emp_in_predicate(self, predicate):
+        for k, field_list in DATASET.FIELDS["emp"].items():
+            for field in field_list:
+                if field in predicate:
+                    return True
+        return False
     def construct_flex_num_queries(self):
             while self.iterator < self.queries_to_generate:
                 fieldname = self.get_random_value(self.query_types)
@@ -961,9 +970,23 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
                     # particular data type
                     continue
                 for predicate in flex_query_predicate_list:
-                    self.fts_flex_queries.append(self.replace_underscores(self.fts_flex_query_template.format(self.dataset, predicate)))
-                    self.gsi_queries.append(self.replace_underscores(self.gsi_query_template.format(self.dataset, predicate)))
+                    for type in self.get_type_mapping(predicate):
+                        self.fts_flex_queries.append(self.replace_underscores(self.fts_flex_query_template.format(type, predicate)))
+                        self.gsi_queries.append(self.replace_underscores(self.gsi_query_template.format(type, predicate)))
                 self.iterator += len(flex_query_predicate_list)
+
+    def get_type_mapping(self, predicate):
+        if self.dataset == "default":
+            return [""]
+        if self.dataset == "all":
+            #commenting due to bug
+            #type_map_list = ['(type = \"emp\" or type = \"wiki\") and ', 'type = \"emp\" or type = \"wiki\" and ']
+            type_map_list = ['(type = \"emp\" or type = \"wiki\") and ']
+            if self.check_for_emp_in_predicate(predicate):
+                type_map_list.append("type = \"emp\" and ")
+            return type_map_list
+        else:
+            return ['type = \"{0}\" and '.format(self.dataset)]
 
     def construct_flex_queries(self):
         for fieldname in self.query_types:
@@ -973,9 +996,9 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
                 # particular data type
                 continue
             for predicate in flex_query_predicate_list:
-                self.fts_flex_queries.append(self.replace_underscores(self.fts_flex_query_template.format(self.dataset, predicate)))
-                self.gsi_queries.append(self.replace_underscores(self.gsi_query_template.format(
-                    self.dataset, predicate.replace("Z", ""))))
+                for type_map in self.get_type_mapping(predicate):
+                    self.fts_flex_queries.append(self.replace_underscores(self.fts_flex_query_template.format(type_map, predicate)))
+                    self.gsi_queries.append(self.replace_underscores(self.gsi_query_template.format(type_map, predicate)))
 
     def construct_flex_term_range_query(self):
         flex_query_predicate_list = []
@@ -1025,8 +1048,8 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
 
         for x in range(5):
             fieldname = self.get_random_value(self.fields['str'])
-            str1 = self.get_term(fieldname)
-            str2 = self.get_term(fieldname)
+            str1 = eval("self.get_queryable_%s_range" % fieldname + "()")
+            str2 = eval("self.get_queryable_%s_range" % fieldname + "(min=False)")
 
             flex_query_predicate = "( {0} between \"{1}\" and \"{2}\")".format(fieldname, str1, str2)
             flex_query_predicate_list.append(flex_query_predicate)
@@ -1039,7 +1062,7 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
         for x in range(5):
             fieldname = self.get_random_value(self.fields['str'])
             match_str = eval("self.get_queryable_%s()" % fieldname)
-            pos = random.randint(0, len(match_str) - 1)
+            pos = random.randint(1, len(match_str) - 1)
             match_str = match_str[:pos] + '%'
             flex_query_predicate = "( {0} like \"{1}\")".format(fieldname, match_str)
             flex_query_predicate_list.append(flex_query_predicate)
@@ -1204,7 +1227,7 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
         for x in range(5):
             fieldname = self.get_random_value(self.fields['array'])
             match_str = self.get_term(fieldname)
-            pos = random.randint(0, len(match_str) - 1)
+            pos = random.randint(1, len(match_str) - 1)
             match_str = match_str[:pos] + '%'
             flex_query_predicate_list.append("( ANY v IN {0} SATISFIES v like \"{1}\" END)".format(fieldname, match_str))
 
@@ -1216,7 +1239,7 @@ class FTSFlexQueryGenerator(FTSESQueryGenerator):
         for x in range(5):
             fieldname = self.get_random_value(self.fields['array'])
             match_str = self.get_term(fieldname)
-            pos = random.randint(0, len(match_str) - 1)
+            pos = random.randint(1, len(match_str) - 1)
             match_str = match_str[:pos] + '%'
             flex_query_predicate_list.append("( SOME v IN {0} SATISFIES v like \"{1}\" END)".format(fieldname, match_str))
 

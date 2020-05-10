@@ -1,0 +1,675 @@
+[2020-05-08 13:35:10,274] - [remote_util] [123145475928064] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-08 13:35:10,768] - [remote_util] [123145475928064] - INFO - Connected to 172.23.121.68
+[2020-05-08 13:35:11,424] - [remote_util] [123145475928064] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-08 13:35:12,185] - [remote_util] [123145475928064] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-08 13:35:12,413] - [rest_client] [123145475928064] - INFO - Node version in cluster 7.0.0-2016-enterprise
+[2020-05-08 13:35:12,515] - [rest_client] [123145475928064] - INFO - Node versions in cluster ['7.0.0-2016-enterprise']
+[2020-05-08 13:35:12,516] - [basetestcase] [123145475928064] - INFO - ==============  basetestcase setup was started for test #3 test_flex_single_typemapping==============
+[2020-05-08 13:35:13,089] - [cluster_helper] [123145475928064] - INFO - waiting for ns_server @ 172.23.121.68:8091
+[2020-05-08 13:35:13,165] - [cluster_helper] [123145475928064] - INFO - ns_server @ 172.23.121.68:8091 is running
+[2020-05-08 13:35:13,166] - [basetestcase] [123145475928064] - INFO - initializing cluster
+[2020-05-08 13:35:13,325] - [task] [123145486438400] - INFO - server: ip:172.23.121.68 port:8091 ssh_username:root, nodes/self 
+[2020-05-08 13:35:13,387] - [task] [123145486438400] - INFO -  {'uptime': '67558', 'memoryTotal': 4366938112, 'memoryFree': 2220331008, 'mcdMemoryReserved': 3331, 'mcdMemoryAllocated': 3331, 'status': 'healthy', 'hostname': '172.23.121.68:8091', 'clusterCompatibility': 458752, 'clusterMembership': 'active', 'version': '7.0.0-2016-enterprise', 'os': 'x86_64-unknown-linux-gnu', 'ports': [], 'availableStorage': [], 'storage': [<membase.api.rest_client.NodeDataStorage object at 0x14ee36210>], 'memoryQuota': 1225, 'moxi': 11211, 'memcached': 11210, 'id': 'ns_1@cb.local', 'ip': '172.23.121.68', 'rest_username': '', 'rest_password': '', 'port': '8091', 'services': ['fts', 'index', 'kv', 'n1ql'], 'storageTotalRam': 4164, 'curr_items': 0}
+[2020-05-08 13:35:13,450] - [task] [123145486438400] - INFO - quota for index service will be 256 MB
+[2020-05-08 13:35:13,450] - [task] [123145486438400] - INFO - set index quota to node 172.23.121.68 
+[2020-05-08 13:35:13,451] - [rest_client] [123145486438400] - INFO - pools/default params : indexMemoryQuota=256
+[2020-05-08 13:35:13,516] - [task] [123145486438400] - INFO - quota for fts service will be 750 MB
+[2020-05-08 13:35:13,517] - [task] [123145486438400] - INFO - set both index and fts quota at node 172.23.121.68 
+[2020-05-08 13:35:13,518] - [rest_client] [123145486438400] - INFO - pools/default params : ftsMemoryQuota=750
+[2020-05-08 13:35:13,573] - [rest_client] [123145486438400] - INFO - pools/default params : memoryQuota=1225
+[2020-05-08 13:35:13,635] - [rest_client] [123145486438400] - INFO - --> init_node_services(Administrator,password,172.23.121.68,8091,['kv', 'index', 'n1ql', 'fts'])
+[2020-05-08 13:35:13,635] - [rest_client] [123145486438400] - INFO - /node/controller/setupServices params on 172.23.121.68: 8091:hostname=172.23.121.68&user=Administrator&password=password&services=kv%2Cindex%2Cn1ql%2Cfts
+[2020-05-08 13:35:13,691] - [rest_client] [123145486438400] - ERROR - POST http://172.23.121.68:8091//node/controller/setupServices body: hostname=172.23.121.68&user=Administrator&password=password&services=kv%2Cindex%2Cn1ql%2Cfts headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 400 reason: unknown b'["cannot change node services after cluster is provisioned"]' auth: Administrator:password
+[2020-05-08 13:35:13,692] - [rest_client] [123145486438400] - INFO - This node is already provisioned with services, we do not consider this as failure for test case
+[2020-05-08 13:35:13,692] - [rest_client] [123145486438400] - INFO - --> in init_cluster...Administrator,password,8091
+[2020-05-08 13:35:13,693] - [rest_client] [123145486438400] - INFO - settings/web params on 172.23.121.68:8091:port=8091&username=Administrator&password=password
+[2020-05-08 13:35:13,777] - [rest_client] [123145486438400] - INFO - --> status:True
+[2020-05-08 13:35:13,778] - [remote_util] [123145486438400] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-08 13:35:14,268] - [remote_util] [123145486438400] - INFO - Connected to 172.23.121.68
+[2020-05-08 13:35:14,986] - [remote_util] [123145486438400] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-08 13:35:15,809] - [remote_util] [123145486438400] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-08 13:35:15,935] - [remote_util] [123145486438400] - INFO - running command.raw on 172.23.121.68: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-08 13:35:16,013] - [remote_util] [123145486438400] - INFO - command executed successfully
+[2020-05-08 13:35:16,014] - [remote_util] [123145486438400] - INFO - ['ok']
+[2020-05-08 13:35:16,071] - [rest_client] [123145486438400] - INFO - /diag/eval status on 172.23.121.68:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-08 13:35:16,137] - [rest_client] [123145486438400] - INFO - /diag/eval status on 172.23.121.68:8091: True content: [7,0] command: cluster_compat_mode:get_compat_version().
+[2020-05-08 13:35:16,138] - [rest_client] [123145486438400] - INFO - settings/indexes params : storageMode=plasma
+[2020-05-08 13:35:16,440] - [basetestcase] [123145475928064] - INFO - **** add built-in 'cbadminbucket' user to node 172.23.121.68 ****
+[2020-05-08 13:35:16,968] - [basetestcase] [123145475928064] - INFO - sleep for 5 secs.  ...
+[2020-05-08 13:35:21,974] - [basetestcase] [123145475928064] - INFO - **** add 'admin' role to 'cbadminbucket' user ****
+[2020-05-08 13:35:22,150] - [basetestcase] [123145475928064] - INFO - done initializing cluster
+[2020-05-08 13:35:22,153] - [remote_util] [123145475928064] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-08 13:35:22,666] - [remote_util] [123145475928064] - INFO - Connected to 172.23.121.68
+[2020-05-08 13:35:23,356] - [remote_util] [123145475928064] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-08 13:35:24,176] - [remote_util] [123145475928064] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-08 13:35:24,292] - [remote_util] [123145475928064] - INFO - running command.raw on 172.23.121.68: curl http://Administrator:password@localhost:8091/diag/eval -X POST -d 'ns_config:set(allow_nonlocal_eval, true).'
+[2020-05-08 13:35:24,367] - [remote_util] [123145475928064] - INFO - command executed successfully
+[2020-05-08 13:35:24,368] - [remote_util] [123145475928064] - INFO - ['ok']
+[2020-05-08 13:35:24,369] - [basetestcase] [123145475928064] - INFO - Enabled diag/eval for non-local hosts from 172.23.121.68
+[2020-05-08 13:35:25,641] - [rest_client] [123145486438400] - INFO - http://172.23.121.68:8091/pools/default/buckets with param: name=default&authType=sasl&saslPassword=None&ramQuotaMB=200&replicaNumber=1&bucketType=membase&replicaIndex=1&threadsNumber=3&flushEnabled=1&evictionPolicy=valueOnly&compressionMode=passive
+[2020-05-08 13:35:25,692] - [rest_client] [123145486438400] - INFO - 0.05 seconds to create bucket default
+[2020-05-08 13:35:25,693] - [bucket_helper] [123145486438400] - INFO - waiting for memcached bucket : default in 172.23.121.68 to accept set ops
+[2020-05-08 13:35:26,395] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:27,148] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:27,545] - [task] [123145486438400] - WARNING - vbucket map not ready after try 0
+[2020-05-08 13:35:27,546] - [bucket_helper] [123145486438400] - INFO - waiting for memcached bucket : default in 172.23.121.68 to accept set ops
+[2020-05-08 13:35:28,195] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:28,910] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:29,308] - [task] [123145486438400] - WARNING - vbucket map not ready after try 1
+[2020-05-08 13:35:29,309] - [bucket_helper] [123145486438400] - INFO - waiting for memcached bucket : default in 172.23.121.68 to accept set ops
+[2020-05-08 13:35:30,253] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:30,958] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:31,385] - [task] [123145486438400] - WARNING - vbucket map not ready after try 2
+[2020-05-08 13:35:31,386] - [bucket_helper] [123145486438400] - INFO - waiting for memcached bucket : default in 172.23.121.68 to accept set ops
+[2020-05-08 13:35:32,023] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:32,787] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:33,184] - [task] [123145486438400] - WARNING - vbucket map not ready after try 3
+[2020-05-08 13:35:33,185] - [bucket_helper] [123145486438400] - INFO - waiting for memcached bucket : default in 172.23.121.68 to accept set ops
+[2020-05-08 13:35:33,804] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:34,718] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:35,123] - [task] [123145486438400] - WARNING - vbucket map not ready after try 4
+[2020-05-08 13:35:35,124] - [bucket_helper] [123145486438400] - INFO - waiting for memcached bucket : default in 172.23.121.68 to accept set ops
+[2020-05-08 13:35:35,765] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:36,523] - [data_helper] [123145486438400] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:36,925] - [task] [123145486438400] - WARNING - vbucket map not ready after try 5
+[2020-05-08 13:35:36,928] - [basetestcase] [123145475928064] - INFO - ==============  basetestcase setup was finished for test #3 test_flex_single_typemapping ==============
+[2020-05-08 13:35:37,155] - [basetestcase] [123145475928064] - INFO - ------- Cluster statistics -------
+[2020-05-08 13:35:37,156] - [basetestcase] [123145475928064] - INFO - 172.23.121.68:8091 => {'services': ['fts', 'index', 'kv', 'n1ql'], 'cpu_utilization': 4.102564102564102, 'mem_free': 2190180352, 'mem_total': 4366938112, 'swap_mem_used': 9437184, 'swap_mem_total': 3758092288}
+[2020-05-08 13:35:37,157] - [basetestcase] [123145475928064] - INFO - --- End of cluster statistics ---
+[2020-05-08 13:35:37,158] - [tuq] [123145475928064] - INFO - ==============  QueryTests setup has started ==============
+[2020-05-08 13:35:37,160] - [remote_util] [123145475928064] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-08 13:35:37,686] - [remote_util] [123145475928064] - INFO - Connected to 172.23.121.68
+[2020-05-08 13:35:38,361] - [remote_util] [123145475928064] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-08 13:35:39,154] - [remote_util] [123145475928064] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-08 13:35:39,280] - [remote_util] [123145475928064] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-08 13:35:39,801] - [remote_util] [123145475928064] - INFO - Connected to 172.23.121.68
+[2020-05-08 13:35:40,473] - [remote_util] [123145475928064] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-08 13:35:41,269] - [remote_util] [123145475928064] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-08 13:35:41,271] - [tuq] [123145475928064] - INFO - Generating default:default data...
+[2020-05-08 13:35:41,272] - [tuq] [123145475928064] - INFO - -->start:generate_docs_employee for default...
+[2020-05-08 13:35:41,311] - [tuq] [123145475928064] - INFO - -->end:generate_docs_employee for default...
+[2020-05-08 13:35:41,312] - [tuq] [123145475928064] - INFO - Completed Generating default:default data...
+[2020-05-08 13:35:41,313] - [tuq] [123145475928064] - INFO - --->gens_load is done...
+[2020-05-08 13:35:41,313] - [tuq] [123145475928064] - INFO - -->starting rest connection...
+[2020-05-08 13:35:46,391] - [tuq] [123145475928064] - INFO - --> docs_per_day>0..generating TuqGenerators...
+[2020-05-08 13:35:51,167] - [tuq] [123145475928064] - INFO - --> End: docs_per_day>0..generating TuqGenerators...
+[2020-05-08 13:35:51,167] - [tuq] [123145475928064] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-08 13:35:51,168] - [tuq] [123145475928064] - INFO - Temp fix for MB-16888
+[2020-05-08 13:35:51,168] - [remote_util] [123145475928064] - INFO - running command.raw on 172.23.121.68: killall -9 cbq-engine
+[2020-05-08 13:35:51,237] - [remote_util] [123145475928064] - INFO - command executed successfully
+[2020-05-08 13:35:51,238] - [remote_util] [123145475928064] - INFO - running command.raw on 172.23.121.68: killall -9 indexer
+[2020-05-08 13:35:51,362] - [remote_util] [123145475928064] - INFO - command executed successfully
+[2020-05-08 13:35:51,363] - [tuq] [123145475928064] - INFO - Error executing shell command: killall -9 cbq-engine! Error - bash: killall: command not found
+[2020-05-08 13:35:51,364] - [tuq] [123145475928064] - INFO - Error executing shell command: killall -9 indexer! Error - bash: killall: command not found
+[2020-05-08 13:35:51,364] - [tuq] [123145475928064] - INFO - ----------------------------------------------------------------------------------------------------
+[2020-05-08 13:35:51,365] - [tuq] [123145475928064] - INFO - ==============  QueryTests setup has completed ==============
+[2020-05-08 13:35:51,366] - [flex_index_phase1] [123145475928064] - INFO - ==============  FlexIndexTests setuAp has started ==============
+[2020-05-08 13:35:51,423] - [tuq] [123145475928064] - INFO - RUN QUERY SELECT * FROM system:indexes
+[2020-05-08 13:35:51,424] - [rest_client] [123145475928064] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:35:51,510] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 28.86662ms
+[2020-05-08 13:35:51,568] - [tuq] [123145475928064] - INFO - RUN QUERY SELECT * FROM system:keyspaces
+[2020-05-08 13:35:51,569] - [rest_client] [123145475928064] - INFO - query params : statement=SELECT+%2A+FROM+system%3Akeyspaces&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:35:51,645] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 7.700564ms
+[2020-05-08 13:35:51,646] - [tuq] [123145475928064] - INFO - ==============  System Config: ==============
+
+[2020-05-08 13:35:51,701] - [tuq] [123145475928064] - INFO - RUN QUERY SELECT COUNT(*) FROM `default`
+[2020-05-08 13:35:51,702] - [rest_client] [123145475928064] - INFO - query params : statement=SELECT+COUNT%28%2A%29+FROM+%60default%60&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:35:51,772] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 9.899354ms
+[2020-05-08 13:35:51,773] - [tuq] [123145475928064] - INFO - Bucket: default
+[2020-05-08 13:35:51,774] - [tuq] [123145475928064] - INFO - Indexes: []
+[2020-05-08 13:35:51,775] - [tuq] [123145475928064] - INFO - Docs: 0
+
+[2020-05-08 13:35:51,775] - [tuq] [123145475928064] - INFO - =============================================
+[2020-05-08 13:35:51,776] - [flex_index_phase1] [123145475928064] - INFO - ==============  FlexIndexTests setup has completed ==============
+[2020-05-08 13:35:54,032] - [rest_client] [123145486438400] - INFO - Flush for bucket 'default' was triggered
+[2020-05-08 13:35:54,482] - [data_helper] [123145475928064] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:55,531] - [data_helper] [123145496948736] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:55,531] - [data_helper] [123145496948736] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:55,531] - [data_helper] [123145496948736] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:55,535] - [data_helper] [123145496948736] - INFO - creating direct client 172.23.121.68:11210 default
+[2020-05-08 13:35:56,514] - [rest_client] [123145475928064] - INFO - SUCCESS: FTS RAM quota set to 750mb
+[2020-05-08 13:35:56,647] - [fts_base] [123145475928064] - INFO - {
+   "mapping": {
+      "default_mapping": {
+         "enabled": false,
+         "dynamic": true,
+         "default_analyzer": "keyword"
+      },
+      "type_field": "type",
+      "default_type": "_default",
+      "default_analyzer": "standard",
+      "default_datetime_parser": "dateTimeOptional",
+      "default_field": "_all",
+      "analysis": {},
+      "types": {
+         "emp": {
+            "dynamic": false,
+            "enabled": true,
+            "fields": [],
+            "properties": {
+               "name": {
+                  "dynamic": false,
+                  "enabled": true,
+                  "properties": {},
+                  "fields": [
+                     {
+                        "include_in_all": true,
+                        "include_term_vectors": true,
+                        "index": true,
+                        "name": "name",
+                        "store": false,
+                        "type": "text",
+                        "analyzer": "keyword"
+                     }
+                  ]
+               }
+            }
+         }
+      }
+   },
+   "store": {
+      "kvStoreName": "mossStore",
+      "mossStoreOptions": {},
+      "indexType": "scorch"
+   }
+}
+[2020-05-08 13:35:56,648] - [fts_base] [123145475928064] - INFO - Checking if index already exists ...
+[2020-05-08 13:35:56,894] - [rest_client] [123145475928064] - ERROR - GET http://172.23.121.68:8094/api/index/custom_index body:  headers: {'Content-Type': 'application/json', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 400 reason: rest_auth: preparePerms, err: index not found b'{"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"}\n' auth: Administrator:password
+[2020-05-08 13:35:56,955] - [rest_client] [123145475928064] - ERROR - DELETE http://172.23.121.68:8094/api/index/custom_index body:  headers: {'Content-Type': 'application/json', 'Authorization': 'Basic QWRtaW5pc3RyYXRvcjpwYXNzd29yZA==', 'Accept': '*/*'} error: 400 reason: rest_auth: preparePerms, err: index not found b'{"error":"rest_auth: preparePerms, err: index not found","request":"","status":"fail"}\n' auth: Administrator:password
+[2020-05-08 13:35:56,956] - [fts_base] [123145475928064] - INFO - Creating fulltext-index custom_index on 172.23.121.68
+[2020-05-08 13:35:56,957] - [rest_client] [123145475928064] - INFO - {"type": "fulltext-index", "name": "custom_index", "uuid": "", "params": {"mapping": {"default_mapping": {"enabled": false, "dynamic": true, "default_analyzer": "keyword"}, "type_field": "type", "default_type": "_default", "default_analyzer": "standard", "default_datetime_parser": "dateTimeOptional", "default_field": "_all", "analysis": {}, "types": {"emp": {"dynamic": false, "enabled": true, "fields": [], "properties": {"name": {"dynamic": false, "enabled": true, "properties": {}, "fields": [{"include_in_all": true, "include_term_vectors": true, "index": true, "name": "name", "store": false, "type": "text", "analyzer": "keyword"}]}}}}}, "store": {"kvStoreName": "mossStore", "mossStoreOptions": {}, "indexType": "scorch"}}, "sourceType": "couchbase", "sourceName": "default", "sourceUUID": "", "planParams": {"numReplicas": 0}, "sourceParams": {}}
+[2020-05-08 13:35:57,046] - [rest_client] [123145475928064] - INFO - Index custom_index created
+[2020-05-08 13:35:57,048] - [basetestcase] [123145475928064] - INFO - sleep for 10 secs.  ...
+[2020-05-08 13:36:07,302] - [flex_index_phase1] [123145475928064] - INFO - expected_fts_index_map {'name': ['custom_index'], 'type': ['custom_index']}
+[2020-05-08 13:36:07,357] - [tuq] [123145475928064] - INFO - RUN QUERY SELECT * FROM system:indexes
+[2020-05-08 13:36:07,358] - [rest_client] [123145475928064] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:07,425] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 9.637347ms
+[2020-05-08 13:36:07,427] - [tuq] [123145475928064] - INFO - waiting for: 
+('primary_gsi_index', 'default', 'online')
+
+[2020-05-08 13:36:07,428] - [tuq] [123145475928064] - INFO - current indexes: 
+[('custom_index', 'default', 'online')]
+
+[2020-05-08 13:36:07,485] - [tuq] [123145475928064] - INFO - RUN QUERY create primary index primary_gsi_index on default
+[2020-05-08 13:36:07,486] - [rest_client] [123145475928064] - INFO - query params : statement=create+primary+index+primary_gsi_index+on+default&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:09,427] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 1.883673235s
+[2020-05-08 13:36:09,437] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 1 =======
+[2020-05-08 13:36:09,438] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Desdomna Davis" and "Lucretia Juan José")
+[2020-05-08 13:36:09,508] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Desdomna Davis" and "Lucretia Juan José")
+[2020-05-08 13:36:09,509] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+between+%22Desdomna+Davis%22+and+%22Lucretia+Juan+Jos%C3%A9%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:09,580] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.091801ms
+[2020-05-08 13:36:09,582] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:09,653] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Desdomna Davis" and "Lucretia Juan José")
+[2020-05-08 13:36:09,654] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+between+%22Desdomna+Davis%22+and+%22Lucretia+Juan+Jos%C3%A9%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:09,755] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 45.087974ms
+[2020-05-08 13:36:09,756] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Desdomna Davis" and "Lucretia Juan José") is 375
+[2020-05-08 13:36:09,812] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name between "Desdomna Davis" and "Lucretia Juan José")
+[2020-05-08 13:36:09,813] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+between+%22Desdomna+Davis%22+and+%22Lucretia+Juan+Jos%C3%A9%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:09,975] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 106.424135ms
+[2020-05-08 13:36:09,977] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name between "Desdomna Davis" and "Lucretia Juan José") is 375
+[2020-05-08 13:36:09,978] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:09,979] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 2 =======
+[2020-05-08 13:36:09,980] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Delores Cook" and "Tempest Howard Jr.")
+[2020-05-08 13:36:10,049] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Delores Cook" and "Tempest Howard Jr.")
+[2020-05-08 13:36:10,050] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+between+%22Delores+Cook%22+and+%22Tempest+Howard+Jr.%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:10,121] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.372113ms
+[2020-05-08 13:36:10,122] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:10,174] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Delores Cook" and "Tempest Howard Jr.")
+[2020-05-08 13:36:10,175] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+between+%22Delores+Cook%22+and+%22Tempest+Howard+Jr.%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:10,311] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 47.779152ms
+[2020-05-08 13:36:10,312] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Delores Cook" and "Tempest Howard Jr.") is 590
+[2020-05-08 13:36:10,367] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name between "Delores Cook" and "Tempest Howard Jr.")
+[2020-05-08 13:36:10,368] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+between+%22Delores+Cook%22+and+%22Tempest+Howard+Jr.%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:10,533] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 91.143173ms
+[2020-05-08 13:36:10,534] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name between "Delores Cook" and "Tempest Howard Jr.") is 590
+[2020-05-08 13:36:10,535] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:10,536] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 3 =======
+[2020-05-08 13:36:10,537] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Fantine Thomas" and "Maura Thomas")
+[2020-05-08 13:36:10,593] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Fantine Thomas" and "Maura Thomas")
+[2020-05-08 13:36:10,595] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+between+%22Fantine+Thomas%22+and+%22Maura+Thomas%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:10,653] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.131829ms
+[2020-05-08 13:36:10,654] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:10,715] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Fantine Thomas" and "Maura Thomas")
+[2020-05-08 13:36:10,716] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+between+%22Fantine+Thomas%22+and+%22Maura+Thomas%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:10,803] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 23.557053ms
+[2020-05-08 13:36:10,805] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Fantine Thomas" and "Maura Thomas") is 306
+[2020-05-08 13:36:10,871] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name between "Fantine Thomas" and "Maura Thomas")
+[2020-05-08 13:36:10,872] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+between+%22Fantine+Thomas%22+and+%22Maura+Thomas%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:10,993] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 66.610675ms
+[2020-05-08 13:36:10,994] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name between "Fantine Thomas" and "Maura Thomas") is 306
+[2020-05-08 13:36:10,995] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:10,996] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 4 =======
+[2020-05-08 13:36:10,997] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Cassandra Sebastián" and "Keelia Phillips")
+[2020-05-08 13:36:11,055] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Cassandra Sebastián" and "Keelia Phillips")
+[2020-05-08 13:36:11,057] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+between+%22Cassandra+Sebasti%C3%A1n%22+and+%22Keelia+Phillips%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:11,118] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.208958ms
+[2020-05-08 13:36:11,120] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:11,176] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Cassandra Sebastián" and "Keelia Phillips")
+[2020-05-08 13:36:11,177] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+between+%22Cassandra+Sebasti%C3%A1n%22+and+%22Keelia+Phillips%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:11,269] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 31.696266ms
+[2020-05-08 13:36:11,270] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Cassandra Sebastián" and "Keelia Phillips") is 400
+[2020-05-08 13:36:11,330] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name between "Cassandra Sebastián" and "Keelia Phillips")
+[2020-05-08 13:36:11,331] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+between+%22Cassandra+Sebasti%C3%A1n%22+and+%22Keelia+Phillips%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:11,461] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 70.257904ms
+[2020-05-08 13:36:11,462] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name between "Cassandra Sebastián" and "Keelia Phillips") is 400
+[2020-05-08 13:36:11,463] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:11,464] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 5 =======
+[2020-05-08 13:36:11,465] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Alvita Ward" and "Tempest Thompson")
+[2020-05-08 13:36:11,527] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Alvita Ward" and "Tempest Thompson")
+[2020-05-08 13:36:11,529] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+between+%22Alvita+Ward%22+and+%22Tempest+Thompson%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:11,593] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.254293ms
+[2020-05-08 13:36:11,595] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:11,648] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Alvita Ward" and "Tempest Thompson")
+[2020-05-08 13:36:11,649] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+between+%22Alvita+Ward%22+and+%22Tempest+Thompson%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:11,782] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 64.711799ms
+[2020-05-08 13:36:11,783] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name between "Alvita Ward" and "Tempest Thompson") is 871
+[2020-05-08 13:36:11,843] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name between "Alvita Ward" and "Tempest Thompson")
+[2020-05-08 13:36:11,844] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+between+%22Alvita+Ward%22+and+%22Tempest+Thompson%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:11,995] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 97.507236ms
+[2020-05-08 13:36:11,996] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name between "Alvita Ward" and "Tempest Thompson") is 871
+[2020-05-08 13:36:11,997] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:11,998] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 6 =======
+[2020-05-08 13:36:11,999] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Joby Jackson")
+[2020-05-08 13:36:12,055] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Joby Jackson")
+[2020-05-08 13:36:12,056] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Joby+Jackson%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:12,118] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.11264ms
+[2020-05-08 13:36:12,120] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:12,174] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Joby Jackson")
+[2020-05-08 13:36:12,175] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Joby+Jackson%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:12,231] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.640781ms
+[2020-05-08 13:36:12,232] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Joby Jackson") is 2
+[2020-05-08 13:36:12,299] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name = "Joby Jackson")
+[2020-05-08 13:36:12,300] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Joby+Jackson%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:12,424] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 67.52566ms
+[2020-05-08 13:36:12,425] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name = "Joby Jackson") is 2
+[2020-05-08 13:36:12,426] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:12,427] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 7 =======
+[2020-05-08 13:36:12,428] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Tempest Robinson Sr.")
+[2020-05-08 13:36:12,486] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Tempest Robinson Sr.")
+[2020-05-08 13:36:12,487] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Tempest+Robinson+Sr.%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:12,541] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 1.918895ms
+[2020-05-08 13:36:12,542] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:12,599] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Tempest Robinson Sr.")
+[2020-05-08 13:36:12,600] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Tempest+Robinson+Sr.%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:12,670] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.681539ms
+[2020-05-08 13:36:12,671] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Tempest Robinson Sr.") is 0
+[2020-05-08 13:36:12,732] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name = "Tempest Robinson Sr.")
+[2020-05-08 13:36:12,733] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Tempest+Robinson+Sr.%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:12,867] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 73.758453ms
+[2020-05-08 13:36:12,869] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name = "Tempest Robinson Sr.") is 0
+[2020-05-08 13:36:12,870] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:12,870] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 8 =======
+[2020-05-08 13:36:12,871] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Sebastián")
+[2020-05-08 13:36:12,930] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Sebastián")
+[2020-05-08 13:36:12,932] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Sebasti%C3%A1n%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:12,993] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.275844ms
+[2020-05-08 13:36:12,995] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:13,047] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Sebastián")
+[2020-05-08 13:36:13,048] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Sebasti%C3%A1n%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:13,110] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.640815ms
+[2020-05-08 13:36:13,111] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Sebastián") is 0
+[2020-05-08 13:36:13,170] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name = "Sebastián")
+[2020-05-08 13:36:13,171] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Sebasti%C3%A1n%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:13,308] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 77.910992ms
+[2020-05-08 13:36:13,309] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name = "Sebastián") is 0
+[2020-05-08 13:36:13,311] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:13,311] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 9 =======
+[2020-05-08 13:36:13,312] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Lilith Smith")
+[2020-05-08 13:36:13,365] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Lilith Smith")
+[2020-05-08 13:36:13,367] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Lilith+Smith%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:13,425] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 1.89956ms
+[2020-05-08 13:36:13,426] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:13,487] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Lilith Smith")
+[2020-05-08 13:36:13,488] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Lilith+Smith%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:13,546] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.795712ms
+[2020-05-08 13:36:13,547] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Lilith Smith") is 0
+[2020-05-08 13:36:13,608] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name = "Lilith Smith")
+[2020-05-08 13:36:13,609] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Lilith+Smith%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:13,747] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 74.061455ms
+[2020-05-08 13:36:13,748] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name = "Lilith Smith") is 0
+[2020-05-08 13:36:13,749] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:13,750] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 10 =======
+[2020-05-08 13:36:13,751] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Allen")
+[2020-05-08 13:36:13,809] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Allen")
+[2020-05-08 13:36:13,810] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Allen%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:13,875] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.057797ms
+[2020-05-08 13:36:13,877] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:13,935] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Allen")
+[2020-05-08 13:36:13,936] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Allen%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:14,020] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 8.78079ms
+[2020-05-08 13:36:14,021] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name = "Allen") is 0
+[2020-05-08 13:36:14,078] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name = "Allen")
+[2020-05-08 13:36:14,079] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+%3D+%22Allen%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:14,221] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 75.551935ms
+[2020-05-08 13:36:14,222] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name = "Allen") is 0
+[2020-05-08 13:36:14,223] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:14,223] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 11 =======
+[2020-05-08 13:36:14,224] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "M%")
+[2020-05-08 13:36:14,285] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "M%")
+[2020-05-08 13:36:14,286] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+like+%22M%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:14,348] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.180377ms
+[2020-05-08 13:36:14,350] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:14,404] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "M%")
+[2020-05-08 13:36:14,405] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+like+%22M%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:14,473] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 7.353377ms
+[2020-05-08 13:36:14,474] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "M%") is 38
+[2020-05-08 13:36:14,527] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name like "M%")
+[2020-05-08 13:36:14,528] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+like+%22M%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:14,668] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 84.692121ms
+[2020-05-08 13:36:14,669] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name like "M%") is 38
+[2020-05-08 13:36:14,670] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:14,671] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 12 =======
+[2020-05-08 13:36:14,672] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Ma%")
+[2020-05-08 13:36:14,728] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Ma%")
+[2020-05-08 13:36:14,730] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+like+%22Ma%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:14,783] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.156721ms
+[2020-05-08 13:36:14,785] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:14,844] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Ma%")
+[2020-05-08 13:36:14,845] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+like+%22Ma%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:14,907] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 4.808744ms
+[2020-05-08 13:36:14,907] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Ma%") is 9
+[2020-05-08 13:36:14,960] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name like "Ma%")
+[2020-05-08 13:36:14,961] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+like+%22Ma%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:15,111] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 85.038154ms
+[2020-05-08 13:36:15,112] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name like "Ma%") is 9
+[2020-05-08 13:36:15,113] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:15,114] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 13 =======
+[2020-05-08 13:36:15,115] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Nico%")
+[2020-05-08 13:36:15,176] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Nico%")
+[2020-05-08 13:36:15,178] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+like+%22Nico%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:15,232] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.113996ms
+[2020-05-08 13:36:15,234] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:15,289] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Nico%")
+[2020-05-08 13:36:15,291] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+like+%22Nico%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:15,346] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 3.335984ms
+[2020-05-08 13:36:15,347] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Nico%") is 0
+[2020-05-08 13:36:15,404] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name like "Nico%")
+[2020-05-08 13:36:15,406] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+like+%22Nico%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:15,542] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 81.894202ms
+[2020-05-08 13:36:15,544] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name like "Nico%") is 0
+[2020-05-08 13:36:15,545] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:15,545] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 14 =======
+[2020-05-08 13:36:15,546] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Joby Jua%")
+[2020-05-08 13:36:15,609] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Joby Jua%")
+[2020-05-08 13:36:15,610] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+like+%22Joby+Jua%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:15,672] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.274554ms
+[2020-05-08 13:36:15,673] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:15,731] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Joby Jua%")
+[2020-05-08 13:36:15,732] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+like+%22Joby+Jua%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:15,787] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 4.00144ms
+[2020-05-08 13:36:15,789] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Joby Jua%") is 1
+[2020-05-08 13:36:15,838] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name like "Joby Jua%")
+[2020-05-08 13:36:15,839] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+like+%22Joby+Jua%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:15,972] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 73.074615ms
+[2020-05-08 13:36:15,973] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name like "Joby Jua%") is 1
+[2020-05-08 13:36:15,974] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:15,975] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 15 =======
+[2020-05-08 13:36:15,976] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Va%")
+[2020-05-08 13:36:16,035] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Va%")
+[2020-05-08 13:36:16,036] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+like+%22Va%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:16,095] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.41095ms
+[2020-05-08 13:36:16,097] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:16,154] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Va%")
+[2020-05-08 13:36:16,155] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+like+%22Va%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:16,214] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 5.39133ms
+[2020-05-08 13:36:16,215] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name like "Va%") is 23
+[2020-05-08 13:36:16,277] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name like "Va%")
+[2020-05-08 13:36:16,279] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+like+%22Va%25%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:16,418] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 74.151511ms
+[2020-05-08 13:36:16,419] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name like "Va%") is 23
+[2020-05-08 13:36:16,420] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:16,420] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 16 =======
+[2020-05-08 13:36:16,421] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name > "Balandria Williams" and name <= "Kacila Jr.") OR ( name >= "Dominique Ángel" and name <= "Quella White")) AND ( name like "M%"))
+[2020-05-08 13:36:16,476] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name > "Balandria Williams" and name <= "Kacila Jr.") OR ( name >= "Dominique Ángel" and name <= "Quella White")) AND ( name like "M%"))
+[2020-05-08 13:36:16,477] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+name+%3E+%22Balandria+Williams%22+and+name+%3C%3D+%22Kacila+Jr.%22%29+OR+%28+name+%3E%3D+%22Dominique+%C3%81ngel%22+and+name+%3C%3D+%22Quella+White%22%29%29+AND+%28+name+like+%22M%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:16,550] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 16.602628ms
+[2020-05-08 13:36:16,551] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:16,604] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name > "Balandria Williams" and name <= "Kacila Jr.") OR ( name >= "Dominique Ángel" and name <= "Quella White")) AND ( name like "M%"))
+[2020-05-08 13:36:16,605] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+name+%3E+%22Balandria+Williams%22+and+name+%3C%3D+%22Kacila+Jr.%22%29+OR+%28+name+%3E%3D+%22Dominique+%C3%81ngel%22+and+name+%3C%3D+%22Quella+White%22%29%29+AND+%28+name+like+%22M%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:16,689] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 21.468548ms
+[2020-05-08 13:36:16,690] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name > "Balandria Williams" and name <= "Kacila Jr.") OR ( name >= "Dominique Ángel" and name <= "Quella White")) AND ( name like "M%")) is 38
+[2020-05-08 13:36:16,747] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( ( ( name > "Balandria Williams" and name <= "Kacila Jr.") OR ( name >= "Dominique Ángel" and name <= "Quella White")) AND ( name like "M%"))
+[2020-05-08 13:36:16,748] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+%28+%28+name+%3E+%22Balandria+Williams%22+and+name+%3C%3D+%22Kacila+Jr.%22%29+OR+%28+name+%3E%3D+%22Dominique+%C3%81ngel%22+and+name+%3C%3D+%22Quella+White%22%29%29+AND+%28+name+like+%22M%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:16,890] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 86.701158ms
+[2020-05-08 13:36:16,891] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( ( ( name > "Balandria Williams" and name <= "Kacila Jr.") OR ( name >= "Dominique Ángel" and name <= "Quella White")) AND ( name like "M%")) is 38
+[2020-05-08 13:36:16,892] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:16,893] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 17 =======
+[2020-05-08 13:36:16,893] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( ( ( name = "Amara") AND ( name >= "Dabria Nicolás" and name < "Lucretia Hall")) AND ( name like "B%")) OR ( name like "Perdi%")) OR ( name between "Adara Smith" and "Trista Thompson"))
+[2020-05-08 13:36:16,962] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( ( ( name = "Amara") AND ( name >= "Dabria Nicolás" and name < "Lucretia Hall")) AND ( name like "B%")) OR ( name like "Perdi%")) OR ( name between "Adara Smith" and "Trista Thompson"))
+[2020-05-08 13:36:16,963] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+%28+%28+name+%3D+%22Amara%22%29+AND+%28+name+%3E%3D+%22Dabria+Nicol%C3%A1s%22+and+name+%3C+%22Lucretia+Hall%22%29%29+AND+%28+name+like+%22B%25%22%29%29+OR+%28+name+like+%22Perdi%25%22%29%29+OR+%28+name+between+%22Adara+Smith%22+and+%22Trista+Thompson%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:17,034] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 16.071334ms
+[2020-05-08 13:36:17,036] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:17,094] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( ( ( name = "Amara") AND ( name >= "Dabria Nicolás" and name < "Lucretia Hall")) AND ( name like "B%")) OR ( name like "Perdi%")) OR ( name between "Adara Smith" and "Trista Thompson"))
+[2020-05-08 13:36:17,096] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+%28+%28+name+%3D+%22Amara%22%29+AND+%28+name+%3E%3D+%22Dabria+Nicol%C3%A1s%22+and+name+%3C+%22Lucretia+Hall%22%29%29+AND+%28+name+like+%22B%25%22%29%29+OR+%28+name+like+%22Perdi%25%22%29%29+OR+%28+name+between+%22Adara+Smith%22+and+%22Trista+Thompson%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:17,253] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 105.030783ms
+[2020-05-08 13:36:17,254] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( ( ( name = "Amara") AND ( name >= "Dabria Nicolás" and name < "Lucretia Hall")) AND ( name like "B%")) OR ( name like "Perdi%")) OR ( name between "Adara Smith" and "Trista Thompson")) is 962
+[2020-05-08 13:36:17,314] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( ( ( ( ( name = "Amara") AND ( name >= "Dabria Nicolás" and name < "Lucretia Hall")) AND ( name like "B%")) OR ( name like "Perdi%")) OR ( name between "Adara Smith" and "Trista Thompson"))
+[2020-05-08 13:36:17,316] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+%28+%28+%28+%28+name+%3D+%22Amara%22%29+AND+%28+name+%3E%3D+%22Dabria+Nicol%C3%A1s%22+and+name+%3C+%22Lucretia+Hall%22%29%29+AND+%28+name+like+%22B%25%22%29%29+OR+%28+name+like+%22Perdi%25%22%29%29+OR+%28+name+between+%22Adara+Smith%22+and+%22Trista+Thompson%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:17,469] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 91.710286ms
+[2020-05-08 13:36:17,470] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( ( ( ( ( name = "Amara") AND ( name >= "Dabria Nicolás" and name < "Lucretia Hall")) AND ( name like "B%")) OR ( name like "Perdi%")) OR ( name between "Adara Smith" and "Trista Thompson")) is 962
+[2020-05-08 13:36:17,471] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:17,472] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 18 =======
+[2020-05-08 13:36:17,473] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name like "Tay%") OR ( name like "K%"))
+[2020-05-08 13:36:17,530] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name like "Tay%") OR ( name like "K%"))
+[2020-05-08 13:36:17,531] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+name+like+%22Tay%25%22%29+OR+%28+name+like+%22K%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:17,606] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 12.922333ms
+[2020-05-08 13:36:17,608] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:17,663] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name like "Tay%") OR ( name like "K%"))
+[2020-05-08 13:36:17,664] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+name+like+%22Tay%25%22%29+OR+%28+name+like+%22K%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:17,744] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 26.663677ms
+[2020-05-08 13:36:17,745] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name like "Tay%") OR ( name like "K%")) is 148
+[2020-05-08 13:36:17,805] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( ( name like "Tay%") OR ( name like "K%"))
+[2020-05-08 13:36:17,806] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+%28+name+like+%22Tay%25%22%29+OR+%28+name+like+%22K%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:17,945] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 83.924238ms
+[2020-05-08 13:36:17,946] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( ( name like "Tay%") OR ( name like "K%")) is 148
+[2020-05-08 13:36:17,947] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:17,948] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 19 =======
+[2020-05-08 13:36:17,949] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name between "Dabria Cook" and "Severin Allen") AND ( name >= "Alarice Reed" and name <= "Hanna Thompson")) AND ( name like "Deir%"))
+[2020-05-08 13:36:18,007] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name between "Dabria Cook" and "Severin Allen") AND ( name >= "Alarice Reed" and name <= "Hanna Thompson")) AND ( name like "Deir%"))
+[2020-05-08 13:36:18,008] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+name+between+%22Dabria+Cook%22+and+%22Severin+Allen%22%29+AND+%28+name+%3E%3D+%22Alarice+Reed%22+and+name+%3C%3D+%22Hanna+Thompson%22%29%29+AND+%28+name+like+%22Deir%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:18,080] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 3.719391ms
+[2020-05-08 13:36:18,082] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:18,141] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name between "Dabria Cook" and "Severin Allen") AND ( name >= "Alarice Reed" and name <= "Hanna Thompson")) AND ( name like "Deir%"))
+[2020-05-08 13:36:18,142] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+name+between+%22Dabria+Cook%22+and+%22Severin+Allen%22%29+AND+%28+name+%3E%3D+%22Alarice+Reed%22+and+name+%3C%3D+%22Hanna+Thompson%22%29%29+AND+%28+name+like+%22Deir%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:18,206] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 7.79403ms
+[2020-05-08 13:36:18,207] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name between "Dabria Cook" and "Severin Allen") AND ( name >= "Alarice Reed" and name <= "Hanna Thompson")) AND ( name like "Deir%")) is 10
+[2020-05-08 13:36:18,268] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( ( ( name between "Dabria Cook" and "Severin Allen") AND ( name >= "Alarice Reed" and name <= "Hanna Thompson")) AND ( name like "Deir%"))
+[2020-05-08 13:36:18,269] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+%28+%28+name+between+%22Dabria+Cook%22+and+%22Severin+Allen%22%29+AND+%28+name+%3E%3D+%22Alarice+Reed%22+and+name+%3C%3D+%22Hanna+Thompson%22%29%29+AND+%28+name+like+%22Deir%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:18,404] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 79.007135ms
+[2020-05-08 13:36:18,405] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( ( ( name between "Dabria Cook" and "Severin Allen") AND ( name >= "Alarice Reed" and name <= "Hanna Thompson")) AND ( name like "Deir%")) is 10
+[2020-05-08 13:36:18,406] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:18,407] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 20 =======
+[2020-05-08 13:36:18,408] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( ( ( name like "Severin Wr%") OR ( name > "Dominique Ward" and name <= "Kerry Baker III")) OR ( name like "Á%")) OR ( name = "Young")) OR ( name like "Balandri%"))
+[2020-05-08 13:36:18,473] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( ( ( name like "Severin Wr%") OR ( name > "Dominique Ward" and name <= "Kerry Baker III")) OR ( name like "Á%")) OR ( name = "Young")) OR ( name like "Balandri%"))
+[2020-05-08 13:36:18,474] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+%28+%28+name+like+%22Severin+Wr%25%22%29+OR+%28+name+%3E+%22Dominique+Ward%22+and+name+%3C%3D+%22Kerry+Baker+III%22%29%29+OR+%28+name+like+%22%C3%81%25%22%29%29+OR+%28+name+%3D+%22Young%22%29%29+OR+%28+name+like+%22Balandri%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:18,553] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 17.508805ms
+[2020-05-08 13:36:18,555] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:18,613] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( ( ( name like "Severin Wr%") OR ( name > "Dominique Ward" and name <= "Kerry Baker III")) OR ( name like "Á%")) OR ( name = "Young")) OR ( name like "Balandri%"))
+[2020-05-08 13:36:18,614] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+%28+%28+name+like+%22Severin+Wr%25%22%29+OR+%28+name+%3E+%22Dominique+Ward%22+and+name+%3C%3D+%22Kerry+Baker+III%22%29%29+OR+%28+name+like+%22%C3%81%25%22%29%29+OR+%28+name+%3D+%22Young%22%29%29+OR+%28+name+like+%22Balandri%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:18,713] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 44.839325ms
+[2020-05-08 13:36:18,715] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( ( ( name like "Severin Wr%") OR ( name > "Dominique Ward" and name <= "Kerry Baker III")) OR ( name like "Á%")) OR ( name = "Young")) OR ( name like "Balandri%")) is 263
+[2020-05-08 13:36:18,770] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( ( ( ( ( name like "Severin Wr%") OR ( name > "Dominique Ward" and name <= "Kerry Baker III")) OR ( name like "Á%")) OR ( name = "Young")) OR ( name like "Balandri%"))
+[2020-05-08 13:36:18,771] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+%28+%28+%28+%28+name+like+%22Severin+Wr%25%22%29+OR+%28+name+%3E+%22Dominique+Ward%22+and+name+%3C%3D+%22Kerry+Baker+III%22%29%29+OR+%28+name+like+%22%C3%81%25%22%29%29+OR+%28+name+%3D+%22Young%22%29%29+OR+%28+name+like+%22Balandri%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:18,918] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 85.359357ms
+[2020-05-08 13:36:18,919] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( ( ( ( ( name like "Severin Wr%") OR ( name > "Dominique Ward" and name <= "Kerry Baker III")) OR ( name like "Á%")) OR ( name = "Young")) OR ( name like "Balandri%")) is 263
+[2020-05-08 13:36:18,920] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:18,921] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 21 =======
+[2020-05-08 13:36:18,922] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name like "Sebast%") AND ( name like "Mi%")) AND ( name between "Desdomna Jones" and "Thea Carter"))
+[2020-05-08 13:36:18,975] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name like "Sebast%") AND ( name like "Mi%")) AND ( name between "Desdomna Jones" and "Thea Carter"))
+[2020-05-08 13:36:18,976] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+name+like+%22Sebast%25%22%29+AND+%28+name+like+%22Mi%25%22%29%29+AND+%28+name+between+%22Desdomna+Jones%22+and+%22Thea+Carter%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:19,038] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 3.661183ms
+[2020-05-08 13:36:19,040] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:19,099] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name like "Sebast%") AND ( name like "Mi%")) AND ( name between "Desdomna Jones" and "Thea Carter"))
+[2020-05-08 13:36:19,100] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+name+like+%22Sebast%25%22%29+AND+%28+name+like+%22Mi%25%22%29%29+AND+%28+name+between+%22Desdomna+Jones%22+and+%22Thea+Carter%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:19,164] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 5.496707ms
+[2020-05-08 13:36:19,165] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name like "Sebast%") AND ( name like "Mi%")) AND ( name between "Desdomna Jones" and "Thea Carter")) is 0
+[2020-05-08 13:36:19,223] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( ( ( name like "Sebast%") AND ( name like "Mi%")) AND ( name between "Desdomna Jones" and "Thea Carter"))
+[2020-05-08 13:36:19,224] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+%28+%28+name+like+%22Sebast%25%22%29+AND+%28+name+like+%22Mi%25%22%29%29+AND+%28+name+between+%22Desdomna+Jones%22+and+%22Thea+Carter%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:19,353] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 70.670634ms
+[2020-05-08 13:36:19,354] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( ( ( name like "Sebast%") AND ( name like "Mi%")) AND ( name between "Desdomna Jones" and "Thea Carter")) is 0
+[2020-05-08 13:36:19,355] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:19,356] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 22 =======
+[2020-05-08 13:36:19,357] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name between "Beryl White" and "Kagami Sebastián") OR ( name like "Kerry-Ann W%"))
+[2020-05-08 13:36:19,410] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name between "Beryl White" and "Kagami Sebastián") OR ( name like "Kerry-Ann W%"))
+[2020-05-08 13:36:19,412] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+name+between+%22Beryl+White%22+and+%22Kagami+Sebasti%C3%A1n%22%29+OR+%28+name+like+%22Kerry-Ann+W%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:19,481] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 14.505065ms
+[2020-05-08 13:36:19,483] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:19,539] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name between "Beryl White" and "Kagami Sebastián") OR ( name like "Kerry-Ann W%"))
+[2020-05-08 13:36:19,540] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+name+between+%22Beryl+White%22+and+%22Kagami+Sebasti%C3%A1n%22%29+OR+%28+name+like+%22Kerry-Ann+W%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:19,640] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 45.273796ms
+[2020-05-08 13:36:19,642] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name between "Beryl White" and "Kagami Sebastián") OR ( name like "Kerry-Ann W%")) is 430
+[2020-05-08 13:36:19,695] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( ( name between "Beryl White" and "Kagami Sebastián") OR ( name like "Kerry-Ann W%"))
+[2020-05-08 13:36:19,696] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+%28+name+between+%22Beryl+White%22+and+%22Kagami+Sebasti%C3%A1n%22%29+OR+%28+name+like+%22Kerry-Ann+W%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:19,854] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 94.15663ms
+[2020-05-08 13:36:19,855] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( ( name between "Beryl White" and "Kagami Sebastián") OR ( name like "Kerry-Ann W%")) is 430
+[2020-05-08 13:36:19,856] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:19,857] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 23 =======
+[2020-05-08 13:36:19,858] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name >= "Deandra Nicolás" and name <= "Jetta Richardson IX") OR ( name between "Antonia Baker III" and "Sirena Edwards Sr.")) OR ( name like "A%"))
+[2020-05-08 13:36:19,909] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name >= "Deandra Nicolás" and name <= "Jetta Richardson IX") OR ( name between "Antonia Baker III" and "Sirena Edwards Sr.")) OR ( name like "A%"))
+[2020-05-08 13:36:19,910] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+name+%3E%3D+%22Deandra+Nicol%C3%A1s%22+and+name+%3C%3D+%22Jetta+Richardson+IX%22%29+OR+%28+name+between+%22Antonia+Baker+III%22+and+%22Sirena+Edwards+Sr.%22%29%29+OR+%28+name+like+%22A%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:19,977] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 14.746937ms
+[2020-05-08 13:36:19,979] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:20,037] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name >= "Deandra Nicolás" and name <= "Jetta Richardson IX") OR ( name between "Antonia Baker III" and "Sirena Edwards Sr.")) OR ( name like "A%"))
+[2020-05-08 13:36:20,037] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+name+%3E%3D+%22Deandra+Nicol%C3%A1s%22+and+name+%3C%3D+%22Jetta+Richardson+IX%22%29+OR+%28+name+between+%22Antonia+Baker+III%22+and+%22Sirena+Edwards+Sr.%22%29%29+OR+%28+name+like+%22A%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:20,189] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 84.821248ms
+[2020-05-08 13:36:20,190] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name >= "Deandra Nicolás" and name <= "Jetta Richardson IX") OR ( name between "Antonia Baker III" and "Sirena Edwards Sr.")) OR ( name like "A%")) is 888
+[2020-05-08 13:36:20,248] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( ( ( name >= "Deandra Nicolás" and name <= "Jetta Richardson IX") OR ( name between "Antonia Baker III" and "Sirena Edwards Sr.")) OR ( name like "A%"))
+[2020-05-08 13:36:20,249] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+%28+%28+name+%3E%3D+%22Deandra+Nicol%C3%A1s%22+and+name+%3C%3D+%22Jetta+Richardson+IX%22%29+OR+%28+name+between+%22Antonia+Baker+III%22+and+%22Sirena+Edwards+Sr.%22%29%29+OR+%28+name+like+%22A%25%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:20,423] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 103.103651ms
+[2020-05-08 13:36:20,424] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( ( ( name >= "Deandra Nicolás" and name <= "Jetta Richardson IX") OR ( name between "Antonia Baker III" and "Sirena Edwards Sr.")) OR ( name like "A%")) is 888
+[2020-05-08 13:36:20,425] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:20,426] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 24 =======
+[2020-05-08 13:36:20,427] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name > "Fuscienne Jackson" and name <= "Vala Allen") OR ( name > "Duvessa Wells" and name <= "Kimberly Julián")) OR ( name > "Ebony Wilson" and name < "Sirena Cook"))
+[2020-05-08 13:36:20,495] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name > "Fuscienne Jackson" and name <= "Vala Allen") OR ( name > "Duvessa Wells" and name <= "Kimberly Julián")) OR ( name > "Ebony Wilson" and name < "Sirena Cook"))
+[2020-05-08 13:36:20,496] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+name+%3E+%22Fuscienne+Jackson%22+and+name+%3C%3D+%22Vala+Allen%22%29+OR+%28+name+%3E+%22Duvessa+Wells%22+and+name+%3C%3D+%22Kimberly+Juli%C3%A1n%22%29%29+OR+%28+name+%3E+%22Ebony+Wilson%22+and+name+%3C+%22Sirena+Cook%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:20,570] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 14.263841ms
+[2020-05-08 13:36:20,571] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:20,625] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name > "Fuscienne Jackson" and name <= "Vala Allen") OR ( name > "Duvessa Wells" and name <= "Kimberly Julián")) OR ( name > "Ebony Wilson" and name < "Sirena Cook"))
+[2020-05-08 13:36:20,626] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+%28+name+%3E+%22Fuscienne+Jackson%22+and+name+%3C%3D+%22Vala+Allen%22%29+OR+%28+name+%3E+%22Duvessa+Wells%22+and+name+%3C%3D+%22Kimberly+Juli%C3%A1n%22%29%29+OR+%28+name+%3E+%22Ebony+Wilson%22+and+name+%3C+%22Sirena+Cook%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:20,806] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 67.773674ms
+[2020-05-08 13:36:20,807] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( ( name > "Fuscienne Jackson" and name <= "Vala Allen") OR ( name > "Duvessa Wells" and name <= "Kimberly Julián")) OR ( name > "Ebony Wilson" and name < "Sirena Cook")) is 542
+[2020-05-08 13:36:20,884] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( ( ( name > "Fuscienne Jackson" and name <= "Vala Allen") OR ( name > "Duvessa Wells" and name <= "Kimberly Julián")) OR ( name > "Ebony Wilson" and name < "Sirena Cook"))
+[2020-05-08 13:36:20,885] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+%28+%28+name+%3E+%22Fuscienne+Jackson%22+and+name+%3C%3D+%22Vala+Allen%22%29+OR+%28+name+%3E+%22Duvessa+Wells%22+and+name+%3C%3D+%22Kimberly+Juli%C3%A1n%22%29%29+OR+%28+name+%3E+%22Ebony+Wilson%22+and+name+%3C+%22Sirena+Cook%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:21,064] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 85.662561ms
+[2020-05-08 13:36:21,066] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( ( ( name > "Fuscienne Jackson" and name <= "Vala Allen") OR ( name > "Duvessa Wells" and name <= "Kimberly Julián")) OR ( name > "Ebony Wilson" and name < "Sirena Cook")) is 542
+[2020-05-08 13:36:21,067] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:21,068] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 25 =======
+[2020-05-08 13:36:21,069] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name like "Dabria %") AND ( name = "Antonia Lewis"))
+[2020-05-08 13:36:21,130] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name like "Dabria %") AND ( name = "Antonia Lewis"))
+[2020-05-08 13:36:21,131] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+name+like+%22Dabria+%25%22%29+AND+%28+name+%3D+%22Antonia+Lewis%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:21,193] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.579613ms
+[2020-05-08 13:36:21,194] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:21,253] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name like "Dabria %") AND ( name = "Antonia Lewis"))
+[2020-05-08 13:36:21,254] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+%28+name+like+%22Dabria+%25%22%29+AND+%28+name+%3D+%22Antonia+Lewis%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:21,322] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 3.772123ms
+[2020-05-08 13:36:21,324] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( ( name like "Dabria %") AND ( name = "Antonia Lewis")) is 0
+[2020-05-08 13:36:21,394] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( ( name like "Dabria %") AND ( name = "Antonia Lewis"))
+[2020-05-08 13:36:21,395] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+%28+name+like+%22Dabria+%25%22%29+AND+%28+name+%3D+%22Antonia+Lewis%22%29%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:21,515] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 67.31855ms
+[2020-05-08 13:36:21,516] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( ( name like "Dabria %") AND ( name = "Antonia Lewis")) is 0
+[2020-05-08 13:36:21,517] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:21,517] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 26 =======
+[2020-05-08 13:36:21,518] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name > "Desdomna Simón" and name < "Jetta Tomás")
+[2020-05-08 13:36:21,593] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name > "Desdomna Simón" and name < "Jetta Tomás")
+[2020-05-08 13:36:21,595] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3E+%22Desdomna+Sim%C3%B3n%22+and+name+%3C+%22Jetta+Tom%C3%A1s%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:21,682] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.199066ms
+[2020-05-08 13:36:21,683] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:21,780] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name > "Desdomna Simón" and name < "Jetta Tomás")
+[2020-05-08 13:36:21,781] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3E+%22Desdomna+Sim%C3%B3n%22+and+name+%3C+%22Jetta+Tom%C3%A1s%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:21,866] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 16.722479ms
+[2020-05-08 13:36:21,868] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name > "Desdomna Simón" and name < "Jetta Tomás") is 182
+[2020-05-08 13:36:21,928] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name > "Desdomna Simón" and name < "Jetta Tomás")
+[2020-05-08 13:36:21,929] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+%3E+%22Desdomna+Sim%C3%B3n%22+and+name+%3C+%22Jetta+Tom%C3%A1s%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:22,066] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 81.787827ms
+[2020-05-08 13:36:22,067] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name > "Desdomna Simón" and name < "Jetta Tomás") is 182
+[2020-05-08 13:36:22,067] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:22,068] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 27 =======
+[2020-05-08 13:36:22,069] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name >= "Drucilla Aarón" and name <= "Lucretia Damián")
+[2020-05-08 13:36:22,121] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name >= "Drucilla Aarón" and name <= "Lucretia Damián")
+[2020-05-08 13:36:22,122] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3E%3D+%22Drucilla+Aar%C3%B3n%22+and+name+%3C%3D+%22Lucretia+Dami%C3%A1n%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:22,184] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.503081ms
+[2020-05-08 13:36:22,185] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:22,245] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name >= "Drucilla Aarón" and name <= "Lucretia Damián")
+[2020-05-08 13:36:22,246] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3E%3D+%22Drucilla+Aar%C3%B3n%22+and+name+%3C%3D+%22Lucretia+Dami%C3%A1n%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:22,340] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 26.764485ms
+[2020-05-08 13:36:22,341] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name >= "Drucilla Aarón" and name <= "Lucretia Damián") is 329
+[2020-05-08 13:36:22,398] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name >= "Drucilla Aarón" and name <= "Lucretia Damián")
+[2020-05-08 13:36:22,399] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+%3E%3D+%22Drucilla+Aar%C3%B3n%22+and+name+%3C%3D+%22Lucretia+Dami%C3%A1n%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:22,533] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 76.115978ms
+[2020-05-08 13:36:22,534] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name >= "Drucilla Aarón" and name <= "Lucretia Damián") is 329
+[2020-05-08 13:36:22,534] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:22,535] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 28 =======
+[2020-05-08 13:36:22,536] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name >= "Dabria Stewart" and name < "Jerica Davis")
+[2020-05-08 13:36:22,588] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name >= "Dabria Stewart" and name < "Jerica Davis")
+[2020-05-08 13:36:22,589] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3E%3D+%22Dabria+Stewart%22+and+name+%3C+%22Jerica+Davis%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:22,645] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.233882ms
+[2020-05-08 13:36:22,647] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:22,703] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name >= "Dabria Stewart" and name < "Jerica Davis")
+[2020-05-08 13:36:22,704] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3E%3D+%22Dabria+Stewart%22+and+name+%3C+%22Jerica+Davis%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:22,779] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 20.43829ms
+[2020-05-08 13:36:22,780] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name >= "Dabria Stewart" and name < "Jerica Davis") is 236
+[2020-05-08 13:36:22,849] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name >= "Dabria Stewart" and name < "Jerica Davis")
+[2020-05-08 13:36:22,851] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+%3E%3D+%22Dabria+Stewart%22+and+name+%3C+%22Jerica+Davis%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:22,977] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 71.840668ms
+[2020-05-08 13:36:22,978] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name >= "Dabria Stewart" and name < "Jerica Davis") is 236
+[2020-05-08 13:36:22,979] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:22,980] - [flex_index_phase1] [123145475928064] - INFO - ======== Running Query # 29 =======
+[2020-05-08 13:36:22,981] - [flex_index_phase1] [123145475928064] - INFO - Query : explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name > "Basha Morgan" and name <= "Hanna Roberts")
+[2020-05-08 13:36:23,033] - [tuq] [123145475928064] - INFO - RUN QUERY explain select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name > "Basha Morgan" and name <= "Hanna Roberts")
+[2020-05-08 13:36:23,034] - [rest_client] [123145475928064] - INFO - query params : statement=explain+select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3E+%22Basha+Morgan%22+and+name+%3C%3D+%22Hanna+Roberts%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:23,087] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 2.358302ms
+[2020-05-08 13:36:23,088] - [flex_index_phase1] [123145475928064] - INFO - Actual indexes present: ['custom_index'], Expected Indexes: ['custom_index']
+[2020-05-08 13:36:23,159] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name > "Basha Morgan" and name <= "Hanna Roberts")
+[2020-05-08 13:36:23,160] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+USE+INDEX+%28custom_index+USING+FTS%29+where+type+%3D+%22emp%22+and++%28+name+%3E+%22Basha+Morgan%22+and+name+%3C%3D+%22Hanna+Roberts%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:23,252] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 38.215185ms
+[2020-05-08 13:36:23,254] - [flex_index_phase1] [123145475928064] - INFO - Number of results from flex query: select meta().id from default USE INDEX (custom_index USING FTS) where type = "emp" and  ( name > "Basha Morgan" and name <= "Hanna Roberts") is 360
+[2020-05-08 13:36:23,310] - [tuq] [123145475928064] - INFO - RUN QUERY select meta().id from default where type = "emp" and  ( name > "Basha Morgan" and name <= "Hanna Roberts")
+[2020-05-08 13:36:23,312] - [rest_client] [123145475928064] - INFO - query params : statement=select+meta%28%29.id+from+default+where+type+%3D+%22emp%22+and++%28+name+%3E+%22Basha+Morgan%22+and+name+%3C%3D+%22Hanna+Roberts%22%29&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:23,441] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 70.298104ms
+[2020-05-08 13:36:23,442] - [flex_index_phase1] [123145475928064] - INFO - Number of results from gsi query: select meta().id from default where type = "emp" and  ( name > "Basha Morgan" and name <= "Hanna Roberts") is 360
+[2020-05-08 13:36:23,443] - [flex_index_phase1] [123145475928064] - INFO - ======== Done =======
+[2020-05-08 13:36:23,617] - [fts_base] [123145475928064] - INFO - Deleting fulltext-index custom_index on 172.23.121.68
+[2020-05-08 13:36:23,922] - [remote_util] [123145475928064] - INFO - connecting to 172.23.121.68 with username:root 
+[2020-05-08 13:36:24,443] - [remote_util] [123145475928064] - INFO - Connected to 172.23.121.68
+[2020-05-08 13:36:25,105] - [remote_util] [123145475928064] - INFO - os_distro: CentOS, os_version: centos 7, is_linux_distro: True
+[2020-05-08 13:36:25,947] - [remote_util] [123145475928064] - INFO - extract_remote_info-->distribution_type: CentOS, distribution_version: centos 7
+[2020-05-08 13:36:25,948] - [remote_util] [123145475928064] - INFO - running command.raw on 172.23.121.68: ls /opt/couchbase/var/lib/couchbase/data/@fts |grep ^custom_index | wc -l
+[2020-05-08 13:36:26,085] - [remote_util] [123145475928064] - INFO - command executed successfully
+[2020-05-08 13:36:26,086] - [fts_base] [123145475928064] - INFO - 0
+[2020-05-08 13:36:28,090] - [fts_base] [123145475928064] - INFO - Validated: all index files for custom_index deleted from disk
+[2020-05-08 13:36:28,092] - [flex_index_phase1] [123145475928064] - INFO - All 29 queries passed
+[2020-05-08 13:36:28,094] - [flex_index_phase1] [123145475928064] - INFO - ==============  FlexIndexTests tearDown has started ==============
+[2020-05-08 13:36:28,154] - [tuq] [123145475928064] - INFO - RUN QUERY SELECT * FROM system:indexes
+[2020-05-08 13:36:28,155] - [rest_client] [123145475928064] - INFO - query params : statement=SELECT+%2A+FROM+system%3Aindexes&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:28,223] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 10.872501ms
+[2020-05-08 13:36:28,287] - [tuq] [123145475928064] - INFO - RUN QUERY SELECT * FROM system:keyspaces
+[2020-05-08 13:36:28,288] - [rest_client] [123145475928064] - INFO - query params : statement=SELECT+%2A+FROM+system%3Akeyspaces&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:28,350] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 7.023314ms
+[2020-05-08 13:36:28,352] - [tuq] [123145475928064] - INFO - ==============  System Config: ==============
+
+[2020-05-08 13:36:28,417] - [tuq] [123145475928064] - INFO - RUN QUERY SELECT COUNT(*) FROM `default`
+[2020-05-08 13:36:28,418] - [rest_client] [123145475928064] - INFO - query params : statement=SELECT+COUNT%28%2A%29+FROM+%60default%60&scan_consistency=NOT_BOUNDED
+[2020-05-08 13:36:28,488] - [tuq] [123145475928064] - INFO - TOTAL ELAPSED TIME: 9.346643ms
+[2020-05-08 13:36:28,489] - [tuq] [123145475928064] - INFO - Bucket: default
+[2020-05-08 13:36:28,490] - [tuq] [123145475928064] - INFO - Indexes: ['primary_gsi_index']
+[2020-05-08 13:36:28,491] - [tuq] [123145475928064] - INFO - Docs: 1000
+
+[2020-05-08 13:36:28,492] - [tuq] [123145475928064] - INFO - =============================================
+[2020-05-08 13:36:28,493] - [flex_index_phase1] [123145475928064] - INFO - ==============  FlexIndexTests tearDown has completed ==============
+[2020-05-08 13:36:28,493] - [tuq] [123145475928064] - INFO - ==============  QueryTests tearDown has started ==============
+[2020-05-08 13:36:28,494] - [tuq] [123145475928064] - INFO - ==============  QueryTests tearDown has completed ==============
+[2020-05-08 13:36:28,640] - [basetestcase] [123145475928064] - INFO - ------- Cluster statistics -------
+[2020-05-08 13:36:28,641] - [basetestcase] [123145475928064] - INFO - 172.23.121.68:8091 => {'services': ['fts', 'index', 'kv', 'n1ql'], 'cpu_utilization': 24.03100775193798, 'mem_free': 2187169792, 'mem_total': 4366938112, 'swap_mem_used': 9437184, 'swap_mem_total': 3758092288}
+[2020-05-08 13:36:28,642] - [basetestcase] [123145475928064] - INFO - --- End of cluster statistics ---
+[2020-05-08 13:36:28,643] - [basetestcase] [123145475928064] - INFO - ==============  basetestcase cleanup was started for test #3 test_flex_single_typemapping ==============
+[2020-05-08 13:36:28,957] - [bucket_helper] [123145475928064] - INFO - deleting existing buckets ['default'] on 172.23.121.68
+[2020-05-08 13:36:28,958] - [bucket_helper] [123145475928064] - INFO - remove bucket default ...
+[2020-05-08 13:36:30,195] - [bucket_helper] [123145475928064] - INFO - deleted bucket : default from 172.23.121.68
+[2020-05-08 13:36:30,196] - [bucket_helper] [123145475928064] - INFO - waiting for bucket deletion to complete....
+[2020-05-08 13:36:30,271] - [rest_client] [123145475928064] - INFO - node 172.23.121.68 existing buckets : []
+[2020-05-08 13:36:30,272] - [bucket_helper] [123145475928064] - INFO - sleep 2 seconds to make sure all buckets (['default']) were deleted completely.
+[2020-05-08 13:36:32,604] - [cluster_helper] [123145475928064] - INFO - waiting for ns_server @ 172.23.121.68:8091
+[2020-05-08 13:36:32,661] - [cluster_helper] [123145475928064] - INFO - ns_server @ 172.23.121.68:8091 is running
+[2020-05-08 13:36:32,662] - [basetestcase] [123145475928064] - INFO - ==============  basetestcase cleanup was finished for test #3 test_flex_single_typemapping ==============
+[2020-05-08 13:36:32,663] - [basetestcase] [123145475928064] - INFO - closing all ssh connections
+[2020-05-08 13:36:32,664] - [basetestcase] [123145475928064] - INFO - closing all memcached connections
